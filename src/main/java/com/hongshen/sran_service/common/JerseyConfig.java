@@ -8,5 +8,6 @@ public class JerseyConfig extends ResourceConfig{
     public JerseyConfig(){
 
         register(NetElementQuotaController.class);
+
     }
 }

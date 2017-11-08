@@ -32,4 +32,5 @@ public class Constants {
     public static final String CELL_ALARM = "";
     public static final String CELL_QUOTA = "";
     public static final String CELL_INFO = "";
+
 }

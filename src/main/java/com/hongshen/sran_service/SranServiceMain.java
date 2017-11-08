@@ -28,6 +28,5 @@ public class SranServiceMain {
 		registration.addInitParameter(ServletProperties.JAXRS_APPLICATION_CLASS, JerseyConfig.class.getName());
 
 		return registration;
-
 	}
 }

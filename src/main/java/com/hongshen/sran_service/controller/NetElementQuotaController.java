@@ -137,6 +137,7 @@ public class NetElementQuotaController {
             sign = true;
             result= "success";
         }
+
         jsonResult.put("data",map);
         jsonResult.put("result", result);
         jsonResult.put("status", sign);
