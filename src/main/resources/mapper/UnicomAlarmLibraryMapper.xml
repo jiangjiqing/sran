@@ -135,4 +135,13 @@
       recommend = #{recommend,jdbcType=VARCHAR}
     where alarm_name_id = #{alarmNameId,jdbcType=VARCHAR}
   </update>
+  <select id="getAlarmLibrary" resultType="Map">
+    SELECT * FROM unicom_alarm_library
+  </select>
+  <select id="getSpecifiedLibrary" parameterType="String" resultType="Map">
+  SELECT * FROM unicom_alarm_library WHERE alarm_name = #{alarmNameId}
+  </select>
+<update id="updateSpecifiedLibrary" parameterType="String">
+  UPDATE unicom_alarm_library SET alarm_meaning = #{name} WHERE alarm_name = #{alarmNameId}
+</update>
 </mapper>

@@ -3,6 +3,8 @@ package com.hongshen.sran_service.dao;
 import com.hongshen.sran_service.entity.UnicomGroupWcdma;
 import org.springframework.stereotype.Repository;
 
+import java.util.Map;
+
 @Repository
 public interface UnicomGroupWcdmaMapper {
     /**
@@ -60,4 +62,6 @@ public interface UnicomGroupWcdmaMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(UnicomGroupWcdma record);
+
+    Map<String,Object> getElementTopologyr();
 }

@@ -1,8 +1,12 @@
 package com.hongshen.sran_service.service.util.impl;
 
+import com.hongshen.sran_service.service.AlarmLibrary;
 import com.hongshen.sran_service.service.DataProviderBase;
+import com.hongshen.sran_service.service.ElementTopology;
 import com.hongshen.sran_service.service.GroupService;
+import com.hongshen.sran_service.service.impl.AlarmLibrary_Lte;
 import com.hongshen.sran_service.service.impl.DataProvider_Unicom_Lte;
+import com.hongshen.sran_service.service.impl.ElementTopology_Lte;
 import com.hongshen.sran_service.service.impl.GroupServiceImpl_Lte;
 import com.hongshen.sran_service.service.util.NetObjBase;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +24,11 @@ public class NetObj_Unicom_Lte implements NetObjBase {
     @Autowired
     private GroupServiceImpl_Lte groupServiceImpl_lte;
 
+    @Autowired
+    private ElementTopology_Lte elementTopology_Lte;
+    @Autowired
+    private AlarmLibrary_Lte alarmLibrary_Lte;
+
     @Override
     public DataProviderBase getDataProvider() {
         return dataProvider_Unicom_Lte;
@@ -30,4 +39,26 @@ public class NetObj_Unicom_Lte implements NetObjBase {
 
         return groupServiceImpl_lte;
     }
+
+    @Override
+    public ElementTopology getElementTopologyr() {
+        return elementTopology_Lte;
+    }
+
+    @Override
+    public AlarmLibrary getAlarmLibrary() {
+        return alarmLibrary_Lte;
+    }
+
+    @Override
+    public AlarmLibrary getSpecifiedLibrary() {
+        return alarmLibrary_Lte;
+    }
+
+    @Override
+    public AlarmLibrary updateSpecifiedLibrary() {
+        return alarmLibrary_Lte;
+    }
+
+
 }

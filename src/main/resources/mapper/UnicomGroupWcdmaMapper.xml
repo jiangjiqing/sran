@@ -238,4 +238,7 @@
       room = #{room,jdbcType=VARCHAR}
     where group_name = #{groupName,jdbcType=VARCHAR}
   </update>
+  <select id="getElementTopologyr" resultType="Map">
+    SELECT * FROM unicom_group_wcdma
+  </select>
 </mapper>

@@ -4,15 +4,19 @@ package com.hongshen.sran_service.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.common.BaseController;
+import com.hongshen.sran_service.service.AlarmLibrary;
 import com.hongshen.sran_service.service.DataProviderBase;
+import com.hongshen.sran_service.service.ElementTopology;
 import com.hongshen.sran_service.service.GroupService;
 import com.hongshen.sran_service.service.util.Constants;
 import com.hongshen.sran_service.service.util.Httpclient;
 import com.hongshen.sran_service.service.util.NetObjBase;
 import com.hongshen.sran_service.service.util.NetObjFactory;
 import com.hongshen.sran_service.entity.Role;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -360,5 +364,133 @@ public class NetElementQuotaController extends BaseController {
         }
 
     }
+//    Network element topology
+    @GET
+    @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/roomlist")
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject getElementTopology(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
+                                         @HeaderParam("Auth-Token")String authToken){
 
+        JSONObject result = new JSONObject();
+        String url = Constants.ZB_ELEMENT;
+        String method = Constants.METHOD_GET;
+
+        if (check(url, method, authToken)) {
+
+            NetObjBase obj = objFactory.getNetObj(supplier,generation);
+            ElementTopology elementTopology = obj.getElementTopologyr();
+            Map<String,Object> GroupWcdma =elementTopology.getElementTopologyr();
+
+            if (!GroupWcdma.isEmpty()){
+
+                result.put("data", GroupWcdma);
+                result.put("status", Constants.SUCCESS);
+            } else {
+
+                result.put("status", Constants.FAIL);
+            }
+
+            return result;
+        } else {
+
+            return result;
+        }
+    }
+//    Query all alarms
+    @GET
+    @Path("/suppliers/{supplier}/generations/{generation}/alarms")
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject getAlarmLibrary(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
+                                         @HeaderParam("Auth-Token")String authToken){
+
+        JSONObject result = new JSONObject();
+        String url = Constants.ZB_ELEMENT;
+        String method = Constants.METHOD_GET;
+
+        if (check(url, method, authToken)) {
+
+            NetObjBase obj = objFactory.getNetObj(supplier,generation);
+            AlarmLibrary alarmLibrary = obj.getAlarmLibrary();
+            Map<String,Object> alarm_Library =alarmLibrary.getAlarmLibrary();
+
+            if (!alarm_Library.isEmpty()){
+
+                result.put("data", alarm_Library);
+                result.put("status", Constants.SUCCESS);
+            } else {
+
+                result.put("status", Constants.FAIL);
+            }
+
+            return result;
+        } else {
+
+            return result;
+        }
+    }
+//    Query specified alarm
+    @GET
+    @Path("/suppliers/{supplier}/generations/{generation}/alarms/{alarmNameId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject getSpecifiedLibrary(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
+                                          @PathParam("alarmNameId")String alarmNameId,@HeaderParam("Auth-Token")String authToken){
+
+        JSONObject result = new JSONObject();
+        String url = Constants.ZB_ELEMENT;
+        String method = Constants.METHOD_GET;
+
+        if (check(url, method, authToken)) {
+
+            NetObjBase obj = objFactory.getNetObj(supplier,generation);
+            AlarmLibrary alarmLibrary = obj.getSpecifiedLibrary();
+            Map<String,Object> specifiedLibrary =alarmLibrary.getSpecifiedLibrary(alarmNameId);
+
+            if (!specifiedLibrary.isEmpty()){
+
+                result.put("data", specifiedLibrary);
+                result.put("status", Constants.SUCCESS);
+            } else {
+
+                result.put("status", Constants.FAIL);
+            }
+
+            return result;
+        } else {
+
+            return result;
+        }
+    }
+
+    @POST
+    @Path("/suppliers/{supplier}/generations/{generation}/alarms/{alarmNameId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject updateSpecifiedLibrary(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
+                                             @PathParam("alarmNameId")String alarmNameId, @HeaderParam("Auth-Token")String authToken,
+                                             JSONObject param){
+
+        JSONObject result = new JSONObject();
+        String url = Constants.ZB_ELEMENT;
+        String method = Constants.METHOD_GET;
+        String name = param.getString("name");
+        if (check(url, method, authToken)) {
+
+            NetObjBase obj = objFactory.getNetObj(supplier,generation);
+            AlarmLibrary alarmLibrary = obj.updateSpecifiedLibrary();
+            alarmLibrary.updateSpecifiedLibrary(alarmNameId,name);
+
+//            if (!specifiedLibrary.isEmpty()){
+//
+//                result.put("data", specifiedLibrary);
+//                result.put("status", Constants.SUCCESS);
+//            } else {
+//
+//                result.put("status", Constants.FAIL);
+//            }
+            result.put("status", Constants.SUCCESS);
+            return result;
+        } else {
+
+            return result;
+        }
+    }
 }
