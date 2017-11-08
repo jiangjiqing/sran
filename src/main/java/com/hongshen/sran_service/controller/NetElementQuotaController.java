@@ -28,14 +28,15 @@ import java.util.Map;
 /**
  * Created by poplar on 17-10-26.
  */
-
-@RestController
-@RequestMapping(value = "sran/service")
+@Path("/sran/service")
 public class NetElementQuotaController extends BaseController {
+
     @Autowired
     private NetObjFactory objFactory;
+
     @Autowired
     private Httpclient httpclient;
+
     @RequestMapping(value = "/group/quota")
     public Map getGroupQuotaInfo (){
         boolean sign = false;
@@ -325,19 +326,4 @@ public class NetElementQuotaController extends BaseController {
         return result;
     }
 
-    public boolean check(String url, String method, String authToken){
-
-        Boolean flag = false;
-
-        JSONObject checkResult  = new JSONObject();
-
-        checkResult = checkUrlMethod(url, method, authToken);
-
-        if (checkResult.isEmpty() || Constants.FAIL.equals(checkResult.getString("status"))) {
-
-            flag = true;
-        }
-
-        return flag;
-    }
 }

@@ -12,6 +12,22 @@ public class BaseController {
     @Autowired
     private Httpclient httpclient;
 
+    public boolean check(String url, String method, String authToken){
+
+        Boolean flag = false;
+
+        JSONObject checkResult  = new JSONObject();
+
+        checkResult = checkUrlMethod(url, method, authToken);
+
+        if (!checkResult.isEmpty() || !Constants.FAIL.equals(checkResult.getString("status"))) {
+
+            flag = true;
+        }
+
+        return flag;
+    }
+
     public JSONObject checkUrlMethod(String url, String method, String token){
 
         JSONObject result = new JSONObject();

@@ -22,6 +22,8 @@ public class GroupServiceImpl_Wcdma implements GroupService{
 
     @Override
     public List<JSONObject> getGroups(String userName) {
+
+
         return null;
     }
 }
