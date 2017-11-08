@@ -16,12 +16,12 @@ public class NetObjFactory {
     private NetObj_Unicom_Wcdma netObj_Unicom_Wcdma;
    public NetObjBase getNetObj(String supplier , String generation){
        switch (supplier) {
-                case Constant.UNICM://中国联通
+                case Constants.UNICM://中国联通
                     switch (generation)
                     {
-                        case Constant.WCDMA://3G
+                        case Constants.WCDMA://3G
                             return netObj_Unicom_Wcdma;
-                        case Constant.LTE://4G
+                        case Constants.LTE://4G
                             return netObj_Unicom_Lte;
                         default:
                            return null;

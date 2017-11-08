@@ -3,7 +3,7 @@ package com.hongshen.sran_service.controller;
 
 
 import com.hongshen.sran_service.service.DataProviderBase;
-import com.hongshen.sran_service.service.util.Constant;
+import com.hongshen.sran_service.service.util.Constants;
 import com.hongshen.sran_service.service.util.Httpclient;
 import com.hongshen.sran_service.service.util.NetObjBase;
 import com.hongshen.sran_service.service.util.NetObjFactory;
@@ -68,7 +68,7 @@ public class NetElementQuotaController {
         //Shiro authorization
         String checkUrl = "/service/v1/dc-map";
         String checkMethod = "GET";
-        String url = Constant.SHIRO_URI+"?checkUrl="+checkUrl+"&checkMethod="+checkMethod;
+        String url = Constants.SHIRO_URI+"?checkUrl="+checkUrl+"&checkMethod="+checkMethod;
         String token = "eyJ0eXBlIjoiSldUIiwiYWxnIjoiSFMyNTYiLCJ0eXAiOiJKV1QifQ.eyJzdWIiOiJlY2FwIiwiaXNzIjoiRXJpY3Nzb24iLCJ1c2VybmFtZSI6InBldGVyIn0.IbXgDC975i4M4D3AVeeaWFLC3YD3zY9-6XiNbiocxNo";
         try {
             authResult = httpclient.httpclient(url,token);
@@ -112,7 +112,7 @@ public class NetElementQuotaController {
 
         String checkUrl = "/service/v1/node";
         String checkMethod = "GET";
-        String url = Constant.SHIRO_URI+"?checkUrl="+checkUrl+"&checkMethod="+checkMethod;
+        String url = Constants.SHIRO_URI+"?checkUrl="+checkUrl+"&checkMethod="+checkMethod;
         String token = "eyJ0eXBlIjoiSldUIiwiYWxnIjoiSFMyNTYiLCJ0eXAiOiJKV1QifQ.eyJzdWIiOiJlY2FwIiwiaXNzIjoiRXJpY3Nzb24iLCJ1c2VybmFtZSI6InBldGVyIn0.IbXgDC975i4M4D3AVeeaWFLC3YD3zY9-6XiNbiocxNo";
         try {
             authResult = httpclient.httpclient(url,token);
