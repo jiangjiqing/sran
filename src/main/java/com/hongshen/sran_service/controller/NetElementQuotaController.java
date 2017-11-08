@@ -41,6 +41,7 @@ public class NetElementQuotaController {
         int id=role.getRoleId();
         //
 
+
         NetObjBase obj = objFactory.getNetObj(supplier,generation);
         DataProviderBase dataProvider = obj.getDataProvider();
         Role role1 = dataProvider.getGroupQuotaInfo(id);
