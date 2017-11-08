@@ -1,7 +1,9 @@
 package com.hongshen.sran_service.service.util.impl;
 
 import com.hongshen.sran_service.service.DataProviderBase;
+import com.hongshen.sran_service.service.GroupService;
 import com.hongshen.sran_service.service.impl.DataProvider_Unicom_Wcdma;
+import com.hongshen.sran_service.service.impl.GroupServiceImpl_Wcdma;
 import com.hongshen.sran_service.service.util.NetObjBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,10 +13,21 @@ import org.springframework.stereotype.Controller;
  */
 @Controller
 public class NetObj_Unicom_Wcdma implements NetObjBase {
+
     @Autowired
     private DataProvider_Unicom_Wcdma dataProvider_Unicom_Wcdma;
+
+    @Autowired
+    private GroupServiceImpl_Wcdma groupServiceImpl_wcdma;
+
     @Override
     public DataProviderBase getDataProvider() {
         return dataProvider_Unicom_Wcdma;
+    }
+
+    @Override
+    public GroupService getGroupService() {
+
+        return groupServiceImpl_wcdma;
     }
 }

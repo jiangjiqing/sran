@@ -2,7 +2,10 @@ package com.hongshen.sran_service.controller;
 
 
 
+import com.alibaba.fastjson.JSONObject;
+import com.hongshen.sran_service.common.BaseController;
 import com.hongshen.sran_service.service.DataProviderBase;
+import com.hongshen.sran_service.service.GroupService;
 import com.hongshen.sran_service.service.util.Constants;
 import com.hongshen.sran_service.service.util.Httpclient;
 import com.hongshen.sran_service.service.util.NetObjBase;
@@ -13,9 +16,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 
@@ -25,7 +31,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping(value = "sran/service")
-public class NetElementQuotaController {
+public class NetElementQuotaController extends BaseController {
     @Autowired
     private NetObjFactory objFactory;
     @Autowired
@@ -145,4 +151,193 @@ public class NetElementQuotaController {
         return jsonResult;
     }
 
+    @GET
+    @Path("/suppliers/{supplier}/generations/{generation}/nets/groups")
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject getGroups(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
+                                @HeaderParam("Auth-Token")String authToken){
+
+        JSONObject result = new JSONObject();
+
+        String url = Constants.GROUP_QUERY;
+        String method = Constants.METHOD_GET;
+
+        if (check(url, method, authToken)) {
+
+            NetObjBase base = objFactory.getNetObj(supplier,generation);
+
+            GroupService groupService = base.getGroupService();
+
+            List<JSONObject> resultList = groupService.getGroups(authToken);
+
+            if (!resultList.isEmpty()){
+
+                result.put("data", resultList);
+                result.put("status", Constants.SUCCESS);
+            } else {
+
+                result.put("status", Constants.FAIL);
+            }
+
+            return result;
+        } else {
+
+            return result;
+        }
+    }
+
+    @GET
+    @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/{groupname}/nodes")
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject getNodes(@PathParam("supplier") String supplier, @PathParam("generation")String generation,
+                               @PathParam("groupname")String groupname, @HeaderParam("Auth-Token")String authToken){
+
+        JSONObject result = new JSONObject();
+
+
+        return result;
+    }
+
+    @GET
+    @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/{groupname}/nodes/{nodename}/cells")
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject getCells(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
+                               @PathParam("groupname")String groupname, @PathParam("nodename")String nodename,
+                               @HeaderParam("Auth-Token")String authToken){
+
+        JSONObject result = new JSONObject();
+
+
+        return result;
+    }
+
+    @GET
+    @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/{groupname}/alarms")
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject getGroupAlarm(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
+                                    @PathParam("groupname")String groupname, @HeaderParam("Auth-Token")String authToken){
+
+        JSONObject result = new JSONObject();
+
+
+        return result;
+    }
+
+    @GET
+    @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/{groupname}/nodes/{nodename}/alarms")
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject getNodeAlarm(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
+                                   @PathParam("groupname")String groupname, @PathParam("nodename")String nodename,
+                                   @HeaderParam("Auth-Token")String authToken){
+
+        JSONObject result = new JSONObject();
+
+
+        return result;
+    }
+
+    @GET
+    @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/{groupname}/nodes/{nodename}/cells/{cellname}/alarms")
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject getCellAlarm(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
+                                   @PathParam("groupname")String groupname, @PathParam("nodename")String nodename,
+                                   @PathParam("cellname")String cellname, @HeaderParam("Auth-Token")String authToken){
+
+        JSONObject result = new JSONObject();
+
+
+        return result;
+    }
+
+    @GET
+    @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/{groupname}/quotas")
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject getGroupQuota(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
+                                    @PathParam("groupname")String groupname, @HeaderParam("Auth-Token")String authToken){
+
+        JSONObject result = new JSONObject();
+
+
+        return result;
+    }
+
+    @GET
+    @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/{groupname}/nodes/{nodename}/quotas")
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject getNodeQuota(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
+                                   @PathParam("groupname")String groupname, @PathParam("nodename")String nodename,
+                                   @HeaderParam("Auth-Token")String authToken){
+
+        JSONObject result = new JSONObject();
+
+
+        return result;
+    }
+
+    @GET
+    @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/{groupname}/nodes/{nodename}/cells/{cellname}/quotas")
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject getCellQuota(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
+                                   @PathParam("groupname")String groupname, @PathParam("nodename")String nodename,
+                                   @PathParam("cellname")String cellname, @HeaderParam("Auth-Token")String authToken){
+
+        JSONObject result = new JSONObject();
+
+
+        return result;
+    }
+
+    @GET
+    @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/{groupname}/infos")
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject getGroupInfo(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
+                                   @PathParam("groupname")String groupname, @HeaderParam("Auth-Token")String authToken){
+
+        JSONObject result = new JSONObject();
+
+
+        return result;
+    }
+
+    @GET
+    @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/{groupname}/nodes/{nodename}/infos")
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject getNodeInfo(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
+                                  @PathParam("groupname")String groupname, @PathParam("nodename")String nodename,
+                                  @HeaderParam("Auth-Token")String authToken){
+
+        JSONObject result = new JSONObject();
+
+
+        return result;
+    }
+
+    @GET
+    @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/{groupname}/nodes/{nodename}/cells/{cellname}/infos")
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject getCellInfo(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
+                                  @PathParam("groupname")String groupname, @PathParam("nodename")String nodename,
+                                  @PathParam("cellname")String cellname, @HeaderParam("Auth-Token")String authToken){
+
+        JSONObject result = new JSONObject();
+
+
+        return result;
+    }
+
+    public boolean check(String url, String method, String authToken){
+
+        Boolean flag = false;
+
+        JSONObject checkResult  = new JSONObject();
+
+        checkResult = checkUrlMethod(url, method, authToken);
+
+        if (checkResult.isEmpty() || Constants.FAIL.equals(checkResult.getString("status"))) {
+
+            flag = true;
+        }
+
+        return flag;
+    }
 }
