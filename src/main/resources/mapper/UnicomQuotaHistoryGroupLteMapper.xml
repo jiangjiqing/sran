@@ -240,4 +240,18 @@
       </if>
     </trim>
   </insert>
+
+  <select id="getCellHistoryDataLte" resultType="com.alibaba.fastjson.JSONObject">
+    select
+    hcl.name,
+    hcl.level
+    from
+    unicom_cell_lte cl
+    left join
+    unicom_quota_history_cell_lte hcl
+    on cl.cell_name = hcl.name
+    and cl.node_name = #{nodeName}
+    where
+    hcl.time = #{time};
+  </select>
 </mapper>

@@ -6,5 +6,7 @@ import java.util.List;
 
 public interface GroupService {
 
-    List<JSONObject> getGroups(String userName);
+    List<JSONObject> getGroups(String userName, String time);
+
+    JSONObject getGroupsAlarm();
 }

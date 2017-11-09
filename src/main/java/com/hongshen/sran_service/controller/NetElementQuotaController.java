@@ -4,10 +4,12 @@ package com.hongshen.sran_service.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.common.BaseController;
+import com.hongshen.sran_service.service.CellService;
 import com.hongshen.sran_service.service.AlarmLibrary;
 import com.hongshen.sran_service.service.DataProviderBase;
 import com.hongshen.sran_service.service.ElementTopology;
 import com.hongshen.sran_service.service.GroupService;
+import com.hongshen.sran_service.service.NodeService;
 import com.hongshen.sran_service.service.util.Constants;
 import com.hongshen.sran_service.service.util.Httpclient;
 import com.hongshen.sran_service.service.util.NetObjBase;
@@ -159,23 +161,25 @@ public class NetElementQuotaController extends BaseController {
     }
 
     @GET
-    @Path("/suppliers/{supplier}/generations/{generation}/nets/groups")
+    @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/mapinfos")
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject getGroups(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
-                                @HeaderParam("Auth-Token")String authToken){
+                                @HeaderParam("Auth-Token")String authToken, @HeaderParam("Login-Name")String name){
 
         JSONObject result = new JSONObject();
+
+        String time = "";
 
         String url = Constants.GROUP_QUERY;
         String method = Constants.METHOD_GET;
 
         if (check(url, method, authToken)) {
 
-            NetObjBase base = objFactory.getNetObj(supplier,generation);
+            NetObjBase base = objFactory.getNetObj(supplier, generation);
 
             GroupService groupService = base.getGroupService();
 
-            List<JSONObject> resultList = groupService.getGroups(authToken);
+            List<JSONObject> resultList = groupService.getGroups(name, time);
 
             if (!resultList.isEmpty()){
 
@@ -194,26 +198,77 @@ public class NetElementQuotaController extends BaseController {
     }
 
     @GET
-    @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/{groupname}/nodes")
+    @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/{groupname}/nodes/mapinfos")
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject getNodes(@PathParam("supplier") String supplier, @PathParam("generation")String generation,
-                               @PathParam("groupname")String groupname, @HeaderParam("Auth-Token")String authToken){
+                               @PathParam("groupname")String groupname, @HeaderParam("Auth-Token")String authToken,
+                               @HeaderParam("Login-Name")String name){
 
         JSONObject result = new JSONObject();
 
+        String time = "";
+
+        String url = Constants.NODE_QUERY;
+        String method = Constants.METHOD_GET;
+
+        if (check(url, method, authToken)) {
+
+            NetObjBase base = objFactory.getNetObj(supplier, generation);
+
+            NodeService nodeService = base.getNodeService();
+
+            List<JSONObject> resultList = nodeService.getNodes(name, groupname, time);
+
+            if (!resultList.isEmpty()) {
+
+                result.put("data", resultList);
+                result.put("status", Constants.SUCCESS);
+            } else {
+
+                result.put("status", Constants.FAIL);
+            }
+        } else {
+
+            return result;
+        }
 
         return result;
     }
 
     @GET
-    @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/{groupname}/nodes/{nodename}/cells")
+    @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/{groupname}/nodes/{nodename}/cells/mapinfos")
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject getCells(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
                                @PathParam("groupname")String groupname, @PathParam("nodename")String nodename,
-                               @HeaderParam("Auth-Token")String authToken){
+                               @HeaderParam("Auth-Token")String authToken, @HeaderParam("Login-Name")String name){
 
         JSONObject result = new JSONObject();
 
+        String time = "";
+
+        String url = Constants.CELL_QUERY;
+        String method = Constants.METHOD_GET;
+
+        if (check(url, method, authToken)) {
+
+            NetObjBase base = objFactory.getNetObj(supplier, generation);
+
+            CellService cellService = base.getCellService();
+
+            List<JSONObject> resultList = cellService.getCells(name, nodename, time);
+
+            if (!resultList.isEmpty()) {
+
+                result.put("data", resultList);
+                result.put("status", Constants.SUCCESS);
+            } else {
+
+                result.put("status", Constants.FAIL);
+            }
+        } else {
+
+            return result;
+        }
 
         return result;
     }
@@ -226,8 +281,31 @@ public class NetElementQuotaController extends BaseController {
 
         JSONObject result = new JSONObject();
 
+        String url = Constants.GROUP_ALARM;
+        String method = Constants.METHOD_GET;
 
-        return result;
+        if (check(url, method, authToken)) {
+
+            NetObjBase base = objFactory.getNetObj(supplier, generation);
+
+            GroupService groupService = base.getGroupService();
+
+            JSONObject resultList = groupService.getGroupsAlarm();
+
+            if (!resultList.isEmpty()){
+
+                result.put("data", resultList);
+                result.put("status", Constants.SUCCESS);
+            } else {
+
+                result.put("status", Constants.FAIL);
+            }
+
+            return result;
+        } else {
+
+            return result;
+        }
     }
 
     @GET

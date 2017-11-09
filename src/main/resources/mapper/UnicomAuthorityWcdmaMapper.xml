@@ -87,4 +87,15 @@
     set list = #{list,jdbcType=VARCHAR}
     where authority_name = #{authorityName,jdbcType=VARCHAR}
   </update>
+
+  <select id="getAuthorityList" resultType="java.lang.String">
+    SELECT
+    aw.list
+    FROM unicom_authority_wcdma aw,
+    unicom_user_authority_wcdma uw
+    WHERE
+    aw.authority_name = uw.authority_name
+    AND
+    uw.login_name = #{name}
+  </select>
 </mapper>

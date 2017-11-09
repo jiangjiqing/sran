@@ -240,4 +240,22 @@
       </if>
     </trim>
   </insert>
+
+  <select id="getHistoryData" resultType="com.alibaba.fastjson.JSONObject">
+    select
+    qgw.name name,
+    qgw.level level,
+    gw.rac rac,
+    gw.lac lac
+    FROM
+    unicom_group_wcdma gw
+    left join
+    unicom_quota_history_group_wcdma qgw
+    on gw.group_name = qgw.`name`
+    and gw.group_name = #{nodeName}
+    LEFT JOIN
+    unicom_node_wcdma nc
+    on nc.node_name = #{nodeName}
+    where qgw.time = #{time};
+  </select>
 </mapper>

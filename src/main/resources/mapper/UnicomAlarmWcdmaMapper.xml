@@ -63,4 +63,10 @@
       </if>
     </trim>
   </insert>
+
+  <select id="getAllAlarmWcdma" resultType="com.hongshen.sran_service.entity.UnicomAlarmWcdma">
+    SELECT
+    *
+    FROM unicom_alarm_wcdma;
+  </select>
 </mapper>

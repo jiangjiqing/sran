@@ -63,4 +63,11 @@
       </if>
     </trim>
   </insert>
+
+  <select id="getAllAlarmLte" resultType="com.hongshen.sran_service.entity.UnicomAlarmLte">
+    SELECT
+    *
+    FROM
+    unicom_alarm_lte;
+  </select>
 </mapper>

@@ -201,4 +201,18 @@
       </if>
     </trim>
   </insert>
+
+  <select id="getCellHistoryDataWcdma" resultType="com.alibaba.fastjson.JSONObject">
+    select
+    hcw.name,
+    hcw.level
+    from
+    unicom_cell_wcdma cw
+    left join
+    unicom_quota_history_cell_wcdma hcw
+    on cw.cell_name = hcw.name
+    and cw.node_name = #{nodeName}
+    where
+    hcw.time = #{time};
+  </select>
 </mapper>
