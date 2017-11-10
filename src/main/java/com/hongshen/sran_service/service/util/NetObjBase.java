@@ -29,4 +29,6 @@ public interface NetObjBase {
     NodeService getNodeService();
 
     CellService getCellService();
+
+    AlarmLibrary addSpecifiedLibrary();
 }

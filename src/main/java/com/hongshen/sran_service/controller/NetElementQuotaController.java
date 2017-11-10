@@ -538,7 +538,7 @@ public class NetElementQuotaController extends BaseController {
             return result;
         }
     }
-
+//update specified alarm
     @POST
     @Path("/suppliers/{supplier}/generations/{generation}/alarms/{alarmNameId}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -570,5 +570,44 @@ public class NetElementQuotaController extends BaseController {
 
             return result;
         }
+    }
+//add specified alarm
+    @PUT
+    @Path("/suppliers/{supplier}/generations/{generation}/alarms")
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject addSpecifiedLibrary(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
+                                             @HeaderParam("Auth-Token")String authToken,JSONObject param){
+
+        JSONObject result = new JSONObject();
+        String url = Constants.ZB_ELEMENT;
+        String method = Constants.METHOD_GET;
+        String alarm_name_id = param.getString("alarm_name_id");
+        String alarm_name = param.getString("alarm_name");
+        String alarm_meaning = param.getString("alarm_meaning");
+        String alarm_level_id = param.getString("alarm_level_id");
+        String alarm_scope = param.getString("alarm_scope");
+        String recommend = param.getString("recommend");
+
+
+//        if (check(url, method, authToken)) {
+
+            NetObjBase obj = objFactory.getNetObj(supplier,generation);
+            AlarmLibrary alarmLibrary = obj.addSpecifiedLibrary();
+            alarmLibrary.addSpecifiedLibrary(alarm_name_id,alarm_name,alarm_meaning,alarm_level_id,alarm_scope,recommend);
+
+//            if (!specifiedLibrary.isEmpty()){
+//
+//                result.put("data", specifiedLibrary);
+//                result.put("status", Constants.SUCCESS);
+//            } else {
+//
+//                result.put("status", Constants.FAIL);
+//            }
+            result.put("status", Constants.SUCCESS);
+//            return result;
+//        } else {
+
+            return result;
+//        }
     }
 }

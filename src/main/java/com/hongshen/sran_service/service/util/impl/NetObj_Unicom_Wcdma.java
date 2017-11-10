@@ -81,5 +81,10 @@ public class NetObj_Unicom_Wcdma implements NetObjBase {
         return alarmLibrary_Wcdma;
     }
 
+    @Override
+    public AlarmLibrary addSpecifiedLibrary() {
+        return alarmLibrary_Wcdma;
+    }
+
 
 }

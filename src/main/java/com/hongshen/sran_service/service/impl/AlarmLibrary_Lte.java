@@ -29,5 +29,11 @@ public class AlarmLibrary_Lte implements AlarmLibrary{
         unicomAlarmLibraryMapper.updateSpecifiedLibrary(alarmNameId,name);
     }
 
+    @Override
+    public void addSpecifiedLibrary(String alarm_name_id, String alarm_name, String alarm_meaning, String alarm_level_id, String alarm_scope, String recommend) {
+        unicomAlarmLibraryMapper.addSpecifiedLibrary(alarm_name_id,alarm_name,alarm_meaning,alarm_level_id,alarm_scope,recommend);
+
+    }
+
 
 }

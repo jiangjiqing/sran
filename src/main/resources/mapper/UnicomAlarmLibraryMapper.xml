@@ -144,4 +144,9 @@
 <update id="updateSpecifiedLibrary" parameterType="String">
   UPDATE unicom_alarm_library SET alarm_meaning = #{name} WHERE alarm_name = #{alarmNameId}
 </update>
+  <insert id="addSpecifiedLibrary" parameterType="String">
+    INSERT INTO unicom_alarm_library (alarm_name_id,alarm_name,alarm_meaning,alarm_level_id,
+    alarm_scope,recommend) VALUES (#{alarm_name_id},#{alarm_name},#{alarm_meaning},#{alarm_level_id},
+    #{alarm_scope},#{recommend})
+  </insert>
 </mapper>

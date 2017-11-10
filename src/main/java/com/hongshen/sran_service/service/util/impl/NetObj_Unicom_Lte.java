@@ -53,27 +53,26 @@ public class NetObj_Unicom_Lte implements NetObjBase {
 
     @Override
     public ElementTopology getElementTopologyr() {
-        return null;
+        return elementTopology_Lte;
     }
 
     @Override
     public AlarmLibrary getAlarmLibrary() {
-        return null;
+        return alarmLibrary_Lte;
     }
 
     @Override
     public AlarmLibrary getSpecifiedLibrary() {
-        return null;
+        return alarmLibrary_Lte;
     }
 
     @Override
     public AlarmLibrary updateSpecifiedLibrary() {
-        return null;
+        return alarmLibrary_Lte;
     }
 
     @Override
     public NodeService getNodeService() {
-
         return nodeServiceImpl_lte;
     }
 
@@ -81,5 +80,10 @@ public class NetObj_Unicom_Lte implements NetObjBase {
     public CellService getCellService() {
 
         return cellServiceImpl_lte;
+    }
+
+    @Override
+    public AlarmLibrary addSpecifiedLibrary() {
+        return alarmLibrary_Lte;
     }
 }
