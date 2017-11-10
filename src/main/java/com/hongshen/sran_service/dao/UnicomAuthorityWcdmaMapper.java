@@ -56,4 +56,6 @@ public interface UnicomAuthorityWcdmaMapper {
     int updateByPrimaryKey(UnicomAuthorityWcdma record);
 
     String getAuthorityList(@Param("name")String userName);
+
+    UnicomAuthorityWcdma getUserLists();
 }

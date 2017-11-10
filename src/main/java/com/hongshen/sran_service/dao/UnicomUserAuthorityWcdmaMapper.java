@@ -1,6 +1,8 @@
 package com.hongshen.sran_service.dao;
 
+import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.entity.UnicomUserAuthorityWcdma;
+import org.apache.ibatis.annotations.Param;
 
 public interface UnicomUserAuthorityWcdmaMapper {
     /**
@@ -50,4 +52,8 @@ public interface UnicomUserAuthorityWcdmaMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(UnicomUserAuthorityWcdma record);
+
+    UnicomUserAuthorityWcdma getUserInfo();
+
+    void addUserd(@Param("param") JSONObject param);
 }

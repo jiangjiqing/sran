@@ -98,4 +98,7 @@
     AND
     uw.login_name = #{name}
   </select>
+  <select id="getUserLists" resultMap="UnicomAuthorityWcdma">
+    SELECT * FROM unicom_authority_wcdma;
+  </select>
 </mapper>
