@@ -4,23 +4,15 @@ package com.hongshen.sran_service.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.common.BaseController;
-import com.hongshen.sran_service.service.CellService;
-import com.hongshen.sran_service.service.AlarmLibrary;
-import com.hongshen.sran_service.service.DataProviderBase;
-import com.hongshen.sran_service.service.ElementTopology;
-import com.hongshen.sran_service.service.GroupService;
-import com.hongshen.sran_service.service.NodeService;
+import com.hongshen.sran_service.service.*;
 import com.hongshen.sran_service.service.util.Constants;
 import com.hongshen.sran_service.service.util.Httpclient;
 import com.hongshen.sran_service.service.util.NetObjBase;
 import com.hongshen.sran_service.service.util.NetObjFactory;
 import com.hongshen.sran_service.entity.Role;
-import org.apache.ibatis.annotations.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -44,6 +36,9 @@ public class NetElementQuotaController extends BaseController {
 
     @Autowired
     private Httpclient httpclient;
+
+    @Autowired
+    private AlarmService alarmService;
 
     @RequestMapping(value = "/group/quota")
     public Map getGroupQuotaInfo (){
@@ -274,6 +269,36 @@ public class NetElementQuotaController extends BaseController {
     }
 
     @GET
+    @Path("/net/alarm/nets/nodes/alarms")
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject getAllAlarms (@HeaderParam("Auth-Token")String authToken) {
+
+        JSONObject result = new JSONObject();
+
+        String url = Constants.GROUP_ALARM;
+        String method = Constants.METHOD_GET;
+
+        if (check(url, method, authToken)) {
+
+            List<JSONObject> resultList = alarmService.getAllAlarmSerice();
+
+            if (!resultList.isEmpty()){
+
+                result.put("data", resultList);
+                result.put("status", Constants.SUCCESS);
+            } else {
+
+                result.put("status", Constants.FAIL);
+            }
+
+            return result;
+        } else {
+
+            return result;
+        }
+    }
+
+    @GET
     @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/{groupname}/alarms")
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject getGroupAlarm(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
@@ -290,7 +315,7 @@ public class NetElementQuotaController extends BaseController {
 
             GroupService groupService = base.getGroupService();
 
-            JSONObject resultList = groupService.getGroupsAlarm();
+            List<JSONObject> resultList = groupService.getGroupAlarmByGroupName(groupname);
 
             if (!resultList.isEmpty()){
 
@@ -312,26 +337,72 @@ public class NetElementQuotaController extends BaseController {
     @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/{groupname}/nodes/{nodename}/alarms")
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject getNodeAlarm(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
-                                   @PathParam("groupname")String groupname, @PathParam("nodename")String nodename,
+                                   @PathParam("groupname")String groupName, @PathParam("nodename")String nodeName,
                                    @HeaderParam("Auth-Token")String authToken){
 
         JSONObject result = new JSONObject();
 
+        String url = Constants.NODE_ALARM;
+        String method = Constants.METHOD_GET;
 
-        return result;
+        if (check(url, method, authToken)) {
+
+            NetObjBase base = objFactory.getNetObj(supplier, generation);
+
+            NodeService nodeService = base.getNodeService();
+
+            JSONObject resultNode = nodeService.getNodeAlarmByNodeName(nodeName);
+
+            if (!resultNode.isEmpty()){
+
+                result.put("data", resultNode);
+                result.put("status", Constants.SUCCESS);
+            } else {
+
+                result.put("status", Constants.FAIL);
+            }
+
+            return result;
+        } else {
+
+            return result;
+        }
     }
 
     @GET
     @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/{groupname}/nodes/{nodename}/cells/{cellname}/alarms")
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject getCellAlarm(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
-                                   @PathParam("groupname")String groupname, @PathParam("nodename")String nodename,
-                                   @PathParam("cellname")String cellname, @HeaderParam("Auth-Token")String authToken){
+                                   @PathParam("groupname")String groupName, @PathParam("nodename")String nodeName,
+                                   @PathParam("cellname")String cellName, @HeaderParam("Auth-Token")String authToken){
 
         JSONObject result = new JSONObject();
 
+        String url = Constants.CELL_ALARM;
+        String method = Constants.METHOD_GET;
 
-        return result;
+        if (check(url, method, authToken)) {
+
+            NetObjBase base = objFactory.getNetObj(supplier, generation);
+
+            CellService cellService = base.getCellService();
+
+            JSONObject resultNode = cellService.getCellAlarmByCellName(cellName);
+
+            if (!resultNode.isEmpty()){
+
+                result.put("data", resultNode);
+                result.put("status", Constants.SUCCESS);
+            } else {
+
+                result.put("status", Constants.FAIL);
+            }
+
+            return result;
+        } else {
+
+            return result;
+        }
     }
 
     @GET
