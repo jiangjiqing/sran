@@ -133,4 +133,11 @@
       type = #{type,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="getAllIdQuetaNameWcdma" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT
+    id,
+    quota_name
+    FROM unicom_formula_wcdma
+  </select>
 </mapper>

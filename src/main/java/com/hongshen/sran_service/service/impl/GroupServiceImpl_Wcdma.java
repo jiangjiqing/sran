@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.dao.*;
 import com.hongshen.sran_service.entity.UnicomAlarmWcdma;
 import com.hongshen.sran_service.entity.UnicomFormulaWcdma;
+import com.hongshen.sran_service.entity.UnicomQuotaHistoryGroupWcdma;
 import com.hongshen.sran_service.service.GroupService;
 import com.hongshen.sran_service.service.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class GroupServiceImpl_Wcdma implements GroupService{
     private UnicomAlarmWcdmaMapper alarmWcdmaMapper;
 
     @Autowired
-    private UnicomFormulaWcdma formulaWcdma;
+    private UnicomFormulaWcdmaMapper formulaWcdmaMapper;
 
     @Override
     public List<JSONObject> getGroups(String userName, String time) {
@@ -81,6 +82,10 @@ public class GroupServiceImpl_Wcdma implements GroupService{
 
     @Override
     public List<JSONObject> getGroupQuotaByGroupName(String groupName) {
+
+        UnicomQuotaHistoryGroupWcdma quotaHistoryGroupWcdma = quotaWcdmaMapper.getQuotaHistoryGroupWcdma(groupName);
+
+        List<JSONObject> results = formulaWcdmaMapper.getAllIdQuetaNameWcdma();
 
         return null;
     }

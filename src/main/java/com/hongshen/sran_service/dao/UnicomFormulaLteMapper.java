@@ -1,7 +1,10 @@
 package com.hongshen.sran_service.dao;
 
+import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.entity.UnicomFormulaLte;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface UnicomFormulaLteMapper {
@@ -52,4 +55,6 @@ public interface UnicomFormulaLteMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(UnicomFormulaLte record);
+
+    List<JSONObject> getAllIdQuetaNameLte();
 }

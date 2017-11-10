@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.dao.*;
 import com.hongshen.sran_service.entity.UnicomAlarmLte;
 import com.hongshen.sran_service.entity.UnicomAlarmWcdma;
+import com.hongshen.sran_service.entity.UnicomQuotaHistoryGroupLte;
 import com.hongshen.sran_service.service.GroupService;
 import com.hongshen.sran_service.service.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +55,9 @@ public class GroupServiceImpl_Lte implements GroupService{
     @Override
     public List<JSONObject> getGroupQuotaByGroupName(String groupName) {
 
+        UnicomQuotaHistoryGroupLte quotaHistoryGroupLte = quotaLteMapper.getQuotaHistoryGroupLte(groupName);
+
+        List<JSONObject> results = formulaLteMapper.getAllIdQuetaNameLte();
 
         return null;
     }
