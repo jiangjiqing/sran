@@ -3,6 +3,7 @@ package com.hongshen.sran_service.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.dao.*;
 import com.hongshen.sran_service.entity.UnicomAlarmWcdma;
+import com.hongshen.sran_service.entity.UnicomFormulaWcdma;
 import com.hongshen.sran_service.service.GroupService;
 import com.hongshen.sran_service.service.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ public class GroupServiceImpl_Wcdma implements GroupService{
 
     @Autowired
     private UnicomAlarmWcdmaMapper alarmWcdmaMapper;
+
+    @Autowired
+    private UnicomFormulaWcdma formulaWcdma;
 
     @Override
     public List<JSONObject> getGroups(String userName, String time) {
@@ -61,24 +65,23 @@ public class GroupServiceImpl_Wcdma implements GroupService{
     }
 
     @Override
-    public JSONObject getGroupsAlarm() {
+    public List<JSONObject> getGroupAlarmByGroupName(String groupName) {
 
-        JSONObject result = new JSONObject();
+        List<JSONObject> results = new ArrayList<>();
 
-        List<UnicomAlarmWcdma> alarmWcdmas = new ArrayList<>();
+        results = alarmWcdmaMapper.getGroupAlarmByGroupNameWcdma(groupName);
 
-        String generation = Constants.WCDMA;
+        if (!results.isEmpty()) {
 
-        alarmWcdmas = alarmWcdmaMapper.getAllAlarmWcdma();
-
-        if (!alarmWcdmas.isEmpty()) {
-
-            result.put("generation", generation);
-            result.put("alarms", alarmWcdmas);
-
-            return result;
+            return results;
         }
 
-        return result;
+        return results;
+    }
+
+    @Override
+    public List<JSONObject> getGroupQuotaByGroupName(String groupName) {
+
+        return null;
     }
 }

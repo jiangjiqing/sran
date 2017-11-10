@@ -1,10 +1,7 @@
 package com.hongshen.sran_service.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hongshen.sran_service.dao.UnicomAlarmLteMapper;
-import com.hongshen.sran_service.dao.UnicomFavoriteLteMapper;
-import com.hongshen.sran_service.dao.UnicomGroupWcdmaMapper;
-import com.hongshen.sran_service.dao.UnicomQuotaHistoryGroupLteMapper;
+import com.hongshen.sran_service.dao.*;
 import com.hongshen.sran_service.entity.UnicomAlarmLte;
 import com.hongshen.sran_service.entity.UnicomAlarmWcdma;
 import com.hongshen.sran_service.service.GroupService;
@@ -30,6 +27,9 @@ public class GroupServiceImpl_Lte implements GroupService{
     @Autowired
     private UnicomAlarmLteMapper alarmLteMapper;
 
+    @Autowired
+    private UnicomFormulaLteMapper formulaLteMapper;
+
     @Override
     public List<JSONObject> getGroups(String userName, String time) {
 
@@ -37,24 +37,24 @@ public class GroupServiceImpl_Lte implements GroupService{
     }
 
     @Override
-    public JSONObject getGroupsAlarm() {
+    public List<JSONObject> getGroupAlarmByGroupName(String groupName) {
 
-        JSONObject result = new JSONObject();
+        List<JSONObject> results = new ArrayList<>();
 
-        List<UnicomAlarmLte> alarmLtes = new ArrayList<>();
+        results = alarmLteMapper.getGroupAlarmByGroupNameLte(groupName);
 
-        String generation = Constants.LTE;
+        if (!results.isEmpty()) {
 
-        alarmLtes = alarmLteMapper.getAllAlarmLte();
-
-        if (!alarmLtes.isEmpty()) {
-
-            result.put("generation", generation);
-            result.put("alarms", alarmLtes);
-
-            return result;
+            return results;
         }
 
-        return result;
+        return results;
+    }
+
+    @Override
+    public List<JSONObject> getGroupQuotaByGroupName(String groupName) {
+
+
+        return null;
     }
 }

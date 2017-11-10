@@ -7,4 +7,6 @@ import java.util.List;
 public interface NodeService {
 
     List<JSONObject> getNodes(String userName, String groupName, String time);
+
+    JSONObject getNodeAlarmByNodeName(String nodeName);
 }

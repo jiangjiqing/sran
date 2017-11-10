@@ -1,6 +1,7 @@
 package com.hongshen.sran_service.dao;
 
 import com.hongshen.sran_service.entity.UnicomQuotaHistoryGroupLte;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -20,4 +21,6 @@ public interface UnicomQuotaHistoryGroupLteMapper {
      * @mbggenerated
      */
     int insertSelective(UnicomQuotaHistoryGroupLte record);
+
+    UnicomQuotaHistoryGroupLte getQuotaHistoryGroupLte(@Param("groupName")String groupName);
 }

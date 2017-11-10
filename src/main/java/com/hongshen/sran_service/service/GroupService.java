@@ -8,5 +8,7 @@ public interface GroupService {
 
     List<JSONObject> getGroups(String userName, String time);
 
-    JSONObject getGroupsAlarm();
+    List<JSONObject> getGroupAlarmByGroupName(String groupName);
+
+    List<JSONObject> getGroupQuotaByGroupName(String groupName);
 }

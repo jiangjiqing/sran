@@ -1,6 +1,7 @@
 package com.hongshen.sran_service.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.hongshen.sran_service.dao.UnicomAlarmLteMapper;
 import com.hongshen.sran_service.dao.UnicomCellLteMapper;
 import com.hongshen.sran_service.dao.UnicomQuotaHistoryCellLteMapper;
 import com.hongshen.sran_service.service.CellService;
@@ -19,6 +20,9 @@ public class CellServiceImpl_Lte implements CellService{
     @Autowired
     private UnicomQuotaHistoryCellLteMapper quotaHistoryCellLteMapper;
 
+    @Autowired
+    private UnicomAlarmLteMapper alarmLteMapper;
+
     @Override
     public List<JSONObject> getCells(String userName, String nodeName, String time) {
 
@@ -32,5 +36,15 @@ public class CellServiceImpl_Lte implements CellService{
         }
 
         return results;
+    }
+
+    @Override
+    public JSONObject getCellAlarmByCellName(String cellName) {
+
+        JSONObject result = new JSONObject();
+
+        result = alarmLteMapper.getCellAlarmByCellNameLte(cellName);
+
+        return result;
     }
 }

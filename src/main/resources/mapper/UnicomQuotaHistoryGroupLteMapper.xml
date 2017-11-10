@@ -254,4 +254,12 @@
     where
     hcl.time = #{time};
   </select>
+
+  <select id="getQuotaHistoryGroupLte" resultType="com.hongshen.sran_service.entity.UnicomQuotaHistoryGroupLte">
+    SELECT
+    *
+    FROM
+    unicom_quota_history_group_lte
+    WHERE name = #{groupName}
+  </select>
 </mapper>

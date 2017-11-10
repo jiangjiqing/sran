@@ -70,4 +70,42 @@
     FROM
     unicom_alarm_lte;
   </select>
+
+  <select id="getGroupAlarmByGroupNameLte" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT
+    al.node_name,
+    al.mo,
+    al.alarm_time,
+    al.alarm_type_id,
+    al.alarm_name_id
+    FROM
+    (
+    SELECT node_name
+    FROM unicom_node_lte
+    WHERE group_name = #{groupName}
+    ) nl
+    LEFT JOIN
+    (
+    SELECT
+    node_name,
+    mo,
+    alarm_time,
+    alarm_type_id,
+    alarm_name_id
+    FROM unicom_alarm_lte
+    ) al
+    on al.node_name = nl.node_name;
+  </select>
+
+  <select id="getNodeAlarmByNodeNameLte" resultType="com.hongshen.sran_service.entity.UnicomAlarmLte">
+     select * from
+     unicom_alarm_lte
+     where node_name = #{nodeName}
+  </select>
+
+  <select id="getCellAlarmByCellNameLte" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT * FROM
+    unicom_alarm_lte
+    where cell_name = #{cellName}
+  </select>
 </mapper>

@@ -1,6 +1,8 @@
 package com.hongshen.sran_service.dao;
 
+import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.entity.UnicomAlarmWcdma;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -24,4 +26,10 @@ public interface UnicomAlarmWcdmaMapper {
     int insertSelective(UnicomAlarmWcdma record);
 
     List<UnicomAlarmWcdma> getAllAlarmWcdma();
+
+    List<JSONObject> getGroupAlarmByGroupNameWcdma(@Param("groupName")String groupName);
+
+    UnicomAlarmWcdma getNodeAlarmByNodeNameWcdma(@Param("nodeName")String nodeName);
+
+    JSONObject getCellAlarmByCellNameWcdma(@Param("cellName")String cellName);
 }

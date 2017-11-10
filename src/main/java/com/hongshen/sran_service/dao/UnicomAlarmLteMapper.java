@@ -1,6 +1,8 @@
 package com.hongshen.sran_service.dao;
 
+import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.entity.UnicomAlarmLte;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -24,4 +26,10 @@ public interface UnicomAlarmLteMapper {
     int insertSelective(UnicomAlarmLte record);
 
     List<UnicomAlarmLte> getAllAlarmLte();
+
+    List<JSONObject> getGroupAlarmByGroupNameLte(@Param("groupName")String groupName);
+
+    UnicomAlarmLte getNodeAlarmByNodeNameLte(@Param("nodeName")String nodeName);
+
+    JSONObject getCellAlarmByCellNameLte(@Param("cellName")String cellName);
 }

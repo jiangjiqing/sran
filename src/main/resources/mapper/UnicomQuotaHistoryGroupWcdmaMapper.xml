@@ -258,4 +258,12 @@
     on nc.node_name = #{nodeName}
     where qgw.time = #{time};
   </select>
+
+  <select id="getQuotaHistoryGroupWcdma" resultType="com.hongshen.sran_service.entity.UnicomQuotaHistoryGroupWcdma">
+    SELECT
+    *
+    FROM
+    unicom_quota_history_group_wcdma
+    WHERE name = #{groupName}
+  </select>
 </mapper>
