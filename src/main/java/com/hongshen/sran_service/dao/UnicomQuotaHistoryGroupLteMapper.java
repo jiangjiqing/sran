@@ -4,6 +4,8 @@ import com.hongshen.sran_service.entity.UnicomQuotaHistoryGroupLte;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Map;
+
 @Repository
 public interface UnicomQuotaHistoryGroupLteMapper {
     /**
@@ -23,4 +25,6 @@ public interface UnicomQuotaHistoryGroupLteMapper {
     int insertSelective(UnicomQuotaHistoryGroupLte record);
 
     UnicomQuotaHistoryGroupLte getQuotaHistoryGroupLte(@Param("groupName")String groupName);
+
+    Map<String,Object> getQuotaInfo();
 }

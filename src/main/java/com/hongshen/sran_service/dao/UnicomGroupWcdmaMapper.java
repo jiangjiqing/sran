@@ -64,4 +64,6 @@ public interface UnicomGroupWcdmaMapper {
     int updateByPrimaryKey(UnicomGroupWcdma record);
 
     Map<String,Object> getElementTopologyr();
+
+    Map<String,Object> getGroupInfo();
 }

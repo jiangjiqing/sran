@@ -5,6 +5,8 @@ import com.hongshen.sran_service.entity.UnicomQuotaHistoryGroupWcdma;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Map;
+
 @Repository
 public interface UnicomQuotaHistoryGroupWcdmaMapper {
     /**
@@ -26,4 +28,6 @@ public interface UnicomQuotaHistoryGroupWcdmaMapper {
     JSONObject getHistoryData(@Param("nodeName") String nodeName, @Param("time") String time);
 
     UnicomQuotaHistoryGroupWcdma getQuotaHistoryGroupWcdma(@Param("groupName")String groupName);
+
+    Map<String,Object> getQuotaInfo();
 }

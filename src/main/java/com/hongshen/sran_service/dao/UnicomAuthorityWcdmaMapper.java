@@ -5,6 +5,8 @@ import com.hongshen.sran_service.entity.UnicomAuthorityWcdma;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Map;
+
 @Repository
 public interface UnicomAuthorityWcdmaMapper {
     /**
@@ -58,4 +60,6 @@ public interface UnicomAuthorityWcdmaMapper {
     String getAuthorityList(@Param("name")String userName);
 
     UnicomAuthorityWcdma getUserLists();
+
+    Map<String,Object> getUserAuthorty(String name);
 }

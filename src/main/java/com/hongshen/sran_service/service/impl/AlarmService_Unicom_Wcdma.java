@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class AlarmService_Unicom_Wcdma implements AlarmService{
@@ -55,5 +56,10 @@ public class AlarmService_Unicom_Wcdma implements AlarmService{
         }
 
         return resultList;
+    }
+
+    @Override
+    public Map<String, Object> getGroupAlarmInfo() {
+        return alarmLteMapper.getGroupAlarmInfo();
     }
 }

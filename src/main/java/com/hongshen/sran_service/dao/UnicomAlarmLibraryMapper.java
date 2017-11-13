@@ -63,4 +63,6 @@ public interface UnicomAlarmLibraryMapper {
     void updateSpecifiedLibrary(@Param("alarmNameId") String alarmNameId,@Param("name") String name);
 
     void addSpecifiedLibrary(String alarm_name_id, String alarm_name, String alarm_meaning, String alarm_level_id, String alarm_scope, String recommend);
+
+    Map<String,Object> getAlarmInfo();
 }

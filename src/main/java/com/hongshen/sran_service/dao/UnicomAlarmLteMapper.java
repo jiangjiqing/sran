@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface UnicomAlarmLteMapper {
@@ -32,4 +33,6 @@ public interface UnicomAlarmLteMapper {
     UnicomAlarmLte getNodeAlarmByNodeNameLte(@Param("nodeName")String nodeName);
 
     JSONObject getCellAlarmByCellNameLte(@Param("cellName")String cellName);
+
+    Map<String,Object> getGroupAlarmInfo();
 }
