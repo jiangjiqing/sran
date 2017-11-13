@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class AlarmServiceImpl implements AlarmService{
+public class AlarmService_Unicom_Wcdma implements AlarmService{
 
     @Autowired
     private UnicomAlarmWcdmaMapper alarmWcdmaMapper;
