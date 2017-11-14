@@ -1,17 +1,7 @@
 package com.hongshen.sran_service.service.util.impl;
 
-import com.hongshen.sran_service.service.CellService;
-import com.hongshen.sran_service.service.AlarmLibrary;
-import com.hongshen.sran_service.service.DataProviderBase;
-import com.hongshen.sran_service.service.ElementTopology;
-import com.hongshen.sran_service.service.GroupService;
-import com.hongshen.sran_service.service.NodeService;
-import com.hongshen.sran_service.service.impl.CellServiceImpl_Lte;
-import com.hongshen.sran_service.service.impl.AlarmLibrary_Lte;
-import com.hongshen.sran_service.service.impl.DataProvider_Unicom_Lte;
-import com.hongshen.sran_service.service.impl.ElementTopology_Lte;
-import com.hongshen.sran_service.service.impl.GroupServiceImpl_Lte;
-import com.hongshen.sran_service.service.impl.NodeServiceImpl_Lte;
+import com.hongshen.sran_service.service.*;
+import com.hongshen.sran_service.service.impl.*;
 import com.hongshen.sran_service.service.util.NetObjBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,10 +25,10 @@ public class NetObj_Unicom_Lte implements NetObjBase {
     private CellServiceImpl_Lte cellServiceImpl_lte;
 
     @Autowired
-    private ElementTopology_Lte elementTopology_Lte;
+    private AlarmLibService_Unicom alarmLibService_Unicom;
 
     @Autowired
-    private AlarmLibrary_Lte alarmLibrary_Lte;
+    private TelecomRoomService_Unicom_Wcdma telecomRoomService_unicom_wcdma;
 
     @Override
     public DataProviderBase getDataProvider() {
@@ -52,28 +42,28 @@ public class NetObj_Unicom_Lte implements NetObjBase {
     }
 
     @Override
-    public ElementTopology getElementTopologyr() {
-        return elementTopology_Lte;
+    public TelecomRoomService getElementTopologyr() {
+        return telecomRoomService_unicom_wcdma;
     }
 
     @Override
-    public AlarmLibrary getAlarmLibrary() {
-        return alarmLibrary_Lte;
+    public AlarmLibService getAlarmLibrary() {
+        return alarmLibService_Unicom;
     }
 
     @Override
-    public AlarmLibrary getSpecifiedLibrary() {
-        return alarmLibrary_Lte;
+    public AlarmLibService getSpecifiedLibrary() {
+        return alarmLibService_Unicom;
     }
 
     @Override
-    public AlarmLibrary updateSpecifiedLibrary() {
-        return alarmLibrary_Lte;
+    public AlarmLibService updateSpecifiedLibrary() {
+        return alarmLibService_Unicom;
     }
 
     @Override
     public NodeService getNodeService() {
-        return nodeServiceImpl_lte;
+        return null;
     }
 
     @Override
@@ -83,7 +73,7 @@ public class NetObj_Unicom_Lte implements NetObjBase {
     }
 
     @Override
-    public AlarmLibrary addSpecifiedLibrary() {
-        return alarmLibrary_Lte;
+    public AlarmLibService addSpecifiedLibrary() {
+        return alarmLibService_Unicom;
     }
 }

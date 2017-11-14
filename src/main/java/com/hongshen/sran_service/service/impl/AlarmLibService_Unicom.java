@@ -18,4 +18,24 @@ public class AlarmLibService_Unicom implements AlarmLibService {
     public Map<String, Object> getAlarmInfo() {
         return unicomAlarmLibraryMapper.getAlarmInfo();
     }
+
+    @Override
+    public Map<String, Object> getAlarmLibrary() {
+        return null;
+    }
+
+    @Override
+    public Map<String, Object> getSpecifiedLibrary(String alarmNameId) {
+        return null;
+    }
+
+    @Override
+    public void updateSpecifiedLibrary(String alarmNameId, String name) {
+
+    }
+
+    @Override
+    public void addSpecifiedLibrary(String alarm_name_id, String alarm_name, String alarm_meaning, String alarm_level_id, String alarm_scope, String recommend) {
+
+    }
 }

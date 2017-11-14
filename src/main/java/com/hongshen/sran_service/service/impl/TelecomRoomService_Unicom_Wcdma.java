@@ -1,17 +1,17 @@
 package com.hongshen.sran_service.service.impl;
 
 import com.hongshen.sran_service.dao.UnicomGroupWcdmaMapper;
-import com.hongshen.sran_service.service.ElementTopology;
+import com.hongshen.sran_service.service.TelecomRoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
 /**
- * Created by poplar on 17-11-8.
+ * Created by poplar on 11/14/17.
  */
 @Service
-public class ElementTopology_Wcdma implements ElementTopology{
+public class TelecomRoomService_Unicom_Wcdma implements TelecomRoomService {
     @Autowired
     private UnicomGroupWcdmaMapper unicomGroupWcdmaMapper;
     @Override
