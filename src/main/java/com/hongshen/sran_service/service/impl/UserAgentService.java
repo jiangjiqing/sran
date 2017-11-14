@@ -19,4 +19,7 @@ public class UserAgentService {
 
     public static void addUser(JSONObject param) {
     }
+
+    public static void updateUser(JSONObject param) {
+    }
 }

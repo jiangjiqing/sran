@@ -15,6 +15,7 @@ import java.util.Map;
 /**
  * Created by poplar on 11/13/17.
  */
+@Path("/sran/service/alarmlib")
 public class AlarmLibController extends BaseController{
     @Autowired
     private NetObjFactory objFactory;

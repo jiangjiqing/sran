@@ -13,7 +13,7 @@ import java.util.Map;
 
 /**
  * Created by poplar on 11/14/17.
- */
+ */@Path("/sran/auth")
 public class UserController extends BaseController{
     @Autowired
     private UserAgentService userAgentService;
@@ -59,6 +59,34 @@ public class UserController extends BaseController{
 
         if (check(url, method, authToken)) {
             UserAgentService.addUser(param);
+//
+//            if (unicomAuthorityWcdma != null || unicomUserAuthorityWcdma != null ){
+//                map.put("unicomAuthorityWcdma",unicomAuthorityWcdma);
+//                map.put("unicomUserAuthorityWcdma",unicomUserAuthorityWcdma);
+            result.put("data", map);
+            result.put("status", Constants.SUCCESS);
+//            } else {
+//
+//                result.put("status", Constants.FAIL);
+//            }
+//
+            return result;
+        } else {
+
+            return result;
+        }
+    }
+    @POST
+    @Path("/user/{loginName}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject updateUser (@HeaderParam("Auth-Token")String authToken,JSONObject param){
+        JSONObject result = new JSONObject();
+        Map<String, Object> map = null;
+        String url = Constants.ZB_ELEMENT;
+        String method = Constants.METHOD_GET;
+
+        if (check(url, method, authToken)) {
+            UserAgentService.updateUser(param);
 //
 //            if (unicomAuthorityWcdma != null || unicomUserAuthorityWcdma != null ){
 //                map.put("unicomAuthorityWcdma",unicomAuthorityWcdma);
