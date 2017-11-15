@@ -76,14 +76,15 @@ public class UserController extends BaseController{
             return result;
         }
     }
+//    update specified user
     @POST
-    @Path("/user/{loginName}")
+    @Path("/users/{loginName}")
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject updateUser (@HeaderParam("Auth-Token")String authToken,JSONObject param){
         JSONObject result = new JSONObject();
         Map<String, Object> map = null;
         String url = Constants.ZB_ELEMENT;
-        String method = Constants.METHOD_GET;
+        String method = Constants.METHOD_POST;
 
         if (check(url, method, authToken)) {
             UserAgentService.updateUser(param);
@@ -98,6 +99,65 @@ public class UserController extends BaseController{
 //                result.put("status", Constants.FAIL);
 //            }
 //
+            return result;
+        } else {
+
+            return result;
+        }
+    }
+//    delete specified user
+    @DELETE
+    @Path("/users/{loginName}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject deleteUser (@HeaderParam("Auth-Token")String authToken,@PathParam("loginName")String loginName){
+        JSONObject result = new JSONObject();
+        Map<String, Object> map = null;
+        String url = Constants.ZB_ELEMENT;
+        String method = Constants.METHOD_POST;
+
+        if (check(url, method, authToken)) {
+            UserAgentService.deleteUser(loginName);
+//
+//            if (unicomAuthorityWcdma != null || unicomUserAuthorityWcdma != null ){
+//                map.put("unicomAuthorityWcdma",unicomAuthorityWcdma);
+//                map.put("unicomUserAuthorityWcdma",unicomUserAuthorityWcdma);
+            result.put("data", map);
+            result.put("status", Constants.SUCCESS);
+//            } else {
+//
+//                result.put("status", Constants.FAIL);
+//            }
+//
+            return result;
+        } else {
+
+            return result;
+        }
+    }
+//   Query all role
+    @GET
+    @Path("/users/roles")
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject getRoleAll(@HeaderParam("Auth-Token")String authToken){
+        JSONObject result = new JSONObject();
+        Map<String, Object> map = null;
+        String url = Constants.ZB_ELEMENT;
+        String method = Constants.METHOD_GET;
+
+        if (check(url, method, authToken)) {
+            List RoleAll = userAgentService.getRoleAll();
+//            Map<String,Object> UserInfo = userAgentService.getUserInfo();
+
+            if (RoleAll != null){
+                map.put("RoleList",RoleAll);
+//                map.put("UserInfo",UserInfo);
+                result.put("data", map);
+                result.put("status", Constants.SUCCESS);
+            } else {
+
+                result.put("status", Constants.FAIL);
+            }
+
             return result;
         } else {
 
