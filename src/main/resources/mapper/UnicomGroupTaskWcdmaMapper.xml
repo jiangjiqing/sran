@@ -100,4 +100,7 @@
       command_list = #{commandList,jdbcType=VARCHAR}
     where task_name = #{taskName,jdbcType=VARCHAR}
   </update>
+  <select id="getTaskInfo" resultMap="java.util.Map">
+    SELECT * FROM unicom_group_task_wcdma
+  </select>
 </mapper>

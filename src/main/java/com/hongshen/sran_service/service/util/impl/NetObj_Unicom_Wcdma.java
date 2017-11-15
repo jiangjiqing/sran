@@ -30,6 +30,9 @@ public class NetObj_Unicom_Wcdma implements NetObjBase {
     @Autowired
     private TelecomRoomService_Unicom_Wcdma telecomRoomService_unicom_wcdma;
 
+    @Autowired
+    private TaskService_Unicom_Wcdma taskService_unicom_wcdma;
+
     @Override
     public DataProviderBase getDataProvider() {
         return dataProvider_Unicom_Wcdma;
@@ -76,6 +79,11 @@ public class NetObj_Unicom_Wcdma implements NetObjBase {
     @Override
     public AlarmLibService addSpecifiedLibrary() {
         return alarmLibService_Unicom;
+    }
+
+    @Override
+    public TaskService getTaskInfo() {
+        return taskService_unicom_wcdma;
     }
 //new service
 

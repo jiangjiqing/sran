@@ -26,4 +26,6 @@ public interface NetObjBase {
     CellService getCellService();
 
     AlarmLibService addSpecifiedLibrary();
+
+    TaskService getTaskInfo();
 }

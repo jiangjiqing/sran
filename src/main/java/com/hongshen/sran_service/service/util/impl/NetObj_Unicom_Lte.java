@@ -30,6 +30,9 @@ public class NetObj_Unicom_Lte implements NetObjBase {
     @Autowired
     private TelecomRoomService_Unicom_Wcdma telecomRoomService_unicom_wcdma;
 
+    @Autowired
+    private TaskService_Unicom_Wcdma taskService_unicom_wcdma;
+
     @Override
     public DataProviderBase getDataProvider() {
         return dataProvider_Unicom_Lte;
@@ -75,5 +78,10 @@ public class NetObj_Unicom_Lte implements NetObjBase {
     @Override
     public AlarmLibService addSpecifiedLibrary() {
         return alarmLibService_Unicom;
+    }
+
+    @Override
+    public TaskService getTaskInfo() {
+        return taskService_unicom_wcdma;
     }
 }
