@@ -10,7 +10,7 @@ public interface NetObjBase {
 
     TelecomRoomService getTelecomRoomService();
 
-    AlarmLibService getAlarmLibService();
+//    AlarmLibService getAlarmLibService();
 
     TaskService getTaskService();
 

@@ -41,7 +41,7 @@
       </if>
     </trim>
   </insert>
-  <select id="getProtect" resultType="com.alibaba.fastjson.JSONObject">
+  <select id="getProtectList" resultType="com.alibaba.fastjson.JSONObject">
     SELECT a.node_name,b.group_name,b.latitude,b.station_name,b.longitude,c.level FROM unicom_protect_wcdma a LEFT JOIN unicom_node_wcdma b ON a.node_name=b.node_name LEFT JOIN unicom_quota_history_node_wcdma c ON a.node_name=c.name
 --   SELECT a.node_name,b.group_name,b.latitude,b.station_name,b.longitude FROM unicom_protect_wcdma a LEFT JOIN unicom_node_wcdma b ON a.node_name=b.node_name
 -- SELECT node_name,group_name,latitude,station_name,longitude FROM unicom_node_wcdma

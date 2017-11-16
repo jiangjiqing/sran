@@ -12,8 +12,8 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class NetObj_Unicom_Wcdma implements NetObjBase {
 
-    @Autowired
-    private AlarmLibService_Unicom_Wcdma alarmLibService;
+//    @Autowired
+//    private AlarmLibService_Unicom_Wcdma alarmLibService;
 
     @Autowired
     private TelecomRoomService_Unicom_Wcdma telecomRoomService;
@@ -30,10 +30,10 @@ public class NetObj_Unicom_Wcdma implements NetObjBase {
         return telecomRoomService;
     }
 
-    @Override
-    public AlarmLibService getAlarmLibService() {
-        return alarmLibService;
-    }
+//    @Override
+//    public AlarmLibService getAlarmLibService() {
+//        return alarmLibService;
+//    }
 
     @Override
     public TaskService getTaskService() {
