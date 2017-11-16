@@ -9,7 +9,7 @@ import java.util.Map;
  * Created by poplar on 11/13/17.
  */
 public interface ElementInfoService {
-    List<JSONObject> getProtect();
+    List<JSONObject> getProtectList();
 
 
 //   List<String> getProtect();

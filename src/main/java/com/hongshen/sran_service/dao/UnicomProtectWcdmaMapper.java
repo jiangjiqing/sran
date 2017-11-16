@@ -31,5 +31,5 @@ public interface UnicomProtectWcdmaMapper {
      */
     int insertSelective(UnicomProtectWcdma record);
 
-    List<JSONObject> getProtect();
+    List<JSONObject> getProtectList();
 }

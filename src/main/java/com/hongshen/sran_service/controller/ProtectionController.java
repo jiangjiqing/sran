@@ -21,70 +21,32 @@ import java.util.Map;
  */
 @Path("/sran/service/net/protection")
 public class ProtectionController extends BaseController{
+	
     @Autowired
     private NetObjFactory objFactory;
 
     @Autowired
     private Httpclient httpclient;
-    @Autowired
-    private AlarmLibService alarmLibService;
-    //Re guarantee network element
-//    @GET
-//    @Path("/suppliers/{supplier}/generations/{generation}/nets/protectednets")
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public JSONObject getZBElement(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
-//                                   @HeaderParam("Auth-Token")String authToken){
-//
-//        JSONObject result = new JSONObject();
-//        String url = Constants.ZB_ELEMENT;
-//        String method = Constants.METHOD_GET;
-//
-//        if (check(url, method, authToken)) {
-//
-//            NetObjBase obj = objFactory.getNetObj(supplier,generation);
-//            DataProviderBase dataProvider = obj.getDataProvider();
-//            Map<String,Object> protect =dataProvider.getProtect();
-//
-//            if (!protect.isEmpty()){
-//
-//                result.put("data", protect);
-//                result.put("status", Constants.SUCCESS);
-//            } else {
-//
-//                result.put("status", Constants.FAIL);
-//            }
-//
-//            return result;
-//        } else {
-//
-//            return result;
-//        }
-//
-//    }
+	
     @GET
-    @Path("/suppliers/{supplier}/generations/{generation}/nets/protectednets")
+    @Path("/suppliers/{supplier}/generations/{generation}/nets/protections")
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject getZBElement(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
+    public JSONObject getProtectionList(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
                                    @HeaderParam("Auth-Token")String authToken) {
 
         JSONObject result = new JSONObject();
-        String url = Constants.ZB_ELEMENT;
+		
+        String url = Constants.PATH_DUMMY;
         String method = Constants.METHOD_GET;
 
-//        if (check(url, method, authToken)) {
+//      if (check(url, method, authToken)) {
 
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        ElementInfoService elementInfoService = obj.getProtect();
-        List<JSONObject> protect = elementInfoService.getProtect();
-//2
+        List<JSONObject> protectList = obj.getElementInfoService().getProtectList();
 
-//        String name = protect.get(0);
-//        System.out.println(protect.get(3));
-//        List<JSONObject> groupInfo = elementInfoService.getGroupInfo(name);
+        if (!protectList.isEmpty()) {
 
-        if (!protect.isEmpty()) {
-
-            result.put("data", protect);
+            result.put("data", protectList);
             result.put("result", Constants.SUCCESS);
         } else {
             result.put("msg", Constants.MSG_NO_DATA);
@@ -93,7 +55,8 @@ public class ProtectionController extends BaseController{
 
         return result;
 //        } else {
-//
+//			  result.put("result", Constants.FAIL);
+//			  result.put("msg", Constants.MSG_NO_PERMISSION);
 //            return result;
 //        }
 

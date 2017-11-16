@@ -13,81 +13,35 @@ import org.springframework.stereotype.Controller;
 public class NetObj_Unicom_Lte implements NetObjBase {
 
     @Autowired
-    private DataProvider_Unicom_Lte dataProvider_Unicom_Lte;
+    private AlarmLibService_Unicom_Lte alarmLibService;
 
     @Autowired
-    private GroupServiceImpl_Lte groupServiceImpl_lte;
+    private TelecomRoomService_Unicom_Wcdma telecomRoomService;
 
     @Autowired
-    private NodeServiceImpl_Lte nodeServiceImpl_lte;
-
+    private TaskService_Unicom_Wcdma taskService;
+	
     @Autowired
-    private CellServiceImpl_Lte cellServiceImpl_lte;
-
-    @Autowired
-    private AlarmLibService_Unicom_Wcdma alarmLibService_Unicom;
-
-    @Autowired
-    private TelecomRoomService_Unicom_Wcdma telecomRoomService_unicom_wcdma;
-
-    @Autowired
-    private TaskService_Unicom_Wcdma taskService_unicom_wcdma;
-    @Autowired
-    private ElementInfoService_Unicom_Lte elementInfoService_unicom_lte;
+    private ElementInfoService_Unicom_Lte elementInfoService;
+	
+	
     @Override
-    public DataProviderBase getDataProvider() {
-        return dataProvider_Unicom_Lte;
+    public TelecomRoomService getTelecomRoomService() {
+        return telecomRoomService;
     }
 
     @Override
-    public GroupService getGroupService() {
-
-        return groupServiceImpl_lte;
+    public AlarmLibService getAlarmLibService() {
+        return alarmLibService;
     }
 
     @Override
-    public TelecomRoomService getElementTopologyr() {
-        return telecomRoomService_unicom_wcdma;
+    public TaskService getTaskService() {
+        return taskService;
     }
 
     @Override
-    public AlarmLibService getAlarmLibrary() {
-        return alarmLibService_Unicom;
-    }
-
-    @Override
-    public AlarmLibService getSpecifiedLibrary() {
-        return alarmLibService_Unicom;
-    }
-
-    @Override
-    public AlarmLibService updateSpecifiedLibrary() {
-        return alarmLibService_Unicom;
-    }
-
-    @Override
-    public NodeService getNodeService() {
-        return null;
-    }
-
-    @Override
-    public CellService getCellService() {
-
-        return cellServiceImpl_lte;
-    }
-
-    @Override
-    public AlarmLibService addSpecifiedLibrary() {
-        return alarmLibService_Unicom;
-    }
-
-    @Override
-    public TaskService getTaskInfo() {
-        return taskService_unicom_wcdma;
-    }
-
-    @Override
-    public ElementInfoService getProtect() {
-        return elementInfoService_unicom_lte;
+    public ElementInfoService getElementInfoService() {
+        return elementInfoService;
     }
 }

@@ -16,11 +16,13 @@ import java.util.Map;
  */
 @Service
 public class ElementInfoService_Unicom_Wcdma implements ElementInfoService {
+	
     @Autowired
-    private UnicomProtectWcdmaMapper unicomProtectWcdmaMapper;
+    private UnicomProtectWcdmaMapper unicomProtectMapper;
+	
     @Override
-    public List<JSONObject> getProtect() {
-        return unicomProtectWcdmaMapper.getProtect();
+    public List<JSONObject> getProtectList() {
+        return unicomProtectMapper.getProtectList();
     }
 //    @Autowired
 //    private UnicomGroupWcdmaMapper unicomGroupWcdmaMapper;

@@ -16,8 +16,9 @@ import java.util.Map;
  */
 @Service
 public class ElementInfoService_Unicom_Lte implements ElementInfoService {
+	
     @Override
-    public List<JSONObject> getProtect() {
+    public List<JSONObject> getProtectList() {
         return null;
     }
 //    @Autowired

@@ -33,6 +33,8 @@ public class Constants {
     public static final String CELL_QUOTA = "";
     public static final String CELL_INFO = "";
 
-    public static final String ZB_ELEMENT = "/service/v1/node";
-    public static final String MSG_NO_DATA = "";
+    public static final String PATH_DUMMY = "/service/v1/node";
+	
+    public static final String MSG_NO_DATA = "Data is empty.";
+	public static final String MSG_NO_PERMISSION = "Permission denied.";
 }
