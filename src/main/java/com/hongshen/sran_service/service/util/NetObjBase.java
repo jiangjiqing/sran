@@ -8,26 +8,12 @@ import com.hongshen.sran_service.service.*;
 
 public interface NetObjBase {
 
-    DataProviderBase getDataProvider();
+    TelecomRoomService getTelecomRoomService();
 
-    GroupService getGroupService();
+    AlarmLibService getAlarmLibService();
 
-    TelecomRoomService getElementTopologyr();
+    TaskService getTaskService();
 
-    AlarmLibService getAlarmLibrary();
-
-    AlarmLibService getSpecifiedLibrary();
-
-
-    AlarmLibService updateSpecifiedLibrary();
-
-    NodeService getNodeService();
-
-    CellService getCellService();
-
-    AlarmLibService addSpecifiedLibrary();
-
-    TaskService getTaskInfo();
-
-    ElementInfoService getProtect();
+    ElementInfoService getElementInfoService();
+	
 }
