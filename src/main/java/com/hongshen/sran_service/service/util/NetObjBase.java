@@ -28,4 +28,6 @@ public interface NetObjBase {
     AlarmLibService addSpecifiedLibrary();
 
     TaskService getTaskInfo();
+
+    ElementInfoService getProtect();
 }

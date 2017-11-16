@@ -17,25 +17,25 @@
         </commentGenerator>
 
         <!-- !!!! Database Configurations !!!! -->
-        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/LTE" userId="root" password="123456"/>
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/Sran" userId="root" password="123456"/>
 
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
 
         <!-- !!!! Model Configurations !!!! -->
-        <javaModelGenerator targetPackage="com.hongshen.sran_service.entity" targetProject="/home/poplar/2_sran_service/SRAN_SERVICE/src/main/java">
+        <javaModelGenerator targetPackage="com.hongshen.sran_service.entity" targetProject="/home/poplar/sran_service/SRAN_SERVICE/src/main/java">
             <property name="enableSubPackages" value="false"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
 
         <!-- !!!! Mapper XML Configurations !!!! -->
-        <sqlMapGenerator targetPackage="mapper" targetProject="/home/poplar/2_sran_service/SRAN_SERVICE/src/main/resources">
+        <sqlMapGenerator targetPackage="mapper" targetProject="/home/poplar/sran_service/SRAN_SERVICE/src/main/resources">
             <property name="enableSubPackages" value="false"/>
         </sqlMapGenerator>
 
         <!-- !!!! Mapper Interface Configurations !!!! -->
-        <javaClientGenerator targetPackage="com.hongshen.sran_service.dao" targetProject="/home/poplar/2_sran_service/SRAN_SERVICE/src/main/java" type="XMLMAPPER">
+        <javaClientGenerator targetPackage="com.hongshen.sran_service.dao" targetProject="/home/poplar/sran_service/SRAN_SERVICE/src/main/java" type="XMLMAPPER">
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
 
@@ -81,7 +81,9 @@
         <table tableName="unicom_group_wcdma" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" />
         <table tableName="unicom_cell_lte" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" />
         <table tableName="unicom_node_lte" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" />
-        <table tableName="unicom_alarm_library" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" />
+        <table tableName="unicom_alarm_library_lte" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" />
+        <table tableName="unicom_alarm_library_wcdma" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" />
+        <table tableName="unicom_alarm_index" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" />
         <table tableName="unicom_alarm_lte" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" />
         <table tableName="unicom_alarm_temp_lte" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" />
         <table tableName="unicom_alarm_wcdma" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" />
@@ -97,5 +99,7 @@
         <table tableName="unicom_favorite_wcdma" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" />
         <table tableName="unicom_command_wcdma" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" />
         <table tableName="unicom_group_task_wcdma" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" />
+        <table tableName="unicom_room_wcdma" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" />
+        <table tableName="role_authority" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" />
     </context>
 </generatorConfiguration>

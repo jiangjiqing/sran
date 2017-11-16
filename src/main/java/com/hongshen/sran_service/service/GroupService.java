@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface GroupService {
 
-    List<JSONObject> getGroups(String userName, String time);
-
-    List<JSONObject> getGroupAlarmByGroupName(String groupName);
-
-    List<JSONObject> getGroupQuotaByGroupName(String groupName);
+//    List<JSONObject> getGroups(String userName, String time);
+//
+//    List<JSONObject> getGroupAlarmByGroupName(String groupName);
+//
+//    List<JSONObject> getGroupQuotaByGroupName(String groupName);
 }

@@ -15,50 +15,50 @@ import java.util.List;
 
 @Service
 public class GroupServiceImpl_Lte implements GroupService{
-
-    @Autowired
-    private UnicomGroupWcdmaMapper groupWcdmaMapper;
-
-    @Autowired
-    private UnicomQuotaHistoryGroupLteMapper quotaLteMapper;
-
-    @Autowired
-    private UnicomFavoriteLteMapper favoriteLteMapper;
-
-    @Autowired
-    private UnicomAlarmLteMapper alarmLteMapper;
-
-    @Autowired
-    private UnicomFormulaLteMapper formulaLteMapper;
-
-    @Override
-    public List<JSONObject> getGroups(String userName, String time) {
-
-        return null;
-    }
-
-    @Override
-    public List<JSONObject> getGroupAlarmByGroupName(String groupName) {
-
-        List<JSONObject> results = new ArrayList<>();
-
-        results = alarmLteMapper.getGroupAlarmByGroupNameLte(groupName);
-
-        if (!results.isEmpty()) {
-
-            return results;
-        }
-
-        return results;
-    }
-
-    @Override
-    public List<JSONObject> getGroupQuotaByGroupName(String groupName) {
-
-        UnicomQuotaHistoryGroupLte quotaHistoryGroupLte = quotaLteMapper.getQuotaHistoryGroupLte(groupName);
-
-        List<JSONObject> results = formulaLteMapper.getAllIdQuetaNameLte();
-
-        return null;
-    }
+//
+//    @Autowired
+//    private UnicomGroupWcdmaMapper groupWcdmaMapper;
+//
+//    @Autowired
+//    private UnicomQuotaHistoryGroupLteMapper quotaLteMapper;
+//
+//    @Autowired
+//    private UnicomFavoriteLteMapper favoriteLteMapper;
+//
+//    @Autowired
+//    private UnicomAlarmLteMapper alarmLteMapper;
+//
+//    @Autowired
+//    private UnicomFormulaLteMapper formulaLteMapper;
+//
+//    @Override
+//    public List<JSONObject> getGroups(String userName, String time) {
+//
+//        return null;
+//    }
+//
+//    @Override
+//    public List<JSONObject> getGroupAlarmByGroupName(String groupName) {
+//
+//        List<JSONObject> results = new ArrayList<>();
+//
+//        results = alarmLteMapper.getGroupAlarmByGroupNameLte(groupName);
+//
+//        if (!results.isEmpty()) {
+//
+//            return results;
+//        }
+//
+//        return results;
+//    }
+//
+//    @Override
+//    public List<JSONObject> getGroupQuotaByGroupName(String groupName) {
+//
+//        UnicomQuotaHistoryGroupLte quotaHistoryGroupLte = quotaLteMapper.getQuotaHistoryGroupLte(groupName);
+//
+//        List<JSONObject> results = formulaLteMapper.getAllIdQuetaNameLte();
+//
+//        return null;
+//    }
 }

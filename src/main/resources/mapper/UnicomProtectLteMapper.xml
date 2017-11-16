@@ -41,7 +41,4 @@
       </if>
     </trim>
   </insert>
-  <select id="getProtect" resultType="Map">
-    SELECT * FROM unicom_protect_lte
-  </select>
 </mapper>

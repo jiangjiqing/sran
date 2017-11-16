@@ -12,10 +12,10 @@ import java.util.Map;
  */
 @Service
 public class QuotaService_Unicom_Lte implements QuotaService {
-    @Autowired
-    private UnicomQuotaHistoryGroupLteMapper unicomQuotaHistoryGroupLteMapper;
-    @Override
-    public Map<String, Object> getQuotaInfo() {
-        return unicomQuotaHistoryGroupLteMapper.getQuotaInfo();
-    }
+//    @Autowired
+//    private UnicomQuotaHistoryGroupLteMapper unicomQuotaHistoryGroupLteMapper;
+//    @Override
+//    public Map<String, Object> getQuotaInfo() {
+//        return unicomQuotaHistoryGroupLteMapper.getQuotaInfo();
+//    }
 }

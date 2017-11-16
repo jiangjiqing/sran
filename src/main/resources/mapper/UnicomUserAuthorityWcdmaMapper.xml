@@ -87,10 +87,4 @@
     set authority_name = #{authorityName,jdbcType=VARCHAR}
     where login_name = #{loginName,jdbcType=VARCHAR}
   </update>
-  <select id="getUserInfo" resultMap="UnicomUserAuthorityWcdma">
-    SELECT * FROM unicom_user_authority_wcama;
-  </select>
-<insert id="addUserd" parameterType="com.alibaba.fastjson.JSONObject">
---   INSERT INTO unicom_user_authority_wcdma () VALUES (#{param.},)
-</insert>
 </mapper>

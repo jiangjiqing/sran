@@ -12,10 +12,10 @@ import java.util.Map;
  */
 @Service
 public class TaskService_Unicom_Wcdma implements TaskService {
-    @Autowired
-    private UnicomGroupTaskWcdmaMapper unicomGroupTaskWcdmaMapper;
-    @Override
-    public Map<String, Object> getTaskInfo() {
-        return unicomGroupTaskWcdmaMapper.getTaskInfo();
-    }
+//    @Autowired
+//    private UnicomGroupTaskWcdmaMapper unicomGroupTaskWcdmaMapper;
+//    @Override
+//    public Map<String, Object> getTaskInfo() {
+//        return unicomGroupTaskWcdmaMapper.getTaskInfo();
+//    }
 }

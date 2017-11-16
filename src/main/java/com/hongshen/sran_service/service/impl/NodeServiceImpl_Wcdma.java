@@ -14,38 +14,38 @@ import java.util.List;
 
 @Service
 public class NodeServiceImpl_Wcdma implements NodeService{
-
-    @Autowired
-    private UnicomNodeWcdmaMapper nodeWcdmaMapper;
-
-    @Autowired
-    private UnicomQuotaHistoryNodeWcdmaMapper quotaHistoryNodeWcdmaMapper;
-
-    @Autowired
-    private UnicomAlarmWcdmaMapper alarmWcdmaMapper;
-
-    @Override
-    public List<JSONObject> getNodes(String userName, String groupName, String time) {
-
-        List<JSONObject> results = new ArrayList<>();
-
-        results = quotaHistoryNodeWcdmaMapper.getNodeHistoryDataWcdma(groupName, time);
-
-        if (!results.isEmpty()) {
-
-            return results;
-        }
-
-        return results;
-    }
-
-    @Override
-    public JSONObject getNodeAlarmByNodeName(String nodeName) {
-
-        JSONObject result = new JSONObject();
-
-        UnicomAlarmWcdma alarmWcdma = alarmWcdmaMapper.getNodeAlarmByNodeNameWcdma(nodeName);
-
-        return result;
-    }
+//
+//    @Autowired
+//    private UnicomNodeWcdmaMapper nodeWcdmaMapper;
+//
+//    @Autowired
+//    private UnicomQuotaHistoryNodeWcdmaMapper quotaHistoryNodeWcdmaMapper;
+//
+//    @Autowired
+//    private UnicomAlarmWcdmaMapper alarmWcdmaMapper;
+//
+//    @Override
+//    public List<JSONObject> getNodes(String userName, String groupName, String time) {
+//
+//        List<JSONObject> results = new ArrayList<>();
+//
+//        results = quotaHistoryNodeWcdmaMapper.getNodeHistoryDataWcdma(groupName, time);
+//
+//        if (!results.isEmpty()) {
+//
+//            return results;
+//        }
+//
+//        return results;
+//    }
+//
+//    @Override
+//    public JSONObject getNodeAlarmByNodeName(String nodeName) {
+//
+//        JSONObject result = new JSONObject();
+//
+//        UnicomAlarmWcdma alarmWcdma = alarmWcdmaMapper.getNodeAlarmByNodeNameWcdma(nodeName);
+//
+//        return result;
+//    }
 }

@@ -12,10 +12,10 @@ import java.util.Map;
  */
 @Service
 public class QuotaService_Unicom_Wcdma implements QuotaService {
-    @Autowired
-    private UnicomQuotaHistoryGroupWcdmaMapper unicomQuotaHistoryGroupWcdmaMapper;
-    @Override
-    public Map<String, Object> getQuotaInfo() {
-        return unicomQuotaHistoryGroupWcdmaMapper.getQuotaInfo();
-    }
+//    @Autowired
+//    private UnicomQuotaHistoryGroupWcdmaMapper unicomQuotaHistoryGroupWcdmaMapper;
+//    @Override
+//    public Map<String, Object> getQuotaInfo() {
+//        return unicomQuotaHistoryGroupWcdmaMapper.getQuotaInfo();
+//    }
 }

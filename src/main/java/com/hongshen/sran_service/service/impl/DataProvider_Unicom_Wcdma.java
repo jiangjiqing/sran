@@ -16,19 +16,19 @@ import java.util.Map;
  */
 @Service
 public class DataProvider_Unicom_Wcdma implements DataProviderBase {
-    @Autowired
-    private RoleMapper roleMapper;
-    @Autowired
-    private UnicomProtectWcdmaMapper unicomProtectWcdmaMapper;
-    @Override
-    public Role getGroupQuotaInfo(int id) {
-        Role role1 =roleMapper.selectByPrimaryKey(id);
-        return role1;
-    }
-
-    @Override
-    public Map<String, Object> getProtect() {
-        return unicomProtectWcdmaMapper.getProtect();
-    }
+//    @Autowired
+//    private RoleMapper roleMapper;
+//    @Autowired
+//    private UnicomProtectWcdmaMapper unicomProtectWcdmaMapper;
+//    @Override
+//    public Role getGroupQuotaInfo(int id) {
+//        Role role1 =roleMapper.selectByPrimaryKey(id);
+//        return role1;
+//    }
+//
+//    @Override
+//    public Map<String,Object> getProtect() {
+//        return null;
+//    }
 
 }

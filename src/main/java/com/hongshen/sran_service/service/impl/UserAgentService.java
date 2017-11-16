@@ -1,8 +1,12 @@
 package com.hongshen.sran_service.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.hongshen.sran_service.dao.UserMapper;
+import com.hongshen.sran_service.entity.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +15,10 @@ import java.util.Map;
  */
 @Service
 public class UserAgentService {
+
+//    @Autowired
+//    private UserMapper userMapper;
+
     public List getRoleList() {
         return null;
     }
@@ -31,4 +39,6 @@ public class UserAgentService {
     public List getRoleAll() {
         return null;
     }
+
+
 }

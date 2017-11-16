@@ -6,5 +6,5 @@ import java.util.Map;
  * Created by poplar on 11/14/17.
  */
 public interface TelecomRoomService {
-    Map<String,Object> getElementTopologyr();
+//    Map<String,Object> getElementTopologyr();
 }

@@ -25,14 +25,15 @@ public class NetObj_Unicom_Lte implements NetObjBase {
     private CellServiceImpl_Lte cellServiceImpl_lte;
 
     @Autowired
-    private AlarmLibService_Unicom alarmLibService_Unicom;
+    private AlarmLibService_Unicom_Wcdma alarmLibService_Unicom;
 
     @Autowired
     private TelecomRoomService_Unicom_Wcdma telecomRoomService_unicom_wcdma;
 
     @Autowired
     private TaskService_Unicom_Wcdma taskService_unicom_wcdma;
-
+    @Autowired
+    private ElementInfoService_Unicom_Lte elementInfoService_unicom_lte;
     @Override
     public DataProviderBase getDataProvider() {
         return dataProvider_Unicom_Lte;
@@ -83,5 +84,10 @@ public class NetObj_Unicom_Lte implements NetObjBase {
     @Override
     public TaskService getTaskInfo() {
         return taskService_unicom_wcdma;
+    }
+
+    @Override
+    public ElementInfoService getProtect() {
+        return elementInfoService_unicom_lte;
     }
 }

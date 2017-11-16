@@ -13,38 +13,38 @@ import java.util.List;
 
 @Service
 public class CellServiceImpl_Lte implements CellService{
-
-    @Autowired
-    private UnicomCellLteMapper cellLteMapper;
-
-    @Autowired
-    private UnicomQuotaHistoryCellLteMapper quotaHistoryCellLteMapper;
-
-    @Autowired
-    private UnicomAlarmLteMapper alarmLteMapper;
-
-    @Override
-    public List<JSONObject> getCells(String userName, String nodeName, String time) {
-
-        List<JSONObject> results = new ArrayList<>();
-
-        quotaHistoryCellLteMapper.getCellHistoryDataLte(nodeName, time);
-
-        if (!results.isEmpty()) {
-
-            return results;
-        }
-
-        return results;
-    }
-
-    @Override
-    public JSONObject getCellAlarmByCellName(String cellName) {
-
-        JSONObject result = new JSONObject();
-
-        result = alarmLteMapper.getCellAlarmByCellNameLte(cellName);
-
-        return result;
-    }
+//
+//    @Autowired
+//    private UnicomCellLteMapper cellLteMapper;
+//
+//    @Autowired
+//    private UnicomQuotaHistoryCellLteMapper quotaHistoryCellLteMapper;
+//
+//    @Autowired
+//    private UnicomAlarmLteMapper alarmLteMapper;
+//
+//    @Override
+//    public List<JSONObject> getCells(String userName, String nodeName, String time) {
+//
+//        List<JSONObject> results = new ArrayList<>();
+//
+//        quotaHistoryCellLteMapper.getCellHistoryDataLte(nodeName, time);
+//
+//        if (!results.isEmpty()) {
+//
+//            return results;
+//        }
+//
+//        return results;
+//    }
+//
+//    @Override
+//    public JSONObject getCellAlarmByCellName(String cellName) {
+//
+//        JSONObject result = new JSONObject();
+//
+//        result = alarmLteMapper.getCellAlarmByCellNameLte(cellName);
+//
+//        return result;
+//    }
 }

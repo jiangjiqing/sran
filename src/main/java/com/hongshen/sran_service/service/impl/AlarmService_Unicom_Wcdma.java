@@ -16,50 +16,50 @@ import java.util.Map;
 
 @Service
 public class AlarmService_Unicom_Wcdma implements AlarmService{
-
-    @Autowired
-    private UnicomAlarmWcdmaMapper alarmWcdmaMapper;
-
-    @Autowired
-    private UnicomAlarmLteMapper alarmLteMapper;
-
-    @Override
-    public List<JSONObject> getAllAlarmSerice() {
-
-        List<JSONObject> resultList = new ArrayList<>();
-
-        JSONObject resultWcdma = new JSONObject();
-        JSONObject resultLte = new JSONObject();
-
-        List<UnicomAlarmWcdma> alarmWcdmas = new ArrayList<>();
-        List<UnicomAlarmLte> alarmLtes = new ArrayList<>();
-
-        String wcdmaGeneration = Constants.WCDMA;
-        String lteGeneration = Constants.LTE;
-
-        alarmWcdmas = alarmWcdmaMapper.getAllAlarmWcdma();
-
-        alarmLtes = alarmLteMapper.getAllAlarmLte();
-
-        if (!alarmWcdmas.isEmpty()) {
-
-            resultWcdma.put("generation", wcdmaGeneration);
-            resultWcdma.put("alarms", alarmWcdmas);
-
-            resultList.add(resultWcdma);
-        } else if (!alarmLtes.isEmpty()) {
-
-            resultLte.put("generation", lteGeneration);
-            resultLte.put("alarms", alarmLtes);
-
-            resultList.add(resultLte);
-        }
-
-        return resultList;
-    }
-
-    @Override
-    public Map<String, Object> getGroupAlarmInfo() {
-        return alarmLteMapper.getGroupAlarmInfo();
-    }
+//
+//    @Autowired
+//    private UnicomAlarmWcdmaMapper alarmWcdmaMapper;
+//
+//    @Autowired
+//    private UnicomAlarmLteMapper alarmLteMapper;
+//
+//    @Override
+//    public List<JSONObject> getAllAlarmSerice() {
+//
+//        List<JSONObject> resultList = new ArrayList<>();
+//
+//        JSONObject resultWcdma = new JSONObject();
+//        JSONObject resultLte = new JSONObject();
+//
+//        List<UnicomAlarmWcdma> alarmWcdmas = new ArrayList<>();
+//        List<UnicomAlarmLte> alarmLtes = new ArrayList<>();
+//
+//        String wcdmaGeneration = Constants.WCDMA;
+//        String lteGeneration = Constants.LTE;
+//
+//        alarmWcdmas = alarmWcdmaMapper.getAllAlarmWcdma();
+//
+//        alarmLtes = alarmLteMapper.getAllAlarmLte();
+//
+//        if (!alarmWcdmas.isEmpty()) {
+//
+//            resultWcdma.put("generation", wcdmaGeneration);
+//            resultWcdma.put("alarms", alarmWcdmas);
+//
+//            resultList.add(resultWcdma);
+//        } else if (!alarmLtes.isEmpty()) {
+//
+//            resultLte.put("generation", lteGeneration);
+//            resultLte.put("alarms", alarmLtes);
+//
+//            resultList.add(resultLte);
+//        }
+//
+//        return resultList;
+//    }
+//
+//    @Override
+//    public Map<String, Object> getGroupAlarmInfo() {
+//        return alarmLteMapper.getGroupAlarmInfo();
+//    }
 }

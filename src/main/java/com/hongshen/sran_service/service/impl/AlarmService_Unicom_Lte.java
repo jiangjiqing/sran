@@ -14,15 +14,15 @@ import java.util.Map;
  */
 @Service
 public class AlarmService_Unicom_Lte implements AlarmService {
-    @Autowired
-    private UnicomAlarmWcdmaMapper unicomAlarmWcdmaMapper;
-    @Override
-    public List<JSONObject> getAllAlarmSerice() {
-        return null;
-    }
-
-    @Override
-    public Map<String, Object> getGroupAlarmInfo() {
-        return unicomAlarmWcdmaMapper.getGroupAlarmInfo();
-    }
+//    @Autowired
+//    private UnicomAlarmWcdmaMapper unicomAlarmWcdmaMapper;
+//    @Override
+//    public List<JSONObject> getAllAlarmSerice() {
+//        return null;
+//    }
+//
+//    @Override
+//    public Map<String, Object> getGroupAlarmInfo() {
+//        return unicomAlarmWcdmaMapper.getGroupAlarmInfo();
+//    }
 }

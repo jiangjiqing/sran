@@ -240,19 +240,4 @@
       </if>
     </trim>
   </insert>
-
-  <select id="getNodeHistoryDataLte" resultType="com.alibaba.fastjson.JSONObject">
-    select
-    hnl.level,
-    hnl.name,
-    nl.longitude,
-    nl.latitude
-    from
-    unicom_node_lte nl
-    left join
-    unicom_quota_history_node_lte hnl
-    on  nl.node_name = hnl.name
-    and nl.group_name = #{groupName}
-    WHERE hnl.time = #{time};
-  </select>
 </mapper>

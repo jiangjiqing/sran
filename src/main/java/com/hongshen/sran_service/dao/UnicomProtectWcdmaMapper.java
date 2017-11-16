@@ -1,10 +1,10 @@
 package com.hongshen.sran_service.dao;
 
+import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.entity.UnicomProtectWcdma;
 import org.springframework.stereotype.Repository;
 
-import java.util.Map;
-
+import java.util.List;
 @Repository
 public interface UnicomProtectWcdmaMapper {
     /**
@@ -31,5 +31,5 @@ public interface UnicomProtectWcdmaMapper {
      */
     int insertSelective(UnicomProtectWcdma record);
 
-    Map<String,Object> getProtect();
+    List<JSONObject> getProtect();
 }

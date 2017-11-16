@@ -12,10 +12,10 @@ import java.util.Map;
  */
 @Service
 public class AuthorityService_Unicom_wcdma implements AuthorityService {
-    @Autowired
-    private UnicomAuthorityWcdmaMapper authorityWcdmaMapper;
-    @Override
-    public Map<String, Object> getUserAuthorty(String name) {
-        return authorityWcdmaMapper.getUserAuthorty(name);
-    }
+//    @Autowired
+//    private UnicomAuthorityWcdmaMapper authorityWcdmaMapper;
+//    @Override
+//    public Map<String, Object> getUserAuthorty(String name) {
+//        return null;
+//    }
 }

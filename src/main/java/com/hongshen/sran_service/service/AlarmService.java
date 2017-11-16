@@ -7,6 +7,6 @@ import java.util.Map;
 
 public interface AlarmService {
 
-    List<JSONObject> getAllAlarmSerice();
-    Map<String,Object> getGroupAlarmInfo();
+//    List<JSONObject> getAllAlarmSerice();
+//    Map<String,Object> getGroupAlarmInfo();
 }

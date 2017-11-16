@@ -135,5 +135,4 @@
       phone = #{phone,jdbcType=VARCHAR}
     where login_name = #{loginName,jdbcType=VARCHAR}
   </update>
-
 </mapper>

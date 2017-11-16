@@ -12,10 +12,10 @@ import java.util.Map;
  */
 @Service
 public class TelecomRoomService_Unicom_Wcdma implements TelecomRoomService {
-    @Autowired
-    private UnicomGroupWcdmaMapper unicomGroupWcdmaMapper;
-    @Override
-    public Map<String, Object> getElementTopologyr() {
-        return unicomGroupWcdmaMapper.getElementTopologyr();
-    }
+//    @Autowired
+//    private UnicomGroupWcdmaMapper unicomGroupWcdmaMapper;
+//    @Override
+//    public Map<String, Object> getElementTopologyr() {
+//        return unicomGroupWcdmaMapper.getElementTopologyr();
+//    }
 }

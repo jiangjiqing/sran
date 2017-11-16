@@ -12,7 +12,7 @@ import java.util.Map;
 
 public interface DataProviderBase {
 
-    Role getGroupQuotaInfo(int id);
-
-    Map<String,Object> getProtect();
+//    Role getGroupQuotaInfo(int id);
+//
+//    Map<String,Object> getProtect();
 }

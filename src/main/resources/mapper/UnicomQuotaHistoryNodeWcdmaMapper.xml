@@ -201,19 +201,4 @@
       </if>
     </trim>
   </insert>
-
-  <select id="getNodeHistoryDataWcdma" resultType="com.alibaba.fastjson.JSONObject">
-    select
-    hnw.level,
-    hnw.name,
-    nw.longitude,
-    nw.latitude
-    from
-    unicom_node_wcdma nw
-    left join
-    unicom_quota_history_node_wcdma hnw
-    on  nw.node_name = hnw.name
-    and nw.group_name = #{groupName}
-    WHERE hnw.time = #{time};
-  </select>
 </mapper>

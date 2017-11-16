@@ -15,20 +15,20 @@ import java.util.Map;
  */
 @Service
 public class DataProvider_Unicom_Lte implements DataProviderBase {
-    @Autowired
-    private RoleMapper roleMapper;
-    @Autowired
-    private UnicomProtectLteMapper unicomProtectLteMapper;
-    @Override
-    public Role getGroupQuotaInfo(int id) {
-        System.out.println(id);
-        Role role1 =roleMapper.selectByPrimaryKey(id);
-        return role1;
-    }
-
-    @Override
-    public Map<String, Object> getProtect() {
-        return unicomProtectLteMapper.getProtect();
-    }
+//    @Autowired
+//    private RoleMapper roleMapper;
+//    @Autowired
+//    private UnicomProtectLteMapper unicomProtectLteMapper;
+//    @Override
+//    public Role getGroupQuotaInfo(int id) {
+//        System.out.println(id);
+//        Role role1 =roleMapper.selectByPrimaryKey(id);
+//        return role1;
+//    }
+//
+//    @Override
+//    public Map<String, Object> getProtect() {
+//        return null;
+//    }
 
 }

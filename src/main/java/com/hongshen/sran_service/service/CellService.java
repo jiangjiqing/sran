@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CellService {
 
-    List<JSONObject> getCells(String userName, String nodeName, String time);
-
-    JSONObject getCellAlarmByCellName(@Param("cellName")String cellName);
+//    List<JSONObject> getCells(String userName, String nodeName, String time);
+//
+//    JSONObject getCellAlarmByCellName(@Param("cellName")String cellName);
 }

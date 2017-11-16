@@ -34,4 +34,5 @@ public class Constants {
     public static final String CELL_INFO = "";
 
     public static final String ZB_ELEMENT = "/service/v1/node";
+    public static final String MSG_NO_DATA = "";
 }

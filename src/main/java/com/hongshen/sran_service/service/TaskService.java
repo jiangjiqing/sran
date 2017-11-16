@@ -6,5 +6,5 @@ import java.util.Map;
  * Created by poplar on 11/13/17.
  */
 public interface TaskService {
-    Map<String,Object> getTaskInfo();
+//    Map<String,Object> getTaskInfo();
 }

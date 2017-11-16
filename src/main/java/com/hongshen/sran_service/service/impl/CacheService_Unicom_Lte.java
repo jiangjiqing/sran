@@ -13,35 +13,35 @@ import java.util.Map;
  */
 @Service
 public class CacheService_Unicom_Lte implements CacheService {
-    @Autowired
-    private UnicomCounterLteMapper unicomCounterLteMapper;
-    @Override
-    public Map<String, Object> getCounterMap() {
-        return unicomCounterLteMapper.getCounterMap();
-    }
-
-    @Override
-    public Map<String, Object> resetCounterMap() {
-        return unicomCounterLteMapper.resetCounterMap();
-    }
-
-    @Override
-    public Map<String, Object> getQuotaMap() {
-        return unicomCounterLteMapper.getQuotaMap();
-    }
-
-    @Override
-    public Map<String, Object> restQuotaMap() {
-        return unicomCounterLteMapper.restQuotaMap();
-    }
-
-    @Override
-    public Map<String, Object> getGroupThresholdMap() {
-        return unicomCounterLteMapper.getGroupThresholdMap();
-    }
-
-    @Override
-    public Map<String, Object> restGroupThresholdMap() {
-        return unicomCounterLteMapper.restGroupThresholdMap();
-    }
+//    @Autowired
+//    private UnicomCounterLteMapper unicomCounterLteMapper;
+//    @Override
+//    public Map<String, Object> getCounterMap() {
+//        return unicomCounterLteMapper.getCounterMap();
+//    }
+//
+//    @Override
+//    public Map<String, Object> resetCounterMap() {
+//        return unicomCounterLteMapper.resetCounterMap();
+//    }
+//
+//    @Override
+//    public Map<String, Object> getQuotaMap() {
+//        return unicomCounterLteMapper.getQuotaMap();
+//    }
+//
+//    @Override
+//    public Map<String, Object> restQuotaMap() {
+//        return unicomCounterLteMapper.restQuotaMap();
+//    }
+//
+//    @Override
+//    public Map<String, Object> getGroupThresholdMap() {
+//        return unicomCounterLteMapper.getGroupThresholdMap();
+//    }
+//
+//    @Override
+//    public Map<String, Object> restGroupThresholdMap() {
+//        return unicomCounterLteMapper.restGroupThresholdMap();
+//    }
 }
