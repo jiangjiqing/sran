@@ -7,6 +7,7 @@ import com.hongshen.sran_service.entity.UnicomAlarmLte;
 import com.hongshen.sran_service.entity.UnicomAlarmWcdma;
 import com.hongshen.sran_service.service.AlarmService;
 import com.hongshen.sran_service.service.util.Constants;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,13 +17,30 @@ import java.util.Map;
 
 @Service
 public class AlarmService_Unicom_Wcdma implements AlarmService{
-//
-//    @Autowired
-//    private UnicomAlarmWcdmaMapper alarmWcdmaMapper;
-//
-//    @Autowired
-//    private UnicomAlarmLteMapper alarmLteMapper;
-//
+
+    @Autowired
+    private UnicomAlarmWcdmaMapper alarmMapper;
+
+    @Override
+    public List<JSONObject> getAllAlarmInfo() {
+        return alarmMapper.getAllAlarmInfo();
+    }
+
+	@Override
+    public List<JSONObject> getGroupAlarmByGroupName(@Param("groupName")String groupName) {
+        return alarmMapper.getGroupAlarmByGroupName(groupName);
+    }
+	
+	@Override
+    public List<JSONObject> getNodeAlarmByNodeName(@Param("nodeName")String nodeName) {
+        return alarmMapper.getNodeAlarmByNodeName(nodeName);
+    }
+	
+	@Override
+    public List<JSONObject> getCellAlarmByCellName(@Param("cellName")String cellName) {
+        return alarmMapper.getCellAlarmByCellName(cellName);
+    }
+
 //    @Override
 //    public List<JSONObject> getAllAlarmSerice() {
 //

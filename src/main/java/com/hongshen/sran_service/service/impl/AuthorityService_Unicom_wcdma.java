@@ -11,9 +11,12 @@ import java.util.Map;
  * Created by poplar on 11/13/17.
  */
 @Service
-public class AuthorityService_Unicom_wcdma implements AuthorityService {
+public class AuthorityService_Unicom_Wcdma implements AuthorityService {
+
 //    @Autowired
-//    private UnicomAuthorityWcdmaMapper authorityWcdmaMapper;
+//    private UnicomAuthorityWcdmaMapper authorityMapper;
+
+
 //    @Override
 //    public Map<String, Object> getUserAuthorty(String name) {
 //        return null;

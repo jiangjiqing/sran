@@ -16,7 +16,7 @@ public class NetObjFactory {
     private NetObj_Unicom_Wcdma netObj_Unicom_Wcdma;
    public NetObjBase getNetObj(String supplier , String generation){
        switch (supplier) {
-                case Constants.UNICM://中国联通
+                case Constants.UNICOM://中国联通
                     switch (generation)
                     {
                         case Constants.WCDMA://3G

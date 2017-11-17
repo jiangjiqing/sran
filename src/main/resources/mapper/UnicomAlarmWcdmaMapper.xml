@@ -72,4 +72,49 @@
       </if>
     </trim>
   </insert>
+
+  <!--<select id="getAllAlarmInfo" resultType="com.hongshen.sran_service.entity.UnicomAlarmWcdma">-->
+  <select id="getAllAlarmInfo" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT
+    *
+    FROM unicom_alarm_wcdma;
+  </select>
+
+  <select id="getGroupAlarmByGroupName" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT
+    aw.node_name,
+    aw.mo,
+    aw.alarm_time,
+    aw.alarm_type_id,
+    aw.alarm_name_id
+    FROM
+    (
+    SELECT node_name
+    FROM unicom_node_wcdma
+    WHERE group_name = #{groupName}
+    ) nw
+    LEFT JOIN
+    (
+    SELECT
+    node_name,
+    mo,
+    alarm_time,
+    alarm_type_id,
+    alarm_name_id
+    FROM unicom_alarm_wcdma
+    ) aw
+    on aw.node_name = nw.node_name;
+  </select>
+
+  <select id="getNodeAlarmByNodeName" resultType="com.hongshen.sran_service.entity.UnicomAlarmWcdma">
+     select *
+     from unicom_alarm_wcdma
+     where node_name = #{nodeName}
+  </select>
+
+  <select id="getCellAlarmByCellName" resultType="com.alibaba.fastjson.JSONObject">
+     select *
+     from unicom_alarm_wcdma
+     where cell_name = #{cellName}
+  </select>
 </mapper>

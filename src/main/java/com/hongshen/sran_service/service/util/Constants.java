@@ -7,7 +7,7 @@ public class Constants {
 
     public static final String WCDMA = "wcdma";//3G  
     public static final String LTE = "lte";//4G   
-    public static final String UNICM = "unicom";//中国联通   
+    public static final String UNICOM = "unicom";//中国联通   
     public static final String SHIRO_URI = "http://localhost:8989/service/v1/check";
 
     public static final String SUCCESS = "SUCCESS";
