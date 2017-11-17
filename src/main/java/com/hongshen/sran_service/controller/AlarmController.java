@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,29 +41,29 @@ public class AlarmController {
 			NetObjBase obj_Lte = objFactory.getNetObj(supplier, Constants.LTE);
 			JSONObject resultWcdma = new JSONObject();
 			JSONObject resultLte = new JSONObject();
+			List<JSONObject> list = new ArrayList<JSONObject>();
 			int dataCount = 0;
 			
             List<JSONObject> resultList_Wcdma = obj_Wcdma.getAlarmService().getAllAlarmInfo();
 			List<JSONObject> resultList_Lte = obj_Lte.getAlarmService().getAllAlarmInfo();
 			
 			// add 3G data
-            if (!resultList_Wcdma.isEmpty()){
-				dataCount++;
-				resultWcdma.put("generation", Constants.WCDMA);
-				resultWcdma.put("alarms", resultList_Wcdma);
-				result.put("data", resultWcdma);
-            } 
+            if (!resultList_Wcdma.isEmpty() || !resultList_Lte.isEmpty()){
+                if (!resultList_Wcdma.isEmpty()){
+                    resultWcdma.put("generation", Constants.WCDMA);
+                    resultWcdma.put("alarms", resultList_Wcdma);
+                    list.add(resultWcdma);
+                }
 			
 			// add 4G data
-			if (!resultList_Lte.isEmpty()){
-				dataCount++;
-				resultLte.put("generation", Constants.LTE);
-				resultLte.put("alarms", resultList_Lte);
-				result.put("data", resultLte);
-            } 
-			
-			if (dataCount != 0){
-				result.put("result", Constants.SUCCESS);
+                if (!resultList_Lte.isEmpty()){
+                    resultLte.put("generation", Constants.LTE);
+                    resultLte.put("alarms", resultList_Lte);
+                    list.add(resultLte);
+                }
+
+                result.put("result", Constants.SUCCESS);
+                result.put("data",list);
 			} else {
                 result.put("result", Constants.FAIL);
 				result.put("msg", Constants.MSG_NO_DATA);
