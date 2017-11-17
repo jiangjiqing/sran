@@ -35,7 +35,6 @@ public class ProtectionController extends BaseController{
                                    @HeaderParam("Auth-Token")String authToken) {
 
         JSONObject result = new JSONObject();
-		
         String url = Constants.PATH_DUMMY;
         String method = Constants.METHOD_GET;
 
@@ -43,6 +42,18 @@ public class ProtectionController extends BaseController{
 
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         List<JSONObject> protectList = obj.getElementInfoService().getProtectList();
+        for (int i=0;i<protectList.size();i++) {
+            if (protectList.get(i).getString("node_name") != null) {
+                String nodeName = String.valueOf(protectList.get(i).get("node_name"));
+                List<JSONObject> resultList = obj.getAlarmService().getNodeAlarmByNodeName(nodeName);
+                if(resultList.size() != 0){
+                    protectList.get(i).put("alarmStatus","true");
+                }else {
+                    protectList.get(i).put("alarmStatus","false");
+                }
+            }
+        }
+//            System.out.println(nodeName);
 
         if (!protectList.isEmpty()) {
 

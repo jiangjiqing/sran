@@ -41,4 +41,9 @@
       </if>
     </trim>
   </insert>
+  <select id="getProtectList" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT a.node_name,b.group_name,b.latitude,b.station_name,b.longitude,c.level FROM unicom_protect_lte a LEFT JOIN unicom_node_lte b ON a.node_name=b.node_name LEFT JOIN unicom_quota_history_node_lte c ON a.node_name=c.name ORDER BY NOW() LIMIT 1
+    --   SELECT a.node_name,b.group_name,b.latitude,b.station_name,b.longitude FROM unicom_protect_wcdma a LEFT JOIN unicom_node_wcdma b ON a.node_name=b.node_name
+    -- SELECT node_name,group_name,latitude,station_name,longitude FROM unicom_node_wcdma
+  </select>
 </mapper>

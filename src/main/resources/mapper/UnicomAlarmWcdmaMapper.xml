@@ -106,7 +106,7 @@
     on aw.node_name = nw.node_name;
   </select>
 
-  <select id="getNodeAlarmByNodeName" resultType="com.hongshen.sran_service.entity.UnicomAlarmWcdma">
+  <select id="getNodeAlarmByNodeName" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
      select *
      from unicom_alarm_wcdma
      where node_name = #{nodeName}

@@ -19,7 +19,7 @@ public class NetObj_Unicom_Wcdma implements NetObjBase {
     private QuotaService_Unicom_Wcdma quotaService;
 
     @Autowired
-    private  AlarmService_Unicom_Lte alarmService;
+    private  AlarmService_Unicom_Wcdma alarmService;
 
     //    @Autowired
 //    private AlarmLibService_Unicom_Wcdma alarmLibService;

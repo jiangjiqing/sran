@@ -16,10 +16,11 @@ import java.util.Map;
  */
 @Service
 public class ElementInfoService_Unicom_Lte implements ElementInfoService {
-	
+	@Autowired
+    private UnicomProtectLteMapper unicomProtectMapper;
     @Override
     public List<JSONObject> getProtectList() {
-        return null;
+        return unicomProtectMapper.getProtectList();
     }
 //    @Autowired
 //    private UnicomProtectLteMapper unicomProtectLteMapper;

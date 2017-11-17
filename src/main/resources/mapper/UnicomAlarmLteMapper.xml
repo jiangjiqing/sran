@@ -107,9 +107,9 @@
     on al.node_name = nl.node_name;
   </select>
 
-  <select id="getNodeAlarmByNodeName" resultType="com.hongshen.sran_service.entity.UnicomAlarmLte">
-     select * from
-     unicom_alarm_lte
+  <select id="getNodeAlarmByNodeName" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
+     select *
+     from unicom_alarm_lte
      where node_name = #{nodeName}
   </select>
 
