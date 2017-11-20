@@ -40,11 +40,13 @@ public class ProtectionController extends BaseController{
 
         for (int i=0;i<protectList.size();i++) {
 
-            if (protectList.get(i).getString("node_name") != null) {
+            if (protectList.get(i).getString("nodeName") != null) {
 
-                String nodeName = String.valueOf(protectList.get(i).get("node_name"));
+                String nodeName = String.valueOf(protectList.get(i).get("nodeName"));
 
                 List<JSONObject> resultList = obj.getAlarmService().getNodeAlarmByNodeName(nodeName);
+
+                int level = obj.getElementInfoService().getLevelByName(nodeName);
 
                 if(resultList.size() != 0){
 
@@ -53,6 +55,16 @@ public class ProtectionController extends BaseController{
                 }else {
 
                     protectList.get(i).put("alarmStatus","false");
+
+
+                }
+                if (level > 0) {
+
+                    protectList.get(i).put("level", level );
+
+                }else {
+
+                    protectList.get(i).put("level", "null");
 
                 }
 

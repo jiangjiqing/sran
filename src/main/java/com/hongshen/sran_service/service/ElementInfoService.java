@@ -1,6 +1,7 @@
 package com.hongshen.sran_service.service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.hongshen.sran_service.entity.UnicomNodeWcdma;
 
 import java.util.List;
 
@@ -9,6 +10,10 @@ import java.util.List;
  */
 public interface ElementInfoService {
     List<JSONObject> getProtectList();
+
+    List<JSONObject> getFavoriteList();
+
+    int getLevelByName(String nodeName);
 
 
 //   List<String> getProtect();
