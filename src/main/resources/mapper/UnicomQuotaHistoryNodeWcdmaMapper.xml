@@ -201,4 +201,7 @@
       </if>
     </trim>
   </insert>
+  <select id="getLevelByName" resultType="Integer" parameterType="java.lang.String">
+    SELECT level FROM unicom_quota_history_node_wcdma WHERE name = #{nodeName} ORDER BY NOW() LIMIT 1
+  </select>
 </mapper>

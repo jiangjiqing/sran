@@ -87,4 +87,8 @@
     set list = #{list,jdbcType=VARCHAR}
     where login_name = #{loginName,jdbcType=VARCHAR}
   </update>
+  <select id="getFavoriteList" resultType="com.alibaba.fastjson.JSONObject">
+SELECT b.node_name nodeName,b.group_name groupName,b.latitude latitude,b.station_name stationName,b.longitude longitude FROM unicom_favorite_wcdma a LEFT JOIN unicom_node_wcdma b ON a.list = b.node_name
+-- LEFT JOIN unicom_quota_history_node_wcdma c ON b.node_name = c.`name` ORDER BY NOW() LIMIT 1
+  </select>
 </mapper>
