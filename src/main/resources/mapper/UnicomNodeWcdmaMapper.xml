@@ -168,4 +168,14 @@
       swversion = #{swversion,jdbcType=VARCHAR}
     where node_name = #{nodeName,jdbcType=VARCHAR}
   </update>
+
+
+  <select id="getNodeByName" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
+    SELECT latitude,longitude FROM unicom_node_wcdma where group_name = #{groupName}
+  </select>
+
+  <select id="getNodeList" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT * FROM  unicom_quota_history_node_wcdma ,unicom_node_lte;
+
+  </select>
 </mapper>

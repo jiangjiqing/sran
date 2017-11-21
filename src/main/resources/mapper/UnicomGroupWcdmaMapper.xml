@@ -289,4 +289,15 @@
       scope = #{scope,jdbcType=VARCHAR}
     where group_name = #{groupName,jdbcType=VARCHAR}
   </update>
+  <select id="getQuta" resultType="com.alibaba.fastjson.JSONObject">
+/*SELECT a.`name` groupName,a.`level` FROM unicom_quota_history_group_wcdma a ORDER BY NOW() LIMIT 1*/
+/*SELECT a.`name` groupName,a.`level` FROM unicom_quota_history_group_wcdma a WHERE a.time =(SELECT MAX(time) FROM unicom_quota_history_group_wcdma)*/
+SELECT  group_name groupName FROM  unicom_group_wcdma;
+  </select>
+  <select id="getNodes" parameterType="java.lang.String" resultType="java.util.Map">
+SELECT latitude,longitude FROM unicom_node_wcdma WHERE group_name = #{name};
+  </select>
+  <select id="getGroupByName" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
+    SELECT  level FROM unicom_quota_history_group_wcdma WHERE time =(SELECT MAX(time) FROM unicom_quota_history_group_wcdma) AND name = #{groupName}
+  </select>
 </mapper>

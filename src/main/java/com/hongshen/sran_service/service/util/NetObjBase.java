@@ -23,5 +23,8 @@ public interface NetObjBase {
     TelecomRoomService getTelecomRoomService();
 
     TaskService getTaskService();
-	
+
+    ElementInfoServiceQuotaService getQuota();
+
+    ElementInfoServiceQuotaService getNodeList(String groupName);
 }
