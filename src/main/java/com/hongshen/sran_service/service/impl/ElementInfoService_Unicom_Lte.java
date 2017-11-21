@@ -2,6 +2,7 @@ package com.hongshen.sran_service.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.dao.UnicomFavoriteLteMapper;
+import com.hongshen.sran_service.dao.UnicomNodeLteMapper;
 import com.hongshen.sran_service.dao.UnicomProtectLteMapper;
 import com.hongshen.sran_service.dao.UnicomQuotaHistoryNodeLteMapper;
 import com.hongshen.sran_service.entity.UnicomNodeWcdma;
@@ -24,6 +25,10 @@ public class ElementInfoService_Unicom_Lte implements ElementInfoService {
 
 	@Autowired
     private UnicomQuotaHistoryNodeLteMapper unicomQuotaHistoryNodeMapper;
+
+	@Autowired
+    private UnicomNodeLteMapper unicomNodeMapper;
+
     @Override
     public List<JSONObject> getProtectList() {
         return unicomProtectMapper.getProtectList();
@@ -42,6 +47,21 @@ public class ElementInfoService_Unicom_Lte implements ElementInfoService {
     @Override
     public int cancelCollection(String name) {
         return unicomFavoriteMapper.cancelCollection(name);
+    }
+
+    @Override
+    public int addCollection(String name) {
+        return unicomFavoriteMapper.addCollection(name);
+    }
+
+    @Override
+    public List<JSONObject> getSpecifiedGroupList(String groupName) {
+        return null;
+    }
+
+    @Override
+    public List<JSONObject> getSpecifiedNodeList(String groupName, String nodeName) {
+        return unicomNodeMapper.getSpecifiedNodeList(groupName,nodeName);
     }
 //    @Autowired
 //    private UnicomProtectLteMapper unicomProtectLteMapper;

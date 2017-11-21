@@ -113,8 +113,8 @@ public class FavoriteContrller {
         String method = Constants.METHOD_GET;
 
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
-//        int i = obj.getElementInfoService().addCollection(param);
-        int i = 1;
+        int i = obj.getElementInfoService().addCollection(name);
+//        int i = 1;
         if (i > 0) {
             System.out.println(i);
             result.put("msg", Constants.MSG_ADD_OK);

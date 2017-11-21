@@ -178,4 +178,7 @@
     SELECT * FROM  unicom_quota_history_node_wcdma ,unicom_node_lte;
 
   </select>
+  <select id="getSpecifiedNodeList" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
+    SELECT * FROM unicom_node_wcdma WHERE group_name = #{groupName} AND node_name = #{nodeName}
+  </select>
 </mapper>

@@ -60,4 +60,6 @@ public interface UnicomFavoriteWcdmaMapper {
     List<JSONObject> getFavoriteList();
 
     int cancelCollection(@Param("name") String name);
+
+    int addCollection(@Param("name") String name);
 }

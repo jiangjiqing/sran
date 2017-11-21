@@ -1,6 +1,10 @@
 package com.hongshen.sran_service.dao;
 
+import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.entity.UnicomNodeLte;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface UnicomNodeLteMapper {
     /**
@@ -50,4 +54,6 @@ public interface UnicomNodeLteMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(UnicomNodeLte record);
+
+    List<JSONObject> getSpecifiedNodeList(@Param("groupName") String groupName, @Param("nodeName") String nodeName);
 }

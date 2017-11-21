@@ -17,6 +17,12 @@ public interface ElementInfoService {
 
     int cancelCollection(String name);
 
+    int addCollection(String name);
+
+    List<JSONObject> getSpecifiedGroupList(String groupName);
+
+    List<JSONObject> getSpecifiedNodeList(String groupName, String nodeName);
+
 
 //   List<String> getProtect();
 //

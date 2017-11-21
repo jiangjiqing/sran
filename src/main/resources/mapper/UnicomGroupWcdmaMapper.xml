@@ -300,4 +300,7 @@ SELECT latitude,longitude FROM unicom_node_wcdma WHERE group_name = #{name};
   <select id="getGroupByName" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
     SELECT  level FROM unicom_quota_history_group_wcdma WHERE time =(SELECT MAX(time) FROM unicom_quota_history_group_wcdma) AND name = #{groupName}
   </select>
+  <select id="getSpecifiedGroupList" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
+    SELECT * FROM unicom_group_wcdma WHERE group_name = #{groupName}
+  </select>
 </mapper>
