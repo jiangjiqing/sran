@@ -1,7 +1,5 @@
 package com.hongshen.sran_service.service.util.impl;
-
 import com.hongshen.sran_service.service.*;
-import com.hongshen.sran_service.service.ElementInfoServiceQuotaService;
 import com.hongshen.sran_service.service.impl.*;
 import com.hongshen.sran_service.service.util.NetObjBase;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +34,6 @@ public class NetObj_Unicom_Wcdma implements NetObjBase {
 
     @Autowired
     private TaskService_Unicom_Wcdma taskService;
-    @Autowired
-    private ElementInfoServiceQuotaService groupService;
 
 //    @Override
 //    public AuthorityService getAuthorityService(){ return authorityService; }
@@ -70,16 +66,5 @@ public class NetObj_Unicom_Wcdma implements NetObjBase {
     public TaskService getTaskService() {
         return taskService;
     }
-
-    @Override
-    public ElementInfoServiceQuotaService getQuota() {
-        return groupService;
-    }
-
-    @Override
-    public ElementInfoServiceQuotaService getNodeList(String groupName) {
-        return groupService;
-    }
-
 
 }

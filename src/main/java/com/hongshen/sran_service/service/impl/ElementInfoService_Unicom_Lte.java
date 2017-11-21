@@ -1,11 +1,11 @@
 package com.hongshen.sran_service.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.hongshen.sran_service.dao.*;
 import com.hongshen.sran_service.dao.UnicomFavoriteLteMapper;
 import com.hongshen.sran_service.dao.UnicomNodeLteMapper;
 import com.hongshen.sran_service.dao.UnicomProtectLteMapper;
 import com.hongshen.sran_service.dao.UnicomQuotaHistoryNodeLteMapper;
-import com.hongshen.sran_service.entity.UnicomNodeWcdma;
 import com.hongshen.sran_service.service.ElementInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +16,11 @@ import java.util.List;
  */
 @Service
 public class ElementInfoService_Unicom_Lte implements ElementInfoService {
+    @Autowired
+    private UnicomQuotaGroupLteMapper unicomGroupMapper;
+
+    @Autowired
+    private UnicomNodeLteMapper unicomNodeMapper;
 
 	@Autowired
     private UnicomProtectLteMapper unicomProtectMapper;
@@ -25,10 +30,6 @@ public class ElementInfoService_Unicom_Lte implements ElementInfoService {
 
 	@Autowired
     private UnicomQuotaHistoryNodeLteMapper unicomQuotaHistoryNodeMapper;
-
-	@Autowired
-    private UnicomNodeLteMapper unicomNodeMapper;
-
     @Override
     public List<JSONObject> getProtectList() {
         return unicomProtectMapper.getProtectList();
@@ -47,6 +48,22 @@ public class ElementInfoService_Unicom_Lte implements ElementInfoService {
     @Override
     public int cancelCollection(String name) {
         return unicomFavoriteMapper.cancelCollection(name);
+    }
+
+    @Override
+    public List<JSONObject> getGroupList() {
+        return unicomGroupMapper.getGroupList();
+    }
+
+
+    @Override
+    public List<JSONObject> getNodeList(String groupName) {
+        return unicomNodeMapper.getNodeList(groupName);
+    }
+
+    @Override
+    public JSONObject getGroupByName(String groupName) {
+        return unicomGroupMapper.getGroupByName(groupName);
     }
 
     @Override

@@ -169,14 +169,8 @@
     where node_name = #{nodeName,jdbcType=VARCHAR}
   </update>
 
-
-  <select id="getNodeByName" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
-    SELECT latitude,longitude FROM unicom_node_wcdma where group_name = #{groupName}
-  </select>
-
   <select id="getNodeList" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
-    SELECT * FROM  unicom_quota_history_node_wcdma ,unicom_node_lte;
-
+    SELECT * FROM unicom_node_wcdma WHERE group_name = #{groupName};
   </select>
   <select id="getSpecifiedNodeList" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
     SELECT * FROM unicom_node_wcdma WHERE group_name = #{groupName} AND node_name = #{nodeName}

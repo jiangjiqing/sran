@@ -1,7 +1,6 @@
 package com.hongshen.sran_service.dao;
 
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.entity.UnicomGroupWcdma;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -65,10 +64,9 @@ public interface UnicomGroupWcdmaMapper {
      */
     int updateByPrimaryKey(UnicomGroupWcdma record);
 
-    List<JSONObject> getQuta();
-
     JSONObject getGroupByName(String groupName);
 
+    List<JSONObject> getGroupList();
 
     List<JSONObject> getSpecifiedGroupList(@Param("groupName") String groupName);
 }

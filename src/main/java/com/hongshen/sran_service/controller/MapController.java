@@ -1,7 +1,6 @@
 package com.hongshen.sran_service.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.common.BaseController;
-import com.hongshen.sran_service.service.ElementInfoServiceQuotaService;
 import com.hongshen.sran_service.service.util.Constants;
 import com.hongshen.sran_service.service.util.NetObjBase;
 import com.hongshen.sran_service.service.util.NetObjFactory;
@@ -16,6 +15,7 @@ import java.util.List;
  */
 @Path("/sran/service/net/mapinfo")
 public class MapController extends BaseController{
+
     @Autowired
     private NetObjFactory objFactory;
 
@@ -27,16 +27,15 @@ public class MapController extends BaseController{
         JSONObject result = new JSONObject();
         /*if (check(url, method, authToken)) {*/
             NetObjBase obj = objFactory.getNetObj(supplier, generation);
-            ElementInfoServiceQuotaService elementInfoServiceQuotaService = obj.getQuota();
-            List<JSONObject> quo = elementInfoServiceQuotaService.getquota();
+            List<JSONObject> quo = obj.getElementInfoService().getGroupList();
             List<JSONObject> List =new ArrayList<>();
             for (int i = 0;i<quo.size();i++){
                 JSONObject result1 = new JSONObject();
                 List<Double[]> list = new ArrayList<>();
-                if (quo.get(i).getString("groupName") != null) {
-                    String groupName= quo.get(i).getString("groupName");
-                    List<JSONObject> nodeList =  elementInfoServiceQuotaService.getNodeByName(groupName);
-                    JSONObject group = elementInfoServiceQuotaService.getGroupByName(groupName);
+                if (quo.get(i).getString("group_name") != null) {
+                    String groupName= quo.get(i).getString("group_name");
+                    List<JSONObject> nodeList =  obj.getElementInfoService().getNodeList(groupName);
+                    JSONObject group = obj.getElementInfoService().getGroupByName(groupName);//TODO
                     Double latitude = 0.0;
                     Double longitude = 0.0;
                     int num=0;
@@ -55,6 +54,7 @@ public class MapController extends BaseController{
                     }else{
                         result1.putAll(group);
                     }
+                    result1.put("name",groupName);
                     result1.put("scope",list);
                     result1.putAll(json);
                     List.add(result1);
@@ -86,17 +86,18 @@ public class MapController extends BaseController{
         }
         return j;
     }
-    @GET
-    @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/{groupName}/nodes/mapinfos")
-    @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject  getNodeList(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
-                                    @HeaderParam("Auth-Token")String authToken,@PathParam("groupName")String groupName) {
-        JSONObject result = new JSONObject();
-        NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        ElementInfoServiceQuotaService elementInfoServiceQuotaService = obj.getNodeList(groupName);
-        List<JSONObject> nodeList = elementInfoServiceQuotaService.getNodeList(groupName);
-        System.out.println(nodeList);
-
-        return null;
-    }
+//    @GET
+//    @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/{groupName}/nodes/mapinfos")
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public JSONObject  getNodeList(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
+//                                    @HeaderParam("Auth-Token")String authToken,@PathParam("groupName")String groupName) {
+//        System.out.println(groupName);
+//        JSONObject result = new JSONObject();
+//        NetObjBase obj = objFactory.getNetObj(supplier, generation);
+//        ElementInfoServiceQuotaService elementInfoServiceQuotaService = obj.getNodeList(groupName);
+//        List<JSONObject> nodeList = elementInfoServiceQuotaService.getNodeList(groupName);
+//        System.out.println(nodeList);
+//        result.put("ss",nodeList);
+//        return result;
+//    }
 }

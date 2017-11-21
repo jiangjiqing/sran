@@ -1,7 +1,5 @@
 package com.hongshen.sran_service.service.util.impl;
-
 import com.hongshen.sran_service.service.*;
-import com.hongshen.sran_service.service.ElementInfoServiceQuotaService;
 import com.hongshen.sran_service.service.impl.*;
 import com.hongshen.sran_service.service.util.NetObjBase;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,16 +67,4 @@ public class NetObj_Unicom_Lte implements NetObjBase {
     public TaskService getTaskService() {
         return taskService;
     }
-
-    @Override
-    public ElementInfoServiceQuotaService getQuota() {
-        return null;
-    }
-
-    @Override
-    public ElementInfoServiceQuotaService getNodeList(String groupName) {
-        return null;
-    }
-
-
 }

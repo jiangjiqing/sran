@@ -56,9 +56,6 @@ public interface UnicomNodeWcdmaMapper {
      */
     int updateByPrimaryKey(UnicomNodeWcdma record);
 
-    List<JSONObject> getNodeByName(@Param("groupName") String groupName);
-
-
     List<JSONObject> getNodeList(@Param("groupName") String groupName);
 
     List<JSONObject> getSpecifiedNodeList(@Param("groupName")String groupName, @Param("nodeName") String nodeName);
