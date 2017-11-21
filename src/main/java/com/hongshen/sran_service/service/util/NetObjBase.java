@@ -8,7 +8,9 @@ import com.hongshen.sran_service.service.*;
 
 public interface NetObjBase {
 
-//    getAuthorityService();
+//    AuthorityService getAuthorityService();
+
+    CacheService getCacheService();
 
     QuotaService getQuotaService();
 
