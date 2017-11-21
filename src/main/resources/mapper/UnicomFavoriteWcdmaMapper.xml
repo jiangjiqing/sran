@@ -91,4 +91,7 @@
 SELECT b.node_name nodeName,b.group_name groupName,b.latitude latitude,b.station_name stationName,b.longitude longitude FROM unicom_favorite_wcdma a LEFT JOIN unicom_node_wcdma b ON a.list = b.node_name
 -- LEFT JOIN unicom_quota_history_node_wcdma c ON b.node_name = c.`name` ORDER BY NOW() LIMIT 1
   </select>
+  <update id="cancelCollection" parameterType="java.lang.String">
+    UPDATE unicom_favorite_wcdma a SET a.list = NULL WHERE a.list = #{name}
+  </update>
 </mapper>

@@ -3,6 +3,7 @@ package com.hongshen.sran_service.dao;
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.entity.UnicomFavoriteWcdma;
 import com.hongshen.sran_service.entity.UnicomNodeWcdma;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -57,4 +58,6 @@ public interface UnicomFavoriteWcdmaMapper {
     int updateByPrimaryKey(UnicomFavoriteWcdma record);
 
     List<JSONObject> getFavoriteList();
+
+    int cancelCollection(@Param("name") String name);
 }

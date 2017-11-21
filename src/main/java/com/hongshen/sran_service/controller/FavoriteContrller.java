@@ -24,6 +24,7 @@ public class FavoriteContrller {
     @Autowired
     private Httpclient httpclient;
 
+//    Query collection network element list
     @GET
     @Path("/suppliers/{supplier}/generations/{generation}/nets/favorites/mapinfo")
     @Produces(MediaType.APPLICATION_JSON)
@@ -68,5 +69,62 @@ public class FavoriteContrller {
 //
 //            return result;
 //        }
+    }
+
+//    Cancel the status of network element collection
+    @POST
+    @Path("/suppliers/{supplier}/generations/{generation}/nets/{level}/{name}/favorites")
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject cancelCollection(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
+                                        @HeaderParam("Auth-Token")String authToken, @PathParam("level")String level,
+                                        @PathParam("name")String name) {
+
+        JSONObject result = new JSONObject();
+        String url = Constants.PATH_DUMMY;
+        String method = Constants.METHOD_GET;
+//        if (check(url, method, authToken)) {
+        NetObjBase obj = objFactory.getNetObj(supplier, generation);
+
+        int i = obj.getElementInfoService().cancelCollection(name);
+        if (i > 0) {
+            System.out.println(i);
+            result.put("msg", Constants.MSG_DELETE_OK);
+            result.put("result", Constants.SUCCESS);
+        } else {
+            System.out.println(i);
+            result.put("msg", Constants.MSG_DELETE_FAILED);
+            result.put("result", Constants.FAIL);
+        }
+        return result;
+        //        } else {
+//
+//            return result;
+//        }
+    }
+
+    //    Add the status of network element collection
+    @PUT
+    @Path("/suppliers/{supplier}/generations/{generation}/nets/{level}/{name}/favorites")
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject addCollection(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
+                                       @HeaderParam("Auth-Token")String authToken, @PathParam("level")String level,
+                                       @PathParam("name")String name,JSONObject param) {
+        JSONObject result = new JSONObject();
+        String url = Constants.PATH_DUMMY;
+        String method = Constants.METHOD_GET;
+
+        NetObjBase obj = objFactory.getNetObj(supplier, generation);
+//        int i = obj.getElementInfoService().addCollection(param);
+        int i = 1;
+        if (i > 0) {
+            System.out.println(i);
+            result.put("msg", Constants.MSG_ADD_OK);
+            result.put("result", Constants.SUCCESS);
+        } else {
+            System.out.println(i);
+            result.put("msg", Constants.MSG_ADD_FAILED);
+            result.put("result", Constants.FAIL);
+        }
+        return result;
     }
 }
