@@ -21,5 +21,6 @@ public class JerseyConfig extends ResourceConfig{
         register(QuotaThresholdController.class);
         register(TopologyController.class);
         register(UserController.class);
+        register(CorsFilter.class);
     }
 }

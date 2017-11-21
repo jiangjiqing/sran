@@ -1,7 +1,6 @@
 package com.hongshen.sran_service.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hongshen.sran_service.entity.UnicomNodeWcdma;
 import com.hongshen.sran_service.service.util.Constants;
 import com.hongshen.sran_service.service.util.Httpclient;
 import com.hongshen.sran_service.service.util.NetObjBase;

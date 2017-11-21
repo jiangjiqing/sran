@@ -38,6 +38,11 @@ public class ElementInfoService_Unicom_Lte implements ElementInfoService {
     public int getLevelByName(String nodeName) {
         return unicomQuotaHistoryNodeMapper.getLevelByName(nodeName);
     }
+
+    @Override
+    public int cancelCollection(String name) {
+        return unicomFavoriteMapper.cancelCollection(name);
+    }
 //    @Autowired
 //    private UnicomProtectLteMapper unicomProtectLteMapper;
 //    @Autowired

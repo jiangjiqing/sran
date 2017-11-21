@@ -15,6 +15,8 @@ public interface ElementInfoService {
 
     int getLevelByName(String nodeName);
 
+    int cancelCollection(String name);
+
 
 //   List<String> getProtect();
 //
