@@ -303,4 +303,7 @@ SELECT latitude,longitude FROM unicom_node_wcdma WHERE group_name = #{groupName}
   <select id="getSpecifiedGroupList" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
     SELECT * FROM unicom_group_wcdma WHERE group_name = #{groupName}
   </select>
+  <select id="getGroupInfoList" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT a.group_name groupName,a.group_id groupId,a.msc,a.msc_pool,a.oss,a.pool,a.signal_code singnalCode,a.lac,a.rac,a.a2ea_address,a.ip,a.swversion,a.hwversion,a.room,a.type,a.scope FROM unicom_group_wcdma a
+  </select>
 </mapper>

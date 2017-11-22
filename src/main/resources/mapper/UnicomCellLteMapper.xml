@@ -49,4 +49,7 @@
       </if>
     </trim>
   </insert>
+  <select id="getSpecifiedCellList" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
+    SELECT * FROM unicom_cell_lte WHERE cell_name = #{cellName}
+  </select>
 </mapper>

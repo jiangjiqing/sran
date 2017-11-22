@@ -26,7 +26,7 @@ public class ElementInfoService_Unicom_Wcdma implements ElementInfoService {
     private UnicomNodeWcdmaMapper nodeMapper;
 
     @Autowired
-    private UnicomCellLteMapper cellMapper;
+    private UnicomCellWcdmaMapper cellMapper;
 
     @Override
     public List<JSONObject> getProtectList() {
@@ -71,8 +71,18 @@ public class ElementInfoService_Unicom_Wcdma implements ElementInfoService {
     }
 
     @Override
-    public List<JSONObject> getSpecifiedNodeList(String groupName, String nodeName) {
-        return nodeMapper.getSpecifiedNodeList(groupName,nodeName);
+    public List<JSONObject> getSpecifiedNodeList(String nodeName) {
+        return nodeMapper.getSpecifiedNodeList(nodeName);
+    }
+
+    @Override
+    public List<JSONObject> getSpecifiedCellList(String cellName) {
+        return cellMapper.getSpecifiedCellList(cellName);
+    }
+
+    @Override
+    public List<JSONObject> getGroupInfoList() {
+        return groupMapper.getGroupInfoList();
     }
 //    @Autowired
 //    private UnicomGroupWcdmaMapper unicomGroupWcdmaMapper;

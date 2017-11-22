@@ -28,7 +28,11 @@ public interface ElementInfoService {
 
     List<JSONObject> getSpecifiedGroupList(String groupName);
 
-    List<JSONObject> getSpecifiedNodeList(String groupName, String nodeName);
+    List<JSONObject> getSpecifiedNodeList(String nodeName);
+
+    List<JSONObject> getSpecifiedCellList(String cellName);
+
+    List<JSONObject> getGroupInfoList();
 
 
 //   List<String> getProtect();

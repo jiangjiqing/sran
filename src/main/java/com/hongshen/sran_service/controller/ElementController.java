@@ -33,7 +33,7 @@ public class ElementController {
         JSONObject result = new JSONObject();
         String url = Constants.PATH_DUMMY;
         String method = Constants.METHOD_GET;
-
+//        if (check(url, method, authToken)) {
         if (generation.equals("wcdma")) {
 
             NetObjBase obj = objFactory.getNetObj(supplier, generation);
@@ -56,6 +56,10 @@ public class ElementController {
             result.put("result", Constants.FAIL);
         }
         return result;
+        //        } else {
+//
+//            return result;
+//        }
     }
 
 //    Query specified node information container
@@ -68,9 +72,10 @@ public class ElementController {
         JSONObject result = new JSONObject();
         String url = Constants.PATH_DUMMY;
         String method = Constants.METHOD_GET;
+//        if (check(url, method, authToken)) {
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
 
-        List<JSONObject> NodeList = obj.getElementInfoService().getSpecifiedNodeList(groupName,nodeName);
+        List<JSONObject> NodeList = obj.getElementInfoService().getSpecifiedNodeList(nodeName);
 
         if (!NodeList.isEmpty()){
 
@@ -84,8 +89,73 @@ public class ElementController {
 
         }
         return result;
+//        } else {
+//
+//            return result;
+//        }
     }
 
     //    Query specified cell information container
+    @GET
+    @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/{groupName}/nodes/{nodeName}/cells/{cellName}/infocontainer")
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject getSpecifiedCellList(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
+                                           @PathParam("groupName")String groupName, @PathParam("nodeName")String nodeName,
+                                           @PathParam("cellName")String cellName,@HeaderParam("Auth-Token")String authToken) {
+        JSONObject result = new JSONObject();
+        String url = Constants.PATH_DUMMY;
+        String method = Constants.METHOD_GET;
+//        if (check(url, method, authToken)) {
+        NetObjBase obj = objFactory.getNetObj(supplier, generation);
 
+        List<JSONObject> CellList = obj.getElementInfoService().getSpecifiedCellList(cellName);
+
+        if (!CellList.isEmpty()){
+
+            result.put("data", CellList);
+            result.put("result", Constants.SUCCESS);
+
+        } else {
+
+            result.put("msg", Constants.MSG_NO_DATA);
+            result.put("result", Constants.FAIL);
+
+        }
+        return result;
+//        } else {
+//
+//            return result;
+//        }
+    }
+//    Query group 3G infoList
+    @GET
+    @Path("/suppliers/{supplier}/generations/{generation}/nets/groups")
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject getGroupInfoList(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
+                                           @HeaderParam("Auth-Token")String authToken) {
+        JSONObject result = new JSONObject();
+        String url = Constants.PATH_DUMMY;
+        String method = Constants.METHOD_GET;
+//        if (check(url, method, authToken)) {
+        NetObjBase obj = objFactory.getNetObj(supplier, generation);
+
+        List<JSONObject> GroupInfoList = obj.getElementInfoService().getGroupInfoList();
+
+        if (!GroupInfoList.isEmpty()){
+
+            result.put("data", GroupInfoList);
+            result.put("result", Constants.SUCCESS);
+
+        } else {
+
+            result.put("msg", Constants.MSG_NO_DATA);
+            result.put("result", Constants.FAIL);
+
+        }
+        return result;
+//        } else {
+//
+//            return result;
+//        }
+    }
 }
