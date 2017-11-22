@@ -23,22 +23,17 @@ public class AlarmService_Unicom_Lte implements AlarmService {
     }
 	
 	@Override
-    public List<JSONObject> getGroupAlarmByGroupName(String groupName) {
-        return alarmMapper.getGroupAlarmByGroupName(groupName);
+    public List<JSONObject> getGroupAlarmByName(String groupName) {
+        return alarmMapper.getGroupAlarmByName(groupName);
     }
 	
 	@Override
-    public List<JSONObject> getNodeAlarmByNodeName(String nodeName) {
-        return alarmMapper.getNodeAlarmByNodeName(nodeName);
+    public List<JSONObject> getNodeAlarmByName(String nodeName) {
+        return alarmMapper.getNodeAlarmByName(nodeName);
     }
 	
 	@Override
-    public List<JSONObject> getCellAlarmByCellName(String cellName) {
-        return alarmMapper.getCellAlarmByCellName(cellName);
+    public List<JSONObject> getCellAlarmByName(String cellName) {
+        return alarmMapper.getCellAlarmByName(cellName);
     }
-    //@Override
-    //public Map<String, Object> getGroupAlarmInfo() {
-    //    return alarmMapper.getGroupAlarmInfo();
-    //}
-	
 }

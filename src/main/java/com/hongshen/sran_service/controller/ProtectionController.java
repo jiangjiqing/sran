@@ -44,7 +44,7 @@ public class ProtectionController extends BaseController{
 
                 String nodeName = String.valueOf(protectList.get(i).get("nodeName"));
 
-                List<JSONObject> resultList = obj.getAlarmService().getNodeAlarmByNodeName(nodeName);
+                List<JSONObject> resultList = obj.getAlarmService().getNodeAlarmByName(nodeName);
 
                 int level = obj.getQuotaService().getNodeLevelByName(nodeName);
 
@@ -94,5 +94,54 @@ public class ProtectionController extends BaseController{
 //        }
 
     }
+    //    @RequestMapping(value = "/v1/dc-map")
+//    public Map test() {
+//        boolean sign = false;
+//        String result = "";
+//        Map jsonResult = new HashMap();
+//        Map<String, Object> data = new HashMap<String, Object>();
+//        String authResult = null;
+//        Map<String,Object> role2 = new HashMap<String,Object>();
+//
+//        String supplier = "unicom";
+//        String generation  = "lte";
+//        Role role = new Role();
+//        Role role1 = null;
+//        role.setRoleId(1);
+//        int id=role.getRoleId();
+//        //Shiro authorization
+//        String checkUrl = "/service/v1/dc-map";
+//        String checkMethod = "GET";
+//        String url = Constants.SHIRO_URI+"?checkUrl="+checkUrl+"&checkMethod="+checkMethod;
+//        String token = "eyJ0eXBlIjoiSldUIiwiYWxnIjoiSFMyNTYiLCJ0eXAiOiJKV1QifQ.eyJzdWIiOiJlY2FwIiwiaXNzIjoiRXJpY3Nzb24iLCJ1c2VybmFtZSI6InBldGVyIn0.IbXgDC975i4M4D3AVeeaWFLC3YD3zY9-6XiNbiocxNo";
+//        try {
+//            authResult = httpclient.httpclient(url,token);
+//            data.put("BB",authResult);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        if(authResult.equals("FAILED")){
+//            System.out.println("555");
+//            role1 = null;
+//            sign = false;
+//            result = "failed";
+//        }else {
+//
+//            //
+//            NetObjBase obj = objFactory.getNetObj(supplier,generation);
+
+//            role1 = dataProvider.getGroupQuotaInfo(id);
+//
+//            role2.put("id",role1.getRoleId());
+//            role2.put("name",role1.getRoleName());
+//            sign = true;
+//            result= "success";
+//        }
+//        jsonResult.put("data",role2);
+//        jsonResult.put("result", result);
+//        jsonResult.put("status", sign);
+//
+//        return jsonResult;
+//    }
 
 }

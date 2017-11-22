@@ -9,9 +9,10 @@ import java.util.Map;
 public interface AlarmService {
 
     List<JSONObject> getAllAlarmInfo();
-	List<JSONObject> getGroupAlarmByGroupName(String groupName);
-    List<JSONObject> getNodeAlarmByNodeName(String nodeName);
-    List<JSONObject> getCellAlarmByCellName(String cellName);
-//    List<JSONObject> getAllAlarmSerice();
-//    Map<String,Object> getGroupAlarmInfo();
+
+	List<JSONObject> getGroupAlarmByName(String groupName);
+
+    List<JSONObject> getNodeAlarmByName(String nodeName);
+
+    List<JSONObject> getCellAlarmByName(String cellName);
 }

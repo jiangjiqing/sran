@@ -28,11 +28,10 @@ public interface UnicomAlarmLteMapper {
 
     List<JSONObject> getAllAlarmInfo();
 
-    List<JSONObject> getGroupAlarmByGroupName(@Param("groupName")String groupName);
+    List<JSONObject> getGroupAlarmByName(@Param("groupName")String groupName);
 
-    List<JSONObject> getNodeAlarmByNodeName(@Param("nodeName")String nodeName);
+    List<JSONObject> getNodeAlarmByName(@Param("nodeName")String nodeName);
 
-    List<JSONObject> getCellAlarmByCellName(@Param("cellName")String cellName);
+    List<JSONObject> getCellAlarmByName(@Param("cellName")String cellName);
 
-    //Map<String,Object> getGroupAlarmInfo();
 }

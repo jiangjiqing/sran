@@ -16,7 +16,7 @@ import java.util.List;
  * Created by poplar on 11/13/17.
  */
 @Path("/sran/service/net/formula")
-public class QuoatFormulaController {
+public class QuotaFormulaController {
 
     @Autowired
     private NetObjFactory objFactory;
@@ -82,8 +82,8 @@ public class QuoatFormulaController {
     public JSONObject getCounterList(@PathParam("supplier")String supplier,
                                      @PathParam("generation")String generation,
                                      @HeaderParam("Auth-Token")String authToken){
-        JSONObject resultList = new JSONObject();
+        JSONObject result = new JSONObject();
         //TODO
-        return resultList;
+        return result;
     }
 }
