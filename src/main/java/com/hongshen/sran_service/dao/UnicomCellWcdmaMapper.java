@@ -66,4 +66,7 @@ public interface UnicomCellWcdmaMapper {
     int updateByPrimaryKey(UnicomCellWcdma record);
 
     List<JSONObject> getSpecifiedCellList(@Param("cellName") String cellName);
+
+    List<JSONObject> getCellList(@Param("nodeName")String nodeName);
+
 }
