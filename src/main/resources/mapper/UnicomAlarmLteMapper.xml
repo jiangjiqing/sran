@@ -81,7 +81,7 @@
     unicom_alarm_lte;
   </select>
 
-  <select id="getGroupAlarmByGroupName" resultType="com.alibaba.fastjson.JSONObject">
+  <select id="getGroupAlarmByName" resultType="com.alibaba.fastjson.JSONObject">
     SELECT
     al.node_name,
     al.mo,
@@ -107,13 +107,13 @@
     on al.node_name = nl.node_name;
   </select>
 
-  <select id="getNodeAlarmByNodeName" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
+  <select id="getNodeAlarmByName" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
      select *
      from unicom_alarm_lte
      where node_name = #{nodeName}
   </select>
 
-  <select id="getCellAlarmByCellName" resultType="com.alibaba.fastjson.JSONObject">
+  <select id="getCellAlarmByName" resultType="com.alibaba.fastjson.JSONObject">
     SELECT * FROM
     unicom_alarm_lte
     where cell_name = #{cellName}

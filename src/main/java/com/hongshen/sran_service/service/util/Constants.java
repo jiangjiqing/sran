@@ -38,9 +38,11 @@ public class Constants {
     public static final String MSG_NO_DATA = "Data is empty.";
 	public static final String MSG_NO_PERMISSION = "Permission denied.";
 
-	public static final String MSG_DELETE_OK = "delete favorite ok";
-	public static final String MSG_DELETE_FAILED = "delete favorite failed";
-	public static final String MSG_ADD_OK = "add favorite ok";
-	public static final String MSG_ADD_FAILED = "add favorite failed";
+	public static final String MSG_DELETE_OK = "delete_ok";
+	public static final String MSG_DELETE_FAILED = "delete_failed";
+	public static final String MSG_ADD_OK = "add_ok";
+	public static final String MSG_ADD_FAILED = "add_failed";
+	public static final String MSG_UPDATE_OK = "update_ok";
+	public static final String MSG_UPDATE_FAILED = "update_failed";
 
 }

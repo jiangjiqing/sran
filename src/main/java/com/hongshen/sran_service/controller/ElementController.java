@@ -34,7 +34,6 @@ public class ElementController {
         String url = Constants.PATH_DUMMY;
         String method = Constants.METHOD_GET;
 //        if (check(url, method, authToken)) {
-        if (generation.equals("wcdma")) {
 
             NetObjBase obj = objFactory.getNetObj(supplier, generation);
 
@@ -51,10 +50,6 @@ public class ElementController {
                 result.put("result", Constants.FAIL);
 
             }
-        }else{
-            result.put("msg", Constants.MSG_NO_DATA);
-            result.put("result", Constants.FAIL);
-        }
         return result;
         //        } else {
 //
@@ -137,22 +132,23 @@ public class ElementController {
         String url = Constants.PATH_DUMMY;
         String method = Constants.METHOD_GET;
 //        if (check(url, method, authToken)) {
-        NetObjBase obj = objFactory.getNetObj(supplier, generation);
+            NetObjBase obj = objFactory.getNetObj(supplier, generation);
 
-        List<JSONObject> GroupInfoList = obj.getElementInfoService().getGroupInfoList();
+            List<JSONObject> GroupInfoList = obj.getElementInfoService().getGroupInfoList();
 
-        if (!GroupInfoList.isEmpty()){
+            if (!GroupInfoList.isEmpty()) {
 
-            result.put("data", GroupInfoList);
-            result.put("result", Constants.SUCCESS);
+                result.put("data", GroupInfoList);
+                result.put("result", Constants.SUCCESS);
 
-        } else {
+            } else {
 
-            result.put("msg", Constants.MSG_NO_DATA);
-            result.put("result", Constants.FAIL);
+                result.put("msg", Constants.MSG_NO_DATA);
+                result.put("result", Constants.FAIL);
 
-        }
+            }
         return result;
+
 //        } else {
 //
 //            return result;

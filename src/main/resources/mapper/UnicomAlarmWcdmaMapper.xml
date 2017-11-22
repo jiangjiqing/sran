@@ -80,7 +80,7 @@
     FROM unicom_alarm_wcdma;
   </select>
 
-  <select id="getGroupAlarmByGroupName" resultType="com.alibaba.fastjson.JSONObject">
+  <select id="getGroupAlarmByName" resultType="com.alibaba.fastjson.JSONObject">
     SELECT
     aw.node_name,
     aw.mo,
@@ -106,13 +106,13 @@
     on aw.node_name = nw.node_name;
   </select>
 
-  <select id="getNodeAlarmByNodeName" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
+  <select id="getNodeAlarmByName" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
      select *
      from unicom_alarm_wcdma
      where node_name = #{nodeName}
   </select>
 
-  <select id="getCellAlarmByCellName" resultType="com.alibaba.fastjson.JSONObject">
+  <select id="getCellAlarmByName" resultType="com.alibaba.fastjson.JSONObject">
      select *
      from unicom_alarm_wcdma
      where cell_name = #{cellName}

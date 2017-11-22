@@ -35,8 +35,10 @@ public class NetObj_Unicom_Wcdma implements NetObjBase {
     @Autowired
     private TaskService_Unicom_Wcdma taskService;
 
-//    @Override
-//    public AuthorityService getAuthorityService(){ return authorityService; }
+    @Autowired
+    private AuthorityService_Unicom_Wcdma authorityService;
+    @Override
+    public AuthorityService getAuthorityService(){ return authorityService; }
 
     @Override
     public CacheService getCacheService() { return cacheService; }
@@ -66,5 +68,7 @@ public class NetObj_Unicom_Wcdma implements NetObjBase {
     public TaskService getTaskService() {
         return taskService;
     }
+
+
 
 }
