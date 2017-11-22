@@ -16,8 +16,6 @@ public interface ElementInfoService {
 
     List<JSONObject> getFavoriteList();
 
-    int getLevelByName(String nodeName);//TODO
-
     int cancelCollection(String name);
 
     int addCollection(String name);
