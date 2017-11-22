@@ -57,6 +57,11 @@ public class QuotaService_Unicom_Wcdma implements QuotaService {
         return quotaHistoryCellMapper.getLevelByName(cellName);
     }
 
+    @Override
+    public JSONObject getNodeLevel(String nodeName) {
+        return quotaHistoryNodeMapper.getNodeLevel(nodeName);
+    }
+
 //    @Override
 //    public Map<String, Object> getQuotaInfo() {
 //        return unicomQuotaHistoryGroupWcdmaMapper.getQuotaInfo();

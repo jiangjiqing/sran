@@ -211,4 +211,8 @@
     FROM unicom_quota_history_node_wcdma
     WHERE name = #{nodeName} ORDER BY NOW() LIMIT 1
   </select>
+
+  <select id="getNodeLevel" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
+    SELECT * FROM unicom_quota_history_node_wcdma WHERE name = #{nodeName};
+  </select>
 </mapper>

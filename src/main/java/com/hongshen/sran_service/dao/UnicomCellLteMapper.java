@@ -1,10 +1,8 @@
 package com.hongshen.sran_service.dao;
-
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.entity.UnicomCellLte;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
-
 import java.util.List;
 
 @Repository
@@ -26,4 +24,6 @@ public interface UnicomCellLteMapper {
     int insertSelective(UnicomCellLte record);
 
     List<JSONObject> getSpecifiedCellList(@Param("cellName") String cellName);
+
+    List<JSONObject> getCellList(@Param("nodeName") String nodeName);
 }

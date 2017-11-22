@@ -86,6 +86,11 @@ public class ElementInfoService_Unicom_Lte implements ElementInfoService {
     public List<JSONObject> getGroupInfoList() {
         return groupMapper.getGroupInfoList();
     }
+
+    @Override
+    public List<JSONObject> getCellList(String nodeName) {
+        return cellMapper.getCellList(nodeName);
+    }
 //    @Autowired
 //    private UnicomProtectLteMapper unicomProtectLteMapper;
 //    @Autowired

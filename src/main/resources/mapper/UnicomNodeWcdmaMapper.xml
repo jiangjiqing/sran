@@ -170,8 +170,9 @@
   </update>
 
   <select id="getNodeList" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
-    SELECT * FROM unicom_node_wcdma WHERE group_name = #{groupName};
+    SELECT node_name name,station_name stationName,latitude, longitude FROM unicom_node_wcdma WHERE group_name = #{groupName};
   </select>
+
   <select id="getSpecifiedNodeList" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
     SELECT * FROM unicom_node_wcdma WHERE node_name = #{nodeName}
   </select>

@@ -185,4 +185,5 @@
   <select id="getSpecifiedNodeList" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
     SELECT * FROM unicom_node_lte WHERE node_name = #{nodeName}
   </select>
+  <!--lte-->
 </mapper>

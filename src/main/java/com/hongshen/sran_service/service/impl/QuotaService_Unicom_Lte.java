@@ -56,6 +56,11 @@ public class QuotaService_Unicom_Lte implements QuotaService {
     public int getCellLevelByName(String cellName) {
         return quotaHistoryCellMapper.getLevelByName(cellName);
     }
+
+    @Override
+    public JSONObject getNodeLevel(String nodeName) {
+        return quotaHistoryNodeMapper.getNodeLevel(nodeName);
+    }
 //    @Override
 //    public Map<String, Object> getQuotaInfo() {
 //        return unicomQuotaHistoryGroupLteMapper.getQuotaInfo();

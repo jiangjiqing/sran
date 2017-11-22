@@ -26,4 +26,6 @@ public interface UnicomQuotaHistoryNodeWcdmaMapper {
     JSONObject getQuotaByName(@Param("nodeName")String nodeName);
 
     int getLevelByName(@Param("nodeName") String nodeName);
+
+    JSONObject getNodeLevel(@Param("nodeName")String nodeName);
 }

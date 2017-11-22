@@ -21,4 +21,6 @@ public interface QuotaService {
     int getNodeLevelByName(String nodeName);
 
     int getCellLevelByName(String cellName);
+
+    JSONObject getNodeLevel(String node_name);
 }

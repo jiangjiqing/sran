@@ -1,11 +1,9 @@
 package com.hongshen.sran_service.service;
-
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.entity.UnicomNodeWcdma;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
 /**
  * Created by poplar on 11/13/17.
  */
@@ -33,6 +31,8 @@ public interface ElementInfoService {
     List<JSONObject> getSpecifiedCellList(String cellName);
 
     List<JSONObject> getGroupInfoList();
+
+    List<JSONObject> getCellList(String nodeName);
 
 
 //   List<String> getProtect();

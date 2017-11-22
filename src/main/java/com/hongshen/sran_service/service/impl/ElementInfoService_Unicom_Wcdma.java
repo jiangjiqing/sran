@@ -59,6 +59,7 @@ public class ElementInfoService_Unicom_Wcdma implements ElementInfoService {
         return nodeMapper.getNodeList(groupName);
     }
 
+
     @Override//TODO
     public JSONObject getGroupByName(String groupName) {
         return groupMapper.getGroupByName(groupName);
@@ -84,6 +85,12 @@ public class ElementInfoService_Unicom_Wcdma implements ElementInfoService {
     public List<JSONObject> getGroupInfoList() {
         return groupMapper.getGroupInfoList();
     }
+
+    @Override
+    public List<JSONObject> getCellList(String nodeName) {
+        return cellMapper.getCellList(nodeName);
+    }
+
 //    @Autowired
 //    private UnicomGroupWcdmaMapper unicomGroupWcdmaMapper;
 //    @Autowired
