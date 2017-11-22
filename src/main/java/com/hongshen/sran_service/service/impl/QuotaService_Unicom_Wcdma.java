@@ -1,7 +1,9 @@
 package com.hongshen.sran_service.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.hongshen.sran_service.dao.UnicomQuotaHistoryCellWcdmaMapper;
 import com.hongshen.sran_service.dao.UnicomQuotaHistoryGroupWcdmaMapper;
+import com.hongshen.sran_service.dao.UnicomQuotaHistoryNodeWcdmaMapper;
 import com.hongshen.sran_service.entity.UnicomQuotaHistoryGroupWcdma;
 import com.hongshen.sran_service.service.QuotaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +19,42 @@ import java.util.Map;
 public class QuotaService_Unicom_Wcdma implements QuotaService {
 
     @Autowired
-    private UnicomQuotaHistoryGroupWcdmaMapper quotaGroupMapper;
+    private UnicomQuotaHistoryGroupWcdmaMapper quotaHistoryGroupMapper;
 
+    @Autowired
+    private UnicomQuotaHistoryNodeWcdmaMapper quotaHistoryNodeMapper;
+
+    @Autowired
+    private UnicomQuotaHistoryCellWcdmaMapper quotaHistoryCellMapper;
 
     @Override
-    public JSONObject getGroupQuotaByGroupName(String groupName) {
-        return quotaGroupMapper.getGroupQuotaByGroupName(groupName);
+    public JSONObject getGroupQuotaByName(String groupName) {
+        return quotaHistoryGroupMapper.getQuotaByName(groupName);
+    }
+
+    @Override
+    public JSONObject getNodeQuotaByName(String nodeName){
+        return quotaHistoryNodeMapper.getQuotaByName(nodeName);
+    }
+
+    @Override
+    public JSONObject getCellQuotaByName(String cellName){
+        return quotaHistoryCellMapper.getQuotaByName(cellName);
+    }
+
+    @Override
+    public int getGroupLevelByName(String groupName) {
+        return quotaHistoryGroupMapper.getLevelByName(groupName);
+    }
+
+    @Override
+    public int getNodeLevelByName(String nodeName) {
+        return quotaHistoryNodeMapper.getLevelByName(nodeName);
+    }
+
+    @Override
+    public int getCellLevelByName(String cellName) {
+        return quotaHistoryCellMapper.getLevelByName(cellName);
     }
 
 //    @Override

@@ -240,7 +240,14 @@
       </if>
     </trim>
   </insert>
-  <select id="getGroupQuotaByGroupName" resultType="com.alibaba.fastjson.JSONObject">
-    SELECT * FROM unicom_quota_history_group_lte
+  <select id="getQuotaByName" resultType="com.alibaba.fastjson.JSONObject">
+     SELECT *
+     FROM unicom_quota_history_group_lte
+     WHERE name = #{groupName} ORDER BY NOW() LIMIT 1
+  </select>
+  <select id="getLevelByName" resultType="Integer" parameterType="java.lang.String">
+    SELECT level
+    FROM unicom_quota_history_group_lte
+    WHERE name = #{groupName} ORDER BY NOW() LIMIT 1
   </select>
 </mapper>

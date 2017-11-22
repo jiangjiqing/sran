@@ -9,11 +9,10 @@ import java.util.List;
  * Created by poplar on 11/13/17.
  */
 public interface ElementInfoService {
+
     List<JSONObject> getProtectList();
 
     List<JSONObject> getFavoriteList();
-
-    int getLevelByName(String nodeName);
 
     int cancelCollection(String name);
 

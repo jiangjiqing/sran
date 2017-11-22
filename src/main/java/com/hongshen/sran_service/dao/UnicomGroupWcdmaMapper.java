@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+
 @Repository
 public interface UnicomGroupWcdmaMapper {
     /**
@@ -68,7 +69,6 @@ public interface UnicomGroupWcdmaMapper {
     List<JSONObject> getQuta();
 
     JSONObject getGroupByName(String groupName);
-
 
     List<JSONObject> getSpecifiedGroupList(@Param("groupName") String groupName);
 }

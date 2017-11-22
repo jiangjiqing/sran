@@ -12,7 +12,7 @@ public interface CacheService {
 
     void resetCounterList();
 
-    List<JSONObject> getCounterList();
+    List<JSONObject> getCounterList(Boolean isValid);
 
     void resetFormulaList();
 

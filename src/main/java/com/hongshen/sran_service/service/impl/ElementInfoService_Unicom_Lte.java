@@ -1,10 +1,7 @@
 package com.hongshen.sran_service.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hongshen.sran_service.dao.UnicomFavoriteLteMapper;
-import com.hongshen.sran_service.dao.UnicomNodeLteMapper;
-import com.hongshen.sran_service.dao.UnicomProtectLteMapper;
-import com.hongshen.sran_service.dao.UnicomQuotaHistoryNodeLteMapper;
+import com.hongshen.sran_service.dao.*;
 import com.hongshen.sran_service.entity.UnicomNodeWcdma;
 import com.hongshen.sran_service.service.ElementInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,50 +15,48 @@ import java.util.List;
 public class ElementInfoService_Unicom_Lte implements ElementInfoService {
 
 	@Autowired
-    private UnicomProtectLteMapper unicomProtectMapper;
+    private UnicomProtectLteMapper protectMapper;
 
 	@Autowired
-    private UnicomFavoriteLteMapper unicomFavoriteMapper;
+    private UnicomFavoriteLteMapper favoriteMapper;
+
+    @Autowired
+    private UnicomGroupWcdmaMapper groupMapper; //3G
 
 	@Autowired
-    private UnicomQuotaHistoryNodeLteMapper unicomQuotaHistoryNodeMapper;
+    private UnicomNodeLteMapper nodeMapper;
 
-	@Autowired
-    private UnicomNodeLteMapper unicomNodeMapper;
+    @Autowired
+    private UnicomCellLteMapper cellMapper;
 
     @Override
     public List<JSONObject> getProtectList() {
-        return unicomProtectMapper.getProtectList();
+        return protectMapper.getProtectList();
     }
 
     @Override
     public List<JSONObject> getFavoriteList() {
-        return unicomFavoriteMapper.getFavoriteList();
-    }
-
-    @Override
-    public int getLevelByName(String nodeName) {
-        return unicomQuotaHistoryNodeMapper.getLevelByName(nodeName);
+        return favoriteMapper.getFavoriteList();
     }
 
     @Override
     public int cancelCollection(String name) {
-        return unicomFavoriteMapper.cancelCollection(name);
+        return favoriteMapper.cancelCollection(name);
     }
 
     @Override
     public int addCollection(String name) {
-        return unicomFavoriteMapper.addCollection(name);
+        return favoriteMapper.addCollection(name);
     }
 
     @Override
     public List<JSONObject> getSpecifiedGroupList(String groupName) {
-        return null;
+        return null;//TODO
     }
 
     @Override
     public List<JSONObject> getSpecifiedNodeList(String groupName, String nodeName) {
-        return unicomNodeMapper.getSpecifiedNodeList(groupName,nodeName);
+        return nodeMapper.getSpecifiedNodeList(groupName,nodeName);
     }
 //    @Autowired
 //    private UnicomProtectLteMapper unicomProtectLteMapper;

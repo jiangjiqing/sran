@@ -1,5 +1,6 @@
 package com.hongshen.sran_service.dao;
 
+import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.entity.UnicomQuotaHistoryNodeLte;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -21,6 +22,8 @@ public interface UnicomQuotaHistoryNodeLteMapper {
      * @mbggenerated
      */
     int insertSelective(UnicomQuotaHistoryNodeLte record);
+
+    JSONObject getQuotaByName(@Param("nodeName")String nodeName);
 
     int getLevelByName(@Param("nodeName") String nodeName);
 }
