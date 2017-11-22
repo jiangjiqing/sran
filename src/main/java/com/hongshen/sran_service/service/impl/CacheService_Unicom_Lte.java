@@ -5,9 +5,12 @@ import com.hongshen.sran_service.dao.UnicomCounterLteMapper;
 import com.hongshen.sran_service.dao.UnicomFormulaLteMapper;
 import com.hongshen.sran_service.entity.UnicomFormulaLte;
 import com.hongshen.sran_service.service.CacheService;
+import jdk.nashorn.internal.objects.annotations.Constructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.beans.ConstructorProperties;
+import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -41,18 +44,31 @@ public class CacheService_Unicom_Lte implements CacheService {
     }
 
     @Override
-    public List<JSONObject> getCounterList() {
+    public List<JSONObject> getCounterList(Boolean isValid) {
 
-        List<JSONObject> result = counterMapper.getCounterList();
-        for (JSONObject counter : counterList) {
-            String counterName = counter.getString("name");
-//            boolean counterStatus = counter.getBoolean("status");
-            boolean counterStatus = false;//TODO
-            if (counterStatus) {
-                result.add(counter);
-            }
+        // check cache
+        if (counterList.isEmpty()){
+            resetCounterList();
         }
-        return result;
+
+        if(isValid){
+
+            List<JSONObject> resultList = new ArrayList<JSONObject>();
+
+            for(JSONObject counter : counterList) {
+
+                if (!counter.getBoolean("status")){
+                    continue;
+
+                }else{
+                    resultList.add(counter);
+                }
+            }
+            return resultList;
+
+        }else {
+            return counterList;
+        }
     }
 
     @Override
@@ -68,19 +84,29 @@ public class CacheService_Unicom_Lte implements CacheService {
     @Override
     public List<JSONObject> getFormulaList(Boolean isVisible){
 
-        if (!isVisible){
-            return formulaList;
+        // check cache
+        if (formulaList.isEmpty()){
+            resetFormulaList();
+        }
 
-        }else{
-            List<JSONObject> result = formulaMapper.getFormulaList();
-            for(JSONObject quota : formulaList){
-                String quotaName = quota.getString("quotaName");
-                boolean quotaStatus = quota.getBoolean("quotaStatus");
-                if (quotaStatus){
-                    result.add(quota);
+        if (isVisible) {
+
+            List<JSONObject> resultList = new ArrayList<JSONObject>();
+
+            for (JSONObject f : formulaList) {
+
+                // unvisible quota
+                if (!f.getBoolean("status")) {
+                    continue;
+
+                } else {
+                    resultList.add(f);
                 }
             }
-            return result;
+            return resultList;
+
+        }else{
+            return formulaList;
         }
     }
 

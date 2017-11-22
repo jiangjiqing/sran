@@ -12,70 +12,67 @@ import java.util.List;
  */
 @Service
 public class ElementInfoService_Unicom_Wcdma implements ElementInfoService {
+	
     @Autowired
-    private UnicomGroupWcdmaMapper unicomGroupMapper;
+    private UnicomProtectWcdmaMapper protectMapper;
 
     @Autowired
-    private UnicomNodeWcdmaMapper unicomNodeMapper;
+    private UnicomFavoriteWcdmaMapper favoriteMapper;
 
     @Autowired
-    private UnicomProtectWcdmaMapper unicomProtectMapper;
+    private UnicomGroupWcdmaMapper groupMapper;
 
     @Autowired
-    private UnicomFavoriteWcdmaMapper unicomFavoriteMapper;
+    private UnicomNodeWcdmaMapper nodeMapper;
 
     @Autowired
-    private UnicomQuotaHistoryNodeWcdmaMapper unicomQuotaHistoryNodeMapper;//TODO
+    private UnicomCellLteMapper cellMapper;
 
     @Override
     public List<JSONObject> getProtectList() {
-        return unicomProtectMapper.getProtectList();
+        return protectMapper.getProtectList();
     }
 
     @Override
     public List<JSONObject> getFavoriteList() {
-        return unicomFavoriteMapper.getFavoriteList();
-    }
-
-    @Override
-    public int getLevelByName(String nodeName) {
-        return unicomQuotaHistoryNodeMapper.getLevelByName(nodeName);
+        return favoriteMapper.getFavoriteList();
     }
 
     @Override
     public int cancelCollection(String name) {
-        return unicomFavoriteMapper.cancelCollection(name);
+        return favoriteMapper.cancelCollection(name);
+    }
+
+    @Override
+    public int addCollection(String name) {
+        return favoriteMapper.addCollection(name);
     }
 
     @Override
     public List<JSONObject> getGroupList() {
-        return unicomGroupMapper.getGroupList();
+        return groupMapper.getGroupList();
     }
 
 
     @Override
     public List<JSONObject> getNodeList(String groupName) {
-        return unicomNodeMapper.getNodeList(groupName);
+        return nodeMapper.getNodeList(groupName);
     }
 
     @Override//TODO
     public JSONObject getGroupByName(String groupName) {
-        return unicomGroupMapper.getGroupByName(groupName);
+        return groupMapper.getGroupByName(groupName);
     }
 
-    @Override
-    public int addCollection(String name) {
-        return unicomFavoriteMapper.addCollection(name);
-    }
 
     @Override
     public List<JSONObject> getSpecifiedGroupList(String groupName) {
-        return unicomGroupMapper.getSpecifiedGroupList(groupName);
+        return groupMapper.getSpecifiedGroupList(groupName);
     }
 
     @Override
     public List<JSONObject> getSpecifiedNodeList(String groupName, String nodeName) {
-        return unicomNodeMapper.getSpecifiedNodeList(groupName,nodeName);
+        return nodeMapper.getSpecifiedNodeList(groupName,nodeName);
     }
 //    @Autowired
 //    private UnicomGroupWcdmaMapper unicomGroupWcdmaMapper;

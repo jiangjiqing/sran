@@ -33,7 +33,6 @@ public class CacheService_Unicom_Wcdma implements CacheService {
     @Autowired
     private static List<JSONObject> formulaList = new ArrayList<JSONObject>();
 
-
     @Override
     public void resetCounterList(){
 
@@ -45,18 +44,31 @@ public class CacheService_Unicom_Wcdma implements CacheService {
     }
 
     @Override
-    public List<JSONObject> getCounterList(){
+    public List<JSONObject> getCounterList(Boolean isValid){
 
-        List<JSONObject> result = counterMapper.getCounterList();
-        for(JSONObject counter : counterList) {
-            String counterName = counter.getString("name");
-//            boolean counterStatus = counter.getBoolean("status");
-            boolean counterStatus = false;//TODO
-            if (counterStatus) {
-                result.add(counter);
-            }
+        // check cache
+        if (counterList.isEmpty()){
+            resetCounterList();
         }
-        return result;
+
+        if(isValid){
+
+            List<JSONObject> resultList = new ArrayList<JSONObject>();
+
+            for(JSONObject counter : counterList) {
+
+                if (!counter.getBoolean("status")){
+                    continue;
+
+                }else{
+                    resultList.add(counter);
+                }
+            }
+            return resultList;
+
+        }else {
+            return counterList;
+        }
     }
 
     @Override
@@ -72,19 +84,29 @@ public class CacheService_Unicom_Wcdma implements CacheService {
     @Override
     public List<JSONObject> getFormulaList(Boolean isVisible){
 
-        if (!isVisible){
-            return formulaList;
+        // check cache
+        if (formulaList.isEmpty()){
+            resetFormulaList();
+        }
 
-        }else{
-            List<JSONObject> result = formulaMapper.getFormulaList();
-            for(JSONObject quota : formulaList){
-                String quotaName = quota.getString("quotaName");
-                boolean quotaStatus = quota.getBoolean("status");
-                if (quotaStatus){
-                    result.add(quota);
+        if (isVisible) {
+
+            List<JSONObject> resultList = new ArrayList<JSONObject>();
+
+            for (JSONObject formula : formulaList) {
+
+                // unvisible quota
+                if (!formula.getBoolean("status")) {
+                    continue;
+
+                } else {
+                    resultList.add(formula);
                 }
             }
-            return result;
+            return resultList;
+
+        }else{
+            return formulaList;
         }
     }
 

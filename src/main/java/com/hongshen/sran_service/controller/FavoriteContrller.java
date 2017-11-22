@@ -41,7 +41,7 @@ public class FavoriteContrller {
         for (int i=0 ; i <favoriteList.size();i++) {
             if (favoriteList.get(i).getString("nodeName") !=null) {
                 String nodeName = String.valueOf(favoriteList.get(i).get("nodeName"));
-                int level = obj.getElementInfoService().getLevelByName(nodeName);
+                int level = obj.getQuotaService().getNodeLevelByName(nodeName);
 
                 if (level > 0) {
                     favoriteList.get(i).put("level", level );

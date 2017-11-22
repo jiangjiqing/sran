@@ -46,7 +46,7 @@ public class ProtectionController extends BaseController{
 
                 List<JSONObject> resultList = obj.getAlarmService().getNodeAlarmByNodeName(nodeName);
 
-                int level = obj.getElementInfoService().getLevelByName(nodeName);
+                int level = obj.getQuotaService().getNodeLevelByName(nodeName);
 
                 if(resultList.size() != 0){
 

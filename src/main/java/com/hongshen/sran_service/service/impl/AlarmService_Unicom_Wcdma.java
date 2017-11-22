@@ -20,17 +20,17 @@ public class AlarmService_Unicom_Wcdma implements AlarmService{
     }
 
 	@Override
-    public List<JSONObject> getGroupAlarmByGroupName(@Param("groupName")String groupName) {
+    public List<JSONObject> getGroupAlarmByGroupName(String groupName) {
         return alarmMapper.getGroupAlarmByGroupName(groupName);
     }
 	
 	@Override
-    public List<JSONObject> getNodeAlarmByNodeName(@Param("nodeName")String nodeName) {
+    public List<JSONObject> getNodeAlarmByNodeName(String nodeName) {
         return alarmMapper.getNodeAlarmByNodeName(nodeName);
     }
 	
 	@Override
-    public List<JSONObject> getCellAlarmByCellName(@Param("cellName")String cellName) {
+    public List<JSONObject> getCellAlarmByCellName(String cellName) {
         return alarmMapper.getCellAlarmByCellName(cellName);
     }
 

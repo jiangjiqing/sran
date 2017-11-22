@@ -20,13 +20,13 @@ public interface ElementInfoService {
 
     int cancelCollection(String name);
 
+    int addCollection(String name);
+
     List<JSONObject> getGroupList();
 
     List<JSONObject> getNodeList(String groupName);
 
     JSONObject getGroupByName(String groupName);//TODO
-
-    int addCollection(String name);
 
     List<JSONObject> getSpecifiedGroupList(String groupName);
 

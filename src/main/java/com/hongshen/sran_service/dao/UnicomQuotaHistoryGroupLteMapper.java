@@ -2,6 +2,7 @@ package com.hongshen.sran_service.dao;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.entity.UnicomQuotaHistoryGroupLte;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -22,5 +23,7 @@ public interface UnicomQuotaHistoryGroupLteMapper {
      */
     int insertSelective(UnicomQuotaHistoryGroupLte record);
 
-    JSONObject getGroupQuotaByGroupName(String groupName);
+    JSONObject getQuotaByName(@Param("groupName")String groupName);
+
+    int getLevelByName(@Param("groupName") String groupName);
 }

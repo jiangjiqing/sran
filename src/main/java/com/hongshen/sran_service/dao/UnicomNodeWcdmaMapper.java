@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+
 @Repository
 public interface UnicomNodeWcdmaMapper {
     /**
@@ -55,6 +56,8 @@ public interface UnicomNodeWcdmaMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(UnicomNodeWcdma record);
+
+    List<JSONObject> getNodeByName(@Param("groupName") String groupName);
 
     List<JSONObject> getNodeList(@Param("groupName") String groupName);
 
