@@ -98,7 +98,7 @@ public class AlarmController {
 			//TODO
 //			List<JSONObject> resultList;
             //ElementInfoService
-            List<JSONObject> resultList = obj.getAlarmService().getGroupAlarmByGroupName(groupname);
+            List<JSONObject> resultList = obj.getAlarmService().getGroupAlarmByName(groupname);
 			
             if (!resultList.isEmpty()){
                 result.put("data", resultList);
@@ -137,7 +137,7 @@ public class AlarmController {
 			
 			//TODO
 //			List<JSONObject> resultList;
-            List<JSONObject> resultList = obj.getAlarmService().getNodeAlarmByNodeName(nodeName);
+            List<JSONObject> resultList = obj.getAlarmService().getNodeAlarmByName(nodeName);
 
             if (!resultList.isEmpty()){
 
@@ -178,7 +178,7 @@ public class AlarmController {
             
 			//TODO
 //			List<JSONObject> resultList;
-            List<JSONObject> resultList = obj.getAlarmService().getCellAlarmByCellName(cellName);
+            List<JSONObject> resultList = obj.getAlarmService().getCellAlarmByName(cellName);
 
             if (!resultList.isEmpty()){
 

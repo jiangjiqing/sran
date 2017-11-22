@@ -20,57 +20,17 @@ public class AlarmService_Unicom_Wcdma implements AlarmService{
     }
 
 	@Override
-    public List<JSONObject> getGroupAlarmByGroupName(String groupName) {
-        return alarmMapper.getGroupAlarmByGroupName(groupName);
+    public List<JSONObject> getGroupAlarmByName(String groupName) {
+        return alarmMapper.getGroupAlarmByName(groupName);
     }
 	
 	@Override
-    public List<JSONObject> getNodeAlarmByNodeName(String nodeName) {
-        return alarmMapper.getNodeAlarmByNodeName(nodeName);
+    public List<JSONObject> getNodeAlarmByName(String nodeName) {
+        return alarmMapper.getNodeAlarmByName(nodeName);
     }
 	
 	@Override
-    public List<JSONObject> getCellAlarmByCellName(String cellName) {
-        return alarmMapper.getCellAlarmByCellName(cellName);
+    public List<JSONObject> getCellAlarmByName(String cellName) {
+        return alarmMapper.getCellAlarmByName(cellName);
     }
-
-//    @Override
-//    public List<JSONObject> getAllAlarmSerice() {
-//
-//        List<JSONObject> resultList = new ArrayList<>();
-//
-//        JSONObject resultWcdma = new JSONObject();
-//        JSONObject resultLte = new JSONObject();
-//
-//        List<UnicomAlarmWcdma> alarmWcdmas = new ArrayList<>();
-//        List<UnicomAlarmLte> alarmLtes = new ArrayList<>();
-//
-//        String wcdmaGeneration = Constants.WCDMA;
-//        String lteGeneration = Constants.LTE;
-//
-//        alarmWcdmas = alarmWcdmaMapper.getAllAlarmWcdma();
-//
-//        alarmLtes = alarmLteMapper.getAllAlarmLte();
-//
-//        if (!alarmWcdmas.isEmpty()) {
-//
-//            resultWcdma.put("generation", wcdmaGeneration);
-//            resultWcdma.put("alarms", alarmWcdmas);
-//
-//            resultList.add(resultWcdma);
-//        } else if (!alarmLtes.isEmpty()) {
-//
-//            resultLte.put("generation", lteGeneration);
-//            resultLte.put("alarms", alarmLtes);
-//
-//            resultList.add(resultLte);
-//        }
-//
-//        return resultList;
-//    }
-//
-//    @Override
-//    public Map<String, Object> getGroupAlarmInfo() {
-//        return alarmLteMapper.getGroupAlarmInfo();
-//    }
 }
