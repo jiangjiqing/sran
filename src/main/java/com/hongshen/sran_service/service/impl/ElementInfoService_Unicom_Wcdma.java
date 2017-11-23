@@ -91,6 +91,11 @@ public class ElementInfoService_Unicom_Wcdma implements ElementInfoService {
         return cellMapper.getCellList(nodeName);
     }
 
+    @Override
+    public JSONObject getNodelatitudeAndlongitude(String nodeName) {
+        return nodeMapper.getNodeLaoutAndLong(nodeName);
+    }
+
 //    @Autowired
 //    private UnicomGroupWcdmaMapper unicomGroupWcdmaMapper;
 //    @Autowired

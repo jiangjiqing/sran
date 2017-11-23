@@ -211,4 +211,8 @@
     FROM unicom_quota_history_cell_wcdma
     WHERE name = #{cellName} ORDER BY NOW() LIMIT 1
   </select>
+
+  <select id="getCellLevel" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT LEVEL FROM unicom_quota_history_cell_wcdma WHERE time = (SELECT MAX(time) FROM unicom_quota_history_cell_wcdma) and name = #{cellName};
+  </select>
 </mapper>

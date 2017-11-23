@@ -213,6 +213,6 @@
   </select>
 
   <select id="getNodeLevel" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
-    SELECT * FROM unicom_quota_history_node_wcdma WHERE name = #{nodeName};
+    SELECT level FROM unicom_quota_history_node_wcdma WHERE time = (SELECT MAX(time) FROM unicom_quota_history_node_wcdma) AND name = #{nodeName};
   </select>
 </mapper>

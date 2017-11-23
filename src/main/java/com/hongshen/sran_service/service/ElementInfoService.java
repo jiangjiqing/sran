@@ -10,6 +10,7 @@ import java.util.List;
 @Service
 public interface ElementInfoService {
 
+
     List<JSONObject> getProtectList();
 
     List<JSONObject> getFavoriteList();
@@ -33,6 +34,8 @@ public interface ElementInfoService {
     List<JSONObject> getGroupInfoList();
 
     List<JSONObject> getCellList(String nodeName);
+
+    JSONObject getNodelatitudeAndlongitude(String nodeName);
 
 
 //   List<String> getProtect();

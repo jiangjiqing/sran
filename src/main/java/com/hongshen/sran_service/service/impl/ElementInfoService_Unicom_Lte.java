@@ -91,6 +91,11 @@ public class ElementInfoService_Unicom_Lte implements ElementInfoService {
     public List<JSONObject> getCellList(String nodeName) {
         return cellMapper.getCellList(nodeName);
     }
+
+    @Override
+    public JSONObject getNodelatitudeAndlongitude(String nodeName) {
+        return  nodeMapper.getNodeLaoutAndLong(nodeName);
+    }
 //    @Autowired
 //    private UnicomProtectLteMapper unicomProtectLteMapper;
 //    @Autowired

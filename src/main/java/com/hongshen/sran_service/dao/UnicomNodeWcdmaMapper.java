@@ -60,6 +60,8 @@ public interface UnicomNodeWcdmaMapper {
     List<JSONObject> getNodeList(@Param("groupName") String groupName);
 
     List<JSONObject> getSpecifiedNodeList(@Param("nodeName") String nodeName);
+
     List<JSONObject> getSpecifiedNodeList(@Param("groupName")String groupName, @Param("nodeName") String nodeName);
 
+    JSONObject getNodeLaoutAndLong(String nodeName);
 }
