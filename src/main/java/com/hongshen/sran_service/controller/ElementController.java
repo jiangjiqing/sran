@@ -26,7 +26,7 @@ public class ElementController {
 
 //   Query specified group information container
     @GET
-    @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/{groupName}/infocontainer")
+    @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/{groupName}")
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject getSpecifiedGroupList(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
                                         @PathParam("groupName")String groupName, @HeaderParam("Auth-Token")String authToken) {
@@ -59,11 +59,10 @@ public class ElementController {
 
 //    Query specified node information container
     @GET
-    @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/{groupName}/nodes/{nodeName}/infocontainer")
+    @Path("/suppliers/{supplier}/generations/{generation}/nets/nodes/{nodeName}")
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject getSpecifiedNodeList(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
-                                            @PathParam("groupName")String groupName, @PathParam("nodeName")String nodeName,
-                                            @HeaderParam("Auth-Token")String authToken) {
+                                            @PathParam("nodeName")String nodeName, @HeaderParam("Auth-Token")String authToken) {
         JSONObject result = new JSONObject();
         String url = Constants.PATH_DUMMY;
         String method = Constants.METHOD_GET;
@@ -92,10 +91,9 @@ public class ElementController {
 
     //    Query specified cell information container
     @GET
-    @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/{groupName}/nodes/{nodeName}/cells/{cellName}/infocontainer")
+    @Path("/suppliers/{supplier}/generations/{generation}/nets/cells/{cellName}")
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject getSpecifiedCellList(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
-                                           @PathParam("groupName")String groupName, @PathParam("nodeName")String nodeName,
                                            @PathParam("cellName")String cellName,@HeaderParam("Auth-Token")String authToken) {
         JSONObject result = new JSONObject();
         String url = Constants.PATH_DUMMY;
