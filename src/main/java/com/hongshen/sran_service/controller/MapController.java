@@ -101,7 +101,7 @@ public class MapController extends BaseController{
 
         JSONObject result = new JSONObject();
         List listJson = new ArrayList();
-        System.out.println(list.size());
+        JSONObject json = new JSONObject();
         if(!list.isEmpty()){
             if(list.size() > 3){
 
@@ -139,8 +139,7 @@ public class MapController extends BaseController{
                 listJson.add(d4);
                 Double latitude = l1+l2+l3+l4;
                 Double longitude = t1+t2+t3+t4;
-                JSONObject json = Scopes(latitude,longitude,4);
-                listJson.add(json);
+                json = Scopes(latitude,longitude,4);
             }else if(list.size()==3){
 
                 listJson.add(list);
@@ -151,6 +150,7 @@ public class MapController extends BaseController{
         }
 
         result.put("scope",listJson);
+        result.putAll(json);
         System.out.println(result);
         return result;
     };
