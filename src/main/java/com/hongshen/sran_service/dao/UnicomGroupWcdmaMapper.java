@@ -72,4 +72,5 @@ public interface UnicomGroupWcdmaMapper {
     List<JSONObject> getSpecifiedGroupList(@Param("groupName") String groupName);
 
     List<JSONObject> getGroupInfoList();
+
 }
