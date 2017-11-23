@@ -182,8 +182,15 @@
       enb_id = #{enbId,jdbcType=VARCHAR}
     where node_name = #{nodeName,jdbcType=VARCHAR}
   </update>
+
   <select id="getSpecifiedNodeList" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
     SELECT * FROM unicom_node_lte WHERE node_name = #{nodeName}
   </select>
   <!--lte-->
+  <select id="getNodeList" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
+    SELECT * FROM unicom_node_lte WHERE group_name = #{groupName}
+  </select>
+  <select id="getNodeLaoutAndLong" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
+    SELECT latitude,longitude FROM unicom_node_lte WHERE node_name = #{nodeName}
+  </select>
 </mapper>

@@ -22,7 +22,6 @@ public class NetObj_Unicom_Lte implements NetObjBase {
 
     @Autowired
     private  AlarmService_Unicom_Lte alarmService;
-
     //    @Autowired
 //    private AlarmLibService_Unicom_Lte alarmLibService;
 	

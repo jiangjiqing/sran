@@ -28,6 +28,7 @@ public class MapController extends BaseController{
         /*if (check(url, method, authToken)) {*/
             NetObjBase obj = objFactory.getNetObj(supplier, generation);
             List<JSONObject> grupList = obj.getElementInfoService().getGroupList();
+            System.out.println(grupList+"**************************");
             List<JSONObject> List =new ArrayList<>();
             for (int i = 0;i<grupList.size();i++){
                 JSONObject result1 = new JSONObject();
@@ -38,22 +39,15 @@ public class MapController extends BaseController{
                     List<JSONObject> nodeList =  obj.getElementInfoService().getNodeList(groupName);
 
                     JSONObject group = obj.getElementInfoService().getGroupByName(groupName);//TODO
-                   // Double latitude = 0.0;
-                    //Double longitude = 0.0;
-                    //int num=0;
                     if (nodeList.size() != 0) {
                         for (int j = 0; j < nodeList.size(); j++) {
 
                             if(nodeList.get(j).getDouble("latitude")!= 0.0 && nodeList.get(j).getDouble("longitude")!= 0.0){
-                                //num++;
                                 Double[] doubles ={nodeList.get(j).getDouble("latitude"),nodeList.get(j).getDouble("longitude")};
                                 list.add(doubles);
-                                /*latitude = latitude  + nodeList.get(j).getDouble("latitude");
-                                longitude = longitude + nodeList.get(j).getDouble("longitude");*/
                             }
                         }
                     }
-                   // JSONObject json = Scopes(latitude,longitude,num);
                     if(group==null){
                        result1.put("level",-1);
                     }else{
@@ -199,6 +193,7 @@ public class MapController extends BaseController{
             for (int i=0;i<cellList.size();i++ ){
             JSONObject json = new JSONObject();
             JSONObject cellLevel = obj.getQuotaService().getCellLevel(cellList.get(i).getString("name"));
+
             JSONObject NodelatAndlong = obj.getElementInfoService().getNodelatitudeAndlongitude(nodeName);
             if(cellLevel!=null){
                 json.putAll(cellLevel);

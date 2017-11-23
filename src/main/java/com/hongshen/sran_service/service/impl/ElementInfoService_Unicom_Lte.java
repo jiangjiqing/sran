@@ -52,7 +52,7 @@ public class ElementInfoService_Unicom_Lte implements ElementInfoService {
 
     @Override
     public List<JSONObject> getGroupList() {
-        return groupMapper.getGroupList();
+        return groupMapper.getGroupListLte();
     }
 
 
@@ -79,6 +79,7 @@ public class ElementInfoService_Unicom_Lte implements ElementInfoService {
 
     @Override
     public List<JSONObject> getSpecifiedCellList(String cellName) {
+
         return cellMapper.getSpecifiedCellList(cellName);
     }
 
