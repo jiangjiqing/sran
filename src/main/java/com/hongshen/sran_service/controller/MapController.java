@@ -28,7 +28,6 @@ public class MapController extends BaseController{
         /*if (check(url, method, authToken)) {*/
             NetObjBase obj = objFactory.getNetObj(supplier, generation);
             List<JSONObject> grupList = obj.getElementInfoService().getGroupList();
-            System.out.println(grupList+"**************************");
             List<JSONObject> List =new ArrayList<>();
             for (int i = 0;i<grupList.size();i++){
                 JSONObject result1 = new JSONObject();
