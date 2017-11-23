@@ -54,7 +54,6 @@ public class MapController extends BaseController{
                     }
                     result1.put("name",groupName);
                     result1.putAll(LatitudeAndLongitude(list));
-                    //result1.putAll(json);
                     List.add(result1);
                 }
             }
