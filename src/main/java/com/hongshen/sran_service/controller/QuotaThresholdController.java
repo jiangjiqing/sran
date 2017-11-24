@@ -5,18 +5,15 @@ package com.hongshen.sran_service.controller;
  */
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.common.BaseController;
-import com.hongshen.sran_service.entity.*;
+import com.hongshen.sran_service.service.util.Constants;
 import com.hongshen.sran_service.service.util.NetObjBase;
 import com.hongshen.sran_service.service.util.NetObjFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Path("/sran/service/net/threshold")
 public class QuotaThresholdController extends BaseController{
@@ -36,22 +33,28 @@ public class QuotaThresholdController extends BaseController{
         {
             case "groups":
                 List<JSONObject> thresholdGroupList = obj.getCacheService().getThresholdGroupList();
-                list = getvalue(thresholdGroupList);
+                    list = getvalue(thresholdGroupList);
             break;
 
             case "nodes":
                 List<JSONObject> thresholdNodeList = obj.getCacheService().getThresholdNodeList();
-                list = getvalue(thresholdNodeList);
+                    list = getvalue(thresholdNodeList);
             break;
 
             case "cells":
                 List<JSONObject> thresholdCellList = obj.getCacheService().getThresholdCellList();
-                list = getvalue(thresholdCellList);
+
+                    list = getvalue(thresholdCellList);
                 break;
 
             default :
     }
-        result.put("data",list);
+        if(!list.isEmpty()){
+            result.put("result", Constants.SUCCESS);
+            result.put("data",list);
+        }else{
+            result.put("result", Constants.FAIL);
+        }
         return result;
     }
 
