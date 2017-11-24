@@ -41,7 +41,7 @@ public class MapController extends BaseController{
                     if (nodeList.size() != 0) {
                         for (int j = 0; j < nodeList.size(); j++) {
 
-                            if(nodeList.get(j).getDouble("latitude")!= 0.0 && nodeList.get(j).getDouble("longitude")!= 0.0){
+                            if(nodeList.get(j).getDouble("latitude")!= null && nodeList.get(j).getDouble("longitude")!= null){
                                 Double[] doubles ={nodeList.get(j).getDouble("latitude"),nodeList.get(j).getDouble("longitude")};
                                 list.add(doubles);
                             }
