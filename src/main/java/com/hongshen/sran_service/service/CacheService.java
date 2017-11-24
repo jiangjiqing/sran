@@ -18,6 +18,20 @@ public interface CacheService {
 
     List<JSONObject> getFormulaList(Boolean isVisible);
 
+    void  resetThresholdGroupList();
+
+    List<JSONObject> getThresholdGroupList();
+
+    void  resetThresholdNodeList();
+
+    List<JSONObject> getThresholdNodeList();
+
+    void  resetThresholdCellList();
+
+    List<JSONObject> getThresholdCellList();
+
+
+
 
 //    Map<String,Object> getCounterMap();
 //    Map<String,Object> resetCounterMap();

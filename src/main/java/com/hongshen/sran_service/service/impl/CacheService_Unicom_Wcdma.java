@@ -2,8 +2,7 @@ package com.hongshen.sran_service.service.impl;
 
 
 import com.alibaba.fastjson.JSONObject;
-import com.hongshen.sran_service.dao.UnicomCounterWcdmaMapper;
-import com.hongshen.sran_service.dao.UnicomFormulaWcdmaMapper;
+import com.hongshen.sran_service.dao.*;
 import com.hongshen.sran_service.entity.UnicomFormulaWcdma;
 import com.hongshen.sran_service.service.CacheService;
 import jdk.nashorn.internal.objects.annotations.Constructor;
@@ -33,13 +32,31 @@ public class CacheService_Unicom_Wcdma implements CacheService {
     @Autowired
     private static List<JSONObject> formulaList = new ArrayList<JSONObject>();
 
+    @Autowired
+    private UnicomQuotaThresholdGroupWcdmaMapper thresholdGroupMapper;
+
+    @Autowired
+    private  static  List<JSONObject> thresholdGroupList = new ArrayList<>();
+
+    @Autowired
+    private UnicomQuotaThresholdNodeWcdmaMapper thresholdNodeMapper;
+
+    @Autowired
+    private  static  List<JSONObject> thresholdNodeList = new ArrayList<>();
+
+    @Autowired
+    private UnicomQuotaThresholdCellWcdmaMapper thresholdCellMapper;
+
+    @Autowired
+    private  static  List<JSONObject> thresholdCellList = new ArrayList<>();
+
     @Override
     public void resetCounterList(){
 
-        // clear data
+        //clear data
         counterList.clear();
 
-        // set data
+        //set data
         counterList = counterMapper.getCounterList();
     }
 
@@ -110,8 +127,52 @@ public class CacheService_Unicom_Wcdma implements CacheService {
         }
     }
 
+    @Override
+    public void resetThresholdGroupList() {
 
+        thresholdGroupList.clear();
 
+        thresholdGroupList = thresholdGroupMapper.getThresholdGroupList();
+    }
+
+    @Override
+    public List<JSONObject> getThresholdGroupList() {
+        if (thresholdGroupList.isEmpty()){
+            resetThresholdGroupList();
+        }
+        return thresholdGroupList;
+    }
+
+    @Override
+    public void resetThresholdNodeList() {
+        thresholdNodeList.clear();
+
+        thresholdNodeList = thresholdNodeMapper.getThresholdNodeList();
+    }
+
+    @Override
+    public List<JSONObject> getThresholdNodeList() {
+        if (thresholdNodeList.isEmpty()){
+            resetThresholdNodeList();
+        }
+        System.out.println(thresholdNodeList);
+        return thresholdNodeList;
+    }
+
+    @Override
+    public void resetThresholdCellList() {
+        thresholdCellList.clear();
+
+        thresholdCellList = thresholdCellMapper.getThresholdCellList();
+    }
+
+    @Override
+    public List<JSONObject> getThresholdCellList() {
+        if (thresholdCellList.isEmpty()){
+            resetThresholdCellList();
+        }
+        return thresholdCellList;
+    }
 
 
 //    @Override

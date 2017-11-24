@@ -72,4 +72,7 @@
       </if>
     </trim>
   </insert>
+  <select id="getThresholdCellList" resultType="com.alibaba.fastjson.JSONObject">
+    select * from unicom_quota_threshold_cell_wcdma;
+  </select>
 </mapper>
