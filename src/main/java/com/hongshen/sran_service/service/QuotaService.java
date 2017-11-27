@@ -1,6 +1,7 @@
 package com.hongshen.sran_service.service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.hongshen.sran_service.entity.UnicomQuotaThresholdCellLte;
 
 import java.util.List;
 import java.util.Map;
@@ -25,4 +26,11 @@ public interface QuotaService {
     JSONObject getNodeLevel(String node_name);
 
     JSONObject getCellLevel(String cellName);
+
+    Integer setGroup(JSONObject quotaThres);
+
+    Integer setNode(JSONObject quotaThres);
+
+    Integer setCell(JSONObject quotaThres);
+
 }

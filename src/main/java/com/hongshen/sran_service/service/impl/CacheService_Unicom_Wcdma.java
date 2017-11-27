@@ -155,7 +155,6 @@ public class CacheService_Unicom_Wcdma implements CacheService {
         if (thresholdNodeList.isEmpty()){
             resetThresholdNodeList();
         }
-        System.out.println(thresholdNodeList);
         return thresholdNodeList;
     }
 

@@ -18,9 +18,6 @@ public class NetObj_Unicom_Lte implements NetObjBase {
     private CacheService_Unicom_Lte cacheService;
 
     @Autowired
-    private QuotaService_Unicom_Lte quotaService;
-
-    @Autowired
     private  AlarmService_Unicom_Lte alarmService;
     //    @Autowired
 //    private AlarmLibService_Unicom_Lte alarmLibService;
@@ -36,6 +33,9 @@ public class NetObj_Unicom_Lte implements NetObjBase {
 
     @Autowired
     private AuthorityService_Unicom_Lte authorityService;
+
+    @Autowired
+    private QuotaService_Unicom_Lte quotaService;
 
     @Override
     public AuthorityService getAuthorityService(){ return authorityService; }
@@ -67,6 +67,11 @@ public class NetObj_Unicom_Lte implements NetObjBase {
     @Override
     public TaskService getTaskService() {
         return taskService;
+    }
+
+    @Override
+    public QuotaService quotaService() {
+        return quotaService;
     }
 
 

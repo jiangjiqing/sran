@@ -25,4 +25,6 @@ public interface UnicomQuotaThresholdNodeLteMapper {
     int insertSelective(UnicomQuotaThresholdNodeLte record);
 
     List<JSONObject> getThresholdNodeList();
+
+    Integer setNode(JSONObject quotaThres);
 }

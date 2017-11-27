@@ -1,10 +1,9 @@
 package com.hongshen.sran_service.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hongshen.sran_service.dao.UnicomQuotaHistoryCellWcdmaMapper;
-import com.hongshen.sran_service.dao.UnicomQuotaHistoryGroupWcdmaMapper;
-import com.hongshen.sran_service.dao.UnicomQuotaHistoryNodeWcdmaMapper;
+import com.hongshen.sran_service.dao.*;
 import com.hongshen.sran_service.entity.UnicomQuotaHistoryGroupWcdma;
+import com.hongshen.sran_service.entity.UnicomQuotaThresholdNodeWcdma;
 import com.hongshen.sran_service.service.QuotaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +26,14 @@ public class QuotaService_Unicom_Wcdma implements QuotaService {
     @Autowired
     private UnicomQuotaHistoryCellWcdmaMapper quotaHistoryCellMapper;
 
+    @Autowired
+    private UnicomQuotaThresholdGroupWcdmaMapper quotaThresholdGroupMapper;
+
+    @Autowired
+    private UnicomQuotaThresholdNodeWcdmaMapper quotaThresholdNodeMapper;
+
+    @Autowired
+    private UnicomQuotaThresholdCellWcdmaMapper quotaThresholdCellMapper;
     @Override
     public JSONObject getGroupQuotaByName(String groupName) {
         return quotaHistoryGroupMapper.getQuotaByName(groupName);
@@ -65,6 +72,21 @@ public class QuotaService_Unicom_Wcdma implements QuotaService {
     @Override
     public JSONObject getCellLevel(String cellName) {
         return  quotaHistoryCellMapper.getCellLevel(cellName);
+    }
+
+    @Override
+    public Integer setGroup(JSONObject quotaThres) {
+        return quotaThresholdGroupMapper.setGroup(quotaThres);
+    }
+
+    @Override
+    public Integer setNode(JSONObject quotaThres) {
+        return quotaThresholdNodeMapper.setNode(quotaThres);
+    }
+
+    @Override
+    public Integer setCell(JSONObject quotaThres) {
+        return quotaThresholdCellMapper.setCell(quotaThres);
     }
 
 //    @Override

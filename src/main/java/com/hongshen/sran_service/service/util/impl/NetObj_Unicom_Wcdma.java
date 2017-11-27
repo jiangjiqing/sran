@@ -18,9 +18,6 @@ public class NetObj_Unicom_Wcdma implements NetObjBase {
     private CacheService_Unicom_Wcdma cacheService;
 
     @Autowired
-    private QuotaService_Unicom_Wcdma quotaService;
-
-    @Autowired
     private  AlarmService_Unicom_Wcdma alarmService;
 
     //    @Autowired
@@ -37,6 +34,9 @@ public class NetObj_Unicom_Wcdma implements NetObjBase {
 
     @Autowired
     private AuthorityService_Unicom_Wcdma authorityService;
+
+    @Autowired
+    private QuotaService_Unicom_Wcdma quotaService;
     @Override
     public AuthorityService getAuthorityService(){ return authorityService; }
 
@@ -69,6 +69,10 @@ public class NetObj_Unicom_Wcdma implements NetObjBase {
         return taskService;
     }
 
+    @Override
+    public QuotaService quotaService() {
+        return quotaService;
+    }
 
 
 }

@@ -1,10 +1,9 @@
 package com.hongshen.sran_service.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hongshen.sran_service.dao.UnicomQuotaHistoryCellLteMapper;
-import com.hongshen.sran_service.dao.UnicomQuotaHistoryGroupLteMapper;
-import com.hongshen.sran_service.dao.UnicomQuotaHistoryNodeLteMapper;
+import com.hongshen.sran_service.dao.*;
 import com.hongshen.sran_service.service.QuotaService;
+import org.hibernate.procedure.spi.ParameterRegistrationImplementor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +24,15 @@ public class QuotaService_Unicom_Lte implements QuotaService {
 
     @Autowired
     private UnicomQuotaHistoryCellLteMapper quotaHistoryCellMapper;
+
+    @Autowired
+    private UnicomQuotaThresholdGroupLteMapper quotaThresholdGroupMapper;
+
+    @Autowired
+    private UnicomQuotaThresholdNodeLteMapper quotaThresholdNodeMapper;
+
+    @Autowired
+    private UnicomQuotaThresholdCellLteMapper quotaThresholdCellMapper;
 
 
     @Override
@@ -65,6 +73,21 @@ public class QuotaService_Unicom_Lte implements QuotaService {
     @Override
     public JSONObject getCellLevel(String cellName) {
         return quotaHistoryCellMapper.getCellLevel(cellName);
+    }
+
+    @Override
+    public Integer setGroup(JSONObject quotaThres) {
+        return quotaThresholdGroupMapper.setGroup(quotaThres);
+    }
+
+    @Override
+    public Integer setNode(JSONObject quotaThres) {
+        return quotaThresholdNodeMapper.setNode(quotaThres);
+    }
+
+    @Override
+    public Integer setCell(JSONObject quotaThres) {
+        return quotaThresholdCellMapper.setCell(quotaThres);
     }
 //    @Override
 //    public Map<String, Object> getQuotaInfo() {

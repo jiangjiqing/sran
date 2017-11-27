@@ -24,7 +24,6 @@ public class QuotaThresholdController extends BaseController{
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject getGroupList(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
                                    @HeaderParam("Auth-Token")String authToken,@PathParam("level")String level) {
-        System.out.println(level);
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         JSONObject result = new JSONObject();
         List<JSONObject> list = new ArrayList<>();
@@ -48,6 +47,7 @@ public class QuotaThresholdController extends BaseController{
                 break;
 
             default :
+                list = null;
     }
         if(!list.isEmpty()){
             result.put("result", Constants.SUCCESS);
@@ -76,13 +76,40 @@ public class QuotaThresholdController extends BaseController{
     @PUT
     @Path("/suppliers/{supplier}/generations/{generation}/nets/{level}/quotas/{quotaName}/thresholds")
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject getGroupList(@RequestParam(value="quotaName") JSONObject quotaName1,
+    public JSONObject getGroupList(@RequestParam(value = "quotaThres") JSONObject quotaThres,
                                    @PathParam("supplier")String supplier, @PathParam("generation")String generation,
                                    @HeaderParam("Auth-Token")String authToken, @PathParam("level")String level,
                                    @PathParam("quotaName")String quotaName) {
+        quotaThres.put("quotaName",quotaName);
+      //  System.out.println(quotaThres);
+        NetObjBase obj = objFactory.getNetObj(supplier, generation);
+        JSONObject result = new JSONObject();
+        Integer Num = 0;
+        switch (level)
+        {
+            case "groups":
+                 Num = obj.quotaService().setGroup(quotaThres);
+                 obj.getCacheService().resetThresholdGroupList();
+                break;
 
-    System.out.println(quotaName1.getString("quotaName"));
-     return null;
+            case "nodes":
+                 Num = obj.quotaService().setNode(quotaThres);
+                 obj.getCacheService().resetThresholdNodeList();
+                break;
+
+            case "cells":
+                 Num = obj.quotaService().setCell(quotaThres);
+                 obj.getCacheService().resetThresholdCellList();
+                break;
+
+            default :
+                Num = 0;
+        }
+            if(Num == 0){
+                result.put("result",Constants.FAIL);
+            }else{
+                result.put("result",Constants.SUCCESS);
+            }
+        return result;
     }
-
 }

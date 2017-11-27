@@ -25,4 +25,6 @@ public interface UnicomQuotaThresholdCellLteMapper {
     int insertSelective(UnicomQuotaThresholdCellLte record);
 
     List<JSONObject> getThresholdCellList();
+
+    Integer setCell(JSONObject quotaThres);
 }

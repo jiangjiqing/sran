@@ -25,5 +25,8 @@ public interface NetObjBase {
     TaskService getTaskService();
 
 
+     QuotaService quotaService();
+
+
 //    AuthorityService getAuthorityService();
 }
