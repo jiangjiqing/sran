@@ -25,7 +25,7 @@ public class FavoriteContrller {
 
 //    Query collection network element list
     @GET
-    @Path("/suppliers/{supplier}/generations/{generation}/nets/favorites/mapinfo")
+    @Path("/suppliers/{supplier}/generations/{generation}/nets/favorites/mapinfos")
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject getProtectionList(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
                                         @HeaderParam("Auth-Token")String authToken) {
@@ -102,7 +102,7 @@ public class FavoriteContrller {
     }
 
     //    Add the status of network element collection
-    @PUT
+    @DELETE
     @Path("/suppliers/{supplier}/generations/{generation}/nets/{level}/{name}/favorites")
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject addCollection(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
