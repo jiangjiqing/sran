@@ -1,8 +1,10 @@
 package com.hongshen.sran_service.dao;
 
 import com.alibaba.fastjson.JSONObject;
+import com.hongshen.sran_service.entity.UnicomFormula;
 import com.hongshen.sran_service.entity.UnicomFormulaLte;
 import com.hongshen.sran_service.entity.UnicomFormulaWcdma;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -58,4 +60,7 @@ public interface UnicomFormulaLteMapper {
     int updateByPrimaryKey(UnicomFormulaLte record);
 
     List<JSONObject> getFormulaList();
+
+    @Select("SELECT * FROM unicom_formula_lte")
+    List<UnicomFormula> getFormulaLteList();
 }

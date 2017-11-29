@@ -37,6 +37,9 @@ public class NetObj_Unicom_Lte implements NetObjBase {
     @Autowired
     private QuotaService_Unicom_Lte quotaService;
 
+    @Autowired
+    private ScannerService_Unicom_Lte scannerService;
+
     @Override
     public AuthorityService getAuthorityService(){ return authorityService; }
 
@@ -72,6 +75,12 @@ public class NetObj_Unicom_Lte implements NetObjBase {
     @Override
     public QuotaService quotaService() {
         return quotaService;
+    }
+
+    @Override
+    public ScannerService getScannerService() {
+
+        return scannerService;
     }
 
 

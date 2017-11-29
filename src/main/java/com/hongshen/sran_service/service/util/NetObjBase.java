@@ -29,4 +29,6 @@ public interface NetObjBase {
 
 
 //    AuthorityService getAuthorityService();
+
+    ScannerService getScannerService();
 }

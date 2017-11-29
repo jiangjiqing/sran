@@ -463,4 +463,63 @@
       </if>
     </trim>
   </insert>
+
+  <select id="getCounterHistoryLteListByTime" resultType="com.alibaba.fastjson.JSONObject">
+
+    SELECT
+    name, time,
+    counter1 EUtranCellFDD_pmRrcConnEstabAtt,
+    counter2 EUtranCellTDD_pmRrcConnEstabAtt,
+    counter3 EUtranCellFDD_pmRrcConnEstabAttReatt,
+    counter4 EUtranCellTDD_pmRrcConnEstabAttReatt,
+    counter5 EUtranCellFDD_pmRrcConnEstabSucc,
+    counter6 EUtranCellTDD_pmRrcConnEstabSucc,
+    counter7 EUtranCellFDD_pmS1SigConnEstabAtt,
+    counter8 EUtranCellTDD_pmS1SigConnEstabAtt,
+    counter9 EUtranCellFDD_pmS1SigConnEstabSucc,
+    counter10 EUtranCellTDD_pmS1SigConnEstabSucc,
+    counter11 EUtranCellFDD_pmErabEstabAttInit,
+    counter12 EUtranCellTDD_pmErabEstabAttInit,
+    counter13 EUtranCellFDD_pmErabEstabAttAdded,
+    counter14 EUtranCellTDD_pmErabEstabAttAdded,
+    counter15 EUtranCellFDD_pmErabEstabSuccInit,
+    counter16 EUtranCellTDD_pmErabEstabSuccInit,
+    counter17 EUtranCellFDD_pmErabEstabSuccAdded,
+    counter18 EUtranCellTDD_pmErabEstabSuccAdded,
+    counter19 EUtranCellFDD_pmPagReceived,
+    counter20 EUtranCellTDD_pmPagReceived,
+    counter21 EUtranCellFDD_pmPagDiscarded,
+    counter22 EUtranCellTDD_pmPagDiscarded,
+    counter23 EUtranCellFDD_pmErabRelAbnormalEnbAct,
+    counter24 EUtranCellTDD_pmErabRelAbnormalEnbAct,
+    counter25 EUtranCellFDD_pmErabRelMmeAct,
+    counter26 EUtranCellTDD_pmErabRelMmeAct,
+    counter27 EUtranCellRelation_pmHoPrepAttLteInterF,
+    counter28 EUtranCellRelation_pmHoPrepAttLteIntraF,
+    counter29 EUtranCellRelation_pmHoExeSuccLteInterF,
+    counter30 EUtranCellRelation_pmHoExeSuccLteIntraF,
+    counter31 pmPrbUsedDlFirstTrans,
+    counter32 pmPrbUsedDlBcch,
+    counter33 pmPrbUsedDlDtch,
+    counter34 pmPrbUsedDlPcch,
+    counter35 pmPrbUsedDlSrbFirstTrans,
+    counter36 pmPrbUsedDlReTrans,
+    counter37 pmPrbUsedUlDtch,
+    counter38 pmPrbUsedUlSrb,
+    counter39 pmPdcpVolDlDrb,
+    counter40 pmPdcpVolUlDrb,
+    counter41 pmUeThpTimeDl,
+    counter42 pmPdcpVolDlDrbLastTTI,
+    counter43 pmUeThpTimeUl,
+    counter44 pmUeThpVolUl,
+    counter45 pmSessionTimeUe,
+    counter46 pmSessionTimeDrb,
+    counter47 pmActiveUeDlSum,
+    counter48 pmActiveUeUlSum,
+    counter49 pmErabLevSamp,
+    counter50 pmCellDowntimeAuto,
+    counter51, counter52,counter53, counter54, counter55
+    FROM unicom_counter_history_lte
+    WHERE time = #{time}
+  </select>
 </mapper>

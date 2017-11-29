@@ -37,6 +37,10 @@ public class NetObj_Unicom_Wcdma implements NetObjBase {
 
     @Autowired
     private QuotaService_Unicom_Wcdma quotaService;
+
+    @Autowired
+    private ScannerService_Unicom_Wcdma scannerService;
+
     @Override
     public AuthorityService getAuthorityService(){ return authorityService; }
 
@@ -72,6 +76,12 @@ public class NetObj_Unicom_Wcdma implements NetObjBase {
     @Override
     public QuotaService quotaService() {
         return quotaService;
+    }
+
+    @Override
+    public ScannerService getScannerService() {
+
+        return scannerService;
     }
 
 

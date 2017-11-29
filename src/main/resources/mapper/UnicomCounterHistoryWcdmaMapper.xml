@@ -348,4 +348,30 @@
       </if>
     </trim>
   </insert>
+
+  <select id="getCounterHistoryWcdmaListByTime" resultType="com.alibaba.fastjson.JSONObject">
+
+    SELECT
+    name, time,
+    counter1 pmNoIuSigEstablishSuccessCs, counter2 pmNoIuSigEstablishAttemptCs,
+    counter3 pmNoIuSigEstablishSuccessPs, counter4 pmNoIuSigEstablishAttemptPs,
+    counter5 pmTotNoRrcConnectReqSuccess, counter6 pmTotNoRrcConnectReq,
+    counter7 pmNoLoadSharingRrcConn, counter8 pmTotNoRrcConnectReqPsSucc,
+    counter9 pmTotNoRrcConnectReqPs, counter10 pmNoLoadSharingRrcConnPs,
+    counter11 pmTotNoRrcConnectReqCsSucc, counter12 pmTotNoRrcConnectReqCs,
+    counter13 pmNoLoadSharingRrcConnCs, counter14 pmNoRabEstablishSuccessSpeech,
+    counter15 pmNoRabEstablishAttemptSpeech, counter16 pmNoRabEstablishSuccessPacketInteractive,
+    counter17 pmNoRabEstablishAttemptPacketInteractive, counter18 pmNoTimesRlAddToActSet,
+    counter19 pmNoTimesCellFailAddToActSet, counter20 pmNoSystemRabReleaseSpeech,
+    counter21 pmNoNormalRabReleaseSpeech, counter22 pmNoSystemRabReleasePacket,
+    counter23 pmNoSystemRabReleasePacketUra, counter24 pmChSwitchAttemptFachUra,
+    counter25 pmChSwitchSuccFachUra, counter26 pmChSwitchAttemptDchUra,
+    counter27 pmChSwitchSuccDchUra, counter28 pmChSwitchAttemptHsUra,
+    counter29 pmChSwitchSuccHsUra, counter30 pmNoNormalRabReleasePacket,
+    counter31 pmNoNormalRabReleasePacketUra, counter32,
+    counter33, counter34, counter35, counter36,
+    counter37, counter38, counter39, counter40
+    FROM unicom_counter_history_wcdma
+    WHERE time = #{time}
+  </select>
 </mapper>
