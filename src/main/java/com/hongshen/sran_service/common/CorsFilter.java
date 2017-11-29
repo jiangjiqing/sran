@@ -3,11 +3,14 @@ package com.hongshen.sran_service.common;
 /**
  * Created by poplar on 11/21/17.
  */
+import com.hongshen.sran_service.service.util.websocket.MyWebSocket;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
@@ -19,7 +22,8 @@ import java.io.IOException;
  */
 @Component
 public class CorsFilter extends BaseController implements Filter{
-
+    @Autowired
+    private MyWebSocket myWebSocket;
     final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(CorsFilter.class);
 
 
@@ -37,33 +41,23 @@ public class CorsFilter extends BaseController implements Filter{
         System.out.println(method);
         StringBuffer url = request.getRequestURL();
         System.out.println(url);
-//        if (authToken.equals("qwe")){
-////            String aa = "failed";
-////            response.addDateHeader("aa", 1);
-//            ResponseWrapper wrapperResponse = new ResponseWrapper((HttpServletResponse)response);//转换成代理类
-//            // 这里只拦截返回，直接让请求过去，如果在请求前有处理，可以在这里处理
-////        chain.doFilter(request, wrapperResponse);
-//            byte[] content = wrapperResponse.getContent();//获取返回值
-//            ServletOutputStream out = response.getOutputStream();
-//            String a ="result:failed,data:[]";
-//            out.write(a.getBytes());
-//            out.flush();
-//            return;
-//        }
-//
-//                if (!check(url.toString(), method, authToken)) {
-//                    ResponseWrapper wrapperResponse = new ResponseWrapper((HttpServletResponse)response);//转换成代理类
-//            // 这里只拦截返回，直接让请求过去，如果在请求前有处理，可以在这里处理
-////        chain.doFilter(request, wrapperResponse);
-//            byte[] content = wrapperResponse.getContent();//获取返回值
-//            ServletOutputStream out = response.getOutputStream();
-//        String a ="result:failed,data:[]";
-//        out.write(a.getBytes());
-//            out.write(s.getBytes(),a.getBytes());
-//            out.flush();
-//            return;
-//         }
+        HttpSession session = request.getSession();
+        session.setAttribute("user","ooo");
+        String message = "aaaaaa";
+//      if (!check(url.toString(), method, authToken)) {
+//          ResponseWrapper wrapperResponse = new ResponseWrapper((HttpServletResponse)response);//转换成代理类
+            // 这里只拦截返回，直接让请求过去，如果在请求前有处理，可以在这里处理
+//          chain.doFilter(request, wrapperResponse);
+//          byte[] content = wrapperResponse.getContent();//获取返回值
+//          ServletOutputStream out = response.getOutputStream();
+//          String a ="result:failed,data:[]";
+//          out.write(a.getBytes());
+//          out.write(s.getBytes(),a.getBytes());
+//          out.flush();
+//          return;
+//       }
 
+        response.setHeader("Access-Control-Allow-Credentials", "true");
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE");
         response.setHeader("Access-Control-Max-Age", "3600");

@@ -22,7 +22,7 @@ public class ProtectionController extends BaseController{
 
     @Autowired
     private Httpclient httpclient;
-	
+
     @GET
     @Path("/suppliers/{supplier}/generations/{generation}/nets/protections")
     @Produces(MediaType.APPLICATION_JSON)
