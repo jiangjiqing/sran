@@ -253,4 +253,21 @@
   <select id="getCellLevel" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
     SELECT level FROM unicom_quota_history_cell_wcdma WHERE time = (SELECT MAX(time) FROM unicom_quota_history_cell_wcdma) and name = #{cellName};
   </select>
+
+  <insert id="addQuotaHistoryCellLteList" parameterType="java.util.List">
+    INSERT INTO
+
+    unicom_quota_history_cell_lte
+
+    <foreach item="cloumn" index="index" collection="cloumns" open="(" separator="," close=")">
+      ${cloumn}
+    </foreach>
+
+    VALUES
+
+    <foreach item="cellLte" collection="cellLteList" index="index" separator="," >
+
+      ${cellLte}
+    </foreach>
+  </insert>
 </mapper>

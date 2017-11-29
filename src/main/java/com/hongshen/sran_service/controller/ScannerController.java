@@ -40,6 +40,5 @@ public class ScannerController extends BaseController {
         ret = netObj.getScannerService().cellCalculation(time);
 
         return ret;
-
     }
 }

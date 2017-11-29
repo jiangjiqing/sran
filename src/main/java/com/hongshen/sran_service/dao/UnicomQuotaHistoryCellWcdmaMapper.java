@@ -5,6 +5,8 @@ import com.hongshen.sran_service.entity.UnicomQuotaHistoryCellWcdma;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface UnicomQuotaHistoryCellWcdmaMapper {
     /**
@@ -28,4 +30,7 @@ public interface UnicomQuotaHistoryCellWcdmaMapper {
     int getLevelByName(@Param("cellName") String cellName);
 
     JSONObject getCellLevel(@Param("cellName")String cellName);
+
+    void addQuotaHistoryCellWcdmaList(@Param("cloumns")List<String> cloumns,
+                                    @Param("cellLteList")List<String> cellLteList);
 }
