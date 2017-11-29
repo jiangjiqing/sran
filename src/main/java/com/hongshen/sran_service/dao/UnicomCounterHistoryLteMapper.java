@@ -28,4 +28,6 @@ public interface UnicomCounterHistoryLteMapper {
     int insertSelective(UnicomCounterHistoryLte record);
 
     List<JSONObject> getCounterHistoryLteListByTime(@Param("time")String time);
+
+    List<JSONObject> getCellListByNameListAndTime(@Param("nameList")List<String> nameList, @Param("time")String time);
 }

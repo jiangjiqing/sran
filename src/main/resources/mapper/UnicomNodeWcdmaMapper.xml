@@ -179,4 +179,11 @@
   <select id="getNodeLaoutAndLong" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
     SELECT latitude,longitude FROM unicom_node_wcdma WHERE node_name = #{nodeName}
   </select>
+
+  <select id="getNodeNameList" resultType="java.lang.String">
+
+    SELECT
+    node_name name
+    FROM unicom_node_wcdma
+  </select>
 </mapper>

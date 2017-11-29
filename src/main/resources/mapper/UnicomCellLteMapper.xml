@@ -56,4 +56,10 @@
   <select id="getCellList" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
     SELECT cell_name name FROM unicom_cell_lte WHERE node_name = #{nodeName}
   </select>
+
+  <select id="getCellNameListByNodeName" resultType="java.lang.String" >
+    SELECT cell_name name
+    FROM unicom_cell_lte
+    WHERE node_name = #{nodeName}
+  </select>
 </mapper>

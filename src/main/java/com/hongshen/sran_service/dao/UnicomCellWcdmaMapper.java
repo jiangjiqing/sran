@@ -2,11 +2,13 @@ package com.hongshen.sran_service.dao;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.entity.UnicomCellWcdma;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Mapper
 @Repository
 public interface UnicomCellWcdmaMapper {
     /**
@@ -70,4 +72,5 @@ public interface UnicomCellWcdmaMapper {
 
     List<JSONObject> getCellList(@Param("nodeName")String nodeName);
 
+    List<String> getCellNameListByNodeName(@Param("nodeName")String nodeName);
 }

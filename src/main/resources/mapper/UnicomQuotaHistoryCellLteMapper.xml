@@ -254,7 +254,7 @@
     SELECT level FROM unicom_quota_history_cell_wcdma WHERE time = (SELECT MAX(time) FROM unicom_quota_history_cell_wcdma) and name = #{cellName};
   </select>
 
-  <insert id="addQuotaHistoryCellLteList" parameterType="java.util.List">
+  <insert id="addQuotaHistoryCellList" parameterType="java.util.List">
     INSERT INTO
 
     unicom_quota_history_cell_lte
@@ -265,9 +265,9 @@
 
     VALUES
 
-    <foreach item="cellLte" collection="cellLteList" index="index" separator="," >
+    <foreach item="cell" collection="cellList" index="index" separator="," >
 
-      ${cellLte}
+      ${cell}
     </foreach>
   </insert>
 </mapper>

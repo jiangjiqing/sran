@@ -522,4 +522,17 @@
     FROM unicom_counter_history_lte
     WHERE time = #{time}
   </select>
+
+  <select id="getCellListByIdAndTime" parameterType="java.util.List" resultType="com.alibaba.fastjson.JSONObject">
+
+    SELECT
+    *
+    FROM unicom_counter_history_lte
+    WHERE
+    name in
+    <foreach item="name" index="index" collection="nameList" open="(" separator="," close=")">
+      ${cloumn}
+    </foreach>
+    and time = #{time}
+  </select>
 </mapper>

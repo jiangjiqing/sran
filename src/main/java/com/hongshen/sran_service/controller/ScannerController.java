@@ -23,9 +23,9 @@ public class ScannerController extends BaseController {
     private static final Logger logger = LoggerFactory.getLogger(ScannerController.class);
 
     @GET
-    @Path("/{supplier}/{generation}/calculation/cell/{time}")
+    @Path("/suppliers/{supplier}/generations/{generation}/quotas/{time}/calculation")
     @Produces(MediaType.APPLICATION_JSON)
-    public String cellCalculation(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
+    public String calculation(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
                                       @PathParam("time")String time) {
 
         String ret = null;
@@ -39,43 +39,7 @@ public class ScannerController extends BaseController {
 
         ret = netObj.getScannerService().cellCalculation(time);
 
-        return ret;
-    }
-
-    @GET
-    @Path("/{supplier}/{generation}/calculation/node/{time}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String nodeCalculation(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
-                                 @PathParam("time")String time) {
-
-        String ret = null;
-
-        if (time == null) {
-
-            return ret;
-        }
-
-        NetObjBase netObj = objFactory.getNetObj(supplier, generation);
-
         ret = netObj.getScannerService().nodeCalculation(time);
-
-        return ret;
-    }
-
-    @GET
-    @Path("/{supplier}/{generation}/calculation/group/{time}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String groupCalculation(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
-                                 @PathParam("time")String time) {
-
-        String ret = null;
-
-        if (time == null) {
-
-            return ret;
-        }
-
-        NetObjBase netObj = objFactory.getNetObj(supplier, generation);
 
         ret = netObj.getScannerService().groupCalculation(time);
 

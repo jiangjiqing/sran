@@ -2,10 +2,7 @@ package com.hongshen.sran_service.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.common.BaseService;
-import com.hongshen.sran_service.dao.UnicomCounterHistoryWcdmaMapper;
-import com.hongshen.sran_service.dao.UnicomFormulaWcdmaMapper;
-import com.hongshen.sran_service.dao.UnicomQuotaCellWcdmaMapper;
-import com.hongshen.sran_service.dao.UnicomQuotaHistoryCellWcdmaMapper;
+import com.hongshen.sran_service.dao.*;
 import com.hongshen.sran_service.entity.UnicomFormula;
 import com.hongshen.sran_service.service.ScannerService;
 import net.java.dev.eval.Expression;
@@ -27,6 +24,12 @@ public class ScannerService_Unicom_Wcdma extends BaseService implements ScannerS
 
     @Autowired
     private UnicomFormulaWcdmaMapper formula;
+
+    @Autowired
+    private UnicomCellWcdmaMapper cell;
+
+    @Autowired
+    private UnicomNodeWcdmaMapper node;
 
     @Override
     public String cellCalculation(String time) {
@@ -142,14 +145,37 @@ public class ScannerService_Unicom_Wcdma extends BaseService implements ScannerS
 
         paramValues.size();
 
-        quotaCell.addQuotaHistoryCellWcdmaList(paramcloumns, paramValues);
+        quotaCell.addQuotaHistoryCellList(paramcloumns, paramValues);
 
         return ret;
     }
 
     @Override
     public String nodeCalculation(String time) {
-        return null;
+
+        String ret = null;
+
+        List<String> nodeNameList = node.getNodeNameList();
+
+        if (nodeNameList.size() == 0) {
+
+            return ret;
+        }
+
+        for (String nodeName : nodeNameList) {
+
+            List<String> cellNameList = cell.getCellNameListByNodeName(nodeName);
+
+            if (cellNameList.size() == 0) {
+
+                continue;
+            }
+
+            List<JSONObject> cellList = counterHistory.getCellListByNameListAndTime(cellNameList, time);
+
+        }
+
+        return ret;
     }
 
     @Override

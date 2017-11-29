@@ -2,10 +2,7 @@ package com.hongshen.sran_service.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.common.BaseService;
-import com.hongshen.sran_service.dao.UnicomCounterHistoryLteMapper;
-import com.hongshen.sran_service.dao.UnicomFormulaLteMapper;
-import com.hongshen.sran_service.dao.UnicomQuotaCellLteMapper;
-import com.hongshen.sran_service.dao.UnicomQuotaHistoryCellLteMapper;
+import com.hongshen.sran_service.dao.*;
 import com.hongshen.sran_service.entity.UnicomFormula;
 import com.hongshen.sran_service.service.ScannerService;
 import net.java.dev.eval.Expression;
@@ -27,6 +24,12 @@ public class ScannerService_Unicom_Lte extends BaseService implements ScannerSer
 
     @Autowired
     private UnicomFormulaLteMapper formula;
+
+    @Autowired
+    private UnicomNodeLteMapper node;
+
+    @Autowired
+    private UnicomCellLteMapper cell;
 
     @Override
     public String cellCalculation(String time) {
@@ -112,6 +115,7 @@ public class ScannerService_Unicom_Lte extends BaseService implements ScannerSer
                         }catch (Exception e){
 
                             value = "-1";
+
                             e.getStackTrace();
                         }
 
@@ -142,14 +146,37 @@ public class ScannerService_Unicom_Lte extends BaseService implements ScannerSer
 
         paramValues.size();
 
-        quotaCell.addQuotaHistoryCellLteList(paramcloumns, paramValues);
+        quotaCell.addQuotaHistoryCellList(paramcloumns, paramValues);
 
         return ret;
     }
 
     @Override
     public String nodeCalculation(String time) {
-        return null;
+
+        String ret = null;
+
+        List<String> nodeNameList = node.getNodeNameList();
+
+        if (nodeNameList.size() == 0) {
+
+            return ret;
+        }
+
+        for (String nodeName : nodeNameList) {
+
+            List<String> cellNameList = cell.getCellNameListByNodeName(nodeName);
+
+            if (cellNameList.size() == 0) {
+
+                continue;
+            }
+
+            List<JSONObject> cellList = counterHistory.getCellListByNameListAndTime(cellNameList, time);
+
+        }
+
+        return ret;
     }
 
     @Override

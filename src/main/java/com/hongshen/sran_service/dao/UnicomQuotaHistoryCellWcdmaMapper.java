@@ -31,6 +31,6 @@ public interface UnicomQuotaHistoryCellWcdmaMapper {
 
     JSONObject getCellLevel(@Param("cellName")String cellName);
 
-    void addQuotaHistoryCellWcdmaList(@Param("cloumns")List<String> cloumns,
-                                    @Param("cellLteList")List<String> cellLteList);
+    void addQuotaHistoryCellList(@Param("cloumns")List<String> cloumns,
+                                    @Param("cellList")List<String> cellList);
 }

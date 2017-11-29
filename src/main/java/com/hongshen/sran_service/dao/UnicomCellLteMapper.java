@@ -27,4 +27,6 @@ public interface UnicomCellLteMapper {
 
 
     List<JSONObject> getCellList(@Param("nodeName") String nodeName);
+
+    List<String> getCellNameListByNodeName(@Param("nodeName")String nodeName);
 }
