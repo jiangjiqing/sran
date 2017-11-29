@@ -147,6 +147,16 @@ public class ScannerService_Unicom_Lte extends BaseService implements ScannerSer
         return ret;
     }
 
+    @Override
+    public String nodeCalculation(String time) {
+        return null;
+    }
+
+    @Override
+    public String groupCalculation(String time) {
+        return null;
+    }
+
 
     public String cellCalculationOld(String time) {
 

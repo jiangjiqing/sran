@@ -147,6 +147,16 @@ public class ScannerService_Unicom_Wcdma extends BaseService implements ScannerS
         return ret;
     }
 
+    @Override
+    public String nodeCalculation(String time) {
+        return null;
+    }
+
+    @Override
+    public String groupCalculation(String time) {
+        return null;
+    }
+
     public String cellCalculationOld(String time) {
 
         String ret = null;
