@@ -7,6 +7,7 @@ import org.hibernate.procedure.spi.ParameterRegistrationImplementor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +16,6 @@ import java.util.Map;
  */
 @Service
 public class QuotaService_Unicom_Lte implements QuotaService {
-
     @Autowired
     private UnicomQuotaHistoryGroupLteMapper quotaHistoryGroupMapper;
 
@@ -88,6 +88,11 @@ public class QuotaService_Unicom_Lte implements QuotaService {
     @Override
     public Integer setCell(JSONObject quotaThres) {
         return quotaThresholdCellMapper.setCell(quotaThres);
+    }
+
+    @Override
+    public List<JSONObject>  getQuotas(Date start, Date end) {
+        return quotaHistoryGroupMapper.getQuos(start,end);
     }
 //    @Override
 //    public Map<String, Object> getQuotaInfo() {

@@ -8,6 +8,7 @@ import com.hongshen.sran_service.service.QuotaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -87,6 +88,11 @@ public class QuotaService_Unicom_Wcdma implements QuotaService {
     @Override
     public Integer setCell(JSONObject quotaThres) {
         return quotaThresholdCellMapper.setCell(quotaThres);
+    }
+
+    @Override
+    public List<JSONObject>  getQuotas(Date start, Date end) {
+        return quotaHistoryGroupMapper.getQuotas(start,end);
     }
 
 //    @Override

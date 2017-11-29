@@ -42,7 +42,6 @@ public class QuotaThresholdController extends BaseController{
 
             case "cells":
                 List<JSONObject> thresholdCellList = obj.getCacheService().getThresholdCellList();
-
                     list = getvalue(thresholdCellList);
                 break;
 
