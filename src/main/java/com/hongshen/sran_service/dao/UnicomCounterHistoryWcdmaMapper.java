@@ -30,4 +30,8 @@ public interface UnicomCounterHistoryWcdmaMapper {
     List<JSONObject> getCounterHistoryWcdmaListByTime(@Param("time")String time);
 
     List<JSONObject> getCellListByNameListAndTime(@Param("nameList")List<String> nameList, @Param("time")String time);
+
+    String getSumCounterByCellsAndCounterAndTime(@Param("nameList")List<String> nameList,
+                                            @Param("counter")String counter,
+                                            @Param("time")String time);
 }

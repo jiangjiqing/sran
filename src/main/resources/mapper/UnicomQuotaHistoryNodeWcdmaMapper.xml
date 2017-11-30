@@ -215,4 +215,22 @@
   <select id="getNodeLevel" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
     SELECT level FROM unicom_quota_history_node_wcdma WHERE time = (SELECT MAX(time) FROM unicom_quota_history_node_wcdma) AND name = #{nodeName};
   </select>
+
+  <insert id="addQuotaHistoryNodeList" parameterType="java.util.List">
+
+    INSERT INTO
+
+    unicom_quota_history_node_wcdma
+
+    <foreach item="cloumn" index="index" collection="cloumns" open="(" separator="," close=")">
+      ${cloumn}
+    </foreach>
+
+    VALUES
+
+    <foreach item="cell" collection="cellList" index="index" separator="," >
+
+      ${cell}
+    </foreach>
+  </insert>
 </mapper>

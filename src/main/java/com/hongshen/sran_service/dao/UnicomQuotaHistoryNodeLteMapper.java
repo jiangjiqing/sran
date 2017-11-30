@@ -5,6 +5,8 @@ import com.hongshen.sran_service.entity.UnicomQuotaHistoryNodeLte;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface UnicomQuotaHistoryNodeLteMapper {
     /**
@@ -28,4 +30,7 @@ public interface UnicomQuotaHistoryNodeLteMapper {
     int getLevelByName(@Param("nodeName") String nodeName);
 
     JSONObject getNodeLevel(@Param("nodeName")String nodeName);
+
+    void addQuotaHistoryNodeList(@Param("cloumns")List<String> cloumns,
+                                 @Param("cellList")List<String> cellList);
 }

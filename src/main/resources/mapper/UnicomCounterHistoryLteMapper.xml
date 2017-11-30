@@ -535,4 +535,16 @@
     </foreach>
     and time = #{time}
   </select>
+
+  <select id="getSumCellsCounterByCellsAndTime" parameterType="java.util.List" resultType="java.lang.String">
+
+    SELECT
+    sum(#{counter})
+    FROM unicom_counter_history_lte
+    WHERE name in
+    <foreach item="name" index="index" collection="nameList" open="(" separator="," close=")">
+      #{name}
+    </foreach>
+    and time = #{time}
+  </select>
 </mapper>
