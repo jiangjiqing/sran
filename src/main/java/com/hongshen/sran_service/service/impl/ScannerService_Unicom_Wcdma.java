@@ -18,22 +18,25 @@ import java.util.Map;
 public class ScannerService_Unicom_Wcdma extends BaseService implements ScannerService{
 
     @Autowired
-    private UnicomQuotaHistoryCellWcdmaMapper quotaCell;
+    private UnicomQuotaHistoryCellWcdmaMapper quotaCellMapper;
 
     @Autowired
-    private UnicomQuotaHistoryNodeWcdmaMapper quotaNode;
+    private UnicomQuotaHistoryNodeWcdmaMapper quotaNodeMapper;
 
     @Autowired
-    private UnicomCounterHistoryWcdmaMapper counterHistory;
+    private UnicomQuotaHistoryGroupWcdmaMapper quotaGroupMapper;
 
     @Autowired
-    private UnicomFormulaWcdmaMapper formula;
+    private UnicomCounterHistoryWcdmaMapper counterHistoryMapper;
 
     @Autowired
-    private UnicomCellWcdmaMapper cell;
+    private UnicomFormulaWcdmaMapper formulaMapper;
 
     @Autowired
-    private UnicomNodeWcdmaMapper node;
+    private UnicomCellWcdmaMapper cellMapper;
+
+    @Autowired
+    private UnicomNodeWcdmaMapper nodeMapper;
 
     @Override
     public String cellCalculation(String time) {
@@ -46,7 +49,7 @@ public class ScannerService_Unicom_Wcdma extends BaseService implements ScannerS
 
         List<String> paramcloumns = new ArrayList<>();
 
-        List<UnicomFormula> formulaList = formula.getFormulaWcdmaList();
+        List<UnicomFormula> formulaList = formulaMapper.getFormulaWcdmaList();
 
         for (int j = 0; j < formulaList.size(); j ++) {
 
@@ -62,7 +65,7 @@ public class ScannerService_Unicom_Wcdma extends BaseService implements ScannerS
         }
 
         List<JSONObject> counterHistoryList =
-                counterHistory.getCounterHistoryWcdmaListByTime(time);
+                counterHistoryMapper.getCounterHistoryWcdmaListByTime(time);
 
         if (counterHistoryList.size() == 0) {
 
@@ -149,7 +152,17 @@ public class ScannerService_Unicom_Wcdma extends BaseService implements ScannerS
 
         paramValues.size();
 
-        quotaCell.addQuotaHistoryCellList(paramcloumns, paramValues);
+        try {
+
+            quotaCellMapper.addQuotaHistoryCellList(paramcloumns, paramValues);
+
+            ret = "SUCCESS";
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            ret = "FAIL";
+        }
 
         return ret;
     }
@@ -167,9 +180,9 @@ public class ScannerService_Unicom_Wcdma extends BaseService implements ScannerS
 
         Map<String, List<String>> expressionSetMap = getVariableListWcdma();
 
-        List<String> nodeNameList = node.getNodeNameList();
+        List<String> nodeNameList = nodeMapper.getNodeNameList();
 
-        List<UnicomFormula> formulaList = formula.getFormulaWcdmaList();
+        List<UnicomFormula> formulaList = formulaMapper.getFormulaWcdmaList();
 
         for (int j = 0; j < formulaList.size(); j ++) {
 
@@ -193,7 +206,7 @@ public class ScannerService_Unicom_Wcdma extends BaseService implements ScannerS
 
             StringBuffer paramValue = new StringBuffer();
 
-            List<String> cellNameList = cell.getCellNameListByNodeName(nodeName);
+            List<String> cellNameList = cellMapper.getCellNameListByNodeName(nodeName);
 
             if (cellNameList.size() == 0) {
 
@@ -219,7 +232,7 @@ public class ScannerService_Unicom_Wcdma extends BaseService implements ScannerS
                         String variable = variableList.get(i);
 
                         String pmValue =
-                                counterHistory.getSumCounterByCellsAndCounterAndTime(cellNameList, variable, time);
+                                counterHistoryMapper.getSumCounterByCellsAndCounterAndTime(cellNameList, variable, time);
 
                         if (pmValue != null && i != variableList.size() - 1) {
 
@@ -276,16 +289,177 @@ public class ScannerService_Unicom_Wcdma extends BaseService implements ScannerS
             paramValues.add(paramValue.toString());
         }
 
-        quotaNode.addQuotaHistoryNodeList(paramcloumns, paramValues);
+        try {
 
-        resultJson.put("nodeCellsMap", nodeCellsMap);
+            quotaNodeMapper.addQuotaHistoryNodeList(paramcloumns, paramValues);
+
+            resultJson.put("nodeCellsMap", nodeCellsMap);
+            resultJson.put("message", "SUCCESS");
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            resultJson.put("nodeCellsMap", null);
+            resultJson.put("message", "FAIL");
+        }
 
         return resultJson;
     }
 
     @Override
     public String groupCalculation(JSONObject params, String time) {
-        return null;
+
+        String result = null;
+
+        if (params == null || time == null) {
+
+            return null;
+        }
+
+        List<String> paramValues = new ArrayList<>();
+
+        List<String> paramcloumns = new ArrayList<>();
+
+        Map<String, List<String>> expressionSetMap = getVariableListWcdma();
+
+        Map<String, List<String>> nodeCellsMap =  (Map<String, List<String>>) params.get("nodeCellsMap");
+
+        List<String> groupNameList = nodeMapper.getGroupNameList();
+
+        List<UnicomFormula> formulaList = formulaMapper.getFormulaWcdmaList();
+
+        for (int j = 0; j < formulaList.size(); j ++) {
+
+            UnicomFormula formula = formulaList.get(j);
+
+            if (j != formulaList.size() -1) {
+
+                paramcloumns.add("formula" + formula.getId() + ",");
+            } else {
+
+                paramcloumns.add("formula" + formula.getId());
+            }
+        }
+
+        if (groupNameList.size() == 0) {
+
+            return result;
+        }
+
+        for (String groupName : groupNameList) {
+
+            StringBuffer paramValue = new StringBuffer();
+
+            List<String> groupAllNodeAllCellList = new ArrayList<>();
+
+            List<String> nodeNameList = nodeMapper.getNodeNameListByGroupName(groupName);
+
+            if (nodeNameList.size() == 0) {
+
+                continue;
+            }
+
+            for (String nodeName : nodeNameList) {
+
+                if (nodeCellsMap.containsKey(nodeName)) {
+
+                    List<String> nodeCells = nodeCellsMap.get(nodeName);
+
+                    for (String cell : nodeCells) {
+
+                        groupAllNodeAllCellList.add(cell);
+                    }
+                }
+            }
+
+            for (int j = 0; j < formulaList.size(); j ++) {
+
+                UnicomFormula formula = formulaList.get(j);
+
+                if (expressionSetMap.containsKey(formula.getQuota_name())) {
+
+                    List<String> variableList = expressionSetMap.get(formula.getQuota_name());
+
+                    String expression = formula.getExpression();
+
+                    boolean flag = false;
+
+                    for (int i = 0; i < variableList.size(); i ++) {
+
+                        String variable = variableList.get(i);
+
+                        String pmValue =
+                                counterHistoryMapper.
+                                        getSumCounterByCellsAndCounterAndTime(groupAllNodeAllCellList, variable, time);
+
+                        if (pmValue != null && i != variableList.size() - 1) {
+
+                            expression = expression.replaceAll(variable, pmValue);
+                        } else if (pmValue != null && i == variableList.size() - 1) {
+
+                            expression = expression.replaceAll(variable, pmValue);
+
+                            flag = true;
+                        } else {
+
+                            break;
+                        }
+                    }
+
+                    if (flag) {
+
+                        String value = null;
+
+                        try{
+
+                            Expression exp = new Expression(expression);
+
+                            Double doubleValue = Double.parseDouble(String.valueOf(exp.eval()));
+
+                            value = String.valueOf((double)Math.round(doubleValue*100)/100);
+                        }catch (Exception e){
+
+                            value = "-1";
+                            e.getStackTrace();
+                        }
+
+                        if (j != formulaList.size() -1) {
+
+                            paramValue.append(value + ",");
+                        }else {
+
+                            paramValue.append(value);
+                        }
+
+                    } else {
+
+                        if (j != formulaList.size() -1) {
+
+                            paramValue.append("-1,");
+                        } else {
+
+                            paramValue.append("-1");
+                        }
+                    }
+                }
+            }
+
+            paramValues.add(paramValue.toString());
+        }
+
+        try {
+
+            quotaGroupMapper.addQuotaHistoryGroupList(paramcloumns, paramValues);
+
+            result = "SUCCESS";
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            result = "FAIL";
+        }
+
+        return result;
     }
 
     public String cellCalculationOld(String time) {
@@ -296,10 +470,10 @@ public class ScannerService_Unicom_Wcdma extends BaseService implements ScannerS
 
         List<JSONObject> paramList = new ArrayList<>();
 
-        List<UnicomFormula> formulaList = formula.getFormulaWcdmaList();
+        List<UnicomFormula> formulaList = formulaMapper.getFormulaWcdmaList();
 
         List<JSONObject> counterHistoryList =
-                counterHistory.getCounterHistoryWcdmaListByTime(time);
+                counterHistoryMapper.getCounterHistoryWcdmaListByTime(time);
 
         if (counterHistoryList.size() == 0) {
 

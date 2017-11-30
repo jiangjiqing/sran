@@ -185,5 +185,23 @@
     SELECT
     node_name name
     FROM unicom_node_wcdma
+    GROUP BY name
+  </select>
+
+  <select id="getGroupNameList" resultType="java.lang.String">
+
+    SELECT
+    group_name name
+    FROM unicom_node_wcdma
+    GROUP BY name
+  </select>
+
+  <select id="getNodeNameListByGroupName" resultType="java.lang.String">
+
+    SELECT
+    node_name name
+    FROM unicom_node_wcdma
+    WHERE group_name = #{groupName}
+    GROUP BY name
   </select>
 </mapper>

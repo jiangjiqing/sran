@@ -255,4 +255,22 @@
     SELECT * FROM unicom_quota_history_group_wcdma WHERE time  BETWEEN #{start} AND #{end} ORDER BY time DESC;
 
   </select>
+
+  <insert id="addQuotaHistoryGroupList" parameterType="java.util.List">
+
+    INSERT INTO
+
+    unicom_quota_history_group_wcdma
+
+    <foreach item="cloumn" index="index" collection="cloumns" open="(" separator="," close=")">
+      ${cloumn}
+    </foreach>
+
+    VALUES
+
+    <foreach item="cell" collection="cellList" index="index" separator="," >
+
+      ${cell}
+    </foreach>
+  </insert>
 </mapper>

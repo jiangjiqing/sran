@@ -253,4 +253,22 @@
   <select id="getQuotas" parameterType="java.util.Date" resultType="com.alibaba.fastjson.JSONObject">
     SELECT * FROM unicom_quota_history_group_lte WHERE time  BETWEEN #{start} AND #{end};
   </select>
+
+  <insert id="addQuotaHistoryGroupList" parameterType="java.util.List">
+
+    INSERT INTO
+
+    unicom_quota_history_group_lte
+
+    <foreach item="cloumn" index="index" collection="cloumns" open="(" separator="," close=")">
+      ${cloumn}
+    </foreach>
+
+    VALUES
+
+    <foreach item="cell" collection="cellList" index="index" separator="," >
+
+      ${cell}
+    </foreach>
+  </insert>
 </mapper>

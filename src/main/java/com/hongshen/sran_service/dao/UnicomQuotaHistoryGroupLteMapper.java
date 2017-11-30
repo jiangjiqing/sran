@@ -31,4 +31,7 @@ public interface UnicomQuotaHistoryGroupLteMapper {
     int getLevelByName(@Param("groupName") String groupName);
 
     List<JSONObject>  getQuos(@Param("start")Date start, @Param("end")Date end);
+
+    void addQuotaHistoryGroupList(@Param("cloumns")List<String> cloumns,
+                                  @Param("cellList")List<String> cellList);
 }
