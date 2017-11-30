@@ -252,6 +252,7 @@
   </select>
 
   <select id="getQuotas" parameterType="java.util.Date" resultType="com.alibaba.fastjson.JSONObject">
-    SELECT * FROM unicom_quota_history_group_wcdma WHERE time  BETWEEN #{start} AND #{end};
+    SELECT * FROM unicom_quota_history_group_wcdma WHERE time  BETWEEN #{start} AND #{end} ORDER BY time DESC;
+
   </select>
 </mapper>
