@@ -32,5 +32,5 @@ public interface UnicomQuotaHistoryNodeLteMapper {
     JSONObject getNodeLevel(@Param("nodeName")String nodeName);
 
     void addQuotaHistoryNodeList(@Param("cloumns")List<String> cloumns,
-                                 @Param("cellList")List<String> cellList);
+                                 @Param("valueList")List<String> valueList);
 }

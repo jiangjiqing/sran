@@ -27,7 +27,7 @@ public interface UnicomCounterHistoryWcdmaMapper {
      */
     int insertSelective(UnicomCounterHistoryWcdma record);
 
-    List<JSONObject> getCounterHistoryWcdmaListByTime(@Param("time")String time);
+    List<JSONObject> getCounterHistoryListByTime(@Param("time")String time);
 
     List<JSONObject> getCellListByNameListAndTime(@Param("nameList")List<String> nameList, @Param("time")String time);
 

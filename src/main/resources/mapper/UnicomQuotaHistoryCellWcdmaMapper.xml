@@ -227,9 +227,9 @@
 
     VALUES
 
-    <foreach item="cell" collection="cellList" index="index" separator="," >
+    <foreach item="value" collection="valueList" index="index" separator="," >
 
-      ${cell}
+      ${value}
     </foreach>
   </insert>
 </mapper>

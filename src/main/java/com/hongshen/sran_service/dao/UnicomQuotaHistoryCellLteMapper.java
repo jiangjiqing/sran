@@ -34,5 +34,5 @@ public interface UnicomQuotaHistoryCellLteMapper {
     JSONObject getCellLevel(@Param("cellName")String cellName);
 
     void addQuotaHistoryCellList(@Param("cloumns")List<String> cloumns,
-                                    @Param("cellList")List<String> cellList);
+                                    @Param("valueList")List<String> valueList);
 }

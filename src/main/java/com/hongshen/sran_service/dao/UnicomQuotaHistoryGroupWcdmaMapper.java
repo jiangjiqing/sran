@@ -33,5 +33,5 @@ public interface UnicomQuotaHistoryGroupWcdmaMapper {
     List<JSONObject>  getQuotas(@Param("start")Date start, @Param("end")Date end);
 
     void addQuotaHistoryGroupList(@Param("cloumns")List<String> cloumns,
-                                 @Param("cellList")List<String> cellList);
+                                 @Param("valueList")List<String> valueList);
 }

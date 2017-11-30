@@ -49,6 +49,10 @@ public class ScannerService_Unicom_Wcdma extends BaseService implements ScannerS
 
         List<String> paramcloumns = new ArrayList<>();
 
+        paramcloumns.add("name");
+        paramcloumns.add("time");
+        paramcloumns.add("level");
+
         List<UnicomFormula> formulaList = formulaMapper.getFormulaWcdmaList();
 
         for (int j = 0; j < formulaList.size(); j ++) {
@@ -65,7 +69,7 @@ public class ScannerService_Unicom_Wcdma extends BaseService implements ScannerS
         }
 
         List<JSONObject> counterHistoryList =
-                counterHistoryMapper.getCounterHistoryWcdmaListByTime(time);
+                counterHistoryMapper.getCounterHistoryListByTime(time);
 
         if (counterHistoryList.size() == 0) {
 
@@ -75,6 +79,12 @@ public class ScannerService_Unicom_Wcdma extends BaseService implements ScannerS
         for (JSONObject counterHistory : counterHistoryList) {
 
             StringBuffer paramValue = new StringBuffer();
+
+            String level = null;
+
+            paramValue.append("'" + counterHistory.getString("name") + "'");
+            paramValue.append("'" + time + "'");
+            paramValue.append("'" + level + "'");
 
             for (int j = 0; j < formulaList.size(); j ++) {
 
@@ -127,10 +137,10 @@ public class ScannerService_Unicom_Wcdma extends BaseService implements ScannerS
 
                         if (j != formulaList.size() -1) {
 
-                            paramValue.append(value + ",");
+                            paramValue.append("'" + value + "',");
                         }else {
 
-                            paramValue.append(value);
+                            paramValue.append("'" + value + "'");
                         }
 
                     } else {
@@ -176,6 +186,10 @@ public class ScannerService_Unicom_Wcdma extends BaseService implements ScannerS
 
         List<String> paramcloumns = new ArrayList<>();
 
+        paramcloumns.add("name");
+        paramcloumns.add("time");
+        paramcloumns.add("level");
+
         Map<String, List<String>> nodeCellsMap = new HashMap<>();
 
         Map<String, List<String>> expressionSetMap = getVariableListWcdma();
@@ -205,6 +219,12 @@ public class ScannerService_Unicom_Wcdma extends BaseService implements ScannerS
         for (String nodeName : nodeNameList) {
 
             StringBuffer paramValue = new StringBuffer();
+
+            String level = null;
+
+            paramValue.append("'" + nodeName + "'");
+            paramValue.append("'" + time + "'");
+            paramValue.append("'" + level + "'");
 
             List<String> cellNameList = cellMapper.getCellNameListByNodeName(nodeName);
 
@@ -267,10 +287,10 @@ public class ScannerService_Unicom_Wcdma extends BaseService implements ScannerS
 
                         if (j != formulaList.size() -1) {
 
-                            paramValue.append(value + ",");
+                            paramValue.append("'" + value + "',");
                         }else {
 
-                            paramValue.append(value);
+                            paramValue.append("'" + value + "'");
                         }
 
                     } else {
@@ -320,6 +340,10 @@ public class ScannerService_Unicom_Wcdma extends BaseService implements ScannerS
 
         List<String> paramcloumns = new ArrayList<>();
 
+        paramcloumns.add("name");
+        paramcloumns.add("time");
+        paramcloumns.add("level");
+
         Map<String, List<String>> expressionSetMap = getVariableListWcdma();
 
         Map<String, List<String>> nodeCellsMap =  (Map<String, List<String>>) params.get("nodeCellsMap");
@@ -351,6 +375,12 @@ public class ScannerService_Unicom_Wcdma extends BaseService implements ScannerS
             StringBuffer paramValue = new StringBuffer();
 
             List<String> groupAllNodeAllCellList = new ArrayList<>();
+
+            String level = null;
+
+            paramValue.append("'" + groupName + "'");
+            paramValue.append("'" + time + "'");
+            paramValue.append("'" + level + "'");
 
             List<String> nodeNameList = nodeMapper.getNodeNameListByGroupName(groupName);
 
@@ -425,10 +455,10 @@ public class ScannerService_Unicom_Wcdma extends BaseService implements ScannerS
 
                         if (j != formulaList.size() -1) {
 
-                            paramValue.append(value + ",");
+                            paramValue.append("'" + value + "',");
                         }else {
 
-                            paramValue.append(value);
+                            paramValue.append("'" + value + "'");
                         }
 
                     } else {
@@ -473,7 +503,7 @@ public class ScannerService_Unicom_Wcdma extends BaseService implements ScannerS
         List<UnicomFormula> formulaList = formulaMapper.getFormulaWcdmaList();
 
         List<JSONObject> counterHistoryList =
-                counterHistoryMapper.getCounterHistoryWcdmaListByTime(time);
+                counterHistoryMapper.getCounterHistoryListByTime(time);
 
         if (counterHistoryList.size() == 0) {
 
