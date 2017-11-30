@@ -1,5 +1,6 @@
 package com.hongshen.sran_service.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.common.BaseController;
 import com.hongshen.sran_service.service.util.NetObjBase;
 import com.hongshen.sran_service.service.util.NetObjFactory;
@@ -39,9 +40,9 @@ public class ScannerController extends BaseController {
 
         ret = netObj.getScannerService().cellCalculation(time);
 
-        ret = netObj.getScannerService().nodeCalculation(time);
+        JSONObject params = netObj.getScannerService().nodeCalculation(time);
 
-        ret = netObj.getScannerService().groupCalculation(time);
+        ret = netObj.getScannerService().groupCalculation(params, time);
 
         return ret;
     }

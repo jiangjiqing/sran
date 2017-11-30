@@ -155,9 +155,9 @@ public class ScannerService_Unicom_Wcdma extends BaseService implements ScannerS
     }
 
     @Override
-    public String nodeCalculation(String time) {
+    public JSONObject nodeCalculation(String time) {
 
-        String ret = null;
+        JSONObject resultJson = new JSONObject();
 
         List<String> paramValues = new ArrayList<>();
 
@@ -186,7 +186,7 @@ public class ScannerService_Unicom_Wcdma extends BaseService implements ScannerS
 
         if (nodeNameList.size() == 0) {
 
-            return ret;
+            return resultJson;
         }
 
         for (String nodeName : nodeNameList) {
@@ -278,11 +278,13 @@ public class ScannerService_Unicom_Wcdma extends BaseService implements ScannerS
 
         quotaNode.addQuotaHistoryNodeList(paramcloumns, paramValues);
 
-        return ret;
+        resultJson.put("nodeCellsMap", nodeCellsMap);
+
+        return resultJson;
     }
 
     @Override
-    public String groupCalculation(String time) {
+    public String groupCalculation(JSONObject params, String time) {
         return null;
     }
 
