@@ -61,6 +61,8 @@ public class ScannerService_Unicom_Lte implements ScannerService{
         Map<String, List<String>> expressionSetMap =
                 ScannerHelper.getVariableList(formulaMapper.getFormulaList());
 
+        Map<String, String> counterMap = ScannerHelper.getCounterMap(counterMapper.getCounterList());
+
         List<String> paramValues = new ArrayList<>();
 
         List<String> paramcloumns = new ArrayList<>();
@@ -114,7 +116,7 @@ public class ScannerService_Unicom_Lte implements ScannerService{
 
                         String variable = variableList.get(i);
 
-                        String pmValue = counterHistory.getString(variable);
+                        String pmValue = counterHistory.getString(counterMap.get(variable));
 
                         if (pmValue != null && i != variableList.size() - 1) {
 
@@ -143,11 +145,9 @@ public class ScannerService_Unicom_Lte implements ScannerService{
                             Double doubleValue = Double.parseDouble(String.valueOf(exp.eval()));
 
                             value = String.valueOf((double)Math.round(doubleValue*100)/100);
-
                         }catch (Exception e){
 
                             value = "-1";
-
                             e.getStackTrace();
                         }
 
@@ -209,6 +209,8 @@ public class ScannerService_Unicom_Lte implements ScannerService{
         Map<String, List<String>> expressionSetMap =
                 ScannerHelper.getVariableList(formulaMapper.getFormulaList());
 
+        Map<String, String> counterMap = ScannerHelper.getCounterMap(counterMapper.getCounterList());
+
         List<JSONObject> counterList = counterMapper.getCounterList();
 
         for (JSONObject counter : counterList) {
@@ -269,7 +271,7 @@ public class ScannerService_Unicom_Lte implements ScannerService{
 
                         String variable = variableList.get(i);
 
-                        String pmValue = nodeResult.getString(variable);
+                        String pmValue = nodeResult.getString(counterMap.get(variable));
 
                         if (pmValue != null && i != variableList.size() - 1) {
 
@@ -383,11 +385,13 @@ public class ScannerService_Unicom_Lte implements ScannerService{
 
         Map<String, JSONObject> nodeMap = (Map<String, JSONObject>) params.get("nodeMap");
 
-        Map<String, List<String>> quotaThresholdNodeMap =
+        Map<String, List<String>> quotaThresholdGroupMap =
                 ScannerHelper.getQuotaThresholdMap(quotaThresholdGroupMapper.getThresholdGroupList());
 
         Map<String, List<String>> expressionSetMap =
                 ScannerHelper.getVariableList(formulaMapper.getFormulaList());
+
+        Map<String, String> counterMap = ScannerHelper.getCounterMap(counterMapper.getCounterList());
 
         for (String groupName : groupNameList) {
 
@@ -434,7 +438,8 @@ public class ScannerService_Unicom_Lte implements ScannerService{
                         String variable = variableList.get(i);
 
                         String pmValue =
-                                ScannerHelper.getGroupVariableValueByNodeList(variable, groupAllGroupList);
+                                ScannerHelper
+                                        .getGroupVariableValueByNodeList(counterMap.get(variable), groupAllGroupList);
 
                         if (pmValue != null && i != variableList.size() - 1) {
 
@@ -472,7 +477,7 @@ public class ScannerService_Unicom_Lte implements ScannerService{
 
                         String fmLevel =
                                 ScannerHelper
-                                        .levelCalculation(value, quotaThresholdNodeMap.get(formula.getQuota_name()));
+                                        .levelCalculation(value, quotaThresholdGroupMap.get(formula.getQuota_name()));
 
                         fmLevelList.add(fmLevel);
 

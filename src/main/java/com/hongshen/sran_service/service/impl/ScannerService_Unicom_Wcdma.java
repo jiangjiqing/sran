@@ -58,6 +58,8 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
         Map<String, List<String>> expressionSetMap =
                 ScannerHelper.getVariableList(formulaMapper.getFormulaList());
 
+        Map<String, String> counterMap = ScannerHelper.getCounterMap(counterMapper.getCounterList());
+
         List<String> paramValues = new ArrayList<>();
 
         List<String> paramcloumns = new ArrayList<>();
@@ -111,7 +113,7 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
 
                         String variable = variableList.get(i);
 
-                        String pmValue = counterHistory.getString(variable);
+                        String pmValue = counterHistory.getString(counterMap.get(variable));
 
                         if (pmValue != null && i != variableList.size() - 1) {
 
@@ -161,7 +163,6 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
                         fmLevelList.add("1");
                     }
                 }
-
             }
 
             level = ScannerHelper.avgFmLevelList(fmLevelList);
@@ -204,6 +205,8 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
 
         Map<String, List<String>> expressionSetMap =
                 ScannerHelper.getVariableList(formulaMapper.getFormulaList());
+
+        Map<String, String> counterMap = ScannerHelper.getCounterMap(counterMapper.getCounterList());
 
         List<JSONObject> counterList = counterMapper.getCounterList();
 
@@ -265,7 +268,7 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
 
                         String variable = variableList.get(i);
 
-                        String pmValue = nodeResult.getString(variable);
+                        String pmValue = nodeResult.getString(counterMap.get(variable));
 
                         if (pmValue != null && i != variableList.size() - 1) {
 
@@ -385,6 +388,8 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
         Map<String, List<String>> expressionSetMap =
                 ScannerHelper.getVariableList(formulaMapper.getFormulaList());
 
+        Map<String, String> counterMap = ScannerHelper.getCounterMap(counterMapper.getCounterList());
+
         for (String groupName : groupNameList) {
 
             List<String> fmLevelList = new ArrayList<>();
@@ -429,7 +434,9 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
 
                         String variable = variableList.get(i);
 
-                        String pmValue = ScannerHelper.getGroupVariableValueByNodeList(variable, groupAllGroupList);
+                        String pmValue =
+                                ScannerHelper
+                                        .getGroupVariableValueByNodeList(counterMap.get(variable), groupAllGroupList);
 
                         if (pmValue != null && i != variableList.size() - 1) {
 

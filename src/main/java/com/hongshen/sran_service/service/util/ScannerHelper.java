@@ -58,11 +58,11 @@ public class ScannerHelper {
             quotaThresholdMap.put(param.getString("quota_name"), paramList);
 
         }
-        return quotaThresholdMap;
 
+        return quotaThresholdMap;
     }
 
-    public static String levelCalculation(String value, List<String> thresholdList){
+    public static String levelCalculation (String value, List<String> thresholdList) {
 
         String level = null;
 
@@ -139,7 +139,7 @@ public class ScannerHelper {
         return resultList;
     }
 
-    public static boolean isNumeric(String str){
+    public static boolean isNumeric(String str) {
 
         Pattern pattern = Pattern.compile("[0-9]*");
 
@@ -151,5 +151,37 @@ public class ScannerHelper {
         }
 
         return true;
+    }
+
+    public static Map<String, String> getCounterMap (List<JSONObject> params) {
+
+        Map<String, String> resultMap = new HashMap<>();
+
+        for (JSONObject param : params) {
+
+            String name = param.getString("name");
+
+            String id = param.getString("id");
+
+            resultMap.put(name, "counter" + id);
+        }
+
+        return resultMap;
+    }
+
+    public static Map<String, String> getFormulaMap (List<JSONObject> params) {
+
+        Map<String, String> resultMap = new HashMap<>();
+
+        for (JSONObject param : params) {
+
+            String name = param.getString("quota_name");
+
+            String id = param.getString("id");
+
+            resultMap.put(name, "formula" + id);
+        }
+
+        return resultMap;
     }
 }
