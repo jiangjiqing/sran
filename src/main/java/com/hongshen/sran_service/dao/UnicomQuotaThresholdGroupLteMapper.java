@@ -28,5 +28,5 @@ public interface UnicomQuotaThresholdGroupLteMapper {
 
     Integer setGroup(JSONObject quotaThres);
 
-    List<UnicomQuotaThresholdGroupLte> getAllQuotaThresholdGroup();
+    List<JSONObject> getAllQuotaThresholdGroup();
 }

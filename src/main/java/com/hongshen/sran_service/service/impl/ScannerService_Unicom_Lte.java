@@ -1,10 +1,10 @@
 package com.hongshen.sran_service.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hongshen.sran_service.common.BaseService;
 import com.hongshen.sran_service.dao.*;
 import com.hongshen.sran_service.entity.*;
 import com.hongshen.sran_service.service.ScannerService;
+import com.hongshen.sran_service.service.util.ScannerHelper;
 import net.java.dev.eval.Expression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class ScannerService_Unicom_Lte extends BaseService implements ScannerService{
+public class ScannerService_Unicom_Lte implements ScannerService{
 
     @Autowired
     private UnicomQuotaHistoryCellLteMapper quotaCellMapper;
@@ -42,7 +42,7 @@ public class ScannerService_Unicom_Lte extends BaseService implements ScannerSer
     private UnicomCounterLteMapper counterMapper;
 
     @Autowired
-    private UnicomQuotaThresholdCellLteMapper quotaThresholdMapper;
+    private UnicomQuotaThresholdCellLteMapper quotaThresholdCellMapper;
 
     @Autowired
     private UnicomQuotaThresholdNodeLteMapper quotaThresholdNodeMapper;
@@ -55,9 +55,11 @@ public class ScannerService_Unicom_Lte extends BaseService implements ScannerSer
 
         String ret = null;
 
-        Map<String, List<String>> quotaThresholdCellMap = getQuotaThresholdMap("cell");
+        Map<String, List<String>> quotaThresholdCellMap =
+                ScannerHelper.getQuotaThresholdMap(quotaThresholdCellMapper.getThresholdCellList());
 
-        Map<String, List<String>> expressionSetMap = getVariableListWcdma();
+        Map<String, List<String>> expressionSetMap =
+                ScannerHelper.getVariableList(formulaMapper.getFormulaList());
 
         List<String> paramValues = new ArrayList<>();
 
@@ -149,7 +151,9 @@ public class ScannerService_Unicom_Lte extends BaseService implements ScannerSer
 
                         paramValue.append("'" + value + "',");
 
-                        String fmLevel = levelCalculation(value, quotaThresholdCellMap.get(formula.getQuota_name()));
+                        String fmLevel =
+                                ScannerHelper
+                                        .levelCalculation(value, quotaThresholdCellMap.get(formula.getQuota_name()));
 
                         fmLevelList.add(fmLevel);
 
@@ -163,7 +167,7 @@ public class ScannerService_Unicom_Lte extends BaseService implements ScannerSer
 
             }
 
-            level = avgFmLevelList(fmLevelList);
+            level = ScannerHelper.avgFmLevelList(fmLevelList);
 
             paramValue.append("'" + level + "'");
 
@@ -198,9 +202,11 @@ public class ScannerService_Unicom_Lte extends BaseService implements ScannerSer
 
         List<String> paramValues = new ArrayList<>();
 
-        Map<String, List<String>> quotaThresholdNodeMap = getQuotaThresholdMap("node");
+        Map<String, List<String>> quotaThresholdNodeMap =
+                ScannerHelper.getQuotaThresholdMap(quotaThresholdNodeMapper.getThresholdNodeList());
 
-        Map<String, List<String>> expressionSetMap = getVariableListWcdma();
+        Map<String, List<String>> expressionSetMap =
+                ScannerHelper.getVariableList(formulaMapper.getFormulaList());
 
         List<JSONObject> counterList = counterMapper.getCounterList();
 
@@ -300,7 +306,9 @@ public class ScannerService_Unicom_Lte extends BaseService implements ScannerSer
 
                         paramValue.append("'" + value + "',");
 
-                        String fmLevel = levelCalculation(value, quotaThresholdNodeMap.get(formula.getQuota_name()));
+                        String fmLevel =
+                                ScannerHelper
+                                        .levelCalculation(value, quotaThresholdNodeMap.get(formula.getQuota_name()));
 
                         fmLevelList.add(fmLevel);
 
@@ -313,7 +321,7 @@ public class ScannerService_Unicom_Lte extends BaseService implements ScannerSer
                 }
             }
 
-            level = avgFmLevelList(fmLevelList);
+            level = ScannerHelper.avgFmLevelList(fmLevelList);
 
             paramValue.append("'" + level + "'");
 
@@ -374,9 +382,11 @@ public class ScannerService_Unicom_Lte extends BaseService implements ScannerSer
 
         Map<String, JSONObject> nodeMap = (Map<String, JSONObject>) params.get("nodeMap");
 
-        Map<String, List<String>> quotaThresholdNodeMap = getQuotaThresholdMap("group");
+        Map<String, List<String>> quotaThresholdNodeMap =
+                ScannerHelper.getQuotaThresholdMap(quotaThresholdGroupMapper.getThresholdGroupList());
 
-        Map<String, List<String>> expressionSetMap = getVariableListWcdma();
+        Map<String, List<String>> expressionSetMap =
+                ScannerHelper.getVariableList(formulaMapper.getFormulaList());
 
         for (String groupName : groupNameList) {
 
@@ -422,7 +432,8 @@ public class ScannerService_Unicom_Lte extends BaseService implements ScannerSer
 
                         String variable = variableList.get(i);
 
-                        String pmValue = getGroupVariableValueByNodeList(variable, groupAllGroupList);
+                        String pmValue =
+                                ScannerHelper.getGroupVariableValueByNodeList(variable, groupAllGroupList);
 
                         if (pmValue != null && i != variableList.size() - 1) {
 
@@ -458,7 +469,9 @@ public class ScannerService_Unicom_Lte extends BaseService implements ScannerSer
 
                         paramValue.append("'" + value + "',");
 
-                        String fmLevel = levelCalculation(value, quotaThresholdNodeMap.get(formula.getQuota_name()));
+                        String fmLevel =
+                                ScannerHelper
+                                        .levelCalculation(value, quotaThresholdNodeMap.get(formula.getQuota_name()));
 
                         fmLevelList.add(fmLevel);
 
@@ -471,7 +484,7 @@ public class ScannerService_Unicom_Lte extends BaseService implements ScannerSer
                 }
             }
 
-            level = avgFmLevelList(fmLevelList);
+            level = ScannerHelper.avgFmLevelList(fmLevelList);
 
             paramValue.append("'" + level + "'");
 
@@ -493,120 +506,6 @@ public class ScannerService_Unicom_Lte extends BaseService implements ScannerSer
         return result;
     }
 
-    String avgFmLevelList (List<String> fmLevelList) {
-
-        String levle = null;
-
-        return levle;
-    }
-
-    String getGroupVariableValueByNodeList (String variable, List<JSONObject> nodeList) {
-
-        String variableValue = null;
-
-        int sum = 0;
-
-        for (JSONObject node : nodeList) {
-
-            int num = Integer.valueOf(node.getString(variable));
-
-            sum = sum + num;
-        }
-
-        variableValue = String.valueOf(sum);
-
-        return variableValue;
-    }
-
-    Map<String, List<String>> getQuotaThresholdMap(String type){
-
-        Map<String, List<String>> quotaThresholdMap = new HashMap<>();
-
-        if (type.equals("cell")) {
-
-            List<UnicomQuotaThresholdCellLte> quotaThresholdCellList = quotaThresholdMapper.getAllQuotaThresholdCell();
-
-            for (UnicomQuotaThresholdCellLte quotaThresholdCell : quotaThresholdCellList) {
-
-                List<String> paramList = new ArrayList<>();
-
-                paramList.add(quotaThresholdCell.getThreshold1());
-                paramList.add(quotaThresholdCell.getThreshold2());
-                paramList.add(quotaThresholdCell.getThreshold3());
-
-                quotaThresholdMap.put(quotaThresholdCell.getQuotaName(), paramList);
-            }
-
-        } else if (type.equals("node")) {
-
-            List<UnicomQuotaThresholdNodeLte> quotaThresholdNodeList =
-                    quotaThresholdNodeMapper.getAllQuotaThresholdNode();
-
-            for (UnicomQuotaThresholdNodeLte quotaThresholdNode : quotaThresholdNodeList) {
-
-                List<String> paramList = new ArrayList<>();
-
-                paramList.add(quotaThresholdNode.getThreshold1());
-                paramList.add(quotaThresholdNode.getThreshold2());
-                paramList.add(quotaThresholdNode.getThreshold3());
-
-                quotaThresholdMap.put(quotaThresholdNode.getQuotaName(), paramList);
-            }
-
-        } else if (type.equals("group")) {
-
-            List<UnicomQuotaThresholdGroupLte> quotaThresholdGroupList =
-                    quotaThresholdGroupMapper.getAllQuotaThresholdGroup();
-
-            for (UnicomQuotaThresholdGroupLte quotaThresholdGroup : quotaThresholdGroupList) {
-
-                List<String> paramList = new ArrayList<>();
-
-                paramList.add(quotaThresholdGroup.getThreshold1());
-                paramList.add(quotaThresholdGroup.getThreshold2());
-                paramList.add(quotaThresholdGroup.getThreshold3());
-
-                quotaThresholdMap.put(quotaThresholdGroup.getQuotaName(), paramList);
-            }
-        }
-
-        return quotaThresholdMap;
-    }
-
-    String levelCalculation(String value, List<String> thresholdList){
-
-        String level = null;
-
-        if (value != "-1") {
-
-            int fmValue = Integer.valueOf(value);
-
-            int threshold1 = Integer.valueOf(thresholdList.get(0));
-            int threshold2 = Integer.valueOf(thresholdList.get(1));
-            int threshold3 = Integer.valueOf(thresholdList.get(2));
-
-            if (fmValue <= threshold1) {
-
-                level = "1";
-            }
-
-            if (fmValue > threshold1 && fmValue <= threshold2) {
-
-                level = "2";
-            }
-
-            if (fmValue > threshold2 && fmValue <= threshold3) {
-
-                level = "3";
-            }
-        } else {
-
-            level = "1";
-        }
-
-        return level;
-    }
-
     public JSONObject nodeCalculationOld(String time) {
 
         JSONObject resultJson = new JSONObject();
@@ -621,7 +520,7 @@ public class ScannerService_Unicom_Lte extends BaseService implements ScannerSer
 
         Map<String, List<String>> nodeCellsMap = new HashMap<>();
 
-        Map<String, List<String>> expressionSetMap = getVariableListWcdma();
+        Map<String, List<String>> expressionSetMap = null;//getVariableListWcdma();
 
         List<String> nodeNameList = nodeMapper.getNodeNameList();
 
@@ -760,7 +659,7 @@ public class ScannerService_Unicom_Lte extends BaseService implements ScannerSer
 
         String ret = null;
 
-        Map<String, List<String>> expressionSetMap = getVariableListWcdma();
+        Map<String, List<String>> expressionSetMap = null;//getVariableListWcdma();
 
         List<JSONObject> paramList = new ArrayList<>();
 

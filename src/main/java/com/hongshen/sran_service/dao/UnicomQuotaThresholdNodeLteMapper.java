@@ -28,5 +28,5 @@ public interface UnicomQuotaThresholdNodeLteMapper {
 
     Integer setNode(JSONObject quotaThres);
 
-    List<UnicomQuotaThresholdNodeLte> getAllQuotaThresholdNode();
+    List<JSONObject> getAllQuotaThresholdNode();
 }

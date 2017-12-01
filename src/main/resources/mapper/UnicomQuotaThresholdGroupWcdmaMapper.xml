@@ -99,7 +99,7 @@
     where quota_name = #{quotaName}
   </update>
 
-  <select id="getAllQuotaThresholdGroup" resultType="com.hongshen.sran_service.entity.UnicomQuotaThresholdGroupWcdma">
+  <select id="getAllQuotaThresholdGroup" resultType="com.alibaba.fastjson.JSONObject">
 
     select
     *

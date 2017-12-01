@@ -28,5 +28,5 @@ public interface UnicomQuotaThresholdCellWcdmaMapper {
 
     Integer setCell(JSONObject quotaThres);
 
-    List<UnicomQuotaThresholdCellWcdma> getAllQuotaThresholdCell();
+    List<JSONObject> getAllQuotaThresholdCell();
 }

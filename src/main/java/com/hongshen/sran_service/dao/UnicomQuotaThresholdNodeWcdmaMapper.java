@@ -28,5 +28,5 @@ public interface UnicomQuotaThresholdNodeWcdmaMapper {
 
     Integer setNode(JSONObject quotaThres);
 
-    List<UnicomQuotaThresholdNodeWcdma> getAllQuotaThresholdNode();
+    List<JSONObject> getAllQuotaThresholdNode();
 }

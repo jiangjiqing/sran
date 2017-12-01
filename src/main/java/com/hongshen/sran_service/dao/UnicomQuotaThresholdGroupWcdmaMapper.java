@@ -28,5 +28,5 @@ public interface UnicomQuotaThresholdGroupWcdmaMapper {
 
     Integer setGroup(JSONObject quotaThres);
 
-    List<UnicomQuotaThresholdGroupWcdma> getAllQuotaThresholdGroup();
+    List<JSONObject> getAllQuotaThresholdGroup();
 }
