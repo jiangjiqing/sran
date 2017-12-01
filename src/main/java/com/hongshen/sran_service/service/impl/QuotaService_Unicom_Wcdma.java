@@ -56,7 +56,7 @@ public class QuotaService_Unicom_Wcdma implements QuotaService {
     }
 
     @Override
-    public int getNodeLevelByName(String nodeName) {
+    public JSONObject getNodeLevelByName(String nodeName) {
         return quotaHistoryNodeMapper.getLevelByName(nodeName);
     }
 

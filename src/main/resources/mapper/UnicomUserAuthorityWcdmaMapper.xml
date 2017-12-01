@@ -87,4 +87,10 @@
     set authority_name = #{authorityName,jdbcType=VARCHAR}
     where login_name = #{loginName,jdbcType=VARCHAR}
   </update>
+  <select id="getWcdmaAuth" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
+   SELECT b.list FROM unicom_user_authority_wcdma a LEFT JOIN unicom_authority_wcdma b ON a.authority_name = b.authority_name WHERE a.login_name = #{name}
+  </select>
+  <insert id="addWcdmaAuthory" parameterType="java.lang.String">
+
+  </insert>
 </mapper>

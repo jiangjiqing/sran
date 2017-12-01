@@ -21,5 +21,6 @@ public class JerseyConfig extends ResourceConfig{
         register(TopologyController.class);
         register(UserController.class);
         register(CorsFilter.class);
+        register(TestResource.class);
     }
 }

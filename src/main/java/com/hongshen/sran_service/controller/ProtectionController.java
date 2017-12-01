@@ -46,7 +46,7 @@ public class ProtectionController extends BaseController{
 
                 List<JSONObject> resultList = obj.getAlarmService().getNodeAlarmByName(nodeName);
 
-                int level = obj.getQuotaService().getNodeLevelByName(nodeName);
+                JSONObject level = obj.getQuotaService().getNodeLevelByName(nodeName);
 
                 if(resultList.size() != 0){
 
@@ -58,7 +58,7 @@ public class ProtectionController extends BaseController{
 
 
                 }
-                if (level > 0) {
+                if (level != null) {
 
                     protectList.get(i).put("level", level );
 

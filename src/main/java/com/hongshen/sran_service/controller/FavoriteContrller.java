@@ -41,9 +41,9 @@ public class FavoriteContrller {
         for (int i=0 ; i <favoriteList.size();i++) {
             if (favoriteList.get(i).getString("nodeName") !=null) {
                 String nodeName = String.valueOf(favoriteList.get(i).get("nodeName"));
-                int level = obj.getQuotaService().getNodeLevelByName(nodeName);
+                JSONObject level = obj.getQuotaService().getNodeLevelByName(nodeName);
 
-                if (level > 0) {
+                if (level != null) {
                     favoriteList.get(i).put("level", level );
                 }else {
                     favoriteList.get(i).put("level", "null");

@@ -20,7 +20,7 @@ public interface QuotaService {
 
     int getGroupLevelByName(String groupName);
 
-    int getNodeLevelByName(String nodeName);
+    JSONObject getNodeLevelByName(String nodeName);
 
     int getCellLevelByName(String cellName);
 

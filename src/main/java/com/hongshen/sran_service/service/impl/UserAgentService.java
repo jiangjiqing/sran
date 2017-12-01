@@ -1,12 +1,13 @@
 package com.hongshen.sran_service.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hongshen.sran_service.dao.UserMapper;
-import com.hongshen.sran_service.entity.User;
+import com.hongshen.sran_service.dao.UnicomUserAuhorityLteMapper;
+import com.hongshen.sran_service.dao.UnicomUserAuthorityWcdmaMapper;
+import com.hongshen.sran_service.service.util.Httpclient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -15,30 +16,91 @@ import java.util.Map;
  */
 @Service
 public class UserAgentService {
-
+    @Autowired
+    private static Httpclient httpclient;
+    @Autowired
+    private static UnicomUserAuhorityLteMapper userAuhorityLteMapper;
+    @Autowired
+    private static UnicomUserAuthorityWcdmaMapper userAuhorityWcdmaMapper;
 //    @Autowired
 //    private UserMapper userMapper;
 
     public List getRoleList() {
-        return null;
+        String method = "getRole";
+        List a = null;
+        try {
+           a =  httpclient.getRole(method);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return a;
     }
 
     public Map<String,Object> getUserInfo() {
-        return null;
+//        httpclient.
+        String method = "getUser";
+        Map A = null;
+        try {
+            A = httpclient.getUser(method);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return A;
     }
 
-    public static void addUser(JSONObject param) {
+    public static int addUser(JSONObject param) {
+        try {
+           int i =  httpclient.addUser(param);
+           if (i == 1){
+               return 1;
+           }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
-    public static void updateUser(JSONObject param) {
+    public static int updateUser(JSONObject param) {
+
+        try {
+            int i =  httpclient.updateUser(param);
+            if (i == 1){
+                return 1;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
-    public static void deleteUser(String loginName) {
+    public static int deleteUser(String loginName) {
+
+        try {
+            int i =  httpclient.deleteUser(loginName);
+            if (i == 1){
+                return 1;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
-    public List getRoleAll() {
-        return null;
+
+    public List<JSONObject> getLteAuth(String name) {
+        return userAuhorityLteMapper.getLteAuth(name);
+    }
+
+    public List<JSONObject> getWcdmaAuth(String name) {
+        return userAuhorityWcdmaMapper.getWcdmaAuth(name);
     }
 
 
+    public static int addLteAuthory(String loginName, String authorityName, String list) {
+       return userAuhorityLteMapper.addLteAuthory(loginName,authorityName,list);
+    }
+
+    public static int addWcdmaAuthory(String loginName, String authorityName, String list) {
+        return userAuhorityWcdmaMapper.addWcdmaAuthory(loginName,authorityName,list);
+    }
 }
