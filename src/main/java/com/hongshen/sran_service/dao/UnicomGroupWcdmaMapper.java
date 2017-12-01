@@ -65,14 +65,10 @@ public interface UnicomGroupWcdmaMapper {
      */
     int updateByPrimaryKey(UnicomGroupWcdma record);
 
-    JSONObject getGroupByName(String groupName);
-
     List<JSONObject> getGroupList();
 
-    List<JSONObject> getGroupListLte();
+    List<String> getGroupNameList();
 
-    List<JSONObject> getSpecifiedGroupList(@Param("groupName") String groupName);
-
-    List<JSONObject> getGroupInfoList();
+    JSONObject getGroupInfo(@Param("groupName") String groupName);
 
 }

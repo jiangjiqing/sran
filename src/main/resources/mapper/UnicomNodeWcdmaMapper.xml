@@ -169,37 +169,60 @@
     where node_name = #{nodeName,jdbcType=VARCHAR}
   </update>
 
-  <select id="getNodeList" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
-    SELECT node_name name,station_name stationName,latitude, longitude FROM unicom_node_wcdma WHERE group_name = #{groupName};
-  </select>
+    <select id="getNodeInfo" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
+        SELECT
+        node_name nodeName,
+        group_name groupName,
+        station_name stationName,
+        rbsid,
+        ip,
+        lac,
+        latitude,
+        longitude,
+        swversion
+        FROM unicom_node_wcdma
+        WHERE node_name = #{nodeName}
+    </select>
 
-  <select id="getSpecifiedNodeList" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
-    SELECT * FROM unicom_node_wcdma WHERE node_name = #{nodeName}
-  </select>
-  <select id="getNodeLaoutAndLong" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
-    SELECT latitude,longitude FROM unicom_node_wcdma WHERE node_name = #{nodeName}
+    <select id="getNodeListByGroup" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
+        SELECT
+        node_name name,
+        station_name stationName,
+        latitude,
+        longitude
+        FROM unicom_node_wcdma
+        WHERE group_name = #{groupName};
+    </select>
+
+    <select id="getNodeNameListByGroup" resultType="java.lang.String">
+        SELECT node_name name
+        FROM unicom_node_wcdma
+        WHERE group_name = #{groupName}
+    </select>
+
+    <select id="getNodeLaoutAndLong" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
+    SELECT latitude,longitude
+    FROM unicom_node_wcdma
+    WHERE node_name = #{nodeName}
   </select>
 
   <select id="getNodeNameList" resultType="java.lang.String">
-
     SELECT
-    node_name name
+      node_name name
     FROM unicom_node_wcdma
     GROUP BY name
   </select>
 
-  <select id="getGroupNameList" resultType="java.lang.String">
-
-    SELECT
-    group_name name
-    FROM unicom_node_wcdma
-    GROUP BY name
-  </select>
+  <!--<select id="getGroupNameList" resultType="java.lang.String">-->
+    <!--SELECT-->
+      <!--group_name name-->
+    <!--FROM unicom_node_wcdma-->
+    <!--GROUP BY name-->
+  <!--</select>-->
 
   <select id="getNodeNameListByGroupName" resultType="java.lang.String">
-
     SELECT
-    node_name name
+      node_name name
     FROM unicom_node_wcdma
     WHERE group_name = #{groupName}
     GROUP BY name

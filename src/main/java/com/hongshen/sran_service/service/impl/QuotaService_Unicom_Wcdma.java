@@ -35,6 +35,7 @@ public class QuotaService_Unicom_Wcdma implements QuotaService {
 
     @Autowired
     private UnicomQuotaThresholdCellWcdmaMapper quotaThresholdCellMapper;
+
     @Override
     public JSONObject getGroupQuotaByName(String groupName) {
         return quotaHistoryGroupMapper.getQuotaByName(groupName);
@@ -51,28 +52,18 @@ public class QuotaService_Unicom_Wcdma implements QuotaService {
     }
 
     @Override
-    public int getGroupLevelByName(String groupName) {
-        return quotaHistoryGroupMapper.getLevelByName(groupName);
-    }
-
-    @Override
-    public JSONObject getNodeLevelByName(String nodeName) {
-        return quotaHistoryNodeMapper.getLevelByName(nodeName);
-    }
-
-    @Override
-    public int getCellLevelByName(String cellName) {
-        return quotaHistoryCellMapper.getLevelByName(cellName);
+    public JSONObject getGroupLevel(String groupName) {
+        return quotaHistoryGroupMapper.getLevel(groupName);
     }
 
     @Override
     public JSONObject getNodeLevel(String nodeName) {
-        return quotaHistoryNodeMapper.getNodeLevel(nodeName);
+        return quotaHistoryNodeMapper.getLevel(nodeName);
     }
 
     @Override
     public JSONObject getCellLevel(String cellName) {
-        return  quotaHistoryCellMapper.getCellLevel(cellName);
+        return quotaHistoryCellMapper.getLevel(cellName);
     }
 
     @Override

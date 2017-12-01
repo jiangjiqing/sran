@@ -201,36 +201,33 @@
       </if>
     </trim>
   </insert>
-  <select id="getQuotaByName" resultType="com.alibaba.fastjson.JSONObject">
-    SELECT *
-    FROM unicom_quota_history_node_wcdma
-    WHERE name = #{nodeName} ORDER BY NOW() LIMIT 1
-  </select>
-  <select id="getLevelByName" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
-    SELECT level
-    FROM unicom_quota_history_node_wcdma
-    WHERE name = #{nodeName} ORDER BY NOW() LIMIT 1
-  </select>
 
-  <select id="getNodeLevel" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
-    SELECT level FROM unicom_quota_history_node_wcdma WHERE time = (SELECT MAX(time) FROM unicom_quota_history_node_wcdma) AND name = #{nodeName};
-  </select>
+    <select id="getQuotaByName" resultType="com.alibaba.fastjson.JSONObject">
+        SELECT *
+        FROM unicom_quota_history_node_wcdma
+        WHERE name = #{nodeName} ORDER BY NOW() LIMIT 1
+    </select>
 
-  <insert id="addQuotaHistoryNodeList" parameterType="java.util.List">
+    <select id="getLevel" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
+        SELECT level
+        FROM unicom_quota_history_node_wcdma
+        WHERE name = #{nodeName} ORDER BY NOW() LIMIT 1
+    </select>
 
-    INSERT INTO
+    <!--<select id="getLevel" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">-->
+    <!--SELECT level-->
+    <!--FROM unicom_quota_history_node_wcdma-->
+    <!--WHERE time = (SELECT MAX(time) FROM unicom_quota_history_node_wcdma) AND name = #{nodeName};-->
+    <!--</select>-->
 
-    unicom_quota_history_node_wcdma
-
-    <foreach item="cloumn" index="index" collection="cloumns" open="(" separator="," close=")">
-      ${cloumn}
-    </foreach>
-
-    VALUES
-
-    <foreach item="value" collection="valueList" index="index" separator="," >
-
-      ${value}
-    </foreach>
-  </insert>
+    <insert id="addQuotaHistoryNodeList" parameterType="java.util.List">
+        INSERT INTO unicom_quota_history_node_wcdma
+        <foreach item="cloumn" index="index" collection="cloumns" open="(" separator="," close=")">
+            ${cloumn}
+        </foreach>
+        VALUES
+        <foreach item="value" collection="valueList" index="index" separator="," >
+            ${value}
+        </foreach>
+    </insert>
 </mapper>

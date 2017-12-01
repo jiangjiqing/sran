@@ -51,7 +51,7 @@ public class QuotaController {
 
             quota.put("value", groupQuota.getString("formula" + f.get("id")));
             quota.put("time", groupQuota.getString("time"));
-            quota.put("quotaName", f.getString("quota_name"));
+            quota.put("quotaName", f.getString("quotaName"));
             quota.put("remark", f.getString("remark"));
             quota.put("topStatus",f.getString("hasTop10"));
 
@@ -103,7 +103,7 @@ public class QuotaController {
             JSONObject quota = new JSONObject();
             quota.put("value", nodeQuota.getString("formula" + f.get("id")));
             quota.put("time", nodeQuota.getString("time"));
-            quota.put("quotaName", f.getString("quota_name"));
+            quota.put("quotaName", f.getString("quotaName"));
             quota.put("remark", f.getString("remark"));
 
             quotaList.add(quota);
@@ -154,7 +154,7 @@ public class QuotaController {
             JSONObject quota = new JSONObject();
             quota.put("value", cellQuota.getString("formula" + f.get("id")));
             quota.put("time", cellQuota.getString("time"));
-            quota.put("quotaName", f.getString("quota_name"));
+            quota.put("quotaName", f.getString("quotaName"));
             quota.put("remark", f.getString("remark"));
 
             quotaList.add(quota);

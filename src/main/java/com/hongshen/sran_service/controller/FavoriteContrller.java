@@ -27,43 +27,40 @@ public class FavoriteContrller {
     @GET
     @Path("/suppliers/{supplier}/generations/{generation}/nets/favorites/mapinfos")
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject getProtectionList(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
+    public JSONObject getProtectionList(@PathParam("supplier")String supplier,
+                                        @PathParam("generation")String generation,
                                         @HeaderParam("Auth-Token")String authToken) {
 
         JSONObject result = new JSONObject();
-        String url = Constants.PATH_DUMMY;
-        String method = Constants.METHOD_GET;
+//        String url = Constants.PATH_DUMMY;
+//        String method = Constants.METHOD_GET;
 //        if (check(url, method, authToken)) {
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
-
         List<JSONObject> favoriteList =  obj.getElementInfoService().getFavoriteList();
 
-        for (int i=0 ; i <favoriteList.size();i++) {
-            if (favoriteList.get(i).getString("nodeName") !=null) {
-                String nodeName = String.valueOf(favoriteList.get(i).get("nodeName"));
-                JSONObject level = obj.getQuotaService().getNodeLevelByName(nodeName);
+        for (JSONObject node : favoriteList) {
+            if (node.getString("nodeName") !=null) {
+                String nodeName = String.valueOf(node.get("nodeName"));
+                JSONObject level = obj.getQuotaService().getNodeLevel(nodeName);
 
-                if (level != null) {
-                    favoriteList.get(i).put("level", level );
+                if (level != null && level.getIntValue("level") != -1) {
+                    node.put("level", level );
                 }else {
-                    favoriteList.get(i).put("level", "null");
+                    node.put("level", Constants.INVALID_VUALUE_LEVEL);
                 }
             }
-
         }
-        if (!favoriteList.isEmpty()){
 
-            result.put("data", favoriteList);
-            result.put("result", Constants.SUCCESS);
-
-        } else {
-
+        if (favoriteList.isEmpty()){
             result.put("msg", Constants.MSG_NO_DATA);
             result.put("result", Constants.FAIL);
 
+        } else {
+            result.put("data", favoriteList);
+            result.put("result", Constants.SUCCESS);
         }
 
-            return result;
+        return result;
 //        } else {
 //
 //            return result;
@@ -74,9 +71,11 @@ public class FavoriteContrller {
     @POST
     @Path("/suppliers/{supplier}/generations/{generation}/nets/{level}/{name}/favorites")
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject cancelCollection(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
-                                        @HeaderParam("Auth-Token")String authToken, @PathParam("level")String level,
-                                        @PathParam("name")String name) {
+    public JSONObject cancelCollection(@PathParam("supplier")String supplier,
+                                       @PathParam("generation")String generation,
+                                       @PathParam("level")String level,
+                                       @PathParam("name")String name,
+                                       @HeaderParam("Auth-Token")String authToken) {
 
         JSONObject result = new JSONObject();
         String url = Constants.PATH_DUMMY;
@@ -105,9 +104,11 @@ public class FavoriteContrller {
     @DELETE
     @Path("/suppliers/{supplier}/generations/{generation}/nets/{level}/{name}/favorites")
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject addCollection(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
-                                       @HeaderParam("Auth-Token")String authToken, @PathParam("level")String level,
-                                       @PathParam("name")String name,JSONObject param) {
+    public JSONObject addCollection(@PathParam("supplier")String supplier,
+                                    @PathParam("generation")String generation,
+                                    @PathParam("level")String level,
+                                    @PathParam("name")String name,JSONObject param,
+                                    @HeaderParam("Auth-Token")String authToken) {
         JSONObject result = new JSONObject();
         String url = Constants.PATH_DUMMY;
         String method = Constants.METHOD_GET;

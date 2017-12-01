@@ -49,17 +49,28 @@
       </if>
     </trim>
   </insert>
-  <select id="getSpecifiedCellList" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
-    SELECT * FROM unicom_cell_lte WHERE cell_name = #{cellName}
+
+  <select id="getCellInfo" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
+    SELECT *
+    FROM unicom_cell_lte
+    WHERE cell_name = #{cellName}
   </select>
 
-  <select id="getCellList" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
-    SELECT cell_name name FROM unicom_cell_lte WHERE node_name = #{nodeName}
+  <select id="getCellListByNode" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
+    SELECT *
+    FROM unicom_cell_lte
+    WHERE node_name = #{nodeName}
   </select>
 
-  <select id="getCellNameListByNodeName" resultType="java.lang.String" >
+  <select id="getCellNameListByNode" resultType="java.lang.String" >
     SELECT cell_name name
     FROM unicom_cell_lte
     WHERE node_name = #{nodeName}
   </select>
+
+  <select id="getCellNameList" resultType="java.lang.String" >
+    SELECT cell_name name
+    FROM unicom_cell_lte
+  </select>
+
 </mapper>

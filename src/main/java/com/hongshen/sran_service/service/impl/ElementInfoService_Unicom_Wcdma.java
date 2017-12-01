@@ -53,42 +53,44 @@ public class ElementInfoService_Unicom_Wcdma implements ElementInfoService {
         return groupMapper.getGroupList();
     }
 
-
     @Override
-    public List<JSONObject> getNodeList(String groupName) {
-        return nodeMapper.getNodeList(groupName);
+    public List<JSONObject> getNodeListByGroup(String groupName) {
+        return nodeMapper.getNodeListByGroup(groupName);
     }
 
-
-    @Override//TODO
-    public JSONObject getGroupByName(String groupName) {
-        return groupMapper.getGroupByName(groupName);
-    }
-
+    //    @Override //TODO
+//    public List<JSONObject> getNodeInfoList() {
+//        return nodeMapper.getNodeInfoList();
+//    }
 
     @Override
-    public List<JSONObject> getSpecifiedGroupList(String groupName) {
-        return groupMapper.getSpecifiedGroupList(groupName);
+    public List<String> getNodeNameListByGroup(String groupName) {
+        return nodeMapper.getNodeNameListByGroup(groupName);
     }
 
     @Override
-    public List<JSONObject> getSpecifiedNodeList(String nodeName) {
-        return nodeMapper.getSpecifiedNodeList(nodeName);
+    public List<JSONObject> getCellListByNode(String nodeName) {
+        return cellMapper.getCellListByNode(nodeName);
     }
 
     @Override
-    public List<JSONObject> getSpecifiedCellList(String cellName) {
-        return cellMapper.getSpecifiedCellList(cellName);
+    public List<String> getCellNameListByNode(String nodeName) {
+        return cellMapper.getCellNameListByNode(nodeName);
     }
 
     @Override
-    public List<JSONObject> getGroupInfoList() {
-        return groupMapper.getGroupInfoList();
+    public JSONObject getGroupInfo(String groupName) {
+        return groupMapper.getGroupInfo(groupName);
     }
 
     @Override
-    public List<JSONObject> getCellList(String nodeName) {
-        return cellMapper.getCellList(nodeName);
+    public JSONObject getNodeInfo(String nodeName) {
+        return nodeMapper.getNodeInfo(nodeName);
+    }
+
+    @Override
+    public JSONObject getCellInfo(String cellName) {
+        return cellMapper.getCellInfo(cellName);
     }
 
     @Override
@@ -96,18 +98,4 @@ public class ElementInfoService_Unicom_Wcdma implements ElementInfoService {
         return nodeMapper.getNodeLaoutAndLong(nodeName);
     }
 
-//    @Autowired
-//    private UnicomGroupWcdmaMapper unicomGroupWcdmaMapper;
-//    @Autowired
-//    private UnicomProtectWcdmaMapper unicomProtectWcdmaMapper;
-//    @Override
-//    public List<JSONObject> getGroupInfo(String name) {
-//        return unicomGroupWcdmaMapper.getGroupInfo(name);
-//    }
-//
-//    @Override
-//    public List<String> getProtect() {
-//
-//        return unicomProtectWcdmaMapper.getProtect();
-//    }
 }

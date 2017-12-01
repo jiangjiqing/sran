@@ -57,17 +57,17 @@ public interface UnicomNodeLteMapper {
      */
     int updateByPrimaryKey(UnicomNodeLte record);
 
-    List<JSONObject> getNodeList(@Param("groupName") String groupName);
+    List<JSONObject> getNodeListByGroup(@Param("groupName") String groupName);
 
-    List<JSONObject> getSpecifiedNodeList(@Param("nodeName") String nodeName);
-
-    List<JSONObject> getSpecifiedNodeList(@Param("groupName") String groupName, @Param("nodeName") String nodeName);
+    List<String> getNodeNameListByGroup(@Param("groupName")String groupName);
 
     JSONObject getNodeLaoutAndLong(String nodeName);
 
     List<String> getNodeNameList();
 
+    List<JSONObject> getGroupList();
+
     List<String> getGroupNameList();
 
-    List<String> getNodeNameListByGroupName(@Param("groupName")String groupName);
+    JSONObject getNodeInfo(@Param("nodeName") String nodeName);
 }

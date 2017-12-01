@@ -87,16 +87,27 @@
     set list = #{list,jdbcType=VARCHAR}
     where authority_name = #{authorityName,jdbcType=VARCHAR}
   </update>
+
   <select id="getAuthorityList" resultType="com.alibaba.fastjson.JSONObject">
-    SELECT a.authority_name authorityName,a.list FROM unicom_authority_lte a
+    SELECT
+      authority_name authorityName,
+      list
+    FROM unicom_authority_lte
   </select>
+
   <update id="updateAuthority" parameterType="com.alibaba.fastjson.JSONObject">
-    UPDATE unicom_authority_lte SET list = #{param.list} WHERE authority_name = #{authorityName}
+    UPDATE unicom_authority_lte
+    SET list = #{param.list}
+    WHERE authority_name = #{authorityName}
   </update>
+
   <insert id="addAuthority" parameterType="com.alibaba.fastjson.JSONObject">
-    INSERT INTO unicom_authority_wcdma VALUES (#{param.authorityName},#{param.list})
+    INSERT INTO unicom_authority_wcdma
+    VALUES (#{param.authorityName},#{param.list})
   </insert>
+
   <delete id="deleteAuthority" parameterType="com.alibaba.fastjson.JSONObject">
-    DELETE FROM unicom_authority_lte WHERE authority_name = #{authorityName}
+    DELETE FROM unicom_authority_lte
+    WHERE authority_name = #{authorityName}
   </delete>
 </mapper>

@@ -22,35 +22,46 @@ public class MapController extends BaseController{
     @GET
     @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/mapinfos")
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject  getGroupList(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
-                         @HeaderParam("Auth-Token")String authToken) {
+    public JSONObject  getGroupList(@PathParam("supplier")String supplier,
+                                    @PathParam("generation")String generation,
+                                    @HeaderParam("Auth-Token")String authToken) {
         JSONObject result = new JSONObject();
         /*if (check(url, method, authToken)) {*/
             NetObjBase obj = objFactory.getNetObj(supplier, generation);
-            List<JSONObject> grupList = obj.getElementInfoService().getGroupList();
-            List<JSONObject> List =new ArrayList<>();
-            for (int i = 0;i<grupList.size();i++){
+            List<JSONObject> groupList = obj.getElementInfoService().getGroupList();
+            List<JSONObject> List = new ArrayList<>();
+
+            for (JSONObject group : groupList){
+
                 JSONObject result1 = new JSONObject();
                 List<Double[]> list = new ArrayList<>();
+                String groupName = group.getString("groupName");
 
-                if (grupList.get(i).getString("group_name") != null) {
-                    String groupName= grupList.get(i).getString("group_name");
-                    List<JSONObject> nodeList =  obj.getElementInfoService().getNodeList(groupName);
+                if (groupName != null && groupName != "") {
 
-                    JSONObject group = obj.getElementInfoService().getGroupByName(groupName);//TODO
+                    List<JSONObject> nodeList =  obj.getElementInfoService().getNodeListByGroup(groupName);
+                    JSONObject groupInfo = obj.getElementInfoService().getGroupInfo(groupName);
+
                     if (nodeList.size() != 0) {
-                        for (int j = 0; j < nodeList.size(); j++) {
+                        for (JSONObject node : nodeList) {
 
-                            if(nodeList.get(j).getDouble("latitude")!= null && nodeList.get(j).getDouble("longitude")!= null){
-                                Double[] doubles ={nodeList.get(j).getDouble("latitude"),nodeList.get(j).getDouble("longitude")};
+                            Double latitude = node.getDouble("latitude");
+                            Double longitude = node.getDouble("longitude");
+
+                            if(latitude!= null && longitude!= null){
+                                Double[] doubles ={latitude,longitude};
+                                list.add(doubles);
+                            }else{
+                                Double[] doubles ={Double.parseDouble(Constants.INVALID_LOCATION_LEVEL),Double.parseDouble(Constants.INVALID_LOCATION_LEVEL)};
                                 list.add(doubles);
                             }
                         }
                     }
-                    if(group==null){
-                       result1.put("level",-1);
+
+                    if(groupInfo == null){
+                       result1.put("level",Constants.INVALID_VUALUE_LEVEL);
                     }else{
-                        result1.putAll(group);
+                        result1.putAll(groupInfo);
                     }
                     result1.put("name",groupName);
                     result1.putAll(LatitudeAndLongitude(list));
@@ -81,6 +92,7 @@ public class MapController extends BaseController{
         }
         return j;
     }
+
     static JSONObject LatitudeAndLongitude(List<Double[]>  list){
         Double t1 = 0.0;
         Double l1 = 0.0;
@@ -146,27 +158,39 @@ public class MapController extends BaseController{
         System.out.println(result);
         return result;
     };
+
     @GET
     @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/{groupName}/nodes/mapinfos")
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject  getNodeList(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
-                                    @HeaderParam("Auth-Token")String authToken,@PathParam("groupName")String groupName) {
+    public JSONObject  getNodeList(@PathParam("supplier")String supplier,
+                                   @PathParam("generation")String generation,
+                                   @PathParam("groupName")String groupName,
+                                   @HeaderParam("Auth-Token")String authToken) {
 
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        List<JSONObject> nodeList = obj.getElementInfoService().getNodeList(groupName);
+        List<JSONObject> nodeList = obj.getElementInfoService().getNodeListByGroup(groupName);
         List list = new ArrayList();
+
         if(!nodeList.isEmpty()){
-            for(int i=0;i<nodeList.size();i++){
-                JSONObject json = new JSONObject();
-                JSONObject nodeLevel = obj.getQuotaService().getNodeLevel(nodeList.get(i).getString("name"));
-                if(nodeLevel!=null){
-                    json.put("level",nodeLevel.getString("level"));
-                }else{
-                   json.put("level",-1);
+
+            for(JSONObject node : nodeList){
+
+                String nodeName = node.getString("name");
+
+                if (nodeName != null || nodeName != ""){
+                    JSONObject json = new JSONObject();
+                    JSONObject level = obj.getQuotaService().getNodeLevel(nodeName);
+
+                    if(level != null && level.getIntValue("level") != -1){
+                        json.put("level", level);
+                    }else{
+                        json.put("level",Constants.INVALID_VUALUE_LEVEL);
+                    }
+                    json.putAll(node);
+                    list.add(json);
                 }
-                json.putAll(nodeList.get(i));
-                list.add(json);
+
             }
             result.put("data",list);
             result.put("result", Constants.SUCCESS);
@@ -179,28 +203,38 @@ public class MapController extends BaseController{
     @GET
     @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/{groupName}/nodes/{nodeName}/cells/mapinfos")
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject  getCellList(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
-                                   @HeaderParam("Auth-Token")String authToken,@PathParam("groupName")String groupName,
-                                   @PathParam("nodeName")String nodeName) {
+    public JSONObject  getCellList(@PathParam("supplier")String supplier,
+                                   @PathParam("generation")String generation,
+                                   @PathParam("groupName")String groupName,
+                                   @PathParam("nodeName")String nodeName,
+                                   @HeaderParam("Auth-Token")String authToken) {
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        List<JSONObject> cellList = obj.getElementInfoService().getCellList(nodeName);
+        List<JSONObject> cellList = obj.getElementInfoService().getCellListByNode(nodeName);
+
         if(!cellList.isEmpty()) {
+
             List list = new ArrayList();
 
-            for (int i=0;i<cellList.size();i++ ){
-            JSONObject json = new JSONObject();
-            JSONObject cellLevel = obj.getQuotaService().getCellLevel(cellList.get(i).getString("name"));
+            for (JSONObject cell : cellList){
 
-            JSONObject NodelatAndlong = obj.getElementInfoService().getNodelatitudeAndlongitude(nodeName);
-            if(cellLevel!=null){
-                json.putAll(cellLevel);
-            }else{
-                json.put("level",-1);
-            }
-                json.putAll(NodelatAndlong);
-                json.putAll(cellList.get(i));
-                list.add(json);
+                JSONObject json = new JSONObject();
+                String cellName = cell.getString("name");
+
+                if (cellName != null || cellName != "") {
+
+                    JSONObject level = obj.getQuotaService().getCellLevel(cellName);
+                    JSONObject NodelatAndlong = obj.getElementInfoService().getNodelatitudeAndlongitude(nodeName);
+
+                    if (level != null && level.getIntValue("level") != -1) {
+                        json.put("level", level);
+                    } else {
+                        json.put("level", Constants.INVALID_VUALUE_LEVEL);
+                    }
+                    json.putAll(NodelatAndlong);
+                    json.putAll(cell);
+                    list.add(json);
+                }
             }
             result.put("data",list);
             result.put("result", Constants.SUCCESS);

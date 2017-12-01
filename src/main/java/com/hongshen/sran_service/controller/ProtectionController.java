@@ -26,10 +26,10 @@ public class ProtectionController extends BaseController{
     @GET
     @Path("/suppliers/{supplier}/generations/{generation}/nets/protections")
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject getProtectionList(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
-                                   @HeaderParam("Auth-Token")String authToken) {
+    public JSONObject getProtectionList(@PathParam("supplier")String supplier,
+                                        @PathParam("generation")String generation,
+                                        @HeaderParam("Auth-Token")String authToken) {
 
-//        response.setHeader("Access-Control-Allow-Origin", "*");
         JSONObject result = new JSONObject();
         String url = Constants.PATH_DUMMY;
         String method = Constants.METHOD_GET;
@@ -38,52 +38,41 @@ public class ProtectionController extends BaseController{
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         List<JSONObject> protectList = obj.getElementInfoService().getProtectList();
 
-        for (int i=0;i<protectList.size();i++) {
+        for (JSONObject protect : protectList) {
 
-            if (protectList.get(i).getString("nodeName") != null) {
+            String nodeName = protect.getString("nodeName");
 
-                String nodeName = String.valueOf(protectList.get(i).get("nodeName"));
+            if (nodeName != null || nodeName != ""){
 
-                List<JSONObject> resultList = obj.getAlarmService().getNodeAlarmByName(nodeName);
+                List<JSONObject> alarmList = obj.getAlarmService().getNodeAlarmByName(nodeName);
 
-                JSONObject level = obj.getQuotaService().getNodeLevelByName(nodeName);
-
-                if(resultList.size() != 0){
-
-                    protectList.get(i).put("alarmStatus","true");
+                if(alarmList.size() != 0){
+                    protect.put("alarmStatus","true");
+                    protect.put("alarmList",alarmList);
 
                 }else {
-
-                    protectList.get(i).put("alarmStatus","false");
-
-
+                    protect.put("alarmStatus","false");
                 }
-                if (level != null) {
 
-                    protectList.get(i).put("level", level );
+                JSONObject level = obj.getQuotaService().getNodeLevel(nodeName);
+
+                if (level != null && level.getIntValue("level") != -1) {
+                    protect.put("level", level);
 
                 }else {
-
-                    protectList.get(i).put("level", "null");
+                    protect.put("level", Constants.INVALID_VUALUE_LEVEL);
 
                 }
-
             }
-
         }
 //            System.out.println(nodeName);
         if (!protectList.isEmpty()) {
-
             result.put("data", protectList);
-
             result.put("result", Constants.SUCCESS);
 
         } else {
-
             result.put("msg", Constants.MSG_NO_DATA);
-
             result.put("result", Constants.FAIL);
-
         }
 
         return result;

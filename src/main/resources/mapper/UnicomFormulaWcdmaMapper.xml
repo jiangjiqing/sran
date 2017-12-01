@@ -136,7 +136,10 @@
 
   <select id="getFormulaList" resultType="com.alibaba.fastjson.JSONObject">
    SELECT
-    *
+      quota_name quotaName,
+      expression,
+      remark,
+      status,
     FROM unicom_formula_wcdma;
   </select>
 

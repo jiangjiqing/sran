@@ -36,6 +36,9 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
     private UnicomNodeWcdmaMapper nodeMapper;
 
     @Autowired
+    private UnicomGroupWcdmaMapper groupMapper;
+
+    @Autowired
     private UnicomCounterWcdmaMapper counterMapper;
 
     @Autowired
@@ -355,7 +358,7 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
             return null;
         }
 
-        List<String> groupNameList = nodeMapper.getGroupNameList();
+        List<String> groupNameList = groupMapper.getGroupNameList();
 
         if (groupNameList.size() == 0) {
 
@@ -403,7 +406,7 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
             paramValue.append("'" + groupName + "'");
             paramValue.append("'" + time + "'");
 
-            List<String> nodeNameList = nodeMapper.getNodeNameListByGroupName(groupName);
+            List<String> nodeNameList = nodeMapper.getNodeNameListByGroup(groupName);
 
             if (nodeNameList.size() == 0) {
 

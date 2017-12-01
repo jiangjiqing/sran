@@ -28,8 +28,10 @@ public class ElementController {
     @GET
     @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/{groupName}")
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject getSpecifiedGroupList(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
-                                        @PathParam("groupName")String groupName, @HeaderParam("Auth-Token")String authToken) {
+    public JSONObject getGroupInfo(@PathParam("supplier")String supplier,
+                                   @PathParam("generation")String generation,
+                                   @PathParam("groupName")String groupName,
+                                   @HeaderParam("Auth-Token")String authToken) {
         JSONObject result = new JSONObject();
         String url = Constants.PATH_DUMMY;
         String method = Constants.METHOD_GET;
@@ -37,11 +39,11 @@ public class ElementController {
 
             NetObjBase obj = objFactory.getNetObj(supplier, generation);
 
-            List<JSONObject> GroupList = obj.getElementInfoService().getSpecifiedGroupList(groupName);
+            JSONObject groupInfo = obj.getElementInfoService().getGroupInfo(groupName);
 
-            if (!GroupList.isEmpty()){
+            if (!groupInfo.isEmpty()){
 
-                result.put("data", GroupList);
+                result.put("data", groupInfo);
                 result.put("result", Constants.SUCCESS);
 
             } else {
@@ -61,19 +63,21 @@ public class ElementController {
     @GET
     @Path("/suppliers/{supplier}/generations/{generation}/nets/nodes/{nodeName}")
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject getSpecifiedNodeList(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
-                                            @PathParam("nodeName")String nodeName, @HeaderParam("Auth-Token")String authToken) {
+    public JSONObject getNodeInfo(@PathParam("supplier")String supplier,
+                                  @PathParam("generation")String generation,
+                                  @PathParam("nodeName")String nodeName,
+                                  @HeaderParam("Auth-Token")String authToken) {
         JSONObject result = new JSONObject();
         String url = Constants.PATH_DUMMY;
         String method = Constants.METHOD_GET;
 //        if (check(url, method, authToken)) {
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
 
-        List<JSONObject> NodeList = obj.getElementInfoService().getSpecifiedNodeList(nodeName);
+        JSONObject nodeInfo = obj.getElementInfoService().getNodeInfo(nodeName);
 
-        if (!NodeList.isEmpty()){
+        if (!nodeInfo.isEmpty()){
 
-            result.put("data", NodeList);
+            result.put("data", nodeInfo);
             result.put("result", Constants.SUCCESS);
 
         } else {
@@ -93,19 +97,21 @@ public class ElementController {
     @GET
     @Path("/suppliers/{supplier}/generations/{generation}/nets/cells/{cellName}")
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject getSpecifiedCellList(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
-                                           @PathParam("cellName")String cellName,@HeaderParam("Auth-Token")String authToken) {
+    public JSONObject getCellInfo(@PathParam("supplier")String supplier,
+                                  @PathParam("generation")String generation,
+                                  @PathParam("cellName")String cellName,
+                                  @HeaderParam("Auth-Token")String authToken) {
         JSONObject result = new JSONObject();
         String url = Constants.PATH_DUMMY;
         String method = Constants.METHOD_GET;
 //        if (check(url, method, authToken)) {
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
 
-        List<JSONObject> CellList = obj.getElementInfoService().getSpecifiedCellList(cellName);
+        JSONObject cellInfo = obj.getElementInfoService().getCellInfo(cellName);
 
-        if (!CellList.isEmpty()){
+        if (!cellInfo.isEmpty()){
 
-            result.put("data", CellList);
+            result.put("data", cellInfo);
             result.put("result", Constants.SUCCESS);
 
         } else {
@@ -120,36 +126,37 @@ public class ElementController {
 //            return result;
 //        }
     }
-//    Query group 3G infoList
-    @GET
-    @Path("/suppliers/{supplier}/generations/{generation}/nets/groups")
-    @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject getGroupInfoList(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
-                                           @HeaderParam("Auth-Token")String authToken) {
-        JSONObject result = new JSONObject();
-        String url = Constants.PATH_DUMMY;
-        String method = Constants.METHOD_GET;
-//        if (check(url, method, authToken)) {
-            NetObjBase obj = objFactory.getNetObj(supplier, generation);
 
-            List<JSONObject> GroupInfoList = obj.getElementInfoService().getGroupInfoList();
-
-            if (!GroupInfoList.isEmpty()) {
-
-                result.put("data", GroupInfoList);
-                result.put("result", Constants.SUCCESS);
-
-            } else {
-
-                result.put("msg", Constants.MSG_NO_DATA);
-                result.put("result", Constants.FAIL);
-
-            }
-        return result;
-
-//        } else {
+//// Query group 3G infoList
+//    @GET
+//    @Path("/suppliers/{supplier}/generations/{generation}/nets/groups")
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public JSONObject getGroupInfoList(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
+//                                           @HeaderParam("Auth-Token")String authToken) {
+//        JSONObject result = new JSONObject();
+//        String url = Constants.PATH_DUMMY;
+//        String method = Constants.METHOD_GET;
+////        if (check(url, method, authToken)) {
+//            NetObjBase obj = objFactory.getNetObj(supplier, generation);
 //
-//            return result;
-//        }
-    }
+//            List<JSONObject> GroupInfoList = obj.getElementInfoService().getGroupInfoList();
+//
+//            if (!GroupInfoList.isEmpty()) {
+//
+//                result.put("data", GroupInfoList);
+//                result.put("result", Constants.SUCCESS);
+//
+//            } else {
+//
+//                result.put("msg", Constants.MSG_NO_DATA);
+//                result.put("result", Constants.FAIL);
+//
+//            }
+//        return result;
+//
+////        } else {
+////
+////            return result;
+////        }
+//    }
 }

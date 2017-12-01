@@ -240,36 +240,39 @@
       </if>
     </trim>
   </insert>
+
   <select id="getQuotaByName" resultType="com.alibaba.fastjson.JSONObject">
     SELECT *
     FROM unicom_quota_history_group_wcdma
     WHERE name = #{groupName} ORDER BY NOW() LIMIT 1
   </select>
-  <select id="getLevelByName" resultType="Integer" parameterType="java.lang.String">
+
+  <select id="getLevel" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
     SELECT level
     FROM unicom_quota_history_group_wcdma
     WHERE name = #{groupName} ORDER BY NOW() LIMIT 1
   </select>
 
-  <select id="getQuotas" parameterType="java.util.Date" resultType="com.alibaba.fastjson.JSONObject">
-    SELECT * FROM unicom_quota_history_group_wcdma WHERE time  BETWEEN #{start} AND #{end} ORDER BY time DESC;
+  <!--<select id="getGroupLevel" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">-->
+    <!--SELECT  level-->
+    <!--FROM unicom_quota_history_group_wcdma-->
+    <!--WHERE time =(SELECT MAX(time) FROM unicom_quota_history_group_wcdma) AND name = #{groupName}-->
+  <!--</select>-->
 
+  <select id="getQuotas" parameterType="java.util.Date" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT *
+    FROM unicom_quota_history_group_wcdma
+    WHERE time  BETWEEN #{start} AND #{end} ORDER BY time DESC;
   </select>
 
   <insert id="addQuotaHistoryGroupList" parameterType="java.util.List">
 
-    INSERT INTO
-
-    unicom_quota_history_group_wcdma
-
+    INSERT INTO unicom_quota_history_group_wcdma
     <foreach item="cloumn" index="index" collection="cloumns" open="(" separator="," close=")">
       ${cloumn}
     </foreach>
-
     VALUES
-
     <foreach item="value" collection="valueList" index="index" separator="," >
-
       ${value}
     </foreach>
   </insert>

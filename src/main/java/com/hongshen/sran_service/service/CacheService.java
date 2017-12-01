@@ -30,13 +30,4 @@ public interface CacheService {
 
     List<JSONObject> getThresholdCellList();
 
-
-
-
-//    Map<String,Object> getCounterMap();
-//    Map<String,Object> resetCounterMap();
-//    Map<String,Object> getQuotaMap();
-//    Map<String,Object> restQuotaMap();
-//    Map<String,Object> getGroupThresholdMap();
-//    Map<String,Object> restGroupThresholdMap();
 }

@@ -201,35 +201,33 @@
       </if>
     </trim>
   </insert>
-  <select id="getQuotaByName" resultType="com.alibaba.fastjson.JSONObject">
-    SELECT *
-    FROM unicom_quota_history_cell_wcdma
-    WHERE name = #{cellName} ORDER BY NOW() LIMIT 1
-  </select>
-  <select id="getLevelByName" resultType="Integer" parameterType="java.lang.String">
-    SELECT level
-    FROM unicom_quota_history_cell_wcdma
-    WHERE name = #{cellName} ORDER BY NOW() LIMIT 1
-  </select>
 
-  <select id="getCellLevel" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
-    SELECT LEVEL FROM unicom_quota_history_cell_wcdma WHERE time = (SELECT MAX(time) FROM unicom_quota_history_cell_wcdma) and name = #{cellName};
-  </select>
+    <select id="getQuotaByName" resultType="com.alibaba.fastjson.JSONObject">
+        SELECT *
+        FROM unicom_quota_history_cell_wcdma
+        WHERE name = #{cellName} ORDER BY NOW() LIMIT 1
+    </select>
 
-  <insert id="addQuotaHistoryCellList" parameterType="java.util.List">
-    INSERT INTO
+    <select id="getLevel" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
+        SELECT level
+        FROM unicom_quota_history_cell_wcdma
+        WHERE name = #{cellName} ORDER BY NOW() LIMIT 1
+    </select>
 
-    unicom_quota_history_cell_wcdma
+    <!--<select id="getLevel" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">-->
+    <!--SELECT LEVEL-->
+    <!--FROM unicom_quota_history_cell_wcdma-->
+    <!--WHERE time = (SELECT MAX(time) FROM unicom_quota_history_cell_wcdma) and name = #{cellName};-->
+    <!--</select>-->
 
-    <foreach item="cloumn" index="index" collection="cloumns" open="(" separator="," close=")">
-      ${cloumn}
-    </foreach>
-
-    VALUES
-
-    <foreach item="value" collection="valueList" index="index" separator="," >
-
-      ${value}
-    </foreach>
-  </insert>
+    <insert id="addQuotaHistoryCellList" parameterType="java.util.List">
+        INSERT INTO unicom_quota_history_cell_wcdma
+        <foreach item="cloumn" index="index" collection="cloumns" open="(" separator="," close=")">
+            ${cloumn}
+        </foreach>
+        VALUES
+        <foreach item="value" collection="valueList" index="index" separator="," >
+            ${value}
+        </foreach>
+    </insert>
 </mapper>

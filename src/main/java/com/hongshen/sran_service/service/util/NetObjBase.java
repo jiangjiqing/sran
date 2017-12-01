@@ -16,19 +16,13 @@ public interface NetObjBase {
 
     AlarmService getAlarmService();
 
-//    AlarmLibService getAlarmLibService();
+    AlarmLibService getAlarmLibService();
 
     ElementInfoService getElementInfoService();
 
     TelecomRoomService getTelecomRoomService();
 
     TaskService getTaskService();
-
-
-     QuotaService quotaService();
-
-
-//    AuthorityService getAuthorityService();
 
     ScannerService getScannerService();
 }

@@ -21,24 +21,20 @@ public interface ElementInfoService {
 
     List<JSONObject> getGroupList();
 
-    List<JSONObject> getNodeList(String groupName);
+    List<JSONObject> getNodeListByGroup(String groupName);
 
-    JSONObject getGroupByName(String groupName);//TODO
+    List<String> getNodeNameListByGroup(String groupName);
 
-    List<JSONObject> getSpecifiedGroupList(String groupName);
+    List<JSONObject> getCellListByNode(String nodeName);
 
-    List<JSONObject> getSpecifiedNodeList(String nodeName);
+    List<String> getCellNameListByNode(String nodeName);
 
-    List<JSONObject> getSpecifiedCellList(String cellName);
+    JSONObject getGroupInfo(String groupName);
 
-    List<JSONObject> getGroupInfoList();
+    JSONObject getNodeInfo(String nodeName);
 
-    List<JSONObject> getCellList(String nodeName);
+    JSONObject getCellInfo(String cellName);
 
     JSONObject getNodelatitudeAndlongitude(String nodeName);
 
-
-//   List<String> getProtect();
-//
-//    List<JSONObject> getGroupInfo(String name);
 }

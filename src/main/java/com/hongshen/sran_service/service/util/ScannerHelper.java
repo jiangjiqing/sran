@@ -18,7 +18,7 @@ public class ScannerHelper {
 
             if (variableList != null) {
 
-                resultMap.put(formula.getString("quota_name"), variableList);
+                resultMap.put(formula.getString("quotaName"), variableList);
             }
         }
 
@@ -51,11 +51,11 @@ public class ScannerHelper {
 
             List<String> paramList = new ArrayList<>();
 
-            paramList.add(param.getString("threshold_1"));
-            paramList.add(param.getString("threshold_2"));
-            paramList.add(param.getString("threshold_3"));
+            paramList.add(param.getString("threshold1"));
+            paramList.add(param.getString("threshold2"));
+            paramList.add(param.getString("threshold3"));
 
-            quotaThresholdMap.put(param.getString("quota_name"), paramList);
+            quotaThresholdMap.put(param.getString("quotaName"), paramList);
 
         }
 
@@ -175,7 +175,7 @@ public class ScannerHelper {
 
         for (JSONObject param : params) {
 
-            String name = param.getString("quota_name");
+            String name = param.getString("quotaName");
 
             String id = param.getString("id");
 

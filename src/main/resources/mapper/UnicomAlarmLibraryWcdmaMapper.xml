@@ -135,4 +135,49 @@
       recommend = #{recommend,jdbcType=VARCHAR}
     where alarm_name = #{alarmName,jdbcType=VARCHAR}
   </update>
+
+  <select id="getAlarmList" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT
+      alarm_name alarmName,
+      alarm_meaning alarmMeaning,
+      alarm_level_id alarmLevelId,
+      alarm_type alarmType,
+      alarm_scop alarmScope,
+      recommend
+    FROM unicom_alarm_library_wcdma;
+  </select>
+
+  <select id="getAlarmByName" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">>
+    SELECT
+      alarm_name alarmName,
+      alarm_meaning alarmMeaning,
+      alarm_level_id alarmLevelId,
+      alarm_type alarmType,
+      alarm_scop alarmScope,
+      recommend
+    FROM unicom_alarm_library_wcdma
+    WHERE alarm_name = #{alarmName};
+  </select>
+  
+  <update id="updateAlarmByName" parameterType="com.alibaba.fastjson.JSONObject">
+    UPDATE unicom_alarm_library_wcdma
+    <set>
+      <if test="param.alarmMeaning != null">
+        alarm_meaning = #{param.alarmMeaning,jdbcType=VARCHAR},
+      </if>
+      <if test="param.alarmLevelId != null">
+        alarm_level_id = #{param.alarmLevelId,jdbcType=VARCHAR},
+      </if>
+      <if test="param.alarmType != null">
+        alarm_type = #{param.alarmType,jdbcType=VARCHAR},
+      </if>
+      <if test="param.alarmScope != null">
+        alarm_scop = #{param.alarmScope,jdbcType=VARCHAR},
+      </if>
+      <if test="param.recommend != null">
+        recommend = #{param.recommend,jdbcType=VARCHAR},
+      </if>
+    </set>
+    WHERE alarm_name = #{alarmName,jdbcType=VARCHAR}
+  </update>
 </mapper>

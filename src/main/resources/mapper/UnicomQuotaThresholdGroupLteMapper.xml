@@ -72,8 +72,16 @@
       </if>
     </trim>
   </insert>
+
   <select id="getThresholdGroupList" resultType="com.alibaba.fastjson.JSONObject">
-    select * from unicom_quota_threshold_group_lte;
+    select
+      quota_name quotaName,
+      quota_type quotaType,
+      threshold_1 threshold1,
+      threshold_2 threshold2,
+      threshold_3 threshold3,
+      quota_unit quotaUnit
+    from unicom_quota_threshold_group_lte;
   </select>
 
   <update id="setGroup" parameterType="com.alibaba.fastjson.JSONObject">

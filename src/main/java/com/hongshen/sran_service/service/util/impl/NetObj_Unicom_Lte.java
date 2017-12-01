@@ -11,34 +11,33 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class NetObj_Unicom_Lte implements NetObjBase {
 
-//    @Autowired
-//    private AuthorityService_Unicom_Lte authorityService;
+    @Autowired
+    private AuthorityService_Unicom_Lte authorityService;
 
     @Autowired
     private CacheService_Unicom_Lte cacheService;
 
     @Autowired
-    private  AlarmService_Unicom_Lte alarmService;
-    //    @Autowired
-//    private AlarmLibService_Unicom_Lte alarmLibService;
+    private AlarmService_Unicom_Lte alarmService;
+
+    @Autowired
+    private AlarmLibService_Unicom_Lte alarmLibService;
 	
     @Autowired
     private ElementInfoService_Unicom_Lte elementInfoService;
 
     @Autowired
-    private TelecomRoomService_Unicom_Wcdma telecomRoomService;
+    private TelecomRoomService_Unicom_Wcdma telecomRoomService; //3G
 
     @Autowired
-    private TaskService_Unicom_Wcdma taskService;
-
-    @Autowired
-    private AuthorityService_Unicom_Lte authorityService;
+    private TaskService_Unicom_Wcdma taskService; //3G
 
     @Autowired
     private QuotaService_Unicom_Lte quotaService;
 
     @Autowired
     private ScannerService_Unicom_Lte scannerService;
+
 
     @Override
     public AuthorityService getAuthorityService(){ return authorityService; }
@@ -52,10 +51,10 @@ public class NetObj_Unicom_Lte implements NetObjBase {
     @Override
     public AlarmService getAlarmService() { return alarmService; }
 
-    //    @Override
-//    public AlarmLibService getAlarmLibService() {
-//        return alarmLibService;
-//    }
+    @Override
+    public AlarmLibService getAlarmLibService() {
+        return alarmLibService;
+    }
 
     @Override
     public ElementInfoService getElementInfoService() {
@@ -73,13 +72,7 @@ public class NetObj_Unicom_Lte implements NetObjBase {
     }
 
     @Override
-    public QuotaService quotaService() {
-        return quotaService;
-    }
-
-    @Override
     public ScannerService getScannerService() {
-
         return scannerService;
     }
 

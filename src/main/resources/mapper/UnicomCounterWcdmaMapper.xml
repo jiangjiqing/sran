@@ -112,8 +112,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="getCounterList" resultType="com.alibaba.fastjson.JSONObject">
-    SELECT
-    *
+    SELECT *
     FROM unicom_counter_wcdma;
   </select>
 </mapper>

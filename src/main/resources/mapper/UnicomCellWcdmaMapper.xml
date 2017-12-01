@@ -125,16 +125,27 @@
     where cell_name = #{cellName,jdbcType=VARCHAR}
   </update>
 
-  <select id="getSpecifiedCellList" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
-    SELECT * FROM unicom_cell_wcdma WHERE cell_name = #{cellName}
-  </select>
-  <select id="getCellList" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
-    SELECT cell_name name FROM unicom_cell_wcdma WHERE node_name = #{nodeName}
+  <select id="getCellInfo" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
+    SELECT *
+    FROM unicom_cell_wcdma
+    WHERE cell_name = #{cellName}
   </select>
 
-  <select id="getCellNameListByNodeName" resultType="java.lang.String" >
+  <select id="getCellListByNode" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
+    SELECT *
+    FROM unicom_cell_wcdma
+    WHERE node_name = #{nodeName}
+  </select>
+
+  <select id="getCellNameListByNode" resultType="java.lang.String" >
     SELECT cell_name name
     FROM unicom_cell_wcdma
     WHERE node_name = #{nodeName}
   </select>
+
+  <select id="getCellNameList" resultType="java.lang.String" >
+    SELECT cell_name name
+    FROM unicom_cell_wcdma
+  </select>
+
 </mapper>

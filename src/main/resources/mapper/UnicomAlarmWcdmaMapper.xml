@@ -73,48 +73,66 @@
     </trim>
   </insert>
 
-  <!--<select id="getAllAlarmInfo" resultType="com.hongshen.sran_service.entity.UnicomAlarmWcdma">-->
   <select id="getAllAlarmInfo" resultType="com.alibaba.fastjson.JSONObject">
     SELECT
-    *
+      node_name nodeName,
+      mo,
+      alarm_time alarmTime,
+      alarm_type_id alarmTypeId,
+      alarm_name_id alarmNameId,
+      cell_name cellname
     FROM unicom_alarm_wcdma;
   </select>
 
   <select id="getGroupAlarmByName" resultType="com.alibaba.fastjson.JSONObject">
     SELECT
-    aw.node_name,
-    aw.mo,
-    aw.alarm_time,
-    aw.alarm_type_id,
-    aw.alarm_name_id
+      a.node_name nodeName,
+      a.mo,
+      a.alarm_time alarmTime,
+      a.alarm_type_id alarmTypeId,
+      a.alarm_name_id alarmNameId
+      a.cell_name cellname
     FROM
-    (
-    SELECT node_name
-    FROM unicom_node_wcdma
-    WHERE group_name = #{groupName}
-    ) nw
-    LEFT JOIN
-    (
-    SELECT
-    node_name,
-    mo,
-    alarm_time,
-    alarm_type_id,
-    alarm_name_id
-    FROM unicom_alarm_wcdma
-    ) aw
-    on aw.node_name = nw.node_name;
+      (
+        SELECT node_name
+        FROM unicom_node_wcdma
+        WHERE group_name = #{groupName}
+      ) n
+      LEFT JOIN
+      (
+        SELECT
+          node_name,
+          mo,
+          alarm_time,
+          alarm_type_id,
+          alarm_name_id,
+          cellname
+        FROM unicom_alarm_wcdma
+      ) a
+      on a.node_name = n.node_name;
   </select>
 
   <select id="getNodeAlarmByName" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
-     select *
-     from unicom_alarm_wcdma
-     where node_name = #{nodeName}
+    select
+      node_name nodeName,
+      mo,
+      alarm_time alarmTime,
+      alarm_type_id alarmTypeId,
+      alarm_name_id alarmNameId,
+      cell_name cellname
+    from unicom_alarm_wcdma
+    where node_name = #{nodeName}
   </select>
 
   <select id="getCellAlarmByName" resultType="com.alibaba.fastjson.JSONObject">
-     select *
-     from unicom_alarm_wcdma
-     where cell_name = #{cellName}
+    select
+      node_name nodeName,
+      mo,
+      alarm_time alarmTime,
+      alarm_type_id alarmTypeId,
+      alarm_name_id alarmNameId,
+      cell_name cellname
+    from unicom_alarm_wcdma
+    where cell_name = #{cellName}
   </select>
 </mapper>

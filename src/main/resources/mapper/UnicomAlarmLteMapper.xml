@@ -73,49 +73,66 @@
     </trim>
   </insert>
 
-  <!--<select id="getAllAlarmInfo" resultType="com.hongshen.sran_service.entity.UnicomAlarmLte">-->
   <select id="getAllAlarmInfo" resultType="com.alibaba.fastjson.JSONObject">
     SELECT
-    *
-    FROM
-    unicom_alarm_lte;
+      node_name nodeName,
+      mo,
+      alarm_time alarmTime,
+      alarm_type_id alarmTypeId,
+      alarm_name_id alarmNameId
+      cell_name cellname
+    FROM unicom_alarm_lte;
   </select>
 
   <select id="getGroupAlarmByName" resultType="com.alibaba.fastjson.JSONObject">
     SELECT
-    al.node_name,
-    al.mo,
-    al.alarm_time,
-    al.alarm_type_id,
-    al.alarm_name_id
+      a.node_name nodeName,
+      a.mo,
+      a.alarm_time alarmTime,
+      a.alarm_type_id alarmTypeId,
+      a.alarm_name_id alarmNameId
+      a.cell_name cellname
     FROM
-    (
-    SELECT node_name
-    FROM unicom_node_lte
-    WHERE group_name = #{groupName}
-    ) nl
-    LEFT JOIN
-    (
-    SELECT
-    node_name,
-    mo,
-    alarm_time,
-    alarm_type_id,
-    alarm_name_id
-    FROM unicom_alarm_lte
-    ) al
-    on al.node_name = nl.node_name;
+      (
+        SELECT node_name
+        FROM unicom_node_lte
+        WHERE group_name = #{groupName}
+      ) n
+      LEFT JOIN
+      (
+        SELECT
+          node_name,
+          mo,
+          alarm_time,
+          alarm_type_id,
+          alarm_name_id
+          cell_name
+        FROM unicom_alarm_lte
+      ) a
+      on a.node_name = n.node_name;
   </select>
 
   <select id="getNodeAlarmByName" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
-     select *
-     from unicom_alarm_lte
-     where node_name = #{nodeName}
+    SELECT
+      node_name nodeName,
+      mo,
+      alarm_time alarmTime,
+      alarm_type_id alarmTypeId,
+      alarm_name_id alarmNameId,
+      cell_name cellname
+    FROM unicom_alarm_lte
+    WHERE node_name = #{nodeName}
   </select>
 
   <select id="getCellAlarmByName" resultType="com.alibaba.fastjson.JSONObject">
-    SELECT * FROM
-    unicom_alarm_lte
-    where cell_name = #{cellName}
+    SELECT
+      node_name nodeName,
+      mo,
+      alarm_time alarmTime,
+      alarm_type_id alarmTypeId,
+      alarm_name_id alarmNameId,
+      cell_name cellname
+    FROM unicom_alarm_lte
+    WHERE cell_name = #{cellName}
   </select>
 </mapper>

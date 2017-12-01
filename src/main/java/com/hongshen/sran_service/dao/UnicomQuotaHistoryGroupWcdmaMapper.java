@@ -28,7 +28,7 @@ public interface UnicomQuotaHistoryGroupWcdmaMapper {
 
     JSONObject getQuotaByName(@Param("groupName")String groupName);
 
-    int getLevelByName(@Param("groupName") String groupName);
+    JSONObject getLevel(@Param("groupName") String groupName);
 
     List<JSONObject>  getQuotas(@Param("start")Date start, @Param("end")Date end);
 

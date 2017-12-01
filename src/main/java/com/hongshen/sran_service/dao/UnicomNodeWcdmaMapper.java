@@ -57,17 +57,15 @@ public interface UnicomNodeWcdmaMapper {
      */
     int updateByPrimaryKey(UnicomNodeWcdma record);
 
-    List<JSONObject> getNodeList(@Param("groupName") String groupName);
-
-    List<JSONObject> getSpecifiedNodeList(@Param("nodeName") String nodeName);
-
-    List<JSONObject> getSpecifiedNodeList(@Param("groupName")String groupName, @Param("nodeName") String nodeName);
-
-    JSONObject getNodeLaoutAndLong(String nodeName);
+    List<JSONObject> getNodeList();
 
     List<String> getNodeNameList();
 
-    List<String> getGroupNameList();
+    List<JSONObject> getNodeListByGroup(@Param("groupName")String groupName);
 
-    List<String> getNodeNameListByGroupName(@Param("groupName")String groupName);
+    List<String> getNodeNameListByGroup(@Param("groupName")String groupName);
+
+    JSONObject getNodeLaoutAndLong(String nodeName);
+
+    JSONObject getNodeInfo(@Param("nodeName") String nodeName);
 }

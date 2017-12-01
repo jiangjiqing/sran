@@ -29,7 +29,8 @@ public class AuthorityController {
     @GET
     @Path("/suppliers/{supplier}/generations/{generation}/authorities")
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject getAuthorityList(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
+    public JSONObject getAuthorityList(@PathParam("supplier")String supplier,
+                                       @PathParam("generation")String generation,
                                        @HeaderParam("Auth-Token")String authToken) {
         JSONObject result = new JSONObject();
         String url = Constants.PATH_DUMMY;
@@ -61,8 +62,10 @@ public class AuthorityController {
     @PUT
     @Path("/suppliers/{supplier}/generations/{generation}/authorities/{authorityName}")
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject updateAuthority(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
-                                      @PathParam("authorityName")String authorityName,@HeaderParam("Auth-Token")String authToken,
+    public JSONObject updateAuthority(@PathParam("supplier")String supplier,
+                                      @PathParam("generation")String generation,
+                                      @PathParam("authorityName")String authorityName,
+                                      @HeaderParam("Auth-Token")String authToken,
                                       JSONObject param) {
         JSONObject result = new JSONObject();
         String url = Constants.PATH_DUMMY;
@@ -94,8 +97,10 @@ public class AuthorityController {
     @POST
     @Path("/suppliers/{supplier}/generations/{generation}/authorities")
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject addAuthority(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
-                                      @HeaderParam("Auth-Token")String authToken, JSONObject param) {
+    public JSONObject addAuthority(@PathParam("supplier")String supplier,
+                                   @PathParam("generation")String generation,
+                                   @HeaderParam("Auth-Token")String authToken,
+                                   JSONObject param) {
         JSONObject result = new JSONObject();
         String url = Constants.PATH_DUMMY;
         String method = Constants.METHOD_GET;
@@ -113,7 +118,6 @@ public class AuthorityController {
 
             result.put("msg", Constants.MSG_ADD_FAILED);
             result.put("result", Constants.FAIL);
-
         }
         return result;
 
@@ -127,8 +131,10 @@ public class AuthorityController {
     @DELETE
     @Path("/suppliers/{supplier}/generations/{generation}/authorities/{authorityName}")
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject deleteAuthority(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
-                                      @PathParam("authorityName")String authorityName,@HeaderParam("Auth-Token")String authToken) {
+    public JSONObject deleteAuthority(@PathParam("supplier")String supplier,
+                                      @PathParam("generation")String generation,
+                                      @PathParam("authorityName")String authorityName,
+                                      @HeaderParam("Auth-Token")String authToken) {
         JSONObject result = new JSONObject();
         String url = Constants.PATH_DUMMY;
         String method = Constants.METHOD_GET;

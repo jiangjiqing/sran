@@ -22,8 +22,10 @@ public class QuotaThresholdController extends BaseController{
     @GET
     @Path("/suppliers/{supplier}/generations/{generation}/nets/{level}/thresholds")
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject getGroupList(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
-                                   @HeaderParam("Auth-Token")String authToken,@PathParam("level")String level) {
+    public JSONObject getGroupList(@PathParam("supplier")String supplier,
+                                   @PathParam("generation")String generation,
+                                   @PathParam("level")String level,
+                                   @HeaderParam("Auth-Token")String authToken) {
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         JSONObject result = new JSONObject();
         List<JSONObject> list = new ArrayList<>();
@@ -31,54 +33,40 @@ public class QuotaThresholdController extends BaseController{
         switch (level)
         {
             case "groups":
-                List<JSONObject> thresholdGroupList = obj.getCacheService().getThresholdGroupList();
-                    list = getvalue(thresholdGroupList);
-            break;
+                list = obj.getCacheService().getThresholdGroupList();
+                break;
 
             case "nodes":
-                List<JSONObject> thresholdNodeList = obj.getCacheService().getThresholdNodeList();
-                    list = getvalue(thresholdNodeList);
-            break;
+                list = obj.getCacheService().getThresholdNodeList();
+                break;
 
             case "cells":
-                List<JSONObject> thresholdCellList = obj.getCacheService().getThresholdCellList();
-                    list = getvalue(thresholdCellList);
+                list = obj.getCacheService().getThresholdCellList();
                 break;
 
             default :
                 list = null;
-    }
-        if(!list.isEmpty()){
+                break;
+        }
+        if(list.isEmpty()){
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_NO_DATA);
+        }else{
             result.put("result", Constants.SUCCESS);
             result.put("data",list);
-        }else{
-            result.put("result", Constants.FAIL);
         }
         return result;
     }
-
- static List<JSONObject> getvalue(List<JSONObject> jsonList){
-     JSONObject result = new JSONObject();
-     List<JSONObject> list = new ArrayList<>();
-     for(JSONObject json:jsonList){
-         result.put("quotaName",json.getString("quota_name"));
-         result.put("quotaType",json.getString("quota_type"));
-         result.put("threshold1",json.getString("threshold_1"));
-         result.put("threshold2",json.getString("threshold_2"));
-         result.put("threshold3",json.getString("threshold_3"));
-         result.put("quotaUnit",json.getString("quota_unit"));
-         list.add(result);
-            }
-        return list;
-     }
 
     @PUT
     @Path("/suppliers/{supplier}/generations/{generation}/nets/{level}/quotas/{quotaName}/thresholds")
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject getGroupList(@RequestParam(value = "quotaThres") JSONObject quotaThres,
-                                   @PathParam("supplier")String supplier, @PathParam("generation")String generation,
-                                   @HeaderParam("Auth-Token")String authToken, @PathParam("level")String level,
-                                   @PathParam("quotaName")String quotaName) {
+                                   @PathParam("supplier")String supplier,
+                                   @PathParam("generation")String generation,
+                                   @PathParam("level")String level,
+                                   @PathParam("quotaName")String quotaName,
+                                   @HeaderParam("Auth-Token")String authToken) {
         quotaThres.put("quotaName",quotaName);
       //  System.out.println(quotaThres);
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
@@ -87,17 +75,17 @@ public class QuotaThresholdController extends BaseController{
         switch (level)
         {
             case "groups":
-                 Num = obj.quotaService().setGroup(quotaThres);
+                 Num = obj.getQuotaService().setGroup(quotaThres);
                  obj.getCacheService().resetThresholdGroupList();
                 break;
 
             case "nodes":
-                 Num = obj.quotaService().setNode(quotaThres);
+                 Num = obj.getQuotaService().setNode(quotaThres);
                  obj.getCacheService().resetThresholdNodeList();
                 break;
 
             case "cells":
-                 Num = obj.quotaService().setCell(quotaThres);
+                 Num = obj.getQuotaService().setCell(quotaThres);
                  obj.getCacheService().resetThresholdCellList();
                 break;
 
@@ -106,6 +94,7 @@ public class QuotaThresholdController extends BaseController{
         }
             if(Num == 0){
                 result.put("result",Constants.FAIL);
+                result.put("msg", Constants.MSG_NO_DATA);
             }else{
                 result.put("result",Constants.SUCCESS);
             }

@@ -21,6 +21,9 @@ import java.util.Map;
 public class CacheService_Unicom_Wcdma implements CacheService {
 
     @Autowired
+    private static String updateTimeForQuotaData = "";
+
+    @Autowired
     private UnicomCounterWcdmaMapper counterMapper;
 
     @Autowired
@@ -53,10 +56,8 @@ public class CacheService_Unicom_Wcdma implements CacheService {
     @Override
     public void resetCounterList(){
 
-        //clear data
         counterList.clear();
 
-        //set data
         counterList = counterMapper.getCounterList();
     }
 
@@ -172,35 +173,4 @@ public class CacheService_Unicom_Wcdma implements CacheService {
         }
         return thresholdCellList;
     }
-
-
-//    @Override
-//    public Map<String, Object> getCounterMap() {
-//        return unicomCounterWcdmaMapper.getCounterMap();
-//    }
-//
-//    @Override
-//    public Map<String, Object> resetCounterMap() {
-//        return unicomCounterWcdmaMapper.resetCounterMap();
-//    }
-//
-//    @Override
-//    public Map<String, Object> getQuotaMap() {
-//        return unicomCounterWcdmaMapper.getQuotaMap();
-//    }
-//
-//    @Override
-//    public Map<String, Object> restQuotaMap() {
-//        return unicomCounterWcdmaMapper.restQuotaMap();
-//    }
-//
-//    @Override
-//    public Map<String, Object> getGroupThresholdMap() {
-//        return unicomCounterWcdmaMapper.getGroupThresholdMap();
-//    }
-//
-//    @Override
-//    public Map<String, Object> restGroupThresholdMap() {
-//        return unicomCounterWcdmaMapper.restGroupThresholdMap();
-//    }
 }

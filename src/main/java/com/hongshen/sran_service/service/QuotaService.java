@@ -18,13 +18,9 @@ public interface QuotaService {
 
     JSONObject getCellQuotaByName(String cellName);
 
-    int getGroupLevelByName(String groupName);
+    JSONObject getGroupLevel(String groupName);
 
-    JSONObject getNodeLevelByName(String nodeName);
-
-    int getCellLevelByName(String cellName);
-
-    JSONObject getNodeLevel(String node_name);
+    JSONObject getNodeLevel(String nodeName);
 
     JSONObject getCellLevel(String cellName);
 

@@ -52,63 +52,51 @@ public class ElementInfoService_Unicom_Lte implements ElementInfoService {
 
     @Override
     public List<JSONObject> getGroupList() {
-        return groupMapper.getGroupListLte();
-    }
-
-
-    @Override
-    public List<JSONObject> getNodeList(String groupName) {
-        return nodeMapper.getNodeList(groupName);
+        return nodeMapper.getGroupList();
     }
 
     @Override
-    public JSONObject getGroupByName(String groupName) {
-        return groupMapper.getGroupByName(groupName);
+    public List<JSONObject> getNodeListByGroup(String groupName) {
+        return nodeMapper.getNodeListByGroup(groupName);
     }
 
+    //    @Override //TODO
+//    public List<JSONObject> getNodeInfoList() {
+//        return nodeMapper.getNodeInfoList();
+//    }
 
     @Override
-    public List<JSONObject> getSpecifiedGroupList(String groupName) {
-        return null;//TODO
-    }
-
-    @Override
-    public List<JSONObject> getSpecifiedNodeList(String nodeName) {
-        return nodeMapper.getSpecifiedNodeList(nodeName);
-    }
-
-    @Override
-    public List<JSONObject> getSpecifiedCellList(String cellName) {
-
-        return cellMapper.getSpecifiedCellList(cellName);
+    public List<String> getNodeNameListByGroup(String groupName) {
+        return nodeMapper.getNodeNameListByGroup(groupName);
     }
 
     @Override
-    public List<JSONObject> getGroupInfoList() {
-        return groupMapper.getGroupInfoList();
+    public List<JSONObject> getCellListByNode(String nodeName) {
+        return cellMapper.getCellListByNode(nodeName);
     }
 
     @Override
-    public List<JSONObject> getCellList(String nodeName) {
-        return cellMapper.getCellList(nodeName);
+    public List<String> getCellNameListByNode(String nodeName) {
+        return cellMapper.getCellNameListByNode(nodeName);
+    }
+
+    @Override
+    public JSONObject getGroupInfo(String groupName) {
+        return null;
+    } // tac info is null
+
+    @Override
+    public JSONObject getNodeInfo(String nodeName) {
+        return nodeMapper.getNodeInfo(nodeName);
+    }
+
+    @Override
+    public JSONObject getCellInfo(String cellName) {
+        return cellMapper.getCellInfo(cellName);
     }
 
     @Override
     public JSONObject getNodelatitudeAndlongitude(String nodeName) {
         return  nodeMapper.getNodeLaoutAndLong(nodeName);
     }
-//    @Autowired
-//    private UnicomProtectLteMapper unicomProtectLteMapper;
-//    @Autowired
-//    private UnicomGroupWcdmaMapper unicomGroupWcdmaMapper;
-//    @Override
-//    public List<JSONObject> getGroupInfo(String name) {
-//        return unicomGroupWcdmaMapper.getGroupInfo(name);
-//    }
-//
-//    @Override
-//    public List<String> getProtect() {
-//
-//        return unicomProtectLteMapper.getProtect();
-//    }
 }

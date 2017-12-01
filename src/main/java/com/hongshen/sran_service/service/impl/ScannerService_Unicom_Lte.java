@@ -406,7 +406,7 @@ public class ScannerService_Unicom_Lte implements ScannerService{
             paramValue.append("'" + groupName + "'");
             paramValue.append("'" + time + "'");
 
-            List<String> nodeNameList = nodeMapper.getNodeNameListByGroupName(groupName);
+            List<String> nodeNameList = nodeMapper.getNodeNameListByGroup(groupName);
 
             if (nodeNameList.size() == 0) {
 
@@ -567,7 +567,7 @@ public class ScannerService_Unicom_Lte implements ScannerService{
             paramValue.append("'" + time + "'");
             paramValue.append("'" + level + "'");
 
-            List<String> nodeNameList = nodeMapper.getNodeNameListByGroupName(groupName);
+            List<String> nodeNameList = nodeMapper.getNodeNameListByGroup(groupName);
 
             if (nodeNameList.size() == 0) {
 
@@ -725,7 +725,7 @@ public class ScannerService_Unicom_Lte implements ScannerService{
             paramValue.append("'" + time + "'");
             paramValue.append("'" + level + "'");
 
-            List<String> cellNameList = cellMapper.getCellNameListByNodeName(nodeName);
+            List<String> cellNameList = cellMapper.getCellNameListByNode(nodeName);
 
             if (cellNameList.size() == 0) {
 

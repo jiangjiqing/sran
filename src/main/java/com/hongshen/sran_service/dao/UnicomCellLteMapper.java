@@ -23,10 +23,11 @@ public interface UnicomCellLteMapper {
      */
     int insertSelective(UnicomCellLte record);
 
-    List<JSONObject> getSpecifiedCellList(@Param("cellName") String cellName);
+    JSONObject getCellInfo(@Param("cellName") String cellName);
 
+    List<JSONObject> getCellListByNode(@Param("nodeName") String nodeName);
 
-    List<JSONObject> getCellList(@Param("nodeName") String nodeName);
+    List<String> getCellNameListByNode(@Param("nodeName")String nodeName);
 
-    List<String> getCellNameListByNodeName(@Param("nodeName")String nodeName);
+    List<String> getCellNameList();
 }

@@ -11,8 +11,8 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class NetObj_Unicom_Wcdma implements NetObjBase {
 
-//    @Autowired
-//    private AuthorityService_Unicom_Wcdma authorityService;
+    @Autowired
+    private AuthorityService_Unicom_Wcdma authorityService;
 
     @Autowired
     private CacheService_Unicom_Wcdma cacheService;
@@ -20,8 +20,8 @@ public class NetObj_Unicom_Wcdma implements NetObjBase {
     @Autowired
     private  AlarmService_Unicom_Wcdma alarmService;
 
-    //    @Autowired
-//    private AlarmLibService_Unicom_Wcdma alarmLibService;
+    @Autowired
+    private AlarmLibService_Unicom_Wcdma alarmLibService;
 
     @Autowired
     private ElementInfoService_Unicom_Wcdma elementInfoService;
@@ -33,13 +33,11 @@ public class NetObj_Unicom_Wcdma implements NetObjBase {
     private TaskService_Unicom_Wcdma taskService;
 
     @Autowired
-    private AuthorityService_Unicom_Wcdma authorityService;
-
-    @Autowired
     private QuotaService_Unicom_Wcdma quotaService;
 
     @Autowired
     private ScannerService_Unicom_Wcdma scannerService;
+
 
     @Override
     public AuthorityService getAuthorityService(){ return authorityService; }
@@ -53,10 +51,10 @@ public class NetObj_Unicom_Wcdma implements NetObjBase {
     @Override
     public AlarmService getAlarmService() { return alarmService; }
 
-    //    @Override
-//    public AlarmLibService getAlarmLibService() {
-//        return alarmLibService;
-//    }
+    @Override
+    public AlarmLibService getAlarmLibService() {
+        return alarmLibService;
+    }
 
     @Override
     public ElementInfoService getElementInfoService() {
@@ -74,13 +72,7 @@ public class NetObj_Unicom_Wcdma implements NetObjBase {
     }
 
     @Override
-    public QuotaService quotaService() {
-        return quotaService;
-    }
-
-    @Override
     public ScannerService getScannerService() {
-
         return scannerService;
     }
 

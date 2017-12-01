@@ -28,7 +28,8 @@ public class AlarmController {
     @GET
     @Path("/suppliers/{supplier}/nets/alarms")
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject getAllAlarms (@PathParam("supplier")String supplier, @HeaderParam("Auth-Token")String authToken) {
+    public JSONObject getAllAlarms (@PathParam("supplier")String supplier,
+                                    @HeaderParam("Auth-Token")String authToken) {
 	
 		JSONObject result = new JSONObject();
 		
@@ -42,7 +43,6 @@ public class AlarmController {
 			JSONObject resultWcdma = new JSONObject();
 			JSONObject resultLte = new JSONObject();
 			List<JSONObject> list = new ArrayList<JSONObject>();
-			int dataCount = 0;
 			
             List<JSONObject> resultList_Wcdma = obj_Wcdma.getAlarmService().getAllAlarmInfo();
 			List<JSONObject> resultList_Lte = obj_Lte.getAlarmService().getAllAlarmInfo();
@@ -83,8 +83,10 @@ public class AlarmController {
     @GET
     @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/{groupname}/alarms")
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject getGroupAlarms(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
-                                    @PathParam("groupname")String groupname, @HeaderParam("Auth-Token")String authToken){
+    public JSONObject getGroupAlarms(@PathParam("supplier")String supplier,
+                                     @PathParam("generation")String generation,
+                                     @PathParam("groupname")String groupname,
+                                     @HeaderParam("Auth-Token")String authToken){
 
         JSONObject result = new JSONObject();
 
@@ -122,9 +124,11 @@ public class AlarmController {
     @GET
     @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/{groupname}/nodes/{nodename}/alarms")
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject getNodeAlarms(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
-                                   @PathParam("groupname")String groupName, @PathParam("nodename")String nodeName,
-                                   @HeaderParam("Auth-Token")String authToken){
+    public JSONObject getNodeAlarms(@PathParam("supplier")String supplier,
+                                    @PathParam("generation")String generation,
+                                    @PathParam("groupname")String groupName,
+                                    @PathParam("nodename")String nodeName,
+                                    @HeaderParam("Auth-Token")String authToken){
 
         JSONObject result = new JSONObject();
 
@@ -163,9 +167,12 @@ public class AlarmController {
     @GET
     @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/{groupname}/nodes/{nodename}/cells/{cellname}/alarms")
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject getCellAlarms(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
-                                   @PathParam("groupname")String groupName, @PathParam("nodename")String nodeName,
-                                   @PathParam("cellname")String cellName, @HeaderParam("Auth-Token")String authToken){
+    public JSONObject getCellAlarms(@PathParam("supplier")String supplier,
+                                    @PathParam("generation")String generation,
+                                    @PathParam("groupname")String groupName,
+                                    @PathParam("nodename")String nodeName,
+                                    @PathParam("cellname")String cellName,
+                                    @HeaderParam("Auth-Token")String authToken){
 
         JSONObject result = new JSONObject();
 
