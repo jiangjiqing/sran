@@ -143,9 +143,11 @@ public class ScannerService_Unicom_Lte implements ScannerService{
                             Double doubleValue = Double.parseDouble(String.valueOf(exp.eval()));
 
                             value = String.valueOf((double)Math.round(doubleValue*100)/100);
+
                         }catch (Exception e){
 
                             value = "-1";
+
                             e.getStackTrace();
                         }
 
@@ -164,7 +166,6 @@ public class ScannerService_Unicom_Lte implements ScannerService{
                         fmLevelList.add("1");
                     }
                 }
-
             }
 
             level = ScannerHelper.avgFmLevelList(fmLevelList);
