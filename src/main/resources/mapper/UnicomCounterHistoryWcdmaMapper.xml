@@ -399,4 +399,34 @@
     </foreach>
     and time = #{time}
   </select>
+
+  <select id="getSumAllCounterByTimeAndCounterList" parameterType="java.util.List" resultType="com.alibaba.fastjson.JSONObject">
+
+    SELECT
+    t1.node_name nodeName,
+    <foreach item="counter" index="index" collection="counterList" separator="," >
+      sum(t2.${counter}) ${counter}
+    </foreach>
+    FROM
+    (
+    SELECT
+    cell_name,
+    node_name
+    FROM unicom_cell_wcdma
+    ) t1
+    left JOIN
+    (
+    SELECT
+    name,
+    time,
+    <foreach item="counter" index="index" collection="counterList" separator="," >
+      ${counter}
+    </foreach>
+    FROM
+    unicom_counter_history_wcdma
+    ) t2
+    on t1.cell_name = t2.name
+    WHERE t2.time = #{time}
+    GROUP BY t1.node_name
+  </select>
 </mapper>

@@ -27,4 +27,6 @@ public interface UnicomQuotaThresholdCellLteMapper {
     List<JSONObject> getThresholdCellList();
 
     Integer setCell(JSONObject quotaThres);
+
+    List<UnicomQuotaThresholdCellLte> getAllQuotaThresholdCell();
 }

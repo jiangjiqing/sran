@@ -38,6 +38,18 @@ public class ScannerService_Unicom_Lte extends BaseService implements ScannerSer
     @Autowired
     private UnicomNodeLteMapper nodeMapper;
 
+    @Autowired
+    private UnicomCounterLteMapper counterMapper;
+
+    @Autowired
+    private UnicomQuotaThresholdCellLteMapper quotaThresholdMapper;
+
+    @Autowired
+    private UnicomQuotaThresholdNodeLteMapper quotaThresholdNodeMapper;
+
+    @Autowired
+    private UnicomQuotaThresholdGroupLteMapper quotaThresholdGroupMapper;
+
     @Override
     public String cellCalculation(String time) {
 
@@ -182,6 +194,156 @@ public class ScannerService_Unicom_Lte extends BaseService implements ScannerSer
 
         JSONObject resultJson = new JSONObject();
 
+        Map<String, JSONObject> nodeMap = new HashMap<>();
+
+        List<String> counterParams = new ArrayList<>();
+
+        List<String> paramValues = new ArrayList<>();
+
+        Map<String, List<String>> expressionSetMap = getVariableListWcdma();
+
+        List<String> paramcloumns = new ArrayList<>();
+
+        paramcloumns.add("name");
+        paramcloumns.add("time");
+        paramcloumns.add("level");
+
+        List<JSONObject> counterList = counterMapper.getCounterList();
+
+        for (JSONObject counter : counterList) {
+
+            counterParams.add("counter" + counter.getString("id"));
+        }
+
+        List<UnicomFormula> formulaList = formulaMapper.getFormulaLteList();
+
+        for (int j = 0; j < formulaList.size(); j ++) {
+
+            UnicomFormula formula = formulaList.get(j);
+
+            if (j != formulaList.size() -1) {
+
+                paramcloumns.add("formula" + formula.getId() + ",");
+            } else {
+
+                paramcloumns.add("formula" + formula.getId());
+            }
+        }
+
+        List<JSONObject> nodeResultList =
+                counterHistoryMapper.getSumAllCounterByTimeAndCounterList(time, counterParams);
+
+        if (nodeResultList.size() == 0) {
+
+            return resultJson;
+        }
+
+        for (JSONObject nodeResult : nodeResultList) {
+
+            String level = null;
+
+            nodeMap.put(nodeResult.getString("nodeName"), nodeResult);
+
+            StringBuffer paramValue = new StringBuffer();
+
+            paramValue.append("'" + nodeResult.getString("nodeName") + "'");
+            paramValue.append("'" + time + "'");
+            paramValue.append("'" + level + "'");
+
+            for (int j = 0; j < formulaList.size(); j ++) {
+
+                UnicomFormula formula = formulaList.get(j);
+
+                if (expressionSetMap.containsKey(formula.getQuota_name())) {
+
+                    List<String> variableList = expressionSetMap.get(formula.getQuota_name());
+
+                    String expression = formula.getExpression();
+
+                    boolean flag = false;
+
+                    for (int i = 0; i < variableList.size(); i ++) {
+
+                        String variable = variableList.get(i);
+
+                        String pmValue = nodeResult.getString(variable);
+
+                        if (pmValue != null && i != variableList.size() - 1) {
+
+                            expression = expression.replaceAll(variable, pmValue);
+                        } else if (pmValue != null && i == variableList.size() - 1) {
+
+                            expression = expression.replaceAll(variable, pmValue);
+
+                            flag = true;
+                        } else {
+
+                            break;
+                        }
+                    }
+
+                    if (flag) {
+
+                        String value = null;
+
+                        try{
+
+                            Expression exp = new Expression(expression);
+
+                            Double doubleValue = Double.parseDouble(String.valueOf(exp.eval()));
+
+                            value = String.valueOf((double)Math.round(doubleValue*100)/100);
+                        }catch (Exception e){
+
+                            value = "-1";
+                            e.getStackTrace();
+                        }
+
+                        if (j != formulaList.size() -1) {
+
+                            paramValue.append("'" + value + "',");
+                        }else {
+
+                            paramValue.append("'" + value + "'");
+                        }
+
+                    } else {
+
+                        if (j != formulaList.size() -1) {
+
+                            paramValue.append("-1,");
+                        } else {
+
+                            paramValue.append("-1");
+                        }
+                    }
+                }
+            }
+
+            paramValues.add(paramValue.toString());
+        }
+
+        try {
+
+            quotaNodeMapper.addQuotaHistoryNodeList(paramcloumns, paramValues);
+
+            resultJson.put("nodeMap", nodeMap);
+            resultJson.put("message", "SUCCESS");
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            resultJson.put("nodeMap", null);
+            resultJson.put("message", "FAIL");
+        }
+
+        return resultJson;
+    }
+
+    public JSONObject nodeCalculationOld(String time) {
+
+        JSONObject resultJson = new JSONObject();
+
         List<String> paramValues = new ArrayList<>();
 
         List<String> paramcloumns = new ArrayList<>();
@@ -252,7 +414,8 @@ public class ScannerService_Unicom_Lte extends BaseService implements ScannerSer
                         String variable = variableList.get(i);
 
                         String pmValue =
-                                counterHistoryMapper.getSumCounterByCellsAndCounterAndTime(cellNameList, variable, time);
+                                counterHistoryMapper.
+                                        getSumCounterByCellsAndCounterAndTime(cellNameList, variable, time);
 
                         if (pmValue != null && i != variableList.size() - 1) {
 

@@ -97,4 +97,12 @@
     </set>
     where quota_name = #{quotaName}
   </update>
+
+  <select id="getAllQuotaThresholdGroup" resultType="com.hongshen.sran_service.entity.UnicomQuotaThresholdGroupLte">
+
+    select
+    *
+    from
+    unicom_quota_threshold_group_lte;
+  </select>
 </mapper>

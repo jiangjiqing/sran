@@ -34,4 +34,7 @@ public interface UnicomCounterHistoryLteMapper {
     String getSumCounterByCellsAndCounterAndTime(@Param("nameList")List<String> nameList,
                                                  @Param("counter")String counter,
                                                  @Param("time")String time);
+
+    List<JSONObject> getSumAllCounterByTimeAndCounterList(@Param("time")String time,
+                                                          @Param("counterList")List<String> counterList);
 }

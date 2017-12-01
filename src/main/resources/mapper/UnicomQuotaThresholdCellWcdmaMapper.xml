@@ -97,4 +97,11 @@
     </set>
     where quota_name = #{quotaName}
   </update>
+
+  <select id="getAllQuotaThresholdCell" resultType="com.hongshen.sran_service.entity.UnicomQuotaThresholdCellWcdma">
+
+    select
+    *
+    from unicom_quota_threshold_cell_wcdma;
+  </select>
 </mapper>
