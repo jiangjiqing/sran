@@ -72,14 +72,7 @@ public class ScannerService_Unicom_Wcdma extends BaseService implements ScannerS
 
             UnicomFormula formula = formulaList.get(j);
 
-            if (j != formulaList.size() -1) {
-
-                paramcloumns.add("formula" + formula.getId() + ",");
-
-            } else {
-
-                paramcloumns.add("formula" + formula.getId());
-            }
+            paramcloumns.add("formula" + formula.getId() + ",");
         }
 
         paramcloumns.add("level");
@@ -100,9 +93,8 @@ public class ScannerService_Unicom_Wcdma extends BaseService implements ScannerS
 
             String level = null;
 
-            paramValue.append("'" + counterHistory.getString("name") + "'");
-            paramValue.append("'" + time + "'");
-            paramValue.append("'" + level + "'");
+            paramValue.append("'" + counterHistory.getString("name") + "',");
+            paramValue.append("'" + time + "',");
 
             for (int j = 0; j < formulaList.size(); j ++) {
 
@@ -155,13 +147,7 @@ public class ScannerService_Unicom_Wcdma extends BaseService implements ScannerS
                             e.getStackTrace();
                         }
 
-                        if (j != formulaList.size() -1) {
-
-                            paramValue.append("'" + value + "',");
-                        }else {
-
-                            paramValue.append("'" + value + "'");
-                        }
+                        paramValue.append("'" + value + "',");
 
                         String fmLevel = levelCalculation(value, quotaThresholdCellMap.get(formula.getQuota_name()));
 
@@ -169,13 +155,7 @@ public class ScannerService_Unicom_Wcdma extends BaseService implements ScannerS
 
                     } else {
 
-                        if (j != formulaList.size() -1) {
-
-                            paramValue.append("-1,");
-                        } else {
-
-                            paramValue.append("-1");
-                        }
+                        paramValue.append("-1,");
 
                         fmLevelList.add("1");
                     }
@@ -222,12 +202,6 @@ public class ScannerService_Unicom_Wcdma extends BaseService implements ScannerS
 
         Map<String, List<String>> expressionSetMap = getVariableListWcdma();
 
-        List<String> paramcloumns = new ArrayList<>();
-
-        paramcloumns.add("name");
-        paramcloumns.add("time");
-        paramcloumns.add("level");
-
         List<JSONObject> counterList = counterMapper.getCounterList();
 
         for (JSONObject counter : counterList) {
@@ -237,18 +211,19 @@ public class ScannerService_Unicom_Wcdma extends BaseService implements ScannerS
 
         List<UnicomFormula> formulaList = formulaMapper.getFormulaWcdmaList();
 
+        List<String> paramcloumns = new ArrayList<>();
+
+        paramcloumns.add("name,");
+        paramcloumns.add("time,");
+
         for (int j = 0; j < formulaList.size(); j ++) {
 
             UnicomFormula formula = formulaList.get(j);
 
-            if (j != formulaList.size() -1) {
-
-                paramcloumns.add("formula" + formula.getId() + ",");
-            } else {
-
-                paramcloumns.add("formula" + formula.getId());
-            }
+            paramcloumns.add("formula" + formula.getId() + ",");
         }
+
+        paramcloumns.add("level");
 
         List<JSONObject> nodeResultList =
                 counterHistoryMapper.getSumAllCounterByTimeAndCounterList(time, counterParams);
@@ -260,15 +235,16 @@ public class ScannerService_Unicom_Wcdma extends BaseService implements ScannerS
 
         for (JSONObject nodeResult : nodeResultList) {
 
+            StringBuffer paramValue = new StringBuffer();
+
+            List<String> fmLevelList = new ArrayList<>();
+
             String level = null;
 
             nodeMap.put(nodeResult.getString("nodeName"), nodeResult);
 
-            StringBuffer paramValue = new StringBuffer();
-
-            paramValue.append("'" + nodeResult.getString("nodeName") + "'");
-            paramValue.append("'" + time + "'");
-            paramValue.append("'" + level + "'");
+            paramValue.append("'" + nodeResult.getString("nodeName") + "',");
+            paramValue.append("'" + time + "',");
 
             for (int j = 0; j < formulaList.size(); j ++) {
 
@@ -291,11 +267,13 @@ public class ScannerService_Unicom_Wcdma extends BaseService implements ScannerS
                         if (pmValue != null && i != variableList.size() - 1) {
 
                             expression = expression.replaceAll(variable, pmValue);
+
                         } else if (pmValue != null && i == variableList.size() - 1) {
 
                             expression = expression.replaceAll(variable, pmValue);
 
                             flag = true;
+
                         } else {
 
                             break;
@@ -313,32 +291,31 @@ public class ScannerService_Unicom_Wcdma extends BaseService implements ScannerS
                             Double doubleValue = Double.parseDouble(String.valueOf(exp.eval()));
 
                             value = String.valueOf((double)Math.round(doubleValue*100)/100);
+
                         }catch (Exception e){
 
                             value = "-1";
                             e.getStackTrace();
                         }
 
-                        if (j != formulaList.size() -1) {
+                        paramValue.append("'" + value + "',");
 
-                            paramValue.append("'" + value + "',");
-                        }else {
+                        String fmLevel = levelCalculation(value, quotaThresholdNodeMap.get(formula.getQuota_name()));
 
-                            paramValue.append("'" + value + "'");
-                        }
+                        fmLevelList.add(fmLevel);
 
                     } else {
 
-                        if (j != formulaList.size() -1) {
+                        paramValue.append("-1,");
 
-                            paramValue.append("-1,");
-                        } else {
-
-                            paramValue.append("-1");
-                        }
+                        fmLevelList.add("1");
                     }
                 }
             }
+
+            level = avgFmLevelList(fmLevelList);
+
+            paramValue.append("'" + level + "'");
 
             paramValues.add(paramValue.toString());
         }
@@ -370,51 +347,49 @@ public class ScannerService_Unicom_Wcdma extends BaseService implements ScannerS
             return null;
         }
 
-        List<String> paramValues = new ArrayList<>();
-
-        List<String> paramcloumns = new ArrayList<>();
-
-        paramcloumns.add("name");
-        paramcloumns.add("time");
-        paramcloumns.add("level");
-
-        Map<String, List<String>> expressionSetMap = getVariableListWcdma();
-
-        Map<String, JSONObject> nodeMap =  (Map<String, JSONObject>) params.get("nodeMap");
-
         List<String> groupNameList = nodeMapper.getGroupNameList();
-
-        List<UnicomFormula> formulaList = formulaMapper.getFormulaWcdmaList();
-
-        for (int j = 0; j < formulaList.size(); j ++) {
-
-            UnicomFormula formula = formulaList.get(j);
-
-            if (j != formulaList.size() -1) {
-
-                paramcloumns.add("formula" + formula.getId() + ",");
-            } else {
-
-                paramcloumns.add("formula" + formula.getId());
-            }
-        }
 
         if (groupNameList.size() == 0) {
 
             return result;
         }
 
+        List<String> paramValues = new ArrayList<>();
+
+        List<UnicomFormula> formulaList = formulaMapper.getFormulaWcdmaList();
+
+        List<String> paramcloumns = new ArrayList<>();
+
+        paramcloumns.add("name,");
+        paramcloumns.add("time,");
+
+        for (int j = 0; j < formulaList.size(); j ++) {
+
+            UnicomFormula formula = formulaList.get(j);
+
+            paramcloumns.add("formula" + formula.getId() + ",");
+        }
+
+        paramcloumns.add("level");
+
+        Map<String, JSONObject> nodeMap = (Map<String, JSONObject>) params.get("nodeMap");
+
+        Map<String, List<String>> quotaThresholdNodeMap = getQuotaThresholdMap("group");
+
+        Map<String, List<String>> expressionSetMap = getVariableListWcdma();
+
         for (String groupName : groupNameList) {
+
+            List<String> fmLevelList = new ArrayList<>();
 
             StringBuffer paramValue = new StringBuffer();
 
-            List<String> groupAllNodeAllCellList = new ArrayList<>();
+            List<JSONObject> groupAllGroupList = new ArrayList<>();
 
             String level = null;
 
             paramValue.append("'" + groupName + "'");
             paramValue.append("'" + time + "'");
-            paramValue.append("'" + level + "'");
 
             List<String> nodeNameList = nodeMapper.getNodeNameListByGroupName(groupName);
 
@@ -423,18 +398,13 @@ public class ScannerService_Unicom_Wcdma extends BaseService implements ScannerS
                 continue;
             }
 
-            /*for (String nodeName : nodeNameList) {
+            for (String nodeName : nodeNameList) {
 
-                if (nodeCellsMap.containsKey(nodeName)) {
+                if (nodeMap.containsKey(nodeName)) {
 
-                    List<String> nodeCells = nodeCellsMap.get(nodeName);
-
-                    for (String cell : nodeCells) {
-
-                        groupAllNodeAllCellList.add(cell);
-                    }
+                    groupAllGroupList.add(nodeMap.get(nodeName));
                 }
-            }*/
+            }
 
             for (int j = 0; j < formulaList.size(); j ++) {
 
@@ -452,9 +422,7 @@ public class ScannerService_Unicom_Wcdma extends BaseService implements ScannerS
 
                         String variable = variableList.get(i);
 
-                        String pmValue =
-                                counterHistoryMapper.
-                                        getSumCounterByCellsAndCounterAndTime(groupAllNodeAllCellList, variable, time);
+                        String pmValue = getGroupVariableValueByNodeList(variable, groupAllGroupList);
 
                         if (pmValue != null && i != variableList.size() - 1) {
 
@@ -483,30 +451,29 @@ public class ScannerService_Unicom_Wcdma extends BaseService implements ScannerS
                             value = String.valueOf((double)Math.round(doubleValue*100)/100);
                         }catch (Exception e){
 
-                            value = "-1";
                             e.getStackTrace();
+
+                            value = "-1";
                         }
 
-                        if (j != formulaList.size() -1) {
+                        paramValue.append("'" + value + "',");
 
-                            paramValue.append("'" + value + "',");
-                        }else {
+                        String fmLevel = levelCalculation(value, quotaThresholdNodeMap.get(formula.getQuota_name()));
 
-                            paramValue.append("'" + value + "'");
-                        }
+                        fmLevelList.add(fmLevel);
 
                     } else {
 
-                        if (j != formulaList.size() -1) {
+                        paramValue.append("-1,");
 
-                            paramValue.append("-1,");
-                        } else {
-
-                            paramValue.append("-1");
-                        }
+                        fmLevelList.add("1");
                     }
                 }
             }
+
+            level = avgFmLevelList(fmLevelList);
+
+            paramValue.append("'" + level + "'");
 
             paramValues.add(paramValue.toString());
         }
@@ -531,6 +498,24 @@ public class ScannerService_Unicom_Wcdma extends BaseService implements ScannerS
         String levle = null;
 
         return levle;
+    }
+
+    String getGroupVariableValueByNodeList (String variable, List<JSONObject> nodeList) {
+
+        String variableValue = null;
+
+        int sum = 0;
+
+        for (JSONObject node : nodeList) {
+
+            int num = Integer.valueOf(node.getString(variable));
+
+            sum = sum + num;
+        }
+
+        variableValue = String.valueOf(sum);
+
+        return variableValue;
     }
 
     Map<String, List<String>> getQuotaThresholdMap(String type){

@@ -27,7 +27,7 @@ public class ScannerController extends BaseController {
     @Path("/suppliers/{supplier}/generations/{generation}/quotas/{time}/calculation")
     @Produces(MediaType.APPLICATION_JSON)
     public String calculation(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
-                                      @PathParam("time")String time) {
+                              @PathParam("time")String time) {
 
         String ret = null;
 
