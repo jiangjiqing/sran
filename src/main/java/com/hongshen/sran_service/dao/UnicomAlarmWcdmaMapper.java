@@ -28,7 +28,7 @@ public interface UnicomAlarmWcdmaMapper {
 
     List<JSONObject> getAllAlarmInfo();
 
-    JSONObject getGroupAlarmByName(@Param("groupName")String groupName);
+    List<JSONObject> getGroupAlarmByName(@Param("groupName")String groupName);
 
     List<JSONObject> getNodeAlarmByName(@Param("nodeName")String nodeName);
 

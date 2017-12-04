@@ -67,15 +67,25 @@ public class UserController extends BaseController{
 
 //        if (check(url, method, authToken)) {
             int i = UserAgentService.addUser(param);
-            String loginName = param.getString("loginName");
-            String authorityName = param.getString("role");
-            String list = param.getString("authority");
-            int j = UserAgentService.addLteAuthory(loginName,authorityName,list);
-            int z = UserAgentService.addWcdmaAuthory(loginName,authorityName,list);
+            if(i != 0) {
+                String loginName = param.getString("loginName");
+                String authorityName = param.getString("role");
 
-            result.put("data", map);
-            result.put("status", Constants.SUCCESS);
 
+                int j = UserAgentService.addLteUserAuthory(loginName, authorityName);
+
+                int z = UserAgentService.addWcdmaUserAuthory(loginName, authorityName);
+                if (j != 0 || z != 0){
+                    result.put("result", Constants.SUCCESS);
+                    result.put("msg", "add user info ok");
+                }else {
+                    result.put("result",Constants.FAIL);
+                    result.put("msg", "add user info fail");
+                }
+            }else {
+                result.put("result",Constants.FAIL);
+                result.put("msg", "add user info fail");
+            }
             return result;
 //        } else {
 //
@@ -86,7 +96,7 @@ public class UserController extends BaseController{
     @POST
     @Path("/users/{loginName}")
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject updateUser (@HeaderParam("Auth-Token")String authToken,JSONObject param){
+    public JSONObject updateUser (@HeaderParam("Auth-Token")String authToken,JSONObject param,@PathParam("loginName") String loginNmae){
         JSONObject result = new JSONObject();
         Map<String, Object> map = null;
 //        String url = Constants.ZB_ELEMENT;
@@ -94,17 +104,25 @@ public class UserController extends BaseController{
 
 //        if (check(url, method, authToken)) {
             int i = UserAgentService.updateUser(param);
-//
-//            if (unicomAuthorityWcdma != null || unicomUserAuthorityWcdma != null ){
-//                map.put("unicomAuthorityWcdma",unicomAuthorityWcdma);
-//                map.put("unicomUserAuthorityWcdma",unicomUserAuthorityWcdma);
-            result.put("data", map);
-            result.put("status", Constants.SUCCESS);
-//            } else {
-//
-//                result.put("status", Constants.FAIL);
-//            }
-//
+
+            if (i != 0){
+//                String loginName = param.getString("loginName");
+                String authorityName = param.getString("role");
+                int j = UserAgentService.updateLteUserAuthory(loginNmae, authorityName);
+
+                int z = UserAgentService.updateWcdmaUserAuthory(loginNmae, authorityName);
+                if (j != 0 || z != 0){
+                    result.put("result", Constants.SUCCESS);
+                    result.put("msg", "update user info ok");
+                }else {
+                    result.put("result",Constants.FAIL);
+                    result.put("msg", "update user info fail");
+                }
+            } else {
+                result.put("result",Constants.FAIL);
+                result.put("msg", "add user info fail");
+            }
+
             return result;
 //        } else {
 //
@@ -122,18 +140,14 @@ public class UserController extends BaseController{
         String method = Constants.METHOD_POST;
 
 //        if (check(url, method, authToken)) {
-           int i =  UserAgentService.deleteUser(loginName);
-//
-//            if (unicomAuthorityWcdma != null || unicomUserAuthorityWcdma != null ){
-//                map.put("unicomAuthorityWcdma",unicomAuthorityWcdma);
-//                map.put("unicomUserAuthorityWcdma",unicomUserAuthorityWcdma);
+            int i =  UserAgentService.deleteUser(loginName);
+            if (i != 0 ){
+                int j =UserAgentService.deleteLteUserAuthory(loginName);
+                int z =UserAgentService.deletewcdmaUserAuthory(loginName);
+            }
             result.put("data", map);
             result.put("status", Constants.SUCCESS);
-//            } else {
-//
-//                result.put("status", Constants.FAIL);
-//            }
-//
+
             return result;
 //        } else {
 //

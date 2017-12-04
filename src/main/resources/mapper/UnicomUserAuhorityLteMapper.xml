@@ -90,4 +90,13 @@
   <select id="getLteAuth" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
     SELECT b.list FROM unicom_user_authority_lte a LEFT JOIN unicom_authority_lte b ON a.authority_name = b.authority_name WHERE a.login_name = #{name}
   </select>
+  <insert id="addLteUserAuthory" parameterType="java.lang.String">
+    INSERT INTO unicom_user_authority_lte (login_name,authority_name) VALUES (#{loginName},#{authorityName})
+  </insert>
+  <update id="updateLteUserAuthory" parameterType="java.lang.String">
+    UPDATE unicom_user_authority_lte SET authority_name = #{authorityName} WHERE login_name = #{loginName}
+  </update>
+  <delete id="deleteLteUserAuthory" parameterType="java.lang.String">
+    DELETE FROM unicom_user_authority_lte WHERE login_name = #{loginName}
+  </delete>
 </mapper>

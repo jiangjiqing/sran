@@ -58,5 +58,9 @@ public interface UnicomUserAuhorityLteMapper {
 
     List<JSONObject> getLteAuth(@Param("name") String name);
 
-    int addLteAuthory(@Param("loginName")String loginName,@Param("authorityName") String authorityName,@Param("list") String list);
+    int addLteUserAuthory(@Param("authorityName") String authorityName,@Param("loginName") String loginName);
+
+    int updateLteUserAuthory(@Param("authorityName") String authorityName,@Param("loginName") String loginName);
+
+    int deleteLteUserAuthory(@Param("loginName") String loginName);
 }

@@ -10,7 +10,7 @@ public interface AlarmService {
 
     List<JSONObject> getAllAlarmInfo();
 
-	JSONObject getGroupAlarmByName(String groupName);
+	List<JSONObject> getGroupAlarmByName(String groupName);
 
     List<JSONObject> getNodeAlarmByName(String nodeName);
 

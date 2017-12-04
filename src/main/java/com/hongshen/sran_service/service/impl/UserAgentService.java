@@ -96,11 +96,34 @@ public class UserAgentService {
     }
 
 
-    public static int addLteAuthory(String loginName, String authorityName, String list) {
-       return userAuhorityLteMapper.addLteAuthory(loginName,authorityName,list);
+
+
+    public static int addLteUserAuthory(String loginName, String authorityName) {
+        return userAuhorityLteMapper.addLteUserAuthory(authorityName,loginName);
     }
 
-    public static int addWcdmaAuthory(String loginName, String authorityName, String list) {
-        return userAuhorityWcdmaMapper.addWcdmaAuthory(loginName,authorityName,list);
+    public static int addWcdmaUserAuthory(String loginName, String authorityName) {
+        return userAuhorityWcdmaMapper.addWcdmaUserAuthory(authorityName,loginName);
+
+    }
+
+    public static int updateLteUserAuthory(String loginName, String authorityName) {
+        return userAuhorityLteMapper.updateLteUserAuthory(authorityName,loginName);
+
+    }
+
+    public static int updateWcdmaUserAuthory(String loginName, String authorityName) {
+        return userAuhorityWcdmaMapper.updateWcdmaUserAuthory(authorityName,loginName);
+
+    }
+
+    public static int deleteLteUserAuthory(String loginName) {
+        return userAuhorityLteMapper.deleteLteUserAuthory(loginName);
+
+    }
+
+    public static int deletewcdmaUserAuthory(String loginName) {
+        return userAuhorityWcdmaMapper.deletewcdmaUserAuthory(loginName);
+
     }
 }

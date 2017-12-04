@@ -100,7 +100,7 @@ public class AlarmController {
 			//TODO
 //			List<JSONObject> resultList;
             //ElementInfoService
-            JSONObject resultList = obj.getAlarmService().getGroupAlarmByName(groupname);
+            List<JSONObject> resultList = obj.getAlarmService().getGroupAlarmByName(groupname);
 			
             if (!resultList.isEmpty()){
                 result.put("data", resultList);

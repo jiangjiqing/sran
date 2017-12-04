@@ -90,7 +90,13 @@
   <select id="getWcdmaAuth" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
    SELECT b.list FROM unicom_user_authority_wcdma a LEFT JOIN unicom_authority_wcdma b ON a.authority_name = b.authority_name WHERE a.login_name = #{name}
   </select>
-  <insert id="addWcdmaAuthory" parameterType="java.lang.String">
-
-  </insert>
+  <insert id="addWcdmaUserAuthory" parameterType="java.lang.String">
+INSERT INTO unicom_user_authority_wcdma (login_name,authority_name) VALUES (#{loginName},#{authorityName})
+</insert>
+  <update id="updateWcdmaUserAuthory" parameterType="java.lang.String">
+    UPDATE unicom_user_authority_wcdma SET authority_name = #{authorityName} WHERE login_name = #{loginName}
+  </update>
+  <delete id="deletewcdmaUserAuthory" parameterType="java.lang.String">
+    DELETE FROM unicom_user_authority_wcdma WHERE login_name = #{loginName}
+  </delete>
 </mapper>
