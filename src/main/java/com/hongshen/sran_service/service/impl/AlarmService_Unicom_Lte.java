@@ -23,7 +23,7 @@ public class AlarmService_Unicom_Lte implements AlarmService {
     }
 	
 	@Override
-    public List<JSONObject> getGroupAlarmByName(String groupName) {
+    public JSONObject getGroupAlarmByName(String groupName) {
         return alarmMapper.getGroupAlarmByName(groupName);
     }
 	

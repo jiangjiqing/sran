@@ -84,32 +84,27 @@
     FROM unicom_alarm_wcdma;
   </select>
 
-  <select id="getGroupAlarmByName" resultType="com.alibaba.fastjson.JSONObject">
-    SELECT
-      a.node_name nodeName,
-      a.mo,
-      a.alarm_time alarmTime,
-      a.alarm_type_id alarmTypeId,
-      a.alarm_name_id alarmNameId
-      a.cell_name cellname
-    FROM
-      (
-        SELECT node_name
-        FROM unicom_node_wcdma
-        WHERE group_name = #{groupName}
-      ) n
-      LEFT JOIN
-      (
-        SELECT
-          node_name,
-          mo,
-          alarm_time,
-          alarm_type_id,
-          alarm_name_id,
-          cellname
-        FROM unicom_alarm_wcdma
-      ) a
-      on a.node_name = n.node_name;
+  <select id="getGroupAlarmByName" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
+
+   SELECT
+   a.node_name nodemName,
+   b.cell_name cellName,
+   b.alarm_time alarmTime,
+   c.level alarmLevelId,
+   b.alarm_name_id alarmNameId,
+   b.mo
+   FROM
+   unicom_node_wcdma a
+   LEFT JOIN
+   unicom_alarm_wcdma b
+   ON
+   a.node_name=b.node_name
+   LEFT JOIN
+   unicom_quota_history_node_wcdma c
+   ON
+   b.node_name=c.name
+   WHERE a.group_name = #{groupName}
+   ORDER BY NOW() LIMIT 1
   </select>
 
   <select id="getNodeAlarmByName" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
