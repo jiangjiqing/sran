@@ -464,7 +464,7 @@
     </trim>
   </insert>
 
-  <select id="getCounterHistoryListByTime" resultType="com.alibaba.fastjson.JSONObject">
+  <select id="getCounterHistoryListByTimeOld" resultType="com.alibaba.fastjson.JSONObject">
 
     SELECT
     name, time,
@@ -576,6 +576,14 @@
     on t1.cell_name = t2.name
     WHERE t2.time = #{time}
     GROUP BY t1.node_name
+  </select>
+
+  <select id="getCounterHistoryListByTime" resultType="com.alibaba.fastjson.JSONObject">
+
+    SELECT
+    *
+    FROM unicom_counter_history_lte
+    WHERE time = #{time}
   </select>
 
   <select id="dowloadCounter" parameterType="java.util.Date" resultType="com.alibaba.fastjson.JSONObject">

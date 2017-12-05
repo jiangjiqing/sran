@@ -38,7 +38,7 @@ public class ScannerController extends BaseController {
 
         NetObjBase netObj = objFactory.getNetObj(supplier, generation);
 
-        ret = netObj.getScannerService().cellCalculation(time);
+        //ret = netObj.getScannerService().cellCalculation(time);
 
         JSONObject params = netObj.getScannerService().nodeCalculation(time);
 

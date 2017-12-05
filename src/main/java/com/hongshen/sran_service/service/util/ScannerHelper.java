@@ -29,13 +29,16 @@ public class ScannerHelper {
 
         String variableValue = null;
 
-        int sum = 0;
+        double sum = 0;
 
         for (JSONObject node : nodeList) {
 
-            int num = Integer.valueOf(node.getString(variable));
+            if (node.getString(variable) != null) {
 
-            sum = sum + num;
+                double num = Double.valueOf(node.getString(variable));
+
+                sum = sum + num;
+            }
         }
 
         variableValue = String.valueOf(sum);
@@ -62,45 +65,38 @@ public class ScannerHelper {
         return quotaThresholdMap;
     }
 
-    public static String levelCalculation (String value, List<String> thresholdList) {
+    public static int levelCalculation (String value, List<String> thresholdList) {
 
-        String level = null;
+        Integer level = 1;
 
         if (value != "-1") {
 
-            int fmValue = Integer.valueOf(value);
+            double fmValue = Double.valueOf(value);
 
-            int threshold1 = Integer.valueOf(thresholdList.get(0));
-            int threshold2 = Integer.valueOf(thresholdList.get(1));
-            int threshold3 = Integer.valueOf(thresholdList.get(2));
+            double threshold1 = Double.valueOf(thresholdList.get(0));
+            double threshold2 = Double.valueOf(thresholdList.get(1));
+            double threshold3 = Double.valueOf(thresholdList.get(2));
 
             if (fmValue <= threshold1) {
 
-                level = "1";
+                level = 1;
             }
 
             if (fmValue > threshold1 && fmValue <= threshold2) {
 
-                level = "2";
+                level = 2;
             }
 
             if (fmValue > threshold2 && fmValue <= threshold3) {
 
-                level = "3";
+                level = 3;
             }
         } else {
 
-            level = "1";
+            level = 1;
         }
 
         return level;
-    }
-
-    public static String avgFmLevelList (List<String> fmLevelList) {
-
-        String levle = null;
-
-        return levle;
     }
 
     public static List<String> parseExpression (String expression) {
@@ -193,5 +189,25 @@ public class ScannerHelper {
         }
 
         return resultMap;
+    }
+
+    public static void sortStringArray (List<String> variableList) {
+
+        Collections.sort(variableList, new Comparator<String>() {
+
+            @Override
+            public int compare(String o1, String o2) {
+
+                return o1.length() < o2.length() ? 1 : -1;
+            }
+
+        });
+    }
+
+    public static int maxLevelArray (List<Integer> params) {
+
+        int max = Collections.max(params);
+
+        return max;
     }
 }

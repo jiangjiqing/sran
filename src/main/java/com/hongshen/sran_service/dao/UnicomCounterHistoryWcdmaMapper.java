@@ -28,7 +28,7 @@ public interface UnicomCounterHistoryWcdmaMapper {
      */
     int insertSelective(UnicomCounterHistoryWcdma record);
 
-    List<JSONObject> getCounterHistoryListByTime(@Param("time")String time);
+    List<JSONObject> getCounterHistoryListByTimeOld(@Param("time")String time);
 
     List<JSONObject> getCellListByNameListAndTime(@Param("nameList")List<String> nameList, @Param("time")String time);
 
@@ -38,6 +38,8 @@ public interface UnicomCounterHistoryWcdmaMapper {
 
     List<JSONObject> getSumAllCounterByTimeAndCounterList(@Param("time")String time,
                                                    @Param("counterList")List<String> counterList);
+
+    List<JSONObject> getCounterHistoryListByTime(@Param("time")String time);
 
     List<JSONObject> dowloadCounter(@Param("start")Date start, @Param("end")Date end, @Param("condition") String condition);
 }
