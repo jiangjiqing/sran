@@ -48,11 +48,11 @@ public class ProtectionController extends BaseController{
 
                 if(alarmList.size() != 0){
                     protect.put("alarmStatus",true);
-                    protect.put("alarmList",alarmList);
 
                 }else {
                     protect.put("alarmStatus",false);
                 }
+                protect.put("alarmList",alarmList);
 
                 JSONObject level = obj.getQuotaService().getNodeLevel(nodeName);
 

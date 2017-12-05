@@ -146,14 +146,6 @@ public class AlarmLibController extends BaseController{
         String url = Constants.PATH_DUMMY;
         String method = Constants.METHOD_GET;
 
-        String alarm_name_id = param.getString("alarm_name_id");
-        String alarm_name = param.getString("alarm_name");
-        String alarm_meaning = param.getString("alarm_meaning");
-        String alarm_level_id = param.getString("alarm_level_id");
-        String alarm_scope = param.getString("alarm_scope");
-        String recommend = param.getString("recommend");
-
-
 //        if (check(url, method, authToken)) {
 
         NetObjBase obj = objFactory.getNetObj(supplier,generation);
