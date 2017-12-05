@@ -139,7 +139,7 @@
       quota_name quotaName,
       expression,
       remark,
-      status,
+      status
     FROM unicom_formula_wcdma;
   </select>
 

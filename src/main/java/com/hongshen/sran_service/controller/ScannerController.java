@@ -15,7 +15,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-@Path("/sran/service/net/sacnner")
+@Path("/sran/service/net/scanner")
 public class ScannerController extends BaseController {
 
     @Autowired

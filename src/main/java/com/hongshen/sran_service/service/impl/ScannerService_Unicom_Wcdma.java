@@ -76,7 +76,7 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
 
             UnicomFormula formula = formulaList.get(j);
 
-            paramcloumns.add("formula" + formula.getId() + ",");
+            paramcloumns.add("formula" + formula.getId());
         }
 
         paramcloumns.add("level");
