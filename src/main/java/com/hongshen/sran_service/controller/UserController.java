@@ -43,10 +43,10 @@ public class UserController extends BaseController{
                 map.put("UserInfo",UserInfo);
 
                 result.put("data", map);
-                result.put("status", Constants.SUCCESS);
+                result.put("result", Constants.SUCCESS);
             } else {
 
-                result.put("status", Constants.FAIL);
+                result.put("result", Constants.FAIL);
             }
 
             return result;
@@ -145,7 +145,7 @@ public class UserController extends BaseController{
                 int z =UserAgentService.deletewcdmaUserAuthory(loginName);
             }
             result.put("data", map);
-            result.put("status", Constants.SUCCESS);
+            result.put("result", Constants.SUCCESS);
 
             return result;
 //        } else {
@@ -171,10 +171,10 @@ public class UserController extends BaseController{
                 map.put("RoleList",RoleAll);
 //                map.put("UserInfo",UserInfo);
                 result.put("data", map);
-                result.put("status", Constants.SUCCESS);
+                result.put("result", Constants.SUCCESS);
             } else {
 
-                result.put("status", Constants.FAIL);
+                result.put("result", Constants.FAIL);
             }
 
             return result;

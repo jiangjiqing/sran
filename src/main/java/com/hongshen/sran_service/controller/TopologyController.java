@@ -39,10 +39,10 @@ public class TopologyController extends BaseController {
 //            if (!GroupWcdma.isEmpty()){
 //
 //                result.put("data", GroupWcdma);
-//                result.put("status", Constants.SUCCESS);
+//                result.put("result", Constants.SUCCESS);
 //            } else {
 //
-//                result.put("status", Constants.FAIL);
+//                result.put("result", Constants.FAIL);
 //            }
 //
 //            return result;

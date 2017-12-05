@@ -55,7 +55,7 @@ public class AlarmLibController extends BaseController{
             return result;
 //        } else {
 //
-//			result.put("status", Constants.FAIL);
+//			result.put("result", Constants.FAIL);
 //			result.put("msg", FAIL_MSG_NO_PERMISSION);
 //            return result;
 //        }
@@ -80,18 +80,18 @@ public class AlarmLibController extends BaseController{
             JSONObject alarm = obj.getAlarmLibService().getAlarmByName(alarmName);
 
             if (!alarm.isEmpty()){
-                result.put("status", Constants.SUCCESS);
+                result.put("result", Constants.SUCCESS);
                 result.put("data", alarm);
 
             } else {
-                result.put("status", Constants.FAIL);
+                result.put("result", Constants.FAIL);
                 result.put("msg", Constants.MSG_NO_DATA);
             }
 
             return result;
         //        } else {
 //
-//			result.put("status", Constants.FAIL);
+//			result.put("result", Constants.FAIL);
 //			result.put("msg", FAIL_MSG_NO_PERMISSION);
 //            return result;
 //        }
@@ -116,18 +116,18 @@ public class AlarmLibController extends BaseController{
             int i = obj.getAlarmLibService().updateAlarmByName(alarmName,param);
 
             if (i > 0){
-                result.put("status", Constants.SUCCESS);
+                result.put("result", Constants.SUCCESS);
                 result.put("data", Constants.MSG_UPDATE_OK);
 
             } else {
-                result.put("status", Constants.FAIL);
+                result.put("result", Constants.FAIL);
                 result.put("msg", Constants.MSG_UPDATE_FAILED);
 
             }
             return result;
         //        } else {
 //
-//			result.put("status", Constants.FAIL);
+//			result.put("result", Constants.FAIL);
 //			result.put("msg", FAIL_MSG_NO_PERMISSION);
 //            return result;
 //        }
@@ -152,18 +152,18 @@ public class AlarmLibController extends BaseController{
         int i = obj.getAlarmLibService().addAlarm(param);
 
         if (i > 0){
-            result.put("status", Constants.SUCCESS);
+            result.put("result", Constants.SUCCESS);
             result.put("data", Constants.MSG_ADD_OK);
 
         } else {
-            result.put("status", Constants.FAIL);
+            result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_ADD_FAILED);
 
         }
         return result;
         //        } else {
 //
-//			result.put("status", Constants.FAIL);
+//			result.put("result", Constants.FAIL);
 //			result.put("msg", FAIL_MSG_NO_PERMISSION);
 //            return result;
 //        }

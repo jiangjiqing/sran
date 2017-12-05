@@ -73,7 +73,7 @@ public class AlarmController {
 			
 //        } else {
 //
-//			result.put("status", Constants.FAIL);
+//			result.put("result", Constants.FAIL);
 //			result.put("msg", FAIL_MSG_NO_PERMISSION);
 //            return result;
 //        }
@@ -103,10 +103,11 @@ public class AlarmController {
             List<JSONObject> resultList = obj.getAlarmService().getGroupAlarmByName(groupname);
 			
             if (!resultList.isEmpty()){
+                result.put("result", Constants.SUCCESS);
                 result.put("data", resultList);
-                result.put("status", Constants.SUCCESS);
+
             } else {
-                result.put("status", Constants.FAIL);
+                result.put("result", Constants.FAIL);
 				result.put("msg", Constants.MSG_NO_DATA);
             }
 
@@ -114,7 +115,7 @@ public class AlarmController {
 			
 //        } else {
 //
-//			result.put("status", Constants.FAIL);
+//			result.put("result", Constants.FAIL);
 //			result.put("msg", FAIL_MSG_NO_PERMISSION);
 //            return result;
 //        }
@@ -144,12 +145,11 @@ public class AlarmController {
             List<JSONObject> resultList = obj.getAlarmService().getNodeAlarmByName(nodeName);
 
             if (!resultList.isEmpty()){
-
+                result.put("result", Constants.SUCCESS);
                 result.put("data", resultList);
-                result.put("status", Constants.SUCCESS);
-            } else {
 
-                result.put("status", Constants.FAIL);
+            } else {
+                result.put("result", Constants.FAIL);
 				result.put("msg", Constants.MSG_NO_DATA);
             }
 
@@ -157,7 +157,7 @@ public class AlarmController {
 			
 //        } else {
 //
-//			result.put("status", Constants.FAIL);
+//			result.put("result", Constants.FAIL);
 //			result.put("msg", Constants.MSG_NO_PERMISSION);
 //            return result;
 //        }
@@ -188,12 +188,12 @@ public class AlarmController {
             List<JSONObject> resultList = obj.getAlarmService().getCellAlarmByName(cellName);
 
             if (!resultList.isEmpty()){
-
+                result.put("result", Constants.SUCCESS);
                 result.put("data", resultList);
-                result.put("status", Constants.SUCCESS);
+
             } else {
 				
-                result.put("status", Constants.FAIL);
+                result.put("result", Constants.FAIL);
 				result.put("msg", Constants.MSG_NO_DATA);
             }
 
@@ -201,7 +201,7 @@ public class AlarmController {
 
 //        } else {
 //
-//			result.put("status", Constants.FAIL);
+//			result.put("result", Constants.FAIL);
 //			result.put("msg", FAIL_MSG_NO_PERMISSION);
 //            return result;
 //        }

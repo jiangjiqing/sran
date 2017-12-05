@@ -41,10 +41,10 @@ public class TaskController extends BaseController {
 //            if (!taskInfo.isEmpty()){
 //
 //                result.put("data", taskInfo);
-//                result.put("status", Constants.SUCCESS);
+//                result.put("result", Constants.SUCCESS);
 //            } else {
 //
-//                result.put("status", Constants.FAIL);
+//                result.put("result", Constants.FAIL);
 //            }
 //
 //            return result;

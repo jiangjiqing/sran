@@ -59,12 +59,12 @@ public class QuotaController {
         }
 
         if (!quotaList.isEmpty()) {
-
+            result.put("result", Constants.SUCCESS);
             result.put("data", quotaList);
-            result.put("status", Constants.SUCCESS);
+
         } else {
 
-            result.put("status", Constants.FAIL);
+            result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
         }
 
@@ -111,12 +111,12 @@ public class QuotaController {
         }
 
         if (!quotaList.isEmpty()) {
-
+            result.put("result", Constants.SUCCESS);
             result.put("data", quotaList);
-            result.put("status", Constants.SUCCESS);
+
         } else {
 
-            result.put("status", Constants.FAIL);
+            result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
         }
 
@@ -163,12 +163,12 @@ public class QuotaController {
         }
 
         if (!quotaList.isEmpty()) {
-
+            result.put("result", Constants.SUCCESS);
             result.put("data", quotaList);
-            result.put("status", Constants.SUCCESS);
+
         } else {
 
-            result.put("status", Constants.FAIL);
+            result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
         }
 

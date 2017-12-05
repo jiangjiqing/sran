@@ -44,10 +44,10 @@ public class BaseController {
 
                 if(authResult.equals(Constants.FAIL)){
 
-                    result.put("status", Constants.FAIL);
+                    result.put("result", Constants.FAIL);
                 }else if (authResult != null && !"".equals(authResult) && !authResult.equals("FAILED")){
 
-                    result.put("status", Constants.SUCCESS);
+                    result.put("result", Constants.SUCCESS);
                 }
             }
 
