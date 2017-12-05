@@ -30,7 +30,7 @@ public interface UnicomQuotaHistoryGroupWcdmaMapper {
 
     JSONObject getLevel(@Param("groupName") String groupName);
 
-    List<JSONObject>  getQuotas(@Param("start")Date start, @Param("end")Date end);
+    List<JSONObject>  getQuotas(@Param("start")Date start, @Param("end")Date end,@Param("condition")String condition);
 
     void addQuotaHistoryGroupList(@Param("cloumns")List<String> cloumns,
                                  @Param("valueList")List<String> valueList);

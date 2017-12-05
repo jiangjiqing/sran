@@ -30,5 +30,10 @@ public interface QuotaService {
 
     Integer setCell(JSONObject quotaThres);
 
-    List<JSONObject>  getQuotas(Date start, Date end);
+    List<JSONObject> getQuotas(Date start, Date end, String condition);
+
+    List<JSONObject> getQuotasNode(Date start, Date end, String condition);
+
+    List<JSONObject> getQuotasCell(Date start, Date end, String condition);
+
 }

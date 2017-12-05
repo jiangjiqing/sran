@@ -81,9 +81,20 @@ public class QuotaService_Unicom_Lte implements QuotaService {
     }
 
     @Override
-    public List<JSONObject>  getQuotas(Date start, Date end) {
-        return quotaHistoryGroupMapper.getQuos(start,end);
+    public List<JSONObject>  getQuotas(Date start, Date end,String condition) {
+        return quotaHistoryGroupMapper.getQuos(start,end,condition);
     }
+
+    @Override
+    public List<JSONObject> getQuotasNode(Date start, Date end, String condition) {
+        return quotaHistoryNodeMapper.getQuosNode(start,end,condition);
+    }
+
+    @Override
+    public List<JSONObject> getQuotasCell(Date start, Date end, String condition) {
+        return quotaHistoryCellMapper.getQuosCell(start,end,condition);
+    }
+
 //    @Override
 //    public Map<String, Object> getQuotaInfo() {
 //        return unicomQuotaHistoryGroupLteMapper.getQuotaInfo();

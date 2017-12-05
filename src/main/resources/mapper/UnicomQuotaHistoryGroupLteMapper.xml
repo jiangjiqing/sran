@@ -253,10 +253,19 @@
     WHERE name = #{groupName} ORDER BY NOW() LIMIT 1
   </select>
 
-  <select id="getQuotas" parameterType="java.util.Date" resultType="com.alibaba.fastjson.JSONObject">
+  <select id="getQuos" parameterType="java.util.Date" resultType="com.alibaba.fastjson.JSONObject">
     SELECT *
     FROM unicom_quota_history_group_lte
-    WHERE time  BETWEEN #{start} AND #{end};
+    <if test="start!=null and end !=null and condition==null">
+      WHERE time  BETWEEN #{start} AND #{end}
+    </if>
+    <if test="start!=null and end !=null and condition!=null">
+      ${condition} AND time  BETWEEN #{start} AND #{end}
+    </if>
+    <if test="start==null and end ==null and condition!=null">
+      ${condition}
+    </if>
+    ORDER BY time DESC;
   </select>
 
   <insert id="addQuotaHistoryGroupList" parameterType="java.util.List">

@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -35,4 +36,6 @@ public interface UnicomQuotaHistoryCellLteMapper {
 
     void addQuotaHistoryCellList(@Param("cloumns")List<String> cloumns,
                                     @Param("valueList")List<String> valueList);
+
+    List<JSONObject> getQuosCell(@Param("start") Date start, @Param("end")Date end,@Param("condition") String condition);
 }

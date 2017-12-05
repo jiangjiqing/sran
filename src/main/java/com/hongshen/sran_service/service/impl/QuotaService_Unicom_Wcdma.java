@@ -82,8 +82,18 @@ public class QuotaService_Unicom_Wcdma implements QuotaService {
     }
 
     @Override
-    public List<JSONObject>  getQuotas(Date start, Date end) {
-        return quotaHistoryGroupMapper.getQuotas(start,end);
+    public List<JSONObject>  getQuotas(Date start, Date end,String condition) {
+        return quotaHistoryGroupMapper.getQuotas(start,end,condition);
+    }
+
+    @Override
+    public List<JSONObject> getQuotasNode(Date start, Date end, String condition) {
+        return quotaHistoryNodeMapper.getQuotasNode(start,end,condition);
+    }
+
+    @Override
+    public List<JSONObject> getQuotasCell(Date start, Date end, String condition) {
+        return quotaHistoryCellMapper.getQuotasCell(start,end,condition);
     }
 
 //    @Override
