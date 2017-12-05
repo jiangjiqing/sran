@@ -111,10 +111,10 @@ public class ScannerHelper {
 
         if (expression.contains(".")) {
 
-            expression = expression.replaceAll(".", "_");
+            expression = expression.replaceAll("\\.", "_");
         }
 
-        String regEx="[`/?!@#$%^&*()+=|{}':;',]";
+        String regEx="[-`/?!@#$%^&*()+=|{}':;',]";
 
         Pattern pattern = Pattern.compile(regEx);
         Matcher matcher = pattern.matcher(expression);
@@ -133,7 +133,17 @@ public class ScannerHelper {
 
         for (String variable : variableSet) {
 
-            resultList.add(variable);
+            String fmVar = "";
+
+            if (variable.contains("_")) {
+
+                fmVar = variable.replaceAll("_", "\\.");
+            }else {
+
+                fmVar = variable;
+            }
+
+            resultList.add(fmVar);
         }
 
         return resultList;
