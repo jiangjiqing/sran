@@ -39,8 +39,11 @@ public class FavoriteContrller {
         List<JSONObject> favoriteList =  obj.getElementInfoService().getFavoriteList();
 
         for (JSONObject node : favoriteList) {
-            if (node.getString("nodeName") !=null) {
-                String nodeName = String.valueOf(node.get("nodeName"));
+
+            String nodeName = String.valueOf(node.getString("nodeName"));
+
+            if (nodeName != null || nodeName != "") {
+//                String nodeName = String.valueOf(node.get("nodeName"));
                 JSONObject level = obj.getQuotaService().getNodeLevel(nodeName);
 
                 if (level != null && level.getIntValue("level") != -1) {
@@ -101,7 +104,7 @@ public class FavoriteContrller {
     }
 
     //    Add the status of network element collection
-    @DELETE
+    @PUT
     @Path("/suppliers/{supplier}/generations/{generation}/nets/{level}/{name}/favorites")
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject addCollection(@PathParam("supplier")String supplier,

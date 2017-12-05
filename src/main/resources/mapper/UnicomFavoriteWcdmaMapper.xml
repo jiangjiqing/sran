@@ -90,7 +90,7 @@
 
   <select id="getFavoriteList" resultType="com.alibaba.fastjson.JSONObject">
     SELECT
-      b.node_name nodeName,
+      a.list nodeName,
       b.group_name groupName,
       b.latitude latitude,
       b.station_name stationName,

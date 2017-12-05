@@ -87,7 +87,7 @@
   <select id="getGroupAlarmByName" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
 
    SELECT
-   a.node_name nodemName,
+   a.node_name nodeName,
    b.cell_name cellName,
    b.alarm_time alarmTime,
    c.level alarmLevelId,

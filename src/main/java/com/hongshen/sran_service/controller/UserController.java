@@ -71,7 +71,6 @@ public class UserController extends BaseController{
                 String loginName = param.getString("loginName");
                 String authorityName = param.getString("role");
 
-
                 int j = UserAgentService.addLteUserAuthory(loginName, authorityName);
 
                 int z = UserAgentService.addWcdmaUserAuthory(loginName, authorityName);
