@@ -247,7 +247,7 @@
     WHERE name = #{cellName} ORDER BY NOW() LIMIT 1
   </select>
 
-  <select id="getLevel" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
+  <select id="getLevel" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
     SELECT level
     FROM unicom_quota_history_cell_lte
     WHERE name = #{cellName} ORDER BY NOW() LIMIT 1
@@ -261,11 +261,11 @@
 
   <insert id="addQuotaHistoryCellList" parameterType="java.util.List">
     INSERT INTO unicom_quota_history_cell_lte
-      <foreach item="cloumn" index="index" collection="cloumns" open="(" separator="," close=")">
+      <foreach close=")" collection="cloumns" index="index" item="cloumn" open="(" separator=",">
         ${cloumn}
       </foreach>
     VALUES
-      <foreach item="value" collection="valueList" index="index" separator="," >
+      <foreach collection="valueList" index="index" item="value" separator=",">
         ${value}
       </foreach>
   </insert>

@@ -183,7 +183,7 @@
     where node_name = #{nodeName,jdbcType=VARCHAR}
   </update>
 
-    <select id="getNodeInfo" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
+    <select id="getNodeInfo" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
         SELECT
         node_name nodeName,
         group_name groupName,
@@ -199,7 +199,7 @@
         WHERE node_name = #{nodeName}
     </select>
 
-    <select id="getNodeListByGroup" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
+    <select id="getNodeListByGroup" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
         SELECT
         node_name name,
         station_name stationName,
@@ -215,7 +215,7 @@
         WHERE group_name = #{groupName}
     </select>
 
-    <select id="getNodeLaoutAndLong" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
+    <select id="getNodeLaoutAndLong" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
     SELECT latitude,longitude
     FROM unicom_node_lte
     WHERE node_name = #{nodeName}

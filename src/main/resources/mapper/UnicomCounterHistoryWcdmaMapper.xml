@@ -382,7 +382,7 @@
     FROM unicom_counter_history_wcdma
     WHERE
     name in
-    <foreach item="name" index="index" collection="nameList" open="(" separator="," close=")">
+    <foreach close=")" collection="nameList" index="index" item="name" open="(" separator=",">
       #{name}
     </foreach>
     and time = #{time}
@@ -394,7 +394,7 @@
     sum(#{counter})
     FROM unicom_counter_history_wcdma
     WHERE name in
-    <foreach item="name" index="index" collection="nameList" open="(" separator="," close=")">
+    <foreach close=")" collection="nameList" index="index" item="name" open="(" separator=",">
       #{name}
     </foreach>
     and time = #{time}
@@ -404,7 +404,7 @@
 
     SELECT
     t1.node_name nodeName,
-    <foreach item="counter" index="index" collection="counterList" separator="," >
+    <foreach collection="counterList" index="index" item="counter" separator=",">
       sum(t2.${counter}) ${counter}
     </foreach>
     FROM
@@ -419,7 +419,7 @@
     SELECT
     name,
     time,
-    <foreach item="counter" index="index" collection="counterList" separator="," >
+    <foreach collection="counterList" index="index" item="counter" separator=",">
       ${counter}
     </foreach>
     FROM
