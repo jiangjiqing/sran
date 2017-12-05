@@ -26,9 +26,11 @@ public class MapController extends BaseController{
                                     @PathParam("generation")String generation,
                                     @HeaderParam("Auth-Token")String authToken) {
         JSONObject result = new JSONObject();
-        /*if (check(url, method, authToken)) {*/
+
             NetObjBase obj = objFactory.getNetObj(supplier, generation);
+
             List<JSONObject> groupList = obj.getElementInfoService().getGroupList();
+
             List<JSONObject> List = new ArrayList<>();
 
             for (JSONObject group : groupList){
@@ -71,11 +73,6 @@ public class MapController extends BaseController{
             result.put("data", List);
             result.put("result", Constants.SUCCESS);
             return result;
-       /* }else{
-                result.put("result", Constants.FAIL);
-			  result.put("msg", Constants.MSG_NO_PERMISSION);
-           return result;
-        }*/
     }
 
     static JSONObject Scopes(Double latitude,Double longitude,int num){

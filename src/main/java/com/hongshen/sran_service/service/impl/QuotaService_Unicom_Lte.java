@@ -16,6 +16,9 @@ import java.util.Map;
  */
 @Service
 public class QuotaService_Unicom_Lte implements QuotaService {
+
+    @Autowired
+    private  UnicomCounterHistoryLteMapper    counterHistoryLteMapper;
     @Autowired
     private UnicomQuotaHistoryGroupLteMapper quotaHistoryGroupMapper;
 
@@ -93,6 +96,11 @@ public class QuotaService_Unicom_Lte implements QuotaService {
     @Override
     public List<JSONObject> getQuotasCell(Date start, Date end, String condition) {
         return quotaHistoryCellMapper.getQuosCell(start,end,condition);
+    }
+
+    @Override
+    public List<JSONObject> getCounterExportGroup(Date start, Date end, String condition) {
+        return counterHistoryLteMapper.dowloadCounter(start,end,condition);
     }
 
 //    @Override

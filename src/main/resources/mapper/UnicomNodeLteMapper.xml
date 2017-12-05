@@ -222,7 +222,7 @@
   </select>
 
     <select id="getGroupList" resultType="com.alibaba.fastjson.JSONObject">
-        SELECT distinct(group_name)
+        SELECT distinct(group_name) groupName
         FROM unicom_node_lte;
     </select>
 

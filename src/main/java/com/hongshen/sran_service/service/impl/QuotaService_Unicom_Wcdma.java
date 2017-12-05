@@ -19,6 +19,8 @@ import java.util.Map;
 public class QuotaService_Unicom_Wcdma implements QuotaService {
 
     @Autowired
+    private  UnicomCounterHistoryWcdmaMapper   counterHistoryWcdmaMapper;
+    @Autowired
     private UnicomQuotaHistoryGroupWcdmaMapper quotaHistoryGroupMapper;
 
     @Autowired
@@ -94,6 +96,11 @@ public class QuotaService_Unicom_Wcdma implements QuotaService {
     @Override
     public List<JSONObject> getQuotasCell(Date start, Date end, String condition) {
         return quotaHistoryCellMapper.getQuotasCell(start,end,condition);
+    }
+
+    @Override
+    public List<JSONObject> getCounterExportGroup(Date start, Date end, String condition) {
+        return counterHistoryWcdmaMapper.dowloadCounter(start,end,condition);
     }
 
 //    @Override

@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 @Mapper
@@ -37,4 +38,6 @@ public interface UnicomCounterHistoryWcdmaMapper {
 
     List<JSONObject> getSumAllCounterByTimeAndCounterList(@Param("time")String time,
                                                    @Param("counterList")List<String> counterList);
+
+    List<JSONObject> dowloadCounter(@Param("start")Date start, @Param("end")Date end, @Param("condition") String condition);
 }
