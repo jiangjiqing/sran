@@ -139,7 +139,8 @@
       quota_name quotaName,
       expression,
       remark,
-      status
+      status,
+      hasTop10
     FROM unicom_formula_wcdma;
   </select>
 

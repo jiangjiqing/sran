@@ -105,6 +105,7 @@ public class QuotaController {
             quota.put("time", nodeQuota.getString("time"));
             quota.put("quotaName", f.getString("quotaName"));
             quota.put("remark", f.getString("remark"));
+            quota.put("topStatus",f.getString("hasTop10"));
 
             quotaList.add(quota);
         }
@@ -156,6 +157,7 @@ public class QuotaController {
             quota.put("time", cellQuota.getString("time"));
             quota.put("quotaName", f.getString("quotaName"));
             quota.put("remark", f.getString("remark"));
+            quota.put("topStatus",f.getString("hasTop10"));
 
             quotaList.add(quota);
         }
