@@ -113,6 +113,7 @@
   </update>
   <select id="getCounterList" resultType="com.alibaba.fastjson.JSONObject">
     SELECT *
-    FROM unicom_counter_wcdma;
+    FROM unicom_counter_wcdma
+    ORDER BY id ASC;
   </select>
 </mapper>

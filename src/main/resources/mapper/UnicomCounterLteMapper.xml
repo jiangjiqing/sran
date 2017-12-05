@@ -114,6 +114,7 @@
 
   <select id="getCounterList" resultType="com.alibaba.fastjson.JSONObject">
     SELECT *
-    FROM unicom_counter_lte;
+    FROM unicom_counter_lte
+    ORDER BY id ASC;
   </select>
 </mapper>

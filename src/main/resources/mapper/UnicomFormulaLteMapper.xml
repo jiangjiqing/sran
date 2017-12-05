@@ -149,12 +149,14 @@
 
   <select id="getFormulaList" resultType="com.alibaba.fastjson.JSONObject">
     SELECT
+      id,
       quota_name quotaName,
       expression,
       remark,
       status,
       type
-    FROM unicom_formula_lte;
+    FROM unicom_formula_lte
+    ORDER BY id ASC;
   </select>
 
 </mapper>
