@@ -78,9 +78,9 @@
       node_name nodeName,
       mo,
       alarm_time alarmTime,
-      alarm_type_id alarmTypeId,
-      alarm_name_id alarmNameId
-      cell_name cellname
+      alarm_level_id alarmLevelId,
+      alarm_name_id alarmNameId,
+      cell_name cellName
     FROM unicom_alarm_lte;
   </select>
 
@@ -90,7 +90,7 @@
    a.node_name nodemName,
    b.cell_name cellName,
    b.alarm_time alarmTime,
-   c.level alarmLevelId,
+   c.alarm_level_id alarmLevelId,
    b.alarm_name_id alarmNameId,
    b.mo
    FROM
@@ -112,7 +112,7 @@
       node_name nodeName,
       mo,
       alarm_time alarmTime,
-      alarm_type_id alarmTypeId,
+      alarm_level_id alarmLevelId,
       alarm_name_id alarmNameId,
       cell_name cellname
     FROM unicom_alarm_lte
@@ -124,9 +124,9 @@
       node_name nodeName,
       mo,
       alarm_time alarmTime,
-      alarm_type_id alarmTypeId,
+      alarm_level_id alarmLevelId,
       alarm_name_id alarmNameId,
-      cell_name cellname
+      cell_name cellName
     FROM unicom_alarm_lte
     WHERE cell_name = #{cellName}
   </select>

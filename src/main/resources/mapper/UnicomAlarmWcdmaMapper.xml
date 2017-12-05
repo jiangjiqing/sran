@@ -78,19 +78,18 @@
       node_name nodeName,
       mo,
       alarm_time alarmTime,
-      alarm_type_id alarmTypeId,
+      alarm_level_id alarmLevelId,
       alarm_name_id alarmNameId,
-      cell_name cellname
+      cell_name cellName
     FROM unicom_alarm_wcdma;
   </select>
 
   <select id="getGroupAlarmByName" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
-
    SELECT
    a.node_name nodeName,
    b.cell_name cellName,
    b.alarm_time alarmTime,
-   c.level alarmLevelId,
+   c.alarm_level_id alarmLevelId,
    b.alarm_name_id alarmNameId,
    b.mo
    FROM
@@ -112,7 +111,7 @@
       node_name nodeName,
       mo,
       alarm_time alarmTime,
-      alarm_type_id alarmTypeId,
+      alarm_level_id alarmLevelId,
       alarm_name_id alarmNameId,
       cell_name cellname
     from unicom_alarm_wcdma
@@ -124,7 +123,7 @@
       node_name nodeName,
       mo,
       alarm_time alarmTime,
-      alarm_type_id alarmTypeId,
+      alarm_level_id alarmLevelId,
       alarm_name_id alarmNameId,
       cell_name cellname
     from unicom_alarm_wcdma

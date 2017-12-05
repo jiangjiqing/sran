@@ -127,36 +127,33 @@ public class ElementController {
 //        }
     }
 
-//// Query group 3G infoList
-//    @GET
-//    @Path("/suppliers/{supplier}/generations/{generation}/nets/groups")
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public JSONObject getGroupInfoList(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
-//                                           @HeaderParam("Auth-Token")String authToken) {
-//        JSONObject result = new JSONObject();
-//        String url = Constants.PATH_DUMMY;
-//        String method = Constants.METHOD_GET;
-////        if (check(url, method, authToken)) {
-//            NetObjBase obj = objFactory.getNetObj(supplier, generation);
+// Query group 3G infoList
+    @GET
+    @Path("/suppliers/{supplier}/generations/{generation}/nets/groups")
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject getGroupInfoList(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
+                                           @HeaderParam("Auth-Token")String authToken) {
+        JSONObject result = new JSONObject();
+        String url = Constants.PATH_DUMMY;
+        String method = Constants.METHOD_GET;
+//        if (check(url, method, authToken)) {
+            NetObjBase obj = objFactory.getNetObj(supplier, generation);
+
+            List<JSONObject> GroupInfoList = obj.getElementInfoService().getGroupList();
+
+            if (GroupInfoList.isEmpty()) {
+                result.put("result", Constants.FAIL);
+                result.put("msg", Constants.MSG_NO_DATA);
+
+            } else {
+                result.put("result", Constants.SUCCESS);
+                result.put("data", GroupInfoList);
+            }
+        return result;
+
+//        } else {
 //
-//            List<JSONObject> GroupInfoList = obj.getElementInfoService().getGroupInfoList();
-//
-//            if (!GroupInfoList.isEmpty()) {
-//
-//                result.put("data", GroupInfoList);
-//                result.put("result", Constants.SUCCESS);
-//
-//            } else {
-//
-//                result.put("msg", Constants.MSG_NO_DATA);
-//                result.put("result", Constants.FAIL);
-//
-//            }
-//        return result;
-//
-////        } else {
-////
-////            return result;
-////        }
-//    }
+//            return result;
+//        }
+    }
 }
