@@ -60,7 +60,7 @@ public class ProtectionController extends BaseController{
                     protect.put("level", level);
 
                 }else {
-                    protect.put("level", Constants.INVALID_VUALUE_LEVEL);
+                    protect.put("level", Constants.INVALID_VALUE_LEVEL);
 
                 }
             }

@@ -50,6 +50,6 @@ public class Constants {
 	public static final String MSG_UPDATE_OK = "update_ok";
 	public static final String MSG_UPDATE_FAILED = "update_failed";
 
-    public static final String INVALID_VUALUE_LEVEL = "-1";
-    public static final String INVALID_LOCATION_LEVEL = "-1";
+    public static final String INVALID_VALUE_LEVEL = "-1";
+    public static final String INVALID_VALUE_LOCATION = "-1";
 }

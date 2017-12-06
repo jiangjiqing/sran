@@ -25,24 +25,38 @@ public class MapController extends BaseController{
     public JSONObject  getGroupList(@PathParam("supplier")String supplier,
                                     @PathParam("generation")String generation,
                                     @HeaderParam("Auth-Token")String authToken) {
+
         JSONObject result = new JSONObject();
+        NetObjBase obj = objFactory.getNetObj(supplier, generation);
+        List<JSONObject> groupList = obj.getElementInfoService().getGroupList();
 
-            NetObjBase obj = objFactory.getNetObj(supplier, generation);
+        if(groupList.isEmpty()){
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_NO_DATA);
 
-            List<JSONObject> groupList = obj.getElementInfoService().getGroupList();
-
-            List<JSONObject> List = new ArrayList<>();
+        }else{
+            List<JSONObject> resultList = new ArrayList<>();
 
             for (JSONObject group : groupList){
 
-                JSONObject result1 = new JSONObject();
-                List<Double[]> list = new ArrayList<>();
+                JSONObject resultOne = new JSONObject();
+                Double[] scopeinit = {};
+                resultOne.put("scope",scopeinit);
+                resultOne.put("latitude",Constants.INVALID_VALUE_LOCATION);
+                resultOne.put("longitude",Constants.INVALID_VALUE_LOCATION);
+                resultOne.put("infos",null);
+                resultOne.put("level",Constants.INVALID_VALUE_LEVEL);
+                resultOne.put("favorite",false);
+
+                // name
                 String groupName = group.getString("groupName");
+                resultOne.put("name",groupName);
 
-                if (groupName != null && groupName != "") {
+                if (groupName != "") {
 
+                    // longitude \ latitude and scope
                     List<JSONObject> nodeList =  obj.getElementInfoService().getNodeListByGroup(groupName);
-                    JSONObject groupInfo = obj.getElementInfoService().getGroupInfo(groupName);
+                    List<Double[]> list = new ArrayList<>();
 
                     if (nodeList.size() != 0) {
                         for (JSONObject node : nodeList) {
@@ -54,25 +68,34 @@ public class MapController extends BaseController{
                                 Double[] doubles ={latitude,longitude};
                                 list.add(doubles);
                             }else{
-                                Double[] doubles ={Double.parseDouble(Constants.INVALID_LOCATION_LEVEL),Double.parseDouble(Constants.INVALID_LOCATION_LEVEL)};
+                                Double[] doubles ={Double.parseDouble(Constants.INVALID_VALUE_LOCATION),Double.parseDouble(Constants.INVALID_VALUE_LOCATION)};
                                 list.add(doubles);
                             }
                         }
                     }
+                    resultOne.putAll(LatitudeAndLongitude(list));
 
-                    if(groupInfo == null){
-                       result1.put("level",Constants.INVALID_VUALUE_LEVEL);
+                    // group info
+                    JSONObject groupInfo = obj.getElementInfoService().getGroupInfo(groupName);
+                    resultOne.put("infos",groupInfo);
+
+                    // level
+                    JSONObject level = obj.getQuotaService().getGroupLevel(groupName);
+                    if(level != null && level.getIntValue("level") != -1){
+                        resultOne.put("level", level);
                     }else{
-                        result1.putAll(groupInfo);
+                        resultOne.put("level",Constants.INVALID_VALUE_LEVEL);
                     }
-                    result1.put("name",groupName);
-                    result1.putAll(LatitudeAndLongitude(list));
-                    List.add(result1);
+
+                    //favorite TODO
+
                 }
+                resultList.add(resultOne);
             }
-            result.put("data", List);
             result.put("result", Constants.SUCCESS);
-            return result;
+            result.put("data", resultList);
+        }
+        return result;
     }
 
     static JSONObject Scopes(Double latitude,Double longitude,int num){
@@ -106,30 +129,30 @@ public class MapController extends BaseController{
         if(!list.isEmpty()){
             if(list.size() > 3){
 
-            for (int i=0;i<list.size(); i++){
-                //MAXlatitude
-                if(list.get(i)[0]>l1){
-                    l1 = list.get(i)[0];
-                    t1 = list.get(i)[1];
-                }
-                //MAXlongitude
-                if(list.get(i)[1]>t2){
-                    l2 = list.get(i)[0];
-                    t2 = list.get(i)[1];
-                    System.out.println(i);
-                }
-                //MINlatitude
-                if(list.get(i)[0]<=l3||l3==0.0){
-                    l3 = list.get(i)[0];
-                    t3 = list.get(i)[1];
-                }
-                //MINlongitude
-                if(list.get(i)[1]<=t4||t4==0.0){
-                    l4 = list.get(i)[0];
-                    t4 = list.get(i)[1];
-                }
+                for (int i=0;i<list.size(); i++){
+                    //MAXlatitude
+                    if(list.get(i)[0]>l1){
+                        l1 = list.get(i)[0];
+                        t1 = list.get(i)[1];
+                    }
+                    //MAXlongitude
+                    if(list.get(i)[1]>t2){
+                        l2 = list.get(i)[0];
+                        t2 = list.get(i)[1];
+                        System.out.println(i);
+                    }
+                    //MINlatitude
+                    if(list.get(i)[0]<=l3||l3==0.0){
+                        l3 = list.get(i)[0];
+                        t3 = list.get(i)[1];
+                    }
+                    //MINlongitude
+                    if(list.get(i)[1]<=t4||t4==0.0){
+                        l4 = list.get(i)[0];
+                        t4 = list.get(i)[1];
+                    }
 
-            }
+                }
                 Double[] d1 = {l1,t1};
                 Double[] d2 = {l2,t2};
                 Double[] d3 = {l3,t3};
@@ -142,7 +165,6 @@ public class MapController extends BaseController{
                 Double longitude = t1+t2+t3+t4;
                 json = Scopes(latitude,longitude,4);
             }else if(list.size()==3){
-
                 listJson.add(list);
 
             }else if(list.size() < 3){
@@ -182,7 +204,7 @@ public class MapController extends BaseController{
                     if(level != null && level.getIntValue("level") != -1){
                         json.put("level", level);
                     }else{
-                        json.put("level",Constants.INVALID_VUALUE_LEVEL);
+                        json.put("level",Constants.INVALID_VALUE_LEVEL);
                     }
                     json.putAll(node);
                     list.add(json);
@@ -226,7 +248,7 @@ public class MapController extends BaseController{
                     if (level != null && level.getIntValue("level") != -1) {
                         json.put("level", level);
                     } else {
-                        json.put("level", Constants.INVALID_VUALUE_LEVEL);
+                        json.put("level", Constants.INVALID_VALUE_LEVEL);
                     }
                     json.putAll(NodelatAndlong);
                     json.putAll(cell);
