@@ -26,7 +26,7 @@ public interface UnicomQuotaHistoryNodeLteMapper {
      */
     int insertSelective(UnicomQuotaHistoryNodeLte record);
 
-    JSONObject getQuotaByName(@Param("nodeName")String nodeName);
+    JSONObject getQuota(@Param("nodeName")String nodeName);
 
     JSONObject getLevel(@Param("nodeName") String nodeName);
 
@@ -35,5 +35,5 @@ public interface UnicomQuotaHistoryNodeLteMapper {
     void addQuotaHistoryNodeList(@Param("cloumns")List<String> cloumns,
                                  @Param("valueList")List<String> valueList);
 
-    List<JSONObject> getQuosNode(@Param("start")Date start, @Param("end")Date end, @Param("condition")String condition);
+    List<JSONObject> getQuotasNode(@Param("start")Date start, @Param("end")Date end, @Param("condition")String condition);
 }

@@ -1,8 +1,5 @@
 package com.hongshen.sran_service.controller;
 
-/**
- * Created by poplar on 11/13/17.
- */
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.common.BaseController;
 import com.hongshen.sran_service.service.util.Constants;
@@ -10,15 +7,22 @@ import com.hongshen.sran_service.service.util.NetObjBase;
 import com.hongshen.sran_service.service.util.NetObjFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Created by poplar on 11/13/17.
+ */
 @Path("/sran/service/net/threshold")
 public class QuotaThresholdController extends BaseController{
+
     @Autowired
     private NetObjFactory objFactory;
+
+    // Query thresholds
     @GET
     @Path("/suppliers/{supplier}/generations/{generation}/nets/{level}/thresholds")
     @Produces(MediaType.APPLICATION_JSON)
@@ -26,38 +30,43 @@ public class QuotaThresholdController extends BaseController{
                                    @PathParam("generation")String generation,
                                    @PathParam("level")String level,
                                    @HeaderParam("Auth-Token")String authToken) {
-        NetObjBase obj = objFactory.getNetObj(supplier, generation);
+
         JSONObject result = new JSONObject();
-        List<JSONObject> list = new ArrayList<>();
+        NetObjBase obj = objFactory.getNetObj(supplier, generation);
+        List<JSONObject> dataList = new ArrayList<>();
 
         switch (level)
         {
             case "groups":
-                list = obj.getCacheService().getThresholdGroupList();
+                dataList = obj.getCacheService().getThresholdGroupList();
                 break;
 
             case "nodes":
-                list = obj.getCacheService().getThresholdNodeList();
+                dataList = obj.getCacheService().getThresholdNodeList();
                 break;
 
             case "cells":
-                list = obj.getCacheService().getThresholdCellList();
+                dataList = obj.getCacheService().getThresholdCellList();
                 break;
 
             default :
-                list = null;
+                dataList = null;
                 break;
         }
-        if(list.isEmpty()){
+
+        if(dataList.isEmpty()){
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
+
         }else{
             result.put("result", Constants.SUCCESS);
-            result.put("data",list);
+            result.put("data", dataList);
         }
+
         return result;
     }
 
+    // Update thresholds
     @PUT
     @Path("/suppliers/{supplier}/generations/{generation}/nets/{level}/quotas/{quotaName}/thresholds")
     @Produces(MediaType.APPLICATION_JSON)
@@ -67,37 +76,45 @@ public class QuotaThresholdController extends BaseController{
                                    @PathParam("level")String level,
                                    @PathParam("quotaName")String quotaName,
                                    @HeaderParam("Auth-Token")String authToken) {
-        quotaThres.put("quotaName",quotaName);
-      //  System.out.println(quotaThres);
-        NetObjBase obj = objFactory.getNetObj(supplier, generation);
+
         JSONObject result = new JSONObject();
-        Integer Num = 0;
+        NetObjBase obj = objFactory.getNetObj(supplier, generation);
+
+        quotaThres.put("quotaName",quotaName);
+
+        Integer num = 0;
+
         switch (level)
         {
             case "groups":
-                 Num = obj.getQuotaService().setGroup(quotaThres);
-                 obj.getCacheService().resetThresholdGroupList();
+                num = obj.getQuotaService().setGroup(quotaThres);
+                obj.getCacheService().resetThresholdGroupList();
                 break;
 
             case "nodes":
-                 Num = obj.getQuotaService().setNode(quotaThres);
-                 obj.getCacheService().resetThresholdNodeList();
+                num = obj.getQuotaService().setNode(quotaThres);
+                obj.getCacheService().resetThresholdNodeList();
                 break;
 
             case "cells":
-                 Num = obj.getQuotaService().setCell(quotaThres);
-                 obj.getCacheService().resetThresholdCellList();
+                num = obj.getQuotaService().setCell(quotaThres);
+                obj.getCacheService().resetThresholdCellList();
                 break;
 
             default :
-                Num = 0;
+                num = 0;
+                break;
         }
-            if(Num == 0){
-                result.put("result",Constants.FAIL);
-                result.put("msg", Constants.MSG_NO_DATA);
-            }else{
-                result.put("result",Constants.SUCCESS);
-            }
+
+        if(num == 0){
+            result.put("result",Constants.FAIL);
+            result.put("msg", Constants.MSG_UPDATE_FAILED);
+
+        }else{
+            result.put("result",Constants.SUCCESS);
+            result.put("msg", Constants.MSG_UPDATE_OK);
+        }
+
         return result;
     }
 }

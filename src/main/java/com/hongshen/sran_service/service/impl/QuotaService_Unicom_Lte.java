@@ -39,18 +39,18 @@ public class QuotaService_Unicom_Lte implements QuotaService {
 
 
     @Override
-    public JSONObject getGroupQuotaByName(String groupName) {
-        return quotaHistoryGroupMapper.getQuotaByName(groupName);
+    public JSONObject getGroupQuota(String groupName) {
+        return quotaHistoryGroupMapper.getQuota(groupName);
     }
 
     @Override
-    public JSONObject getNodeQuotaByName(String nodeName){
-        return quotaHistoryNodeMapper.getQuotaByName(nodeName);
+    public JSONObject getNodeQuota(String nodeName){
+        return quotaHistoryNodeMapper.getQuota(nodeName);
     }
 
     @Override
-    public JSONObject getCellQuotaByName(String cellName){
-        return quotaHistoryCellMapper.getQuotaByName(cellName);
+    public JSONObject getCellQuota(String cellName){
+        return quotaHistoryCellMapper.getQuota(cellName);
     }
 
     @Override
@@ -85,17 +85,17 @@ public class QuotaService_Unicom_Lte implements QuotaService {
 
     @Override
     public List<JSONObject>  getQuotas(Date start, Date end,String condition) {
-        return quotaHistoryGroupMapper.getQuos(start,end,condition);
+        return quotaHistoryGroupMapper.getQuotas(start,end,condition);
     }
 
     @Override
     public List<JSONObject> getQuotasNode(Date start, Date end, String condition) {
-        return quotaHistoryNodeMapper.getQuosNode(start,end,condition);
+        return quotaHistoryNodeMapper.getQuotasNode(start,end,condition);
     }
 
     @Override
     public List<JSONObject> getQuotasCell(Date start, Date end, String condition) {
-        return quotaHistoryCellMapper.getQuosCell(start,end,condition);
+        return quotaHistoryCellMapper.getQuotasCell(start,end,condition);
     }
 
     @Override

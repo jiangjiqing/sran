@@ -241,7 +241,7 @@
     </trim>
   </insert>
 
-  <select id="getQuotaByName" resultType="com.alibaba.fastjson.JSONObject">
+  <select id="getQuota" resultType="com.alibaba.fastjson.JSONObject">
      SELECT *
      FROM unicom_quota_history_group_lte
      WHERE name = #{groupName} ORDER BY NOW() LIMIT 1
@@ -253,7 +253,7 @@
     WHERE name = #{groupName} ORDER BY NOW() LIMIT 1
   </select>
 
-  <select id="getQuos" parameterType="java.util.Date" resultType="com.alibaba.fastjson.JSONObject">
+  <select id="getQuotas" parameterType="java.util.Date" resultType="com.alibaba.fastjson.JSONObject">
     SELECT *
     FROM unicom_quota_history_group_lte
     <if test="start!=null and end !=null and condition==null">

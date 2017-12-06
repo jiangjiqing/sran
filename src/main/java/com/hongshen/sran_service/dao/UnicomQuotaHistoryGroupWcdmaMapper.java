@@ -26,7 +26,7 @@ public interface UnicomQuotaHistoryGroupWcdmaMapper {
      */
     int insertSelective(UnicomQuotaHistoryGroupWcdma record);
 
-    JSONObject getQuotaByName(@Param("groupName")String groupName);
+    JSONObject getQuota(@Param("groupName")String groupName);
 
     JSONObject getLevel(@Param("groupName") String groupName);
 

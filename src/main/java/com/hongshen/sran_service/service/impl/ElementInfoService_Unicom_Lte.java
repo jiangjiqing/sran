@@ -2,7 +2,6 @@ package com.hongshen.sran_service.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.dao.*;
-import com.hongshen.sran_service.entity.UnicomNodeWcdma;
 import com.hongshen.sran_service.service.ElementInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,14 +55,19 @@ public class ElementInfoService_Unicom_Lte implements ElementInfoService {
     }
 
     @Override
+    public List<JSONObject> getGroupInfoList() {
+        return nodeMapper.getGroupInfoList();
+    }
+
+    @Override
     public List<JSONObject> getNodeListByGroup(String groupName) {
         return nodeMapper.getNodeListByGroup(groupName);
     }
 
-    //    @Override //TODO
-//    public List<JSONObject> getNodeInfoList() {
-//        return nodeMapper.getNodeInfoList();
-//    }
+    @Override
+    public List<JSONObject> getNodeInfoList() {
+        return nodeMapper.getNodeInfoList();
+    }
 
     @Override
     public List<String> getNodeNameListByGroup(String groupName) {
@@ -96,7 +100,7 @@ public class ElementInfoService_Unicom_Lte implements ElementInfoService {
     }
 
     @Override
-    public JSONObject getNodelatitudeAndlongitude(String nodeName) {
-        return  nodeMapper.getNodeLaoutAndLong(nodeName);
+    public JSONObject getNodeLocation(String nodeName) {
+        return  nodeMapper.getNodeLocation(nodeName);
     }
 }

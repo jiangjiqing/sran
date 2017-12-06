@@ -26,7 +26,7 @@ public interface UnicomQuotaHistoryCellWcdmaMapper {
      */
     int insertSelective(UnicomQuotaHistoryCellWcdma record);
 
-    JSONObject getQuotaByName(@Param("cellName")String cellName);
+    JSONObject getQuota(@Param("cellName")String cellName);
 
     JSONObject getLevel(@Param("cellName") String cellName);
 

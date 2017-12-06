@@ -111,6 +111,7 @@
       status = #{status,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
   <select id="getCounterList" resultType="com.alibaba.fastjson.JSONObject">
     SELECT *
     FROM unicom_counter_wcdma

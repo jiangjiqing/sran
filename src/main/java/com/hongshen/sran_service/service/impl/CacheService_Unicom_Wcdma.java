@@ -3,16 +3,12 @@ package com.hongshen.sran_service.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.dao.*;
-import com.hongshen.sran_service.entity.UnicomFormulaWcdma;
 import com.hongshen.sran_service.service.CacheService;
-import jdk.nashorn.internal.objects.annotations.Constructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by poplar on 11/13/17.
@@ -28,6 +24,9 @@ public class CacheService_Unicom_Wcdma implements CacheService {
 
     @Autowired
     private static List<JSONObject> counterList = new ArrayList<JSONObject>();
+
+    @Autowired
+    private static List<JSONObject> counterListProcessed  = new ArrayList<JSONObject>();
 
     @Autowired
     private UnicomFormulaWcdmaMapper formulaMapper;
@@ -59,6 +58,16 @@ public class CacheService_Unicom_Wcdma implements CacheService {
         counterList.clear();
 
         counterList = counterMapper.getCounterList();
+
+        resetCounterListProcessed();
+    }
+
+    @Override
+    public void resetCounterListProcessed(){
+
+        counterListProcessed.clear();
+
+        counterListProcessed = counterList;
     }
 
     @Override
@@ -75,11 +84,11 @@ public class CacheService_Unicom_Wcdma implements CacheService {
 
             for(JSONObject counter : counterList) {
 
-                if (!counter.getBoolean("status")){
-                    continue;
+                if (counter.getBoolean("status")){
+                    resultList.add(counter);
 
                 }else{
-                    resultList.add(counter);
+                    continue;
                 }
             }
             return resultList;
@@ -87,6 +96,12 @@ public class CacheService_Unicom_Wcdma implements CacheService {
         }else {
             return counterList;
         }
+    }
+
+    @Override
+    public List<JSONObject> getCounterListProcessed(Boolean isValid){
+        // no need to process
+        return getCounterList(isValid);
     }
 
     @Override
@@ -114,11 +129,11 @@ public class CacheService_Unicom_Wcdma implements CacheService {
             for (JSONObject formula : formulaList) {
 
                 // unvisible quota
-                if (!formula.getBoolean("status")) {
-                    continue;
+                if (formula.getBoolean("status")) {
+                    resultList.add(formula);
 
                 } else {
-                    resultList.add(formula);
+                    continue;
                 }
             }
             return resultList;

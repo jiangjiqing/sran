@@ -241,7 +241,7 @@
     </trim>
   </insert>
 
-  <select id="getQuotaByName" resultType="com.alibaba.fastjson.JSONObject">
+  <select id="getQuota" resultType="com.alibaba.fastjson.JSONObject">
     SELECT *
     FROM unicom_quota_history_cell_lte
     WHERE name = #{cellName} ORDER BY NOW() LIMIT 1
@@ -270,7 +270,7 @@
       </foreach>
   </insert>
 
-  <select id="getQuosCell" parameterType="java.util.Date" resultType="com.alibaba.fastjson.JSONObject">
+  <select id="getQuotasCell" parameterType="java.util.Date" resultType="com.alibaba.fastjson.JSONObject">
     SELECT *
     FROM unicom_quota_history_cell_lte
     <if test="start!=null and end !=null and condition==null">

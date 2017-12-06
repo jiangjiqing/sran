@@ -54,14 +54,19 @@ public class ElementInfoService_Unicom_Wcdma implements ElementInfoService {
     }
 
     @Override
+    public List<JSONObject> getGroupInfoList() {
+        return groupMapper.getGroupInfoList();
+    }
+
+    @Override
     public List<JSONObject> getNodeListByGroup(String groupName) {
         return nodeMapper.getNodeListByGroup(groupName);
     }
 
-    //    @Override //TODO
-//    public List<JSONObject> getNodeInfoList() {
-//        return nodeMapper.getNodeInfoList();
-//    }
+    @Override
+    public List<JSONObject> getNodeInfoList() {
+        return nodeMapper.getNodeInfoList();
+    }
 
     @Override
     public List<String> getNodeNameListByGroup(String groupName) {
@@ -94,8 +99,8 @@ public class ElementInfoService_Unicom_Wcdma implements ElementInfoService {
     }
 
     @Override
-    public JSONObject getNodelatitudeAndlongitude(String nodeName) {
-        return nodeMapper.getNodeLaoutAndLong(nodeName);
+    public JSONObject getNodeLocation(String nodeName) {
+        return nodeMapper.getNodeLocation(nodeName);
     }
 
 }

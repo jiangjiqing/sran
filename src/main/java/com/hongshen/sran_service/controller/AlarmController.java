@@ -2,7 +2,6 @@ package com.hongshen.sran_service.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.service.util.Constants;
-import com.hongshen.sran_service.service.util.Httpclient;
 import com.hongshen.sran_service.service.util.NetObjBase;
 import com.hongshen.sran_service.service.util.NetObjFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +20,6 @@ public class AlarmController {
     @Autowired
     private NetObjFactory objFactory;
 
-    @Autowired
-    private Httpclient httpclient;
-
     // query all alarm log
     @GET
     @Path("/suppliers/{supplier}/nets/alarms")
@@ -32,51 +28,42 @@ public class AlarmController {
                                     @HeaderParam("Auth-Token")String authToken) {
 	
 		JSONObject result = new JSONObject();
-		
-        String url = Constants.PATH_DUMMY;
-        String method = Constants.METHOD_GET;
-		
-//        if (check(url, method, authToken)) {
+        List<JSONObject> dataList = new ArrayList<JSONObject>();
 
-			NetObjBase obj_Wcdma = objFactory.getNetObj(supplier, Constants.WCDMA);
-			NetObjBase obj_Lte = objFactory.getNetObj(supplier, Constants.LTE);
-			JSONObject resultWcdma = new JSONObject();
-			JSONObject resultLte = new JSONObject();
-			List<JSONObject> list = new ArrayList<JSONObject>();
-			
-            List<JSONObject> resultList_Wcdma = obj_Wcdma.getAlarmService().getAllAlarmInfo();
-			List<JSONObject> resultList_Lte = obj_Lte.getAlarmService().getAllAlarmInfo();
-			
-			// add 3G data
-            if (!resultList_Wcdma.isEmpty() || !resultList_Lte.isEmpty()){
-                if (!resultList_Wcdma.isEmpty()){
-                    resultWcdma.put("generation", Constants.WCDMA);
-                    resultWcdma.put("alarms", resultList_Wcdma);
-                    list.add(resultWcdma);
-                }
-			
-			// add 4G data
-                if (!resultList_Lte.isEmpty()){
-                    resultLte.put("generation", Constants.LTE);
-                    resultLte.put("alarms", resultList_Lte);
-                    list.add(resultLte);
-                }
+        NetObjBase objWcdma = objFactory.getNetObj(supplier, Constants.WCDMA);
+        NetObjBase objLte = objFactory.getNetObj(supplier, Constants.LTE);
 
-                result.put("result", Constants.SUCCESS);
-                result.put("data",list);
-			} else {
-                result.put("result", Constants.FAIL);
-				result.put("msg", Constants.MSG_NO_DATA);
+        List<JSONObject> dataListWcdma = objWcdma.getAlarmService().getAllAlarmInfo();
+        List<JSONObject> dataListLte = objLte.getAlarmService().getAllAlarmInfo();
+
+        if (!dataListWcdma.isEmpty() || !dataListLte.isEmpty()){
+            // add 3G data
+            if (!dataListWcdma.isEmpty()){
+                JSONObject dataWcdma = new JSONObject();
+
+                dataWcdma.put("generation", Constants.WCDMA);
+                dataWcdma.put("alarms", dataListWcdma);
+                dataList.add(dataWcdma);
             }
 
-            return result;
-			
-//        } else {
-//
-//			result.put("result", Constants.FAIL);
-//			result.put("msg", FAIL_MSG_NO_PERMISSION);
-//            return result;
-//        }
+            // add 4G data
+            if (!dataListLte.isEmpty()){
+                JSONObject dataLte = new JSONObject();
+
+                dataLte.put("generation", Constants.LTE);
+                dataLte.put("alarms", dataListLte);
+                dataList.add(dataLte);
+            }
+
+            result.put("result", Constants.SUCCESS);
+            result.put("data",dataList);
+
+        } else {
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_NO_DATA);
+        }
+
+        return result;
     }
 
     // query group alarm log 
@@ -89,36 +76,19 @@ public class AlarmController {
                                      @HeaderParam("Auth-Token")String authToken){
 
         JSONObject result = new JSONObject();
+        NetObjBase obj = objFactory.getNetObj(supplier, generation);
+        List<JSONObject> dataList = obj.getAlarmService().getGroupAlarmByName(groupname);
 
-        String url = Constants.PATH_DUMMY;
-        String method = Constants.METHOD_GET;
+        if (dataList.isEmpty()){
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_NO_DATA);
 
-//        if (check(url, method, authToken)) {
+        } else {
+            result.put("result", Constants.SUCCESS);
+            result.put("data", dataList);
+        }
 
-            NetObjBase obj = objFactory.getNetObj(supplier, generation);
-
-			//TODO
-//			List<JSONObject> resultList;
-            //ElementInfoService
-            List<JSONObject> resultList = obj.getAlarmService().getGroupAlarmByName(groupname);
-			
-            if (!resultList.isEmpty()){
-                result.put("result", Constants.SUCCESS);
-                result.put("data", resultList);
-
-            } else {
-                result.put("result", Constants.FAIL);
-				result.put("msg", Constants.MSG_NO_DATA);
-            }
-
-            return result;
-			
-//        } else {
-//
-//			result.put("result", Constants.FAIL);
-//			result.put("msg", FAIL_MSG_NO_PERMISSION);
-//            return result;
-//        }
+        return result;
     }
 
     // query node alarm log
@@ -132,35 +102,19 @@ public class AlarmController {
                                     @HeaderParam("Auth-Token")String authToken){
 
         JSONObject result = new JSONObject();
+        NetObjBase obj = objFactory.getNetObj(supplier, generation);
+        List<JSONObject> dataList = obj.getAlarmService().getNodeAlarmByName(nodeName);
 
-        String url = Constants.PATH_DUMMY;
-        String method = Constants.METHOD_GET;
+        if (dataList.isEmpty()){
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_NO_DATA);
 
-//        if (check(url, method, authToken)) {
+        } else {
+            result.put("result", Constants.SUCCESS);
+            result.put("data", dataList);
+        }
 
-            NetObjBase obj = objFactory.getNetObj(supplier, generation);
-			
-			//TODO
-//			List<JSONObject> resultList;
-            List<JSONObject> resultList = obj.getAlarmService().getNodeAlarmByName(nodeName);
-
-            if (!resultList.isEmpty()){
-                result.put("result", Constants.SUCCESS);
-                result.put("data", resultList);
-
-            } else {
-                result.put("result", Constants.FAIL);
-				result.put("msg", Constants.MSG_NO_DATA);
-            }
-
-            return result;
-			
-//        } else {
-//
-//			result.put("result", Constants.FAIL);
-//			result.put("msg", Constants.MSG_NO_PERMISSION);
-//            return result;
-//        }
+        return result;
     }
 
     // query cell alarm log
@@ -175,35 +129,18 @@ public class AlarmController {
                                     @HeaderParam("Auth-Token")String authToken){
 
         JSONObject result = new JSONObject();
+        NetObjBase obj = objFactory.getNetObj(supplier, generation);
+        List<JSONObject> dataList = obj.getAlarmService().getCellAlarmByName(cellName);
 
-        String url = Constants.PATH_DUMMY;
-        String method = Constants.METHOD_GET;
+        if (dataList.isEmpty()){
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_NO_DATA);
 
-//        if (check(url, method, authToken)) {
+        } else {
+            result.put("result", Constants.SUCCESS);
+            result.put("data", dataList);
+        }
 
-            NetObjBase obj = objFactory.getNetObj(supplier, generation);
-            
-			//TODO
-//			List<JSONObject> resultList;
-            List<JSONObject> resultList = obj.getAlarmService().getCellAlarmByName(cellName);
-
-            if (!resultList.isEmpty()){
-                result.put("result", Constants.SUCCESS);
-                result.put("data", resultList);
-
-            } else {
-				
-                result.put("result", Constants.FAIL);
-				result.put("msg", Constants.MSG_NO_DATA);
-            }
-
-            return result;
-
-//        } else {
-//
-//			result.put("result", Constants.FAIL);
-//			result.put("msg", FAIL_MSG_NO_PERMISSION);
-//            return result;
-//        }
+        return result;
     }
 }

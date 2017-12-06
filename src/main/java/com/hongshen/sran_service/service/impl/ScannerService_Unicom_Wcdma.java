@@ -2,14 +2,9 @@ package com.hongshen.sran_service.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.dao.*;
-import com.hongshen.sran_service.entity.UnicomFormula;
 import com.hongshen.sran_service.service.ScannerService;
-import com.hongshen.sran_service.service.util.ScannerHelper;
-import net.java.dev.eval.Expression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.*;
 
 @Service
 public class ScannerService_Unicom_Wcdma implements ScannerService{
@@ -54,7 +49,7 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
     public String cellCalculation(String time) {
 
         String ret = null;
-
+/*
         Map<String, List<String>> quotaThresholdCellMap =
                 ScannerHelper.getQuotaThresholdMap(quotaThresholdCellMapper.getThresholdCellList());
 
@@ -190,7 +185,7 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
 
             ret = "FAIL";
         }
-
+*/
         return ret;
     }
 
@@ -198,7 +193,7 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
     public JSONObject nodeCalculation(String time) {
 
         JSONObject resultJson = new JSONObject();
-
+/*
         Map<String, JSONObject> nodeMap = new HashMap<>();
 
         List<String> counterParams = new ArrayList<>();
@@ -350,7 +345,7 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
             resultJson.put("nodeMap", null);
             resultJson.put("message", "FAIL");
         }
-
+*/
         return resultJson;
     }
 
@@ -358,7 +353,7 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
     public String groupCalculation(JSONObject params, String time){
 
         String result = null;
-
+/*
         if (params == null || time == null) {
 
             return null;
@@ -519,7 +514,7 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
 
             result = "FAIL";
         }
-
+*/
         return result;
     }
 }

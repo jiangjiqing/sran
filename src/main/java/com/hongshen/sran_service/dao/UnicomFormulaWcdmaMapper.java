@@ -59,7 +59,4 @@ public interface UnicomFormulaWcdmaMapper {
     int updateByPrimaryKey(UnicomFormulaWcdma record);
 
     List<JSONObject> getFormulaList();
-
-    @Select("SELECT * FROM unicom_formula_wcdma")
-    List<UnicomFormula> getFormulaWcdmaList();
 }

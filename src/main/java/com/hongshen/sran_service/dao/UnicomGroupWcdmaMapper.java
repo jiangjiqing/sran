@@ -67,6 +67,8 @@ public interface UnicomGroupWcdmaMapper {
 
     List<JSONObject> getGroupList();
 
+    List<JSONObject> getGroupInfoList();
+
     List<String> getGroupNameList();
 
     JSONObject getGroupInfo(@Param("groupName") String groupName);

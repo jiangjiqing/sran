@@ -60,7 +60,4 @@ public interface UnicomFormulaLteMapper {
     int updateByPrimaryKey(UnicomFormulaLte record);
 
     List<JSONObject> getFormulaList();
-
-    @Select("SELECT * FROM unicom_formula_lte")
-    List<UnicomFormula> getFormulaLteList();
 }

@@ -202,7 +202,7 @@
     </trim>
   </insert>
 
-    <select id="getQuotaByName" resultType="com.alibaba.fastjson.JSONObject">
+    <select id="getQuota" resultType="com.alibaba.fastjson.JSONObject">
         SELECT *
         FROM unicom_quota_history_cell_wcdma
         WHERE name = #{cellName} ORDER BY NOW() LIMIT 1

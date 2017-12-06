@@ -2,7 +2,6 @@ package com.hongshen.sran_service.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.service.util.Constants;
-import com.hongshen.sran_service.service.util.Httpclient;
 import com.hongshen.sran_service.service.util.NetObjBase;
 import com.hongshen.sran_service.service.util.NetObjFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -22,115 +20,89 @@ public class QuotaController {
     @Autowired
     private NetObjFactory objFactory;
 
-    @Autowired
-    private Httpclient httpclient;
-
-    // query group quota
+    // Query group quota
     @GET
     @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/{groupName}/quotas")
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject getGroupQuota(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
-                                    @PathParam("groupName")String groupName, @HeaderParam("Auth-Token")String authToken) {
+    public JSONObject getGroupQuota(@PathParam("supplier")String supplier,
+                                    @PathParam("generation")String generation,
+                                    @PathParam("groupName")String groupName,
+                                    @HeaderParam("Auth-Token")String authToken) {
 
         JSONObject result = new JSONObject();
 
-        String url = Constants.PATH_DUMMY;
-        String method = Constants.METHOD_GET;
-
-//        if (check(url, method, authToken)) {
-
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        JSONObject groupQuota = obj.getQuotaService().getGroupQuotaByName(groupName);
+        JSONObject groupQuota = obj.getQuotaService().getGroupQuota(groupName);
 
         List<JSONObject> quotaList = new ArrayList<JSONObject>();
+
+        //TODO :get data from formula and history
         List<JSONObject> formulaList = obj.getCacheService().getFormulaList(true);
 
         for (JSONObject f : formulaList) {
 
             JSONObject quota = new JSONObject();
 
-            quota.put("value", groupQuota.getString("formula" + f.get("id")));
-            quota.put("time", groupQuota.getString("time"));
-            quota.put("quotaName", f.getString("quotaName"));
-            quota.put("remark", f.getString("remark"));
-            quota.put("topStatus",f.getString("hasTop10"));
+            quota.putAll(quota);
+            quota.put("value", Constants.INVALID_VALUE_QUOTA);
 
             quotaList.add(quota);
         }
 
-        if (!quotaList.isEmpty()) {
-            result.put("result", Constants.SUCCESS);
-            result.put("data", quotaList);
-
-        } else {
-
+        if (quotaList.isEmpty()) {
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
+
+        } else {
+            result.put("result", Constants.SUCCESS);
+            result.put("data", quotaList);
         }
 
         return result;
-
-//
-//        } else {
-//			  result.put("result", Constants.FAIL);
-//			  result.put("msg", Constants.MSG_NO_PERMISSION);
-//            return result;
-//        }
     }
 
-    // query node quota
+    // Query node quota
     @GET
     @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/{groupName}/nodes/{nodeName}/quotas")
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject getNodeQuota(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
-                                    @PathParam("nodeName")String nodeName, @HeaderParam("Auth-Token")String authToken) {
+    public JSONObject getNodeQuota(@PathParam("supplier")String supplier,
+                                   @PathParam("generation")String generation,
+                                   @PathParam("nodeName")String nodeName,
+                                   @HeaderParam("Auth-Token")String authToken) {
 
         JSONObject result = new JSONObject();
 
-        String url = Constants.PATH_DUMMY;
-        String method = Constants.METHOD_GET;
-
-//        if (check(url, method, authToken)) {
-
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        JSONObject nodeQuota = obj.getQuotaService().getNodeQuotaByName(nodeName);
+        JSONObject nodeQuota = obj.getQuotaService().getNodeQuota(nodeName);
 
         List<JSONObject> quotaList = new ArrayList<JSONObject>();
+
+        //TODO :get data from formula and history
         List<JSONObject> formulaList = obj.getCacheService().getFormulaList(true);
 
         for (JSONObject f : formulaList) {
 
             JSONObject quota = new JSONObject();
-            quota.put("value", nodeQuota.getString("formula" + f.get("id")));
-            quota.put("time", nodeQuota.getString("time"));
-            quota.put("quotaName", f.getString("quotaName"));
-            quota.put("remark", f.getString("remark"));
-            quota.put("topStatus",f.getString("hasTop10"));
+
+            quota.putAll(quota);
+            quota.put("value", Constants.INVALID_VALUE_QUOTA);
 
             quotaList.add(quota);
         }
 
-        if (!quotaList.isEmpty()) {
-            result.put("result", Constants.SUCCESS);
-            result.put("data", quotaList);
-
-        } else {
-
+        if (quotaList.isEmpty()) {
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
+
+        } else {
+            result.put("result", Constants.SUCCESS);
+            result.put("data", quotaList);
         }
 
         return result;
-
-//
-//        } else {
-//			  result.put("result", Constants.FAIL);
-//			  result.put("msg", Constants.MSG_NO_PERMISSION);
-//            return result;
-//        }
     }
 
-    // query cell quota
+    // Query cell quota
     @GET
     @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/{groupName}/nodes/{nodeName}/cells/{cellName}/quotas")
     @Produces(MediaType.APPLICATION_JSON)
@@ -139,46 +111,34 @@ public class QuotaController {
 
         JSONObject result = new JSONObject();
 
-        String url = Constants.PATH_DUMMY;
-        String method = Constants.METHOD_GET;
-
-//        if (check(url, method, authToken)) {
-
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        JSONObject cellQuota = obj.getQuotaService().getCellQuotaByName(cellName);
+        JSONObject cellQuota = obj.getQuotaService().getCellQuota(cellName);
 
         List<JSONObject> quotaList = new ArrayList<JSONObject>();
+
+        //TODO :get data from formula and history
         List<JSONObject> formulaList = obj.getCacheService().getFormulaList(true);
 
         for (JSONObject f : formulaList) {
 
             JSONObject quota = new JSONObject();
-            quota.put("value", cellQuota.getString("formula" + f.get("id")));
-            quota.put("time", cellQuota.getString("time"));
-            quota.put("quotaName", f.getString("quotaName"));
-            quota.put("remark", f.getString("remark"));
-            quota.put("topStatus",f.getString("hasTop10"));
+
+            quota.putAll(quota);
+            quota.put("value", Constants.INVALID_VALUE_QUOTA);
 
             quotaList.add(quota);
         }
 
-        if (!quotaList.isEmpty()) {
-            result.put("result", Constants.SUCCESS);
-            result.put("data", quotaList);
-
-        } else {
-
+        if (quotaList.isEmpty()) {
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
+
+        } else {
+            result.put("result", Constants.SUCCESS);
+            result.put("data", quotaList);
         }
 
         return result;
-//
-//        } else {
-//			  result.put("result", Constants.FAIL);
-//			  result.put("msg", Constants.MSG_NO_PERMISSION);
-//            return result;
-//        }
     }
 
 }

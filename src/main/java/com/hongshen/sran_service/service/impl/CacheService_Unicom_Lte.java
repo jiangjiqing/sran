@@ -1,4 +1,5 @@
 package com.hongshen.sran_service.service.impl;
+
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.dao.*;
 import com.hongshen.sran_service.service.CacheService;
@@ -21,6 +22,9 @@ public class CacheService_Unicom_Lte implements CacheService {
 
     @Autowired
     private static List<JSONObject> counterList = new ArrayList<JSONObject>();
+
+    @Autowired
+    private static List<JSONObject> counterListProcessed  = new ArrayList<JSONObject>();
 
     @Autowired
     private UnicomFormulaLteMapper formulaMapper;
@@ -52,15 +56,23 @@ public class CacheService_Unicom_Lte implements CacheService {
 
         counterList.clear();
 
-        List<JSONObject> list = counterMapper.getCounterList();
+        counterList = counterMapper.getCounterList();
 
-        for (JSONObject counter : list){
+        resetCounterListProcessed();
+    }
+
+    @Override
+    public void resetCounterListProcessed(){
+
+        counterListProcessed.clear();
+
+        for (JSONObject counter : counterList){
             String type = counter.getString("type");
             String name = counter.getString("name");
             if ( type == "EUtranCellFDD" || type == "EUtranCellTDD"){
                 counter.put("name", type + "." + name);
             }
-            counterList.add(counter);
+            counterListProcessed.add(counter);
         }
     }
 
@@ -78,17 +90,45 @@ public class CacheService_Unicom_Lte implements CacheService {
 
             for(JSONObject counter : counterList) {
 
-                if (!counter.getBoolean("status")){
-                    continue;
+                if (counter.getBoolean("status")){
+                    resultList.add(counter);
 
                 }else{
-                    resultList.add(counter);
+                    continue;
                 }
             }
             return resultList;
 
         }else {
             return counterList;
+        }
+    }
+
+    @Override
+    public List<JSONObject> getCounterListProcessed(Boolean isValid) {
+
+        // check cache
+        if (counterListProcessed.isEmpty()){
+            resetCounterList();
+        }
+
+        if(isValid){
+
+            List<JSONObject> resultList = new ArrayList<JSONObject>();
+
+            for(JSONObject counter : counterListProcessed) {
+
+                if (counter.getBoolean("status")){
+                    resultList.add(counter);
+
+                }else{
+                    continue;
+                }
+            }
+            return resultList;
+
+        }else {
+            return counterListProcessed;
         }
     }
 
@@ -117,11 +157,11 @@ public class CacheService_Unicom_Lte implements CacheService {
             for (JSONObject f : formulaList) {
 
                 // unvisible quota
-                if (!f.getBoolean("status")) {
-                    continue;
+                if (f.getBoolean("status")) {
+                    resultList.add(f);
 
                 } else {
-                    resultList.add(f);
+                    continue;
                 }
             }
             return resultList;

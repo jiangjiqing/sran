@@ -43,13 +43,14 @@ public class Constants {
     public static final String MSG_NO_DATA = "Data is empty.";
 	public static final String MSG_NO_PERMISSION = "Permission denied.";
 
-	public static final String MSG_DELETE_OK = "delete_ok";
-	public static final String MSG_DELETE_FAILED = "delete_failed";
-	public static final String MSG_ADD_OK = "add_ok";
-	public static final String MSG_ADD_FAILED = "add_failed";
-	public static final String MSG_UPDATE_OK = "update_ok";
-	public static final String MSG_UPDATE_FAILED = "update_failed";
+	public static final String MSG_DELETE_OK = "Delete ok.";
+	public static final String MSG_DELETE_FAILED = "Delete failed.";
+	public static final String MSG_ADD_OK = "Add ok.";
+	public static final String MSG_ADD_FAILED = "Add failed.";
+	public static final String MSG_UPDATE_OK = "Update ok.";
+	public static final String MSG_UPDATE_FAILED = "Update failed.";
 
     public static final String INVALID_VALUE_LEVEL = "-1";
     public static final String INVALID_VALUE_LOCATION = "-1";
+    public static final String INVALID_VALUE_QUOTA = "-1";
 }

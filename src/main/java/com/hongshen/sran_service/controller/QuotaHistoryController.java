@@ -1,4 +1,5 @@
 package com.hongshen.sran_service.controller;
+
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.common.BaseController;
 import com.hongshen.sran_service.service.util.Constants;
@@ -6,6 +7,7 @@ import com.hongshen.sran_service.service.util.NetObjBase;
 import com.hongshen.sran_service.service.util.NetObjFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.text.SimpleDateFormat;
@@ -16,6 +18,7 @@ import java.util.*;
  */
 @Path("/sran/service/net/history")
 public class QuotaHistoryController extends BaseController {
+
     @Autowired
     private NetObjFactory objFactory;
 
@@ -23,16 +26,21 @@ public class QuotaHistoryController extends BaseController {
     @Path("/suppliers/{supplier}/generations/{generation}/nets/{level}/history/quotas")
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject quotaHistory(@RequestParam(value = "quotaHistory") JSONObject quotaHistory,
-                                   @PathParam("supplier") String supplier, @PathParam("generation") String generation,
-                                   @HeaderParam("Auth-Token") String authToken, @PathParam("level") String level) {
-        NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        String unit = quotaHistory.getJSONObject("time").getString("unit");
+                                   @PathParam("supplier") String supplier,
+                                   @PathParam("generation") String generation,
+                                   @PathParam("level") String level,
+                                   @HeaderParam("Auth-Token") String authToken) {
+
         JSONObject result = new JSONObject();
-        List list = new ArrayList();
+        List dataList = new ArrayList();
+
         String condition = null;
         Date start = null;
         Date end = null;
         String[] formula = null;
+        NetObjBase obj = objFactory.getNetObj(supplier, generation);
+        String unit = quotaHistory.getJSONObject("time").getString("unit");
+
         if(quotaHistory.getJSONObject("quota").getString("range").equals("1")){
 
             formula = quotaHistory.getJSONObject("quota").getString("list").replace("]", "")
@@ -60,10 +68,10 @@ public class QuotaHistoryController extends BaseController {
             String[] st = quotaHistory.getJSONObject("element").getString("list").replace("]", "")
                     .replace("[", "").replaceAll("\"", "").split(",");
 
-           condition =Condition(st);
+           condition = Condition(st);
 
         }
-        List<JSONObject> quotaList = getQutas(level,obj,start,end,condition);
+        List<JSONObject> quotaList = getQuotas(level,obj,start,end,condition);
 
         int min = 0;
         if (unit.equals("0") && quotaList != null) {//min
@@ -80,13 +88,16 @@ public class QuotaHistoryController extends BaseController {
             min = 3;
         }
 
-        if (min != 0&&quotaList.size()>0 ) {
-            list = getValue(start, end, quotaList,formula,min,quotaList.get(quotaList.size()-1).getDate("time"),quotaList.get(0).getDate("time"));
+        if (min != 0 && quotaList.size()>0) {
+            dataList = getValue(start, end, quotaList,formula,min,quotaList.get(quotaList.size()-1).getDate("time"),quotaList.get(0).getDate("time"));
             result.put("result", Constants.SUCCESS);
-            result.put("date", list);
+            result.put("date", dataList);
+
         } else {
             result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_NO_DATA);
         }
+
         return result;
     }
 
@@ -219,7 +230,7 @@ public class QuotaHistoryController extends BaseController {
 
     }
 
-    public static List<JSONObject> getQutas(String level,NetObjBase obj,Date start,Date end,String condition){
+    public static List<JSONObject> getQuotas(String level,NetObjBase obj,Date start,Date end,String condition){
         List<JSONObject> quotaListexport = new ArrayList<JSONObject>();
 
         switch (level){
@@ -235,6 +246,7 @@ public class QuotaHistoryController extends BaseController {
         }
         return quotaListexport;
     }
+
     @POST
     @Path("/suppliers/{supplier}/generations/{generation}/nets/{level}/history/quotas/export")
     @Produces(MediaType.APPLICATION_JSON)
@@ -277,7 +289,7 @@ public class QuotaHistoryController extends BaseController {
                     "formula25"};//TODO
                          }
 
-        List<JSONObject> quotaListexport = getQutas(level,obj,start,end,condition);
+        List<JSONObject> quotaListexport = getQuotas(level,obj,start,end,condition);
 
         JSONObject result = new JSONObject();
 

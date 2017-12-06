@@ -1,10 +1,12 @@
 package com.hongshen.sran_service.controller;
+
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.common.BaseController;
 import com.hongshen.sran_service.service.util.Constants;
 import com.hongshen.sran_service.service.util.NetObjBase;
 import com.hongshen.sran_service.service.util.NetObjFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.text.DecimalFormat;
@@ -27,74 +29,71 @@ public class MapController extends BaseController{
                                     @HeaderParam("Auth-Token")String authToken) {
 
         JSONObject result = new JSONObject();
+        List<JSONObject> dataList = new ArrayList<>();
+
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         List<JSONObject> groupList = obj.getElementInfoService().getGroupList();
 
-        if(groupList.isEmpty()){
-            result.put("result", Constants.FAIL);
-            result.put("msg", Constants.MSG_NO_DATA);
+        for (JSONObject group : groupList){
 
-        }else{
-            List<JSONObject> resultList = new ArrayList<>();
+            String groupName = group.getString("name");
 
-            for (JSONObject group : groupList){
+            if (groupName == "") {
+                continue;
 
-                JSONObject resultOne = new JSONObject();
-                Double[] scopeinit = {};
-                resultOne.put("scope",scopeinit);
-                resultOne.put("latitude",Constants.INVALID_VALUE_LOCATION);
-                resultOne.put("longitude",Constants.INVALID_VALUE_LOCATION);
-                resultOne.put("infos",null);
-                resultOne.put("level",Constants.INVALID_VALUE_LEVEL);
-                resultOne.put("favorite",false);
+            }else{
+                JSONObject dataOne = new JSONObject();
+                dataOne.put("name",groupName);
 
-                // name
-                String groupName = group.getString("groupName");
-                resultOne.put("name",groupName);
+                // longitude \ latitude and scope
+                List<JSONObject> nodeList =  obj.getElementInfoService().getNodeListByGroup(groupName);
+                List<Double[]> list = new ArrayList<>();
 
-                if (groupName != "") {
+                if (nodeList.size() != 0) {
+                    for (JSONObject node : nodeList) {
 
-                    // longitude \ latitude and scope
-                    List<JSONObject> nodeList =  obj.getElementInfoService().getNodeListByGroup(groupName);
-                    List<Double[]> list = new ArrayList<>();
+                        Double latitude = node.getDouble("latitude");
+                        Double longitude = node.getDouble("longitude");
 
-                    if (nodeList.size() != 0) {
-                        for (JSONObject node : nodeList) {
-
-                            Double latitude = node.getDouble("latitude");
-                            Double longitude = node.getDouble("longitude");
-
-                            if(latitude!= null && longitude!= null){
-                                Double[] doubles ={latitude,longitude};
-                                list.add(doubles);
-                            }else{
-                                Double[] doubles ={Double.parseDouble(Constants.INVALID_VALUE_LOCATION),Double.parseDouble(Constants.INVALID_VALUE_LOCATION)};
-                                list.add(doubles);
-                            }
+                        if(latitude!= null && longitude!= null){
+                            Double[] doubles ={latitude,longitude};
+                            list.add(doubles);
+                        }else{
+                            Double[] doubles ={Double.parseDouble(Constants.INVALID_VALUE_LOCATION),Double.parseDouble(Constants.INVALID_VALUE_LOCATION)};
+                            list.add(doubles);
                         }
                     }
-                    resultOne.putAll(LatitudeAndLongitude(list));
-
-                    // group info
-                    JSONObject groupInfo = obj.getElementInfoService().getGroupInfo(groupName);
-                    resultOne.put("infos",groupInfo);
-
-                    // level
-                    JSONObject level = obj.getQuotaService().getGroupLevel(groupName);
-                    if(level != null && level.getIntValue("level") != -1){
-                        resultOne.put("level", level);
-                    }else{
-                        resultOne.put("level",Constants.INVALID_VALUE_LEVEL);
-                    }
-
-                    //favorite TODO
-
                 }
-                resultList.add(resultOne);
+                dataOne.putAll(LatitudeAndLongitude(list));
+
+                // group info
+                JSONObject groupInfo = obj.getElementInfoService().getGroupInfo(groupName);
+                dataOne.put("infos",groupInfo);
+
+                // level
+                JSONObject level = obj.getQuotaService().getGroupLevel(groupName);
+                if(level != null && level.getIntValue("level") != -1){
+                    dataOne.put("level", level);
+                }else{
+                    dataOne.put("level",Constants.INVALID_VALUE_LEVEL);
+                }
+
+                // favorite TODO
+                dataOne.put("favorite",false);
+
+                dataList.add(dataOne);
             }
-            result.put("result", Constants.SUCCESS);
-            result.put("data", resultList);
         }
+
+        if(dataList.isEmpty()){
+            result.put("result",Constants.FAIL);
+            result.put("msg",Constants.MSG_NO_DATA);
+
+        }else {
+            result.put("result", Constants.SUCCESS);
+            result.put("data", dataList);
+        }
+
         return result;
     }
 
@@ -104,8 +103,8 @@ public class MapController extends BaseController{
         String lo = df.format(longitude/num);
         JSONObject j = new JSONObject();
         if(latitude==0.0||longitude==0.0||num==0){
-            j.put("latitude",0);
-            j.put("longitude",0);
+            j.put("latitude", Constants.INVALID_VALUE_LOCATION);
+            j.put("longitude", Constants.INVALID_VALUE_LOCATION);
         }else{
             j.put("latitude",la);
             j.put("longitude",lo);
@@ -187,35 +186,59 @@ public class MapController extends BaseController{
                                    @HeaderParam("Auth-Token")String authToken) {
 
         JSONObject result = new JSONObject();
+        List dataList = new ArrayList();
+
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         List<JSONObject> nodeList = obj.getElementInfoService().getNodeListByGroup(groupName);
-        List list = new ArrayList();
 
-        if(!nodeList.isEmpty()){
+        for(JSONObject node : nodeList){
 
-            for(JSONObject node : nodeList){
+            String nodeName = node.getString("name");
 
-                String nodeName = node.getString("name");
+            if (nodeName == "") {
+                continue;
 
-                if (nodeName != null || nodeName != ""){
-                    JSONObject json = new JSONObject();
-                    JSONObject level = obj.getQuotaService().getNodeLevel(nodeName);
+            }else{
+                JSONObject dataOne = new JSONObject();
+                dataOne.putAll(node);
 
-                    if(level != null && level.getIntValue("level") != -1){
-                        json.put("level", level);
-                    }else{
-                        json.put("level",Constants.INVALID_VALUE_LEVEL);
-                    }
-                    json.putAll(node);
-                    list.add(json);
+                if (node.getString("latitude") == ""){
+                    dataOne.put("latitude",Constants.INVALID_VALUE_LOCATION);
+                }
+                if (node.getString("longitude") == ""){
+                    dataOne.put("longitude",Constants.INVALID_VALUE_LOCATION);
                 }
 
+                // infos
+                JSONObject nodeInfo = obj.getElementInfoService().getNodeInfo(nodeName);
+                dataOne.put("infos",nodeInfo);
+
+                // favorite TODO
+                dataOne.put("favorite",false);
+
+                // level
+                JSONObject level = obj.getQuotaService().getNodeLevel(nodeName);
+
+                if(level != null && level.getIntValue("level") != -1){
+                    dataOne.put("level", level);
+                }else{
+                    dataOne.put("level",Constants.INVALID_VALUE_LEVEL);
+                }
+
+                dataList.add(dataOne);
             }
-            result.put("data",list);
-            result.put("result", Constants.SUCCESS);
-        }else{
-            result.put("result",Constants.FAIL);
+
         }
+
+        if(dataList.isEmpty()){
+            result.put("result",Constants.FAIL);
+            result.put("msg",Constants.MSG_NO_DATA);
+
+        }else {
+            result.put("result", Constants.SUCCESS);
+            result.put("data", dataList);
+        }
+
         return result;
     }
 
@@ -227,38 +250,59 @@ public class MapController extends BaseController{
                                    @PathParam("groupName")String groupName,
                                    @PathParam("nodeName")String nodeName,
                                    @HeaderParam("Auth-Token")String authToken) {
+
         JSONObject result = new JSONObject();
+        List dataList = new ArrayList();
+
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         List<JSONObject> cellList = obj.getElementInfoService().getCellListByNode(nodeName);
 
-        if(!cellList.isEmpty()) {
+        for (JSONObject cell : cellList){
 
-            List list = new ArrayList();
+            String cellName = cell.getString("name");
 
-            for (JSONObject cell : cellList){
+            if (cellName == "") {
+                continue;
 
-                JSONObject json = new JSONObject();
-                String cellName = cell.getString("name");
+            }else{
+                JSONObject dataOne = new JSONObject();
+                dataOne.putAll(cell);
 
-                if (cellName != null || cellName != "") {
+                // longitude and latitude from node (TODO)
+                JSONObject nodeLocation = obj.getElementInfoService().getNodeLocation(nodeName);
+                dataOne.putAll(nodeLocation);
 
-                    JSONObject level = obj.getQuotaService().getCellLevel(cellName);
-                    JSONObject NodelatAndlong = obj.getElementInfoService().getNodelatitudeAndlongitude(nodeName);
-
-                    if (level != null && level.getIntValue("level") != -1) {
-                        json.put("level", level);
-                    } else {
-                        json.put("level", Constants.INVALID_VALUE_LEVEL);
-                    }
-                    json.putAll(NodelatAndlong);
-                    json.putAll(cell);
-                    list.add(json);
+                if (nodeLocation.getString("latitude") == ""){
+                    dataOne.put("latitude",Constants.INVALID_VALUE_LOCATION);
                 }
+                if (nodeLocation.getString("longitude") == ""){
+                    dataOne.put("longitude",Constants.INVALID_VALUE_LOCATION);
+                }
+
+                // level
+                JSONObject level = obj.getQuotaService().getCellLevel(cellName);
+
+                if (level != null && level.getIntValue("level") != -1) {
+                    dataOne.put("level", level);
+                } else {
+                    dataOne.put("level", Constants.INVALID_VALUE_LEVEL);
+                }
+
+                // infos
+                JSONObject cellInfo = obj.getElementInfoService().getCellInfo(cellName);
+                dataOne.put("infos",cellInfo);
+
+                dataList.add(dataOne);
             }
-            result.put("data",list);
+        }
+
+        if(dataList.isEmpty()){
+            result.put("result",Constants.FAIL);
+            result.put("msg",Constants.MSG_NO_DATA);
+
+        }else {
             result.put("result", Constants.SUCCESS);
-        }else{
-            result.put("result", Constants.FAIL);
+            result.put("data", dataList);
         }
 
         return  result;

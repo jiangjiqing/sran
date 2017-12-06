@@ -169,38 +169,53 @@
     where node_name = #{nodeName,jdbcType=VARCHAR}
   </update>
 
-    <select id="getNodeInfo" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
-        SELECT
-        node_name nodeName,
-        group_name groupName,
-        station_name stationName,
-        rbsid,
-        ip,
-        lac,
-        latitude,
-        longitude,
-        swversion
-        FROM unicom_node_wcdma
-        WHERE node_name = #{nodeName}
-    </select>
+  <select id="getNodeInfo" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT
+      node_name nodeName,
+      group_name groupName,
+      station_name stationName,
+      rbsid,
+      ip,
+      lac,
+      latitude,
+      longitude,
+      swversion
+    FROM unicom_node_wcdma
+    WHERE node_name = #{nodeName}
+  </select>
 
-    <select id="getNodeListByGroup" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
-        SELECT
-        node_name name,
-        station_name stationName,
-        latitude,
-        longitude
-        FROM unicom_node_wcdma
-        WHERE group_name = #{groupName};
-    </select>
+  <select id="getNodeInfoList" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT
+      node_name nodeName,
+      group_name groupName,
+      station_name stationName,
+      rbsid,
+      ip,
+      lac,
+      latitude,
+      longitude,
+      swversion
+    FROM unicom_node_wcdma
+    WHERE node_name = #{nodeName}
+  </select>
 
-    <select id="getNodeNameListByGroup" resultType="java.lang.String">
-        SELECT node_name name
-        FROM unicom_node_wcdma
-        WHERE group_name = #{groupName}
-    </select>
+  <select id="getNodeListByGroup" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT
+      node_name name,
+      station_name stationName,
+      latitude,
+      longitude
+    FROM unicom_node_wcdma
+    WHERE group_name = #{groupName};
+  </select>
 
-    <select id="getNodeLaoutAndLong" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
+  <select id="getNodeNameListByGroup" resultType="java.lang.String">
+    SELECT node_name name
+    FROM unicom_node_wcdma
+    WHERE group_name = #{groupName}
+  </select>
+
+  <select id="getNodeLocation" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
     SELECT latitude,longitude
     FROM unicom_node_wcdma
     WHERE node_name = #{nodeName}
@@ -212,13 +227,6 @@
     FROM unicom_node_wcdma
     GROUP BY name
   </select>
-
-  <!--<select id="getGroupNameList" resultType="java.lang.String">-->
-    <!--SELECT-->
-      <!--group_name name-->
-    <!--FROM unicom_node_wcdma-->
-    <!--GROUP BY name-->
-  <!--</select>-->
 
   <select id="getNodeNameListByGroupName" resultType="java.lang.String">
     SELECT

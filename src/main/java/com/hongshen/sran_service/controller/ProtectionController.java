@@ -3,12 +3,13 @@ package com.hongshen.sran_service.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.common.BaseController;
 import com.hongshen.sran_service.service.util.Constants;
-import com.hongshen.sran_service.service.util.Httpclient;
 import com.hongshen.sran_service.service.util.NetObjBase;
 import com.hongshen.sran_service.service.util.NetObjFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,9 +21,6 @@ public class ProtectionController extends BaseController{
     @Autowired
     private NetObjFactory objFactory;
 
-    @Autowired
-    private Httpclient httpclient;
-
     @GET
     @Path("/suppliers/{supplier}/generations/{generation}/nets/protections")
     @Produces(MediaType.APPLICATION_JSON)
@@ -31,9 +29,7 @@ public class ProtectionController extends BaseController{
                                         @HeaderParam("Auth-Token")String authToken) {
 
         JSONObject result = new JSONObject();
-        String url = Constants.PATH_DUMMY;
-        String method = Constants.METHOD_GET;
-//      if (check(url, method, authToken)) {
+        List<JSONObject> dataList = new ArrayList<JSONObject>();
 
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         List<JSONObject> protectList = obj.getElementInfoService().getProtectList();
@@ -42,9 +38,13 @@ public class ProtectionController extends BaseController{
 
             String nodeName = protect.getString("nodeName");
 
-            if (nodeName != null || nodeName != ""){
+            if (nodeName == "") {
+                continue;
 
+            }else{
+                // alarm
                 List<JSONObject> alarmList = obj.getAlarmService().getNodeAlarmByName(nodeName);
+                protect.put("alarmList",alarmList);
 
                 if(alarmList.size() != 0){
                     protect.put("alarmStatus",true);
@@ -52,8 +52,8 @@ public class ProtectionController extends BaseController{
                 }else {
                     protect.put("alarmStatus",false);
                 }
-                protect.put("alarmList",alarmList);
 
+                // level
                 JSONObject level = obj.getQuotaService().getNodeLevel(nodeName);
 
                 if (level != null && level.getIntValue("level") != -1) {
@@ -63,26 +63,22 @@ public class ProtectionController extends BaseController{
                     protect.put("level", Constants.INVALID_VALUE_LEVEL);
 
                 }
+                dataList.add(protect);
             }
         }
-//            System.out.println(nodeName);
-        if (!protectList.isEmpty()) {
-            result.put("data", protectList);
-            result.put("result", Constants.SUCCESS);
+
+        if (dataList.isEmpty()) {
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_NO_DATA);
 
         } else {
-            result.put("msg", Constants.MSG_NO_DATA);
-            result.put("result", Constants.FAIL);
+            result.put("result", Constants.SUCCESS);
+            result.put("data", dataList);
         }
 
         return result;
-//        } else {
-//			  result.put("result", Constants.FAIL);
-//			  result.put("msg", Constants.MSG_NO_PERMISSION);
-//            return result;
-//        }
-
     }
+
     //    @RequestMapping(value = "/v1/dc-map")
 //    public Map test() {
 //        boolean sign = false;

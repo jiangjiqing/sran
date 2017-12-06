@@ -2,7 +2,6 @@ package com.hongshen.sran_service.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.dao.*;
-import com.hongshen.sran_service.entity.*;
 import com.hongshen.sran_service.service.ScannerService;
 import com.hongshen.sran_service.service.util.ScannerHelper;
 import net.java.dev.eval.Expression;
@@ -26,8 +25,8 @@ public class ScannerService_Unicom_Lte implements ScannerService{
     @Autowired
     private UnicomCounterHistoryLteMapper counterHistoryMapper;
 
-    @Autowired
-    private UnicomFormulaLteMapper formulaMapper;
+    //@Autowired
+    //private UnicomFormulaLteMapper formulaMapper;
 
     @Autowired
     private UnicomCellLteMapper cellMapper;
@@ -36,7 +35,8 @@ public class ScannerService_Unicom_Lte implements ScannerService{
     private UnicomNodeLteMapper nodeMapper;
 
     @Autowired
-    private UnicomCounterLteMapper counterMapper;
+    private CacheService_Unicom_Lte cacheService;
+    //private UnicomCounterLteMapper counterMapper;
 
     @Autowired
     private UnicomQuotaThresholdCellLteMapper quotaThresholdCellMapper;
@@ -56,9 +56,9 @@ public class ScannerService_Unicom_Lte implements ScannerService{
                 ScannerHelper.getQuotaThresholdMap(quotaThresholdCellMapper.getThresholdCellList());
 
         Map<String, List<String>> expressionSetMap =
-                ScannerHelper.getVariableList(formulaMapper.getFormulaList());
+                ScannerHelper.getVariableList(cacheService.getFormulaList(false));
 
-        Map<String, String> counterMap = ScannerHelper.getCounterMap(counterMapper.getCounterList());
+        Map<String, String> counterMap = ScannerHelper.getCounterMap(cacheService.getCounterListProcessed(false));
 
         List<String> paramValues = new ArrayList<>();
 
@@ -67,13 +67,10 @@ public class ScannerService_Unicom_Lte implements ScannerService{
         paramcloumns.add("name");
         paramcloumns.add("time");
 
-        List<UnicomFormula> formulaList = formulaMapper.getFormulaLteList();
+        List<JSONObject> formulaList = cacheService.getFormulaList(false);
 
-        for (int j = 0; j < formulaList.size(); j ++) {
-
-            UnicomFormula formula = formulaList.get(j);
-
-            paramcloumns.add("formula" + formula.getId());
+        for (JSONObject f : formulaList) {
+            paramcloumns.add("formula" + f.getString("id"));
         }
 
         paramcloumns.add("level");
@@ -97,17 +94,17 @@ public class ScannerService_Unicom_Lte implements ScannerService{
             paramValue.append("('" + counterHistory.getString("name") + "',");
             paramValue.append("'" + time + "',");
 
-            for (int j = 0; j < formulaList.size(); j ++) {
+            for (JSONObject f : formulaList) {
 
-                UnicomFormula formula = formulaList.get(j);
+                String quotaName = f.getString("quotaName");
 
-                if (expressionSetMap.containsKey(formula.getQuota_name())) {
+                if (expressionSetMap.containsKey(quotaName)) {
 
-                    List<String> variableList = expressionSetMap.get(formula.getQuota_name());
+                    List<String> variableList = expressionSetMap.get(quotaName);
 
                     ScannerHelper.sortStringArray(variableList);
 
-                    String expression = formula.getExpression();
+                    String expression = f.getString("expression");
 
                     boolean flag = false;
 
@@ -154,7 +151,7 @@ public class ScannerService_Unicom_Lte implements ScannerService{
 
                         int fmLevel =
                                 ScannerHelper
-                                        .levelCalculation(value, quotaThresholdCellMap.get(formula.getQuota_name()));
+                                        .levelCalculation(value, quotaThresholdCellMap.get(quotaName));
 
                         fmLevelList.add(fmLevel);
 
@@ -206,29 +203,26 @@ public class ScannerService_Unicom_Lte implements ScannerService{
                 ScannerHelper.getQuotaThresholdMap(quotaThresholdNodeMapper.getThresholdNodeList());
 
         Map<String, List<String>> expressionSetMap =
-                ScannerHelper.getVariableList(formulaMapper.getFormulaList());
+                ScannerHelper.getVariableList(cacheService.getFormulaList(false));
 
-        Map<String, String> counterMap = ScannerHelper.getCounterMap(counterMapper.getCounterList());
+        Map<String, String> counterMap = ScannerHelper.getCounterMap(cacheService.getCounterListProcessed(false));
 
-        List<JSONObject> counterList = counterMapper.getCounterList();
+        List<JSONObject> counterList = cacheService.getCounterListProcessed(false);
 
         for (JSONObject counter : counterList) {
 
             counterParams.add("counter" + counter.getString("id"));
         }
 
-        List<UnicomFormula> formulaList = formulaMapper.getFormulaLteList();
+        List<JSONObject> formulaList = cacheService.getFormulaList(false);
 
         List<String> paramcloumns = new ArrayList<>();
 
         paramcloumns.add("name");
         paramcloumns.add("time");
 
-        for (int j = 0; j < formulaList.size(); j ++) {
-
-            UnicomFormula formula = formulaList.get(j);
-
-            paramcloumns.add("formula" + formula.getId());
+        for (JSONObject f : formulaList) {
+            paramcloumns.add("formula" + f.getString("id"));
         }
 
         paramcloumns.add("level");
@@ -254,17 +248,17 @@ public class ScannerService_Unicom_Lte implements ScannerService{
             paramValue.append("('" + nodeResult.getString("nodeName") + "',");
             paramValue.append("'" + time + "',");
 
-            for (int j = 0; j < formulaList.size(); j ++) {
+            for (JSONObject f : formulaList) {
 
-                UnicomFormula formula = formulaList.get(j);
+                String quotaName = f.getString("quotaName");
 
-                if (expressionSetMap.containsKey(formula.getQuota_name())) {
+                if (expressionSetMap.containsKey(quotaName)) {
 
-                    List<String> variableList = expressionSetMap.get(formula.getQuota_name());
+                    List<String> variableList = expressionSetMap.get(quotaName);
 
                     ScannerHelper.sortStringArray(variableList);
 
-                    String expression = formula.getExpression();
+                    String expression = f.getString("expression");
 
                     boolean flag = false;
 
@@ -312,7 +306,7 @@ public class ScannerService_Unicom_Lte implements ScannerService{
 
                         int fmLevel =
                                 ScannerHelper
-                                        .levelCalculation(value, quotaThresholdNodeMap.get(formula.getQuota_name()));
+                                        .levelCalculation(value, quotaThresholdNodeMap.get(quotaName));
 
                         fmLevelList.add(fmLevel);
 
@@ -373,18 +367,15 @@ public class ScannerService_Unicom_Lte implements ScannerService{
 
         List<String> paramValues = new ArrayList<>();
 
-        List<UnicomFormula> formulaList = formulaMapper.getFormulaLteList();
+        List<JSONObject> formulaList = cacheService.getFormulaList(false);
 
         List<String> paramcloumns = new ArrayList<>();
 
         paramcloumns.add("name");
         paramcloumns.add("time");
 
-        for (int j = 0; j < formulaList.size(); j ++) {
-
-            UnicomFormula formula = formulaList.get(j);
-
-            paramcloumns.add("formula" + formula.getId());
+        for (JSONObject f : formulaList) {
+            paramcloumns.add("formula" + f.getString("id"));
         }
 
         paramcloumns.add("level");
@@ -395,9 +386,9 @@ public class ScannerService_Unicom_Lte implements ScannerService{
                 ScannerHelper.getQuotaThresholdMap(quotaThresholdGroupMapper.getThresholdGroupList());
 
         Map<String, List<String>> expressionSetMap =
-                ScannerHelper.getVariableList(formulaMapper.getFormulaList());
+                ScannerHelper.getVariableList(cacheService.getFormulaList(false));
 
-        Map<String, String> counterMap = ScannerHelper.getCounterMap(counterMapper.getCounterList());
+        Map<String, String> counterMap = ScannerHelper.getCounterMap(cacheService.getCounterListProcessed(false));
 
         for (String groupName : groupNameList) {
 
@@ -427,22 +418,17 @@ public class ScannerService_Unicom_Lte implements ScannerService{
                 }
             }
 
-            if (groupAllGroupList.size() == 0) {
+            for (JSONObject f : formulaList) {
 
-                continue;
-            }
+                String quotaName = f.getString("quotaName");
 
-            for (int j = 0; j < formulaList.size(); j ++) {
+                if (expressionSetMap.get(quotaName) != null) {
 
-                UnicomFormula formula = formulaList.get(j);
-
-                if (expressionSetMap.get(formula.getQuota_name()) != null) {
-
-                    List<String> variableList = expressionSetMap.get(formula.getQuota_name());
+                    List<String> variableList = expressionSetMap.get(quotaName);
 
                     ScannerHelper.sortStringArray(variableList);
 
-                    String expression = formula.getExpression();
+                    String expression = f.getString("expression");
 
                     boolean flag = false;
 
@@ -490,7 +476,7 @@ public class ScannerService_Unicom_Lte implements ScannerService{
 
                         int fmLevel =
                                 ScannerHelper
-                                        .levelCalculation(value, quotaThresholdGroupMap.get(formula.getQuota_name()));
+                                        .levelCalculation(value, quotaThresholdGroupMap.get(quotaName));
 
                         fmLevelList.add(fmLevel);
 
@@ -553,18 +539,18 @@ public class ScannerService_Unicom_Lte implements ScannerService{
 
         List<String> groupNameList = nodeMapper.getGroupNameList();
 
-        List<UnicomFormula> formulaList = formulaMapper.getFormulaLteList();
+        List<JSONObject> formulaList = cacheService.getFormulaList(false);
 
         for (int j = 0; j < formulaList.size(); j ++) {
 
-            UnicomFormula formula = formulaList.get(j);
+            JSONObject f = formulaList.get(j);
 
             if (j != formulaList.size() -1) {
 
-                paramcloumns.add("formula" + formula.getId() + ",");
+                paramcloumns.add("formula" + f.getString("id") + ",");
             } else {
 
-                paramcloumns.add("formula" + formula.getId());
+                paramcloumns.add("formula" + f.getString("id"));
             }
         }
 
@@ -607,13 +593,14 @@ public class ScannerService_Unicom_Lte implements ScannerService{
 
             for (int j = 0; j < formulaList.size(); j ++) {
 
-                UnicomFormula formula = formulaList.get(j);
+                JSONObject f = formulaList.get(j);
+                String quotaName = f.getString("quotaName");
 
-                if (expressionSetMap.containsKey(formula.getQuota_name())) {
+                if (expressionSetMap.containsKey(quotaName)) {
 
-                    List<String> variableList = expressionSetMap.get(formula.getQuota_name());
+                    List<String> variableList = expressionSetMap.get(quotaName);
 
-                    String expression = formula.getExpression();
+                    String expression = f.getString("expression");
 
                     boolean flag = false;
 
@@ -713,18 +700,18 @@ public class ScannerService_Unicom_Lte implements ScannerService{
 
         List<String> nodeNameList = nodeMapper.getNodeNameList();
 
-        List<UnicomFormula> formulaList = formulaMapper.getFormulaLteList();
+        List<JSONObject> formulaList = cacheService.getFormulaList(false);
 
         for (int j = 0; j < formulaList.size(); j ++) {
 
-            UnicomFormula formula = formulaList.get(j);
+            JSONObject f = formulaList.get(j);
 
             if (j != formulaList.size() -1) {
 
-                paramcloumns.add("formula" + formula.getId() + ",");
+                paramcloumns.add("formula" + f.getString("id") + ",");
             } else {
 
-                paramcloumns.add("formula" + formula.getId());
+                paramcloumns.add("formula" + f.getString("id"));
             }
         }
 
@@ -754,13 +741,15 @@ public class ScannerService_Unicom_Lte implements ScannerService{
 
             for (int j = 0; j < formulaList.size(); j ++) {
 
-                UnicomFormula formula = formulaList.get(j);
+                JSONObject f = formulaList.get(j);
 
-                if (expressionSetMap.containsKey(formula.getQuota_name())) {
+                String quotaName = f.getString("quotaName");
 
-                    List<String> variableList = expressionSetMap.get(formula.getQuota_name());
+                if (expressionSetMap.containsKey(quotaName)) {
 
-                    String expression = formula.getExpression();
+                    List<String> variableList = expressionSetMap.get(quotaName);
+
+                    String expression = f.getString("expression");
 
                     boolean flag = false;
 
@@ -852,7 +841,7 @@ public class ScannerService_Unicom_Lte implements ScannerService{
 
         List<JSONObject> paramList = new ArrayList<>();
 
-        List<UnicomFormula> formulaList = formulaMapper.getFormulaLteList();
+        List<JSONObject> formulaList = cacheService.getFormulaList(false);
 
         List<JSONObject> counterHistoryList =
                 counterHistoryMapper.getCounterHistoryListByTime(time);
@@ -866,13 +855,15 @@ public class ScannerService_Unicom_Lte implements ScannerService{
 
             JSONObject resultJson = new JSONObject();
 
-            for (UnicomFormula formula : formulaList) {
+            for (JSONObject f : formulaList) {
 
-                if (expressionSetMap.containsKey(formula.getQuota_name())) {
+                String quotaName = f.getString("quotaName");
 
-                    List<String> variableList = expressionSetMap.get(formula.getQuota_name());
+                if (expressionSetMap.containsKey(quotaName)) {
 
-                    String expression = formula.getExpression();
+                    List<String> variableList = expressionSetMap.get(quotaName);
+
+                    String expression = f.getString("expression");
 
                     boolean flag = false;
 
@@ -914,11 +905,11 @@ public class ScannerService_Unicom_Lte implements ScannerService{
                         }
 
                         resultJson
-                                .put("formula" + formula.getId(), value);
+                                .put("formula" + f.getString("id"), value);
                     } else {
 
                         resultJson
-                                .put("formula" + formula.getId(), "-1");
+                                .put("formula" + f.getString("id"), "-1");
                     }
                 }
 

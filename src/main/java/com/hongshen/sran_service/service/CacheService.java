@@ -14,6 +14,10 @@ public interface CacheService {
 
     List<JSONObject> getCounterList(Boolean isValid);
 
+    void resetCounterListProcessed();
+
+    List<JSONObject> getCounterListProcessed(Boolean isValid);
+
     void resetFormulaList();
 
     List<JSONObject> getFormulaList(Boolean isVisible);
