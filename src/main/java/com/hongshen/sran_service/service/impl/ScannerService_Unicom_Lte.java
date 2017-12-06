@@ -73,7 +73,7 @@ public class ScannerService_Unicom_Lte implements ScannerService{
 
             UnicomFormula formula = formulaList.get(j);
 
-            paramcloumns.add("formula" + formula.getId() + ",");
+            paramcloumns.add("formula" + formula.getId());
         }
 
         paramcloumns.add("level");
@@ -94,7 +94,7 @@ public class ScannerService_Unicom_Lte implements ScannerService{
 
             Integer level = null;
 
-            paramValue.append("'" + counterHistory.getString("name") + "',");
+            paramValue.append("('" + counterHistory.getString("name") + "',");
             paramValue.append("'" + time + "',");
 
             for (int j = 0; j < formulaList.size(); j ++) {
@@ -169,7 +169,7 @@ public class ScannerService_Unicom_Lte implements ScannerService{
 
             level = ScannerHelper.maxLevelArray(fmLevelList);
 
-            paramValue.append("'" + level + "'");
+            paramValue.append("'" + level + "')");
 
             paramValues.add(paramValue.toString());
         }
@@ -221,14 +221,14 @@ public class ScannerService_Unicom_Lte implements ScannerService{
 
         List<String> paramcloumns = new ArrayList<>();
 
-        paramcloumns.add("name,");
-        paramcloumns.add("time,");
+        paramcloumns.add("name");
+        paramcloumns.add("time");
 
         for (int j = 0; j < formulaList.size(); j ++) {
 
             UnicomFormula formula = formulaList.get(j);
 
-            paramcloumns.add("formula" + formula.getId() + ",");
+            paramcloumns.add("formula" + formula.getId());
         }
 
         paramcloumns.add("level");
@@ -251,7 +251,7 @@ public class ScannerService_Unicom_Lte implements ScannerService{
 
             nodeMap.put(nodeResult.getString("nodeName"), nodeResult);
 
-            paramValue.append("'" + nodeResult.getString("nodeName") + "',");
+            paramValue.append("('" + nodeResult.getString("nodeName") + "',");
             paramValue.append("'" + time + "',");
 
             for (int j = 0; j < formulaList.size(); j ++) {
@@ -327,14 +327,19 @@ public class ScannerService_Unicom_Lte implements ScannerService{
 
             level = ScannerHelper.maxLevelArray(fmLevelList);
 
-            paramValue.append("'" + level + "'");
+            paramValue.append("'" + level + "')");
 
             paramValues.add(paramValue.toString());
         }
 
         try {
 
-            //quotaNodeMapper.addQuotaHistoryNodeList(paramcloumns, paramValues);
+            List<String> testList = new ArrayList<>();
+
+            testList.add(paramValues.get(0));
+            testList.add(paramValues.get(1));
+
+            quotaNodeMapper.addQuotaHistoryNodeList(paramcloumns, paramValues);
 
             resultJson.put("nodeMap", nodeMap);
             resultJson.put("message", "SUCCESS");
@@ -372,14 +377,14 @@ public class ScannerService_Unicom_Lte implements ScannerService{
 
         List<String> paramcloumns = new ArrayList<>();
 
-        paramcloumns.add("name,");
-        paramcloumns.add("time,");
+        paramcloumns.add("name");
+        paramcloumns.add("time");
 
         for (int j = 0; j < formulaList.size(); j ++) {
 
             UnicomFormula formula = formulaList.get(j);
 
-            paramcloumns.add("formula" + formula.getId() + ",");
+            paramcloumns.add("formula" + formula.getId());
         }
 
         paramcloumns.add("level");
@@ -404,7 +409,7 @@ public class ScannerService_Unicom_Lte implements ScannerService{
 
             Integer level = null;
 
-            paramValue.append("'" + groupName + "',");
+            paramValue.append("('" + groupName + "',");
             paramValue.append("'" + time + "',");
 
             List<String> nodeNameList = nodeMapper.getNodeNameListByGroup(groupName);
@@ -420,6 +425,11 @@ public class ScannerService_Unicom_Lte implements ScannerService{
 
                     groupAllGroupList.add(nodeMap.get(nodeName));
                 }
+            }
+
+            if (groupAllGroupList.size() == 0) {
+
+                continue;
             }
 
             for (int j = 0; j < formulaList.size(); j ++) {
@@ -495,12 +505,17 @@ public class ScannerService_Unicom_Lte implements ScannerService{
 
             level = ScannerHelper.maxLevelArray(fmLevelList);
 
-            paramValue.append("'" + level + "'");
+            paramValue.append("'" + level + "')");
 
             paramValues.add(paramValue.toString());
         }
 
         try {
+
+            List<String> testList = new ArrayList<>();
+
+            testList.add(paramValues.get(0));
+            testList.add(paramValues.get(1));
 
             quotaGroupMapper.addQuotaHistoryGroupList(paramcloumns, paramValues);
 

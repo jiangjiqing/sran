@@ -76,7 +76,7 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
 
             UnicomFormula formula = formulaList.get(j);
 
-            paramcloumns.add("formula" + formula.getId() + ",");
+            paramcloumns.add("formula" + formula.getId());
         }
 
         paramcloumns.add("level");
@@ -97,7 +97,7 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
 
             Integer level = null;
 
-            paramValue.append("'" + counterHistory.getString("name") + "',");
+            paramValue.append("('" + counterHistory.getString("name") + "',");
             paramValue.append("'" + time + "',");
 
             for (int j = 0; j < formulaList.size(); j ++) {
@@ -172,7 +172,7 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
 
             level = ScannerHelper.maxLevelArray(fmLevelList);
 
-            paramValue.append("'" + level + "'");
+            paramValue.append("'" + level + "')");
 
             paramValues.add(paramValue.toString());
         }
@@ -224,14 +224,14 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
 
         List<String> paramcloumns = new ArrayList<>();
 
-        paramcloumns.add("name,");
-        paramcloumns.add("time,");
+        paramcloumns.add("name");
+        paramcloumns.add("time");
 
         for (int j = 0; j < formulaList.size(); j ++) {
 
             UnicomFormula formula = formulaList.get(j);
 
-            paramcloumns.add("formula" + formula.getId() + ",");
+            paramcloumns.add("formula" + formula.getId());
         }
 
         paramcloumns.add("level");
@@ -254,7 +254,7 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
 
             nodeMap.put(nodeResult.getString("nodeName"), nodeResult);
 
-            paramValue.append("'" + nodeResult.getString("nodeName") + "',");
+            paramValue.append("('" + nodeResult.getString("nodeName") + "',");
             paramValue.append("'" + time + "',");
 
             for (int j = 0; j < formulaList.size(); j ++) {
@@ -330,12 +330,14 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
 
             level = ScannerHelper.maxLevelArray(fmLevelList);
 
-            paramValue.append("'" + level + "'");
+            paramValue.append("'" + level + "')");
 
             paramValues.add(paramValue.toString());
         }
 
         try {
+
+            paramValues.size();
 
             quotaNodeMapper.addQuotaHistoryNodeList(paramcloumns, paramValues);
 
@@ -375,14 +377,14 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
 
         List<String> paramcloumns = new ArrayList<>();
 
-        paramcloumns.add("name,");
-        paramcloumns.add("time,");
+        paramcloumns.add("name");
+        paramcloumns.add("time");
 
         for (int j = 0; j < formulaList.size(); j ++) {
 
             UnicomFormula formula = formulaList.get(j);
 
-            paramcloumns.add("formula" + formula.getId() + ",");
+            paramcloumns.add("formula" + formula.getId());
         }
 
         paramcloumns.add("level");
@@ -407,7 +409,7 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
 
             Integer level = null;
 
-            paramValue.append("'" + groupName + "',");
+            paramValue.append("('" + groupName + "',");
             paramValue.append("'" + time + "',");
 
             List<String> nodeNameList = nodeMapper.getNodeNameListByGroup(groupName);
@@ -419,10 +421,15 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
 
             for (String nodeName : nodeNameList) {
 
-                if (nodeMap.containsKey(nodeName)) {
+                if (nodeMap.get(nodeName) != null) {
 
                     groupAllGroupList.add(nodeMap.get(nodeName));
                 }
+            }
+
+            if (groupAllGroupList.size() == 0) {
+
+                continue;
             }
 
             for (int j = 0; j < formulaList.size(); j ++) {
@@ -496,7 +503,7 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
 
             level = ScannerHelper.maxLevelArray(fmLevelList);
 
-            paramValue.append("'" + level + "'");
+            paramValue.append("'" + level + "')");
 
             paramValues.add(paramValue.toString());
         }

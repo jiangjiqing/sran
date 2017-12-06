@@ -110,7 +110,7 @@ public class ScannerHelper {
             expression = expression.replaceAll("\\.", "_");
         }
 
-        String regEx="[-`/?!@#$%^&*()+=|{}':;',]";
+        String regEx="[-`/?!@#$%^&*()<+=|{}':;',]";
 
         Pattern pattern = Pattern.compile(regEx);
         Matcher matcher = pattern.matcher(expression);

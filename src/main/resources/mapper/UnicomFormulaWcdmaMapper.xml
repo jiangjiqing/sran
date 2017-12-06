@@ -154,6 +154,7 @@
       expression,
       remark,
       status,
+      type,
       hasTop10
     FROM unicom_formula_wcdma
     ORDER BY id ASC;

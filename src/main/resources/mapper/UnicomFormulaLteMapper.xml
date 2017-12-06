@@ -154,7 +154,8 @@
       expression,
       remark,
       status,
-      type
+      type,
+      hasTop10
     FROM unicom_formula_lte
     ORDER BY id ASC;
   </select>
