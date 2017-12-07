@@ -3,12 +3,14 @@ package com.hongshen.sran_service.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.common.BaseController;
 import com.hongshen.sran_service.service.util.Constants;
+import com.hongshen.sran_service.service.util.MapHelper;
 import com.hongshen.sran_service.service.util.NetObjBase;
 import com.hongshen.sran_service.service.util.NetObjFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -48,25 +50,54 @@ public class TopologyController extends BaseController {
 
     // Query group list by room
     @GET
-    @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/rooms/{roomName}/groups")
+    @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/rooms/groups")
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject getGroupList(@PathParam("supplier")String supplier,
                                    @PathParam("generation")String generation,
-                                   @PathParam("roomName")String roomName,
+                                   @HeaderParam("roomName")String roomName,
                                    @HeaderParam("Auth-Token")String authToken){
-
+        //TODO  chinese roomName
         JSONObject result = new JSONObject();
+        List<JSONObject> dataList = new ArrayList<>();
 
         NetObjBase obj = objFactory.getNetObj(supplier,generation);
-        List<String> groupNameList = obj.getTelecomRoomService().getGroupNameListByRoom(roomName);
-        //TODO
-        if (groupNameList.isEmpty()){
+        List<JSONObject> groupList = obj.getTelecomRoomService().getGroupListByRoom(roomName);
+
+        for (JSONObject group : groupList){
+
+            JSONObject dataOne = new JSONObject();
+            String groupName = group.getString("groupName");
+
+            if (groupName == ""){
+                continue;
+
+            }else {
+                dataOne.put("groupName", groupName);
+                dataOne.put("infos", group);
+
+                List<JSONObject> nodeLocationList = obj.getElementInfoService().getNodeLocationsByGroup(groupName);
+                JSONObject location = MapHelper.getGroupLocation(nodeLocationList, "latitude", "longitude");
+
+                if (location.getDoubleValue("latitude") == 0) {
+                    location.put("latitude", Constants.INVALID_VALUE_LOCATION);
+                }
+
+                if (location.getDoubleValue("longitude") == 0) {
+                    location.put("longitude", Constants.INVALID_VALUE_LOCATION);
+                }
+                dataOne.putAll(location);
+
+                dataList.add(dataOne);
+            }
+        }
+
+        if (dataList.isEmpty()){
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
 
         } else {
             result.put("result", Constants.SUCCESS);
-            result.put("data", groupNameList);
+            result.put("data", dataList);
         }
 
         return result;

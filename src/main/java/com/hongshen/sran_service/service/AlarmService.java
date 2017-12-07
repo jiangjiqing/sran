@@ -8,7 +8,11 @@ import java.util.Map;
 
 public interface AlarmService {
 
-    List<JSONObject> getAllAlarmInfo();
+    List<JSONObject> getAlarmInfoList();
+
+    List<JSONObject> getProtectAlarmInfoList();
+
+    List<JSONObject> getNormalAlarmInfoList();
 
 	List<JSONObject> getGroupAlarmByName(String groupName);
 

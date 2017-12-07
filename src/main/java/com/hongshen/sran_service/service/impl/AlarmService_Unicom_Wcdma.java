@@ -15,11 +15,21 @@ public class AlarmService_Unicom_Wcdma implements AlarmService{
     private UnicomAlarmWcdmaMapper alarmMapper;
 
     @Override
-    public List<JSONObject> getAllAlarmInfo() {
-        return alarmMapper.getAllAlarmInfo();
+    public List<JSONObject> getAlarmInfoList() {
+        return alarmMapper.getAlarmInfoList();
     }
 
-	@Override
+    @Override
+    public List<JSONObject> getProtectAlarmInfoList() {
+        return alarmMapper.getProtectAlarmInfoList();
+    }
+
+    @Override
+    public List<JSONObject> getNormalAlarmInfoList() {
+        return alarmMapper.getNormalAlarmInfoList();
+    }
+
+    @Override
     public List<JSONObject> getGroupAlarmByName(String groupName) {
         return alarmMapper.getGroupAlarmByName(groupName);
     }

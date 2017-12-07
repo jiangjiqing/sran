@@ -26,7 +26,11 @@ public interface UnicomAlarmWcdmaMapper {
      */
     int insertSelective(UnicomAlarmWcdma record);
 
-    List<JSONObject> getAllAlarmInfo();
+    List<JSONObject> getAlarmInfoList();
+
+    List<JSONObject> getProtectAlarmInfoList();
+
+    List<JSONObject> getNormalAlarmInfoList();
 
     List<JSONObject> getGroupAlarmByName(@Param("groupName")String groupName);
 

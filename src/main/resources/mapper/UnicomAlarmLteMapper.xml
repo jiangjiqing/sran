@@ -73,7 +73,7 @@
     </trim>
   </insert>
 
-  <select id="getAllAlarmInfo" resultType="com.alibaba.fastjson.JSONObject">
+  <select id="getAlarmInfoList" resultType="com.alibaba.fastjson.JSONObject">
     SELECT
       node_name nodeName,
       mo,
@@ -82,6 +82,32 @@
       alarm_name_id alarmNameId,
       cell_name cellName
     FROM unicom_alarm_lte;
+  </select>
+
+  <select id="getProtectAlarmInfoList" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT
+      a.node_name nodeName,
+      a.mo,
+      a.alarm_time alarmTime,
+      a.alarm_level_id alarmLevelId,
+      a.alarm_name_id alarmNameId,
+      a.cell_name cellName
+    FROM unicom_alarm_lte a
+    INNER JOIN unicom_protect_lte b
+      on a.node_name = b.node_name
+  </select>
+
+  <select id="getNormalAlarmInfoList" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT
+      node_name nodeName,
+      mo,
+      alarm_time alarmTime,
+      alarm_level_id alarmLevelId,
+      alarm_name_id alarmNameId,
+      cell_name cellName
+    FROM unicom_alarm_lte
+	WHERE node_name
+	  NOT IN (SELECT node_name FROM unicom_protect_lte)
   </select>
 
   <select id="getGroupAlarmByName" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">

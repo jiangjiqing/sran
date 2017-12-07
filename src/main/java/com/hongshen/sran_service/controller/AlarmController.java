@@ -30,37 +30,82 @@ public class AlarmController {
 		JSONObject result = new JSONObject();
         List<JSONObject> dataList = new ArrayList<JSONObject>();
 
+
         NetObjBase objWcdma = objFactory.getNetObj(supplier, Constants.WCDMA);
         NetObjBase objLte = objFactory.getNetObj(supplier, Constants.LTE);
 
-        List<JSONObject> dataListWcdma = objWcdma.getAlarmService().getAllAlarmInfo();
-        List<JSONObject> dataListLte = objLte.getAlarmService().getAllAlarmInfo();
+        List<JSONObject> protectListWcdma = objWcdma.getAlarmService().getProtectAlarmInfoList();
+        List<JSONObject> normalListWcdma = objWcdma.getAlarmService().getNormalAlarmInfoList();
+        List<JSONObject> protectListLte = objLte.getAlarmService().getProtectAlarmInfoList();
+        List<JSONObject> normalListLte = objLte.getAlarmService().getNormalAlarmInfoList();
 
-        if (!dataListWcdma.isEmpty() || !dataListLte.isEmpty()){
-            // add 3G data
-            if (!dataListWcdma.isEmpty()){
+        // add protect alarm
+        if (!protectListWcdma.isEmpty() || !protectListLte.isEmpty()) {
+
+            JSONObject protect = new JSONObject();
+            protect.put("type", "protect");
+
+            List<JSONObject> protectList = new ArrayList<JSONObject>();
+
+            // add 3G
+            if (!protectListWcdma.isEmpty()) {
                 JSONObject dataWcdma = new JSONObject();
 
                 dataWcdma.put("generation", Constants.WCDMA);
-                dataWcdma.put("alarms", dataListWcdma);
-                dataList.add(dataWcdma);
+                dataWcdma.put("alarms", protectListWcdma);
+                protectList.add(dataWcdma);
             }
 
-            // add 4G data
-            if (!dataListLte.isEmpty()){
+            // add 4G
+            if (!protectListLte.isEmpty()) {
                 JSONObject dataLte = new JSONObject();
 
                 dataLte.put("generation", Constants.LTE);
-                dataLte.put("alarms", dataListLte);
-                dataList.add(dataLte);
+                dataLte.put("alarms", protectListLte);
+                protectList.add(dataLte);
             }
 
-            result.put("result", Constants.SUCCESS);
-            result.put("data",dataList);
+            protect.put("list", protectList);
+            dataList.add(protect);
+        }
 
-        } else {
+        // add normal alarm
+        if (!normalListWcdma.isEmpty() || !normalListLte.isEmpty()) {
+
+            JSONObject normal = new JSONObject();
+            normal.put("type", "normal");
+
+            List<JSONObject> normalList = new ArrayList<JSONObject>();
+
+            // add 3G
+            if (!normalListWcdma.isEmpty()) {
+                JSONObject dataWcdma = new JSONObject();
+
+                dataWcdma.put("generation", Constants.WCDMA);
+                dataWcdma.put("alarms", normalListWcdma);
+                normalList.add(dataWcdma);
+            }
+
+            // add 4G
+            if (!normalListLte.isEmpty()) {
+                JSONObject dataLte = new JSONObject();
+
+                dataLte.put("generation", Constants.LTE);
+                dataLte.put("alarms", normalListLte);
+                normalList.add(dataLte);
+            }
+
+            normal.put("list", normalList);
+            dataList.add(normal);
+        }
+
+        if (dataList.isEmpty()){
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
+
+        } else {
+            result.put("result", Constants.SUCCESS);
+            result.put("data",dataList);
         }
 
         return result;
