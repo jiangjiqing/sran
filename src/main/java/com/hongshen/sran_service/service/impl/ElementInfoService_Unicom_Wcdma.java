@@ -5,8 +5,6 @@ import com.hongshen.sran_service.dao.*;
 import com.hongshen.sran_service.service.ElementInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.io.Reader;
 import java.util.List;
 
 /**
@@ -103,6 +101,11 @@ public class ElementInfoService_Unicom_Wcdma implements ElementInfoService {
     @Override
     public JSONObject getNodeLocation(String nodeName) {
         return nodeMapper.getNodeLocation(nodeName);
+    }
+
+    @Override
+    public List<JSONObject> getNodeLocationsByGroup(String groupName) {
+        return nodeMapper.getNodeLocationsByGroup(groupName);
     }
 
     @Override

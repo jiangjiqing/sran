@@ -46,16 +46,15 @@ public class MapController extends BaseController{
                 dataOne.put("name",groupName);
 
                 // longitude \ latitude and scope
-                List<JSONObject> nodeList =  obj.getElementInfoService().getNodeListByGroup(groupName);
+                List<JSONObject> nodeList =  obj.getElementInfoService().getNodeLocationsByGroup(groupName);
                 List<Double[]> list = new ArrayList<>();
-
 
                     for (JSONObject node : nodeList) {
 
                         Double latitude = node.getDouble("latitude");
                         Double longitude = node.getDouble("longitude");
 
-                        if(latitude!= null && longitude!= null){
+                        if(latitude!= null && longitude!= null&&latitude!=0.0&&longitude!=0.0){
                             Double[] doubles ={latitude,longitude};
                             list.add(doubles);
                         }

@@ -5,8 +5,6 @@ import com.hongshen.sran_service.dao.*;
 import com.hongshen.sran_service.service.ElementInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.io.Reader;
 import java.util.List;
 
 /**
@@ -35,7 +33,8 @@ public class ElementInfoService_Unicom_Lte implements ElementInfoService {
         return protectMapper.getProtectList();
     }
 
-    @Override
+
+   @Override
     public List<JSONObject> getFavoriteList(String TableName) {
         return favoriteMapper.getFavoriteList(TableName);
     }
@@ -104,6 +103,11 @@ public class ElementInfoService_Unicom_Lte implements ElementInfoService {
     @Override
     public JSONObject getNodeLocation(String nodeName) {
         return  nodeMapper.getNodeLocation(nodeName);
+    }
+
+    @Override
+    public List<JSONObject> getNodeLocationsByGroup(String groupName) {
+        return nodeMapper.getNodeLocationsByGroup(groupName);
     }
 
     @Override

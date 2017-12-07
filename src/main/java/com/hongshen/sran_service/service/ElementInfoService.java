@@ -54,4 +54,5 @@ public interface ElementInfoService {
 
     int addNodes(String tableName, List<JSONObject> nodeNames);
 
+    List<JSONObject> getNodeLocationsByGroup(String groupName);
 }

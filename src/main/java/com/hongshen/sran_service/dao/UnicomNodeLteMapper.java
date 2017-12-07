@@ -59,6 +59,8 @@ public interface UnicomNodeLteMapper {
 
     List<JSONObject> getNodeListByGroup(@Param("groupName") String groupName);
 
+    List<JSONObject> getNodeLocationsByGroup(@Param("groupName") String groupName);
+    
     List<String> getNodeNameListByGroup(@Param("groupName")String groupName);
 
     JSONObject getNodeLocation(String nodeName);
