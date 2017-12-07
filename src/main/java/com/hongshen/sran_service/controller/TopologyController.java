@@ -50,18 +50,19 @@ public class TopologyController extends BaseController {
 
     // Query group list by room
     @GET
-    @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/rooms/groups")
+    @Path("/suppliers/{supplier}/generations/{generation}/nets/rooms/groups")
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject getGroupList(@PathParam("supplier")String supplier,
                                    @PathParam("generation")String generation,
-                                   @HeaderParam("roomName")String roomName,
-                                   @HeaderParam("Auth-Token")String authToken){
+                                   @HeaderParam("Auth-Token")String authToken,
+                                   JSONObject param){
         //TODO  chinese roomName
         JSONObject result = new JSONObject();
         List<JSONObject> dataList = new ArrayList<>();
 
         NetObjBase obj = objFactory.getNetObj(supplier,generation);
-        List<JSONObject> groupList = obj.getTelecomRoomService().getGroupListByRoom(roomName);
+
+        List<JSONObject> groupList = obj.getTelecomRoomService().getGroupListByRoom(param.getString("roomName"));
 
         for (JSONObject group : groupList){
 
