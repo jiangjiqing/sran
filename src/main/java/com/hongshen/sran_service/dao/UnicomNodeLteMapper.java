@@ -74,4 +74,7 @@ public interface UnicomNodeLteMapper {
     List<String> getGroupNameList();
 
     JSONObject getNodeInfo(@Param("nodeName") String nodeName);
+
+    List<JSONObject> getNodes(@Param("tableName") String tableName,@Param("name")String name);
+
 }

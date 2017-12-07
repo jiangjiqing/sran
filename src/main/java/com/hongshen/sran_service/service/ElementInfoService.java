@@ -3,6 +3,7 @@ package com.hongshen.sran_service.service;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.stereotype.Service;
 
+import java.io.Reader;
 import java.util.List;
 /**
  * Created by poplar on 11/13/17.
@@ -13,7 +14,7 @@ public interface ElementInfoService {
 
     List<JSONObject> getProtectList();
 
-    List<JSONObject> getFavoriteList();
+    List<JSONObject> getFavoriteList(String TableName);
 
     int cancelCollection(String name);
 
@@ -40,5 +41,17 @@ public interface ElementInfoService {
     JSONObject getCellInfo(String cellName);
 
     JSONObject getNodeLocation(String nodeName);
+
+    JSONObject getTable(String gettableName);
+
+    int deleteNode(String tableName, String name);
+
+    List<JSONObject> getNodes(String tableName,String name);
+
+    int deleteNodes(String tableName, String name);
+
+    int addNode(String tableName,String name);
+
+    int addNodes(String tableName, List<JSONObject> nodeNames);
 
 }

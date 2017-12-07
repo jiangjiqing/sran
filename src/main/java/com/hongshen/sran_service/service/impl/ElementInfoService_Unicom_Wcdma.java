@@ -5,6 +5,8 @@ import com.hongshen.sran_service.dao.*;
 import com.hongshen.sran_service.service.ElementInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.io.Reader;
 import java.util.List;
 
 /**
@@ -34,8 +36,8 @@ public class ElementInfoService_Unicom_Wcdma implements ElementInfoService {
     }
 
     @Override
-    public List<JSONObject> getFavoriteList() {
-        return favoriteMapper.getFavoriteList();
+    public List<JSONObject> getFavoriteList(String TableName) {
+        return favoriteMapper.getFavoriteList(TableName);
     }
 
     @Override
@@ -102,5 +104,36 @@ public class ElementInfoService_Unicom_Wcdma implements ElementInfoService {
     public JSONObject getNodeLocation(String nodeName) {
         return nodeMapper.getNodeLocation(nodeName);
     }
+
+    @Override
+    public JSONObject getTable(String gettableName) {
+        return favoriteMapper.getTable(gettableName);
+    }
+
+    @Override
+    public int deleteNode(String tableName, String name) {
+        return favoriteMapper.deleteNode(tableName,name);
+    }
+
+    @Override
+    public List<JSONObject> getNodes(String tableName,String name) {
+        return nodeMapper.getNodes(tableName,name);
+    }
+
+    @Override
+    public int deleteNodes(String tableName, String name) {
+        return favoriteMapper.deleteNodes(tableName,name);
+    }
+
+    @Override
+    public int addNode(String tableName, String name) {
+        return favoriteMapper.addNode(tableName,name);
+    }
+
+    @Override
+    public int addNodes(String tableName, List<JSONObject> nodeNames) {
+        return favoriteMapper.addNodes(tableName,nodeNames);
+    }
+
 
 }

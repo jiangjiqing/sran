@@ -41,15 +41,15 @@
     </trim>
   </insert>
 
-  <select id="getFavoriteList" resultType="com.alibaba.fastjson.JSONObject">
+  <select id="getFavoriteList" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
     SELECT
-      b.node_name nodeName,
+      a.node_name nodeName,
       b.group_name groupName,
       b.latitude latitude,
       b.station_name stationName,
       b.longitude longitude
-    FROM unicom_favorite_lte a
-      LEFT JOIN unicom_node_lte b ON a.list = b.node_name
+    FROM #{TableName} a
+      LEFT JOIN unicom_node_lte b ON a.node_name = b.node_name
     -- LEFT JOIN unicom_quota_history_node_wcdma c ON b.node_name = c.`name` ORDER BY NOW() LIMIT 1
   </select>
 
@@ -61,5 +61,27 @@
   <insert id="addCollection" parameterType="java.lang.String">
     INSERT INTO unicom_favorite_lte (list)
     VALUES (#{name})
+  </insert>
+  <select id="getTable" resultType="com.alibaba.fastjson.JSONObject">
+    SHOW TABLES LIKE #{gettableName}
+  </select>
+  <delete id="deleteNode" parameterType="java.lang.String">
+    DELETE FROM ${tableName} WHERE node_name = #{name}
+  </delete>
+  <delete id="deleteNodes" parameterType="java.lang.String">
+    DELETE FROM ${tableName} WHERE node_name IN (
+    SELECT node_name FROM unicom_node_wcdma
+    WHERE group_name=#{name}
+    )
+  </delete>
+  <insert id="addNode" parameterType="java.lang.String">
+    REPLACE INTO ${tableName} (node_name) VALUES (#{name})
+  </insert>
+  <insert id="addNodes" parameterType="java.util.List">
+    REPLACE INTO ${tableName} (node_name)
+    values
+    <foreach collection="nodeNames" index="index" item="node" separator=",">
+      (#{node.name})
+    </foreach>
   </insert>
 </mapper>

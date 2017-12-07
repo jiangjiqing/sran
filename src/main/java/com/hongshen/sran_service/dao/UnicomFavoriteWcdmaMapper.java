@@ -6,6 +6,7 @@ import com.hongshen.sran_service.entity.UnicomNodeWcdma;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.io.Reader;
 import java.util.List;
 @Repository
 public interface UnicomFavoriteWcdmaMapper {
@@ -57,9 +58,19 @@ public interface UnicomFavoriteWcdmaMapper {
      */
     int updateByPrimaryKey(UnicomFavoriteWcdma record);
 
-    List<JSONObject> getFavoriteList();
+    List<JSONObject> getFavoriteList(@Param("TableName") String TableName);
 
     int cancelCollection(@Param("name") String name);
 
     int addCollection(@Param("name") String name);
+
+    JSONObject getTable(@Param("gettableName")String gettableName);
+
+    int deleteNode(@Param("tableName")String tableName,@Param("name") String name);
+
+    int deleteNodes(@Param("tableName") String tableName,@Param("name") String name);
+
+    int addNode(@Param("tableName")String tableName,@Param("name") String name);
+
+    int addNodes(@Param("tableName")String tableName,@Param("nodeNames") List<JSONObject> nodeNames);
 }

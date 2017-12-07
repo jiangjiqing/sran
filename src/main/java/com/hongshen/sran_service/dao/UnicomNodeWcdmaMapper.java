@@ -68,4 +68,7 @@ public interface UnicomNodeWcdmaMapper {
     JSONObject getNodeLocation(String nodeName);
 
     JSONObject getNodeInfo(@Param("nodeName") String nodeName);
+
+    List<JSONObject> getNodes(@Param("tableName") String TableName,@Param("name")String name);
+
 }

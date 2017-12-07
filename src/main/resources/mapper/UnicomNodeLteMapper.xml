@@ -269,4 +269,12 @@
     WHERE group_name = #{groupName}
     GROUP BY name
   </select>
+  <select id="getNodes" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
+    SELECT
+    a.node_name
+    FROM ${tableName} a
+    LEFT JOIN  unicom_node_lte b
+    ON a.node_name = b.node_name
+    WHERE b.group_name = #{name}
+  </select>
 </mapper>
