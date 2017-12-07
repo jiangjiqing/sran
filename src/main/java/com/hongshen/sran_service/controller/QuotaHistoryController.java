@@ -122,7 +122,7 @@ public class QuotaHistoryController extends BaseController {
         }else if(msg.equals("MIN")){
            pramary=day*24*60+hour*60+mins;
         }
-            return pramary;
+        return pramary;
     }
 
     public static List getValue(Date start, Date end, List<JSONObject> quotaList,  String[] formula,int min,Date start1,Date end1) {
@@ -226,7 +226,7 @@ public class QuotaHistoryController extends BaseController {
             condition = "where"+" "+"name="+name;
         }
 
-    return condition;
+        return condition;
 
     }
 
@@ -251,8 +251,8 @@ public class QuotaHistoryController extends BaseController {
     @Path("/suppliers/{supplier}/generations/{generation}/nets/{level}/history/quotas/export")
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject quotaHistoryExport(@RequestParam(value = "quotaHistory") JSONObject quotaHistoryExport,
-                                   @PathParam("supplier") String supplier, @PathParam("generation") String generation,
-                                   @HeaderParam("Auth-Token") String authToken, @PathParam("level") String level) {
+                                         @PathParam("supplier") String supplier, @PathParam("generation") String generation,
+                                         @HeaderParam("Auth-Token") String authToken, @PathParam("level") String level) {
 
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         String condition = null;
@@ -287,7 +287,7 @@ public class QuotaHistoryController extends BaseController {
                     "formula19", "formula20", "formula21",
                     "formula22", "formula23", "formula24",
                     "formula25"};//TODO
-                         }
+        }
 
         List<JSONObject> quotaListexport = getQuotas(level,obj,start,end,condition);
 
@@ -315,8 +315,8 @@ public class QuotaHistoryController extends BaseController {
     @Path("/suppliers/{supplier}/generations/{generation}/nets/{level}/history/counters/download")
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject quotaHistoryCounterExport(@RequestParam(value = "quotaHistory") JSONObject quotaHistoryExport,
-                                         @PathParam("supplier") String supplier, @PathParam("generation") String generation,
-                                         @HeaderParam("Auth-Token") String authToken, @PathParam("level") String level) {
+                                                @PathParam("supplier") String supplier, @PathParam("generation") String generation,
+                                                @HeaderParam("Auth-Token") String authToken, @PathParam("level") String level) {
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         String condition = null;
         Date start =null;
@@ -334,9 +334,9 @@ public class QuotaHistoryController extends BaseController {
                     .replace("[", "").replaceAll("\"", "").split(",");
 
             condition =Condition(st);
-          }
+        }
 
-         List<JSONObject> counterList = obj.getQuotaService().getCounterExportGroup(start,end,condition);
+        List<JSONObject> counterList = obj.getQuotaService().getCounterExportGroup(start,end,condition);
 
         for (JSONObject json : counterList) {
             JSONObject result1 =new JSONObject();
@@ -346,7 +346,7 @@ public class QuotaHistoryController extends BaseController {
             list.add(result1);
 
         }
-         result.put("data",list);
+        result.put("data",list);
         return result;
 
     }
