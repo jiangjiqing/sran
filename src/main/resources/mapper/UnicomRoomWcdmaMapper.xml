@@ -111,4 +111,10 @@
       floors = #{floors,jdbcType=VARCHAR}
     where room = #{room,jdbcType=VARCHAR}
   </update>
+
+  <select id="getRoomLocationList" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT *
+    FROM unicom_room_wcdma
+  </select>
+
 </mapper>

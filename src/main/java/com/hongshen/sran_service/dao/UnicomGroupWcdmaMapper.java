@@ -73,4 +73,10 @@ public interface UnicomGroupWcdmaMapper {
 
     JSONObject getGroupInfo(@Param("groupName") String groupName);
 
+    List<JSONObject> getRoomList();
+
+    List<JSONObject> getGroupListByRoom(@Param("roomName")String roomName);
+
+    List<String> getGroupNameListByRoom(@Param("roomName")String roomName);
+
 }

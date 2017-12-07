@@ -308,4 +308,23 @@
     FROM unicom_group_wcdma
   </select>
 
+  <select id="getRoomList" resultType="java.lang.String">
+    SELECT DISTINCT (room) room
+    FROM unicom_group_wcdma
+  </select>
+
+  <select id="getGroupListByRoom" parameterType="java.lang.String" resultType="java.lang.String">
+    SELECT
+      group_name groupName,
+    FROM unicom_group_wcdma
+    WHERE room = #{roomName}
+  </select>
+
+  <select id="getGroupNameListByRoom" parameterType="java.lang.String" resultType="java.lang.String">
+    SELECT
+      group_name groupName
+    FROM unicom_group_wcdma
+    WHERE room = #{roomName}
+  </select>
+
 </mapper>

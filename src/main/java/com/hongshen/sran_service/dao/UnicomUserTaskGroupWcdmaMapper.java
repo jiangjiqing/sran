@@ -1,7 +1,9 @@
 package com.hongshen.sran_service.dao;
 
+import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.entity.UnicomUserTaskGroupWcdma;
 import com.hongshen.sran_service.entity.UnicomUserTaskGroupWcdmaWithBLOBs;
+import org.apache.ibatis.annotations.Param;
 
 public interface UnicomUserTaskGroupWcdmaMapper {
     /**
@@ -59,4 +61,6 @@ public interface UnicomUserTaskGroupWcdmaMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(UnicomUserTaskGroupWcdma record);
+
+    JSONObject getTaskInfo(@Param("loginName")String loginName);
 }

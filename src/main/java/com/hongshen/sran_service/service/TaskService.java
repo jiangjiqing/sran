@@ -1,10 +1,19 @@
 package com.hongshen.sran_service.service;
 
-import java.util.Map;
+import com.alibaba.fastjson.JSONObject;
 
 /**
  * Created by poplar on 11/13/17.
  */
 public interface TaskService {
-//    Map<String,Object> getTaskInfo();
+
+    JSONObject getTaskInfo(String loginName);
+
+    Boolean hasOriginalLog(String loginName);
+
+    Boolean hasScriptLog(String loginName);
+
+    int startTask(String loginName, JSONObject param);
+
+    int cacelTask(String loginName);
 }

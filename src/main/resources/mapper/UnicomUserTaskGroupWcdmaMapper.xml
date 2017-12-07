@@ -172,4 +172,10 @@
       endTime = #{endtime,jdbcType=TIMESTAMP}
     where login_name = #{loginName,jdbcType=VARCHAR}
   </update>
+
+  <select id="getTaskInfo" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT *
+    FROM unicom_user_task_group_wcdma
+    WHERE login_name = #{loginName}
+  </select>
 </mapper>
