@@ -214,6 +214,13 @@
     FROM unicom_node_lte
   </select>
 
+  <select id="getNodeLocationsByGroup" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT
+        distinct latitude, longitude
+     FROM unicom_node_lte
+     WHERE group_name = #{groupName}
+  </select>
+
   <select id="getNodeListByGroup" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
     SELECT
       node_name name,
