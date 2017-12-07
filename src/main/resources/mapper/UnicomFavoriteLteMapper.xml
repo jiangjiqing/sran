@@ -48,7 +48,7 @@
       b.latitude latitude,
       b.station_name stationName,
       b.longitude longitude
-    FROM #{TableName} a
+    FROM ${TableName} a
       LEFT JOIN unicom_node_lte b ON a.node_name = b.node_name
     -- LEFT JOIN unicom_quota_history_node_wcdma c ON b.node_name = c.`name` ORDER BY NOW() LIMIT 1
   </select>
