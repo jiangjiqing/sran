@@ -159,10 +159,41 @@ public class MapController extends BaseController{
                 Double longitude = t1+t2+t3+t4;
                 json = Scopes(latitude,longitude,4);
             }else if(list.size()==3){
-                listJson.add(list);
+                Double latitude = 0.0;
+                Double longitude =0.0;
+                for (int i=0;i<list.size();i++){
+                    latitude = latitude + list.get(i)[0];
+                    longitude = longitude + list.get(i)[1];
+                }
 
-            }else if(list.size() < 3){
-                listJson.add(2);
+                listJson.add(list);
+                json = Scopes(latitude,longitude,3);
+            }else if(list.size() ==2){
+                Double[] d1={list.get(0)[0]+0.0001,list.get(0)[1]+0.0001};
+                Double[] d2={list.get(1)[0]-0.0001,list.get(1)[1]-0.0001};
+                Double[] d3={list.get(0)[0]+0.0001,list.get(1)[1]-0.0001};
+                Double[] d4={list.get(1)[0]-0.0001,list.get(0)[1]+0.0001};
+                Double latitude = (list.get(0)[0]+list.get(1)[0]);
+                Double longitude = (list.get(0)[1]+list.get(1)[1]);
+
+                listJson.add(d1);
+                listJson.add(d2);
+                listJson.add(d3);
+                listJson.add(d4);
+
+                json = Scopes(latitude,longitude,2);
+            }else if(list.size() ==1){
+
+                Double[] d1  = {list.get(0)[0]+0.0001,list.get(0)[1]+0.0001};
+                Double[] d2  = {list.get(0)[0]-0.0001,list.get(0)[1]-0.0001};
+                Double[] d3  = {list.get(0)[0]+0.0001,list.get(0)[1]-0.0001};
+                Double[] d4  = {list.get(0)[0]-0.0001,list.get(0)[1]+0.0001};
+                listJson.add(d1);
+                listJson.add(d2);
+                listJson.add(d3);
+                listJson.add(d4);
+                json = Scopes(list.get(0)[0],list.get(0)[1],1);
+
             }
         }
 
@@ -170,7 +201,7 @@ public class MapController extends BaseController{
         result.putAll(json);
         System.out.println(result);
         return result;
-    };
+    }
 
     @GET
     @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/{groupName}/nodes/mapinfos")
