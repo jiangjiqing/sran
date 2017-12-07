@@ -49,7 +49,7 @@ public class MapController extends BaseController{
                 List<JSONObject> nodeList =  obj.getElementInfoService().getNodeListByGroup(groupName);
                 List<Double[]> list = new ArrayList<>();
 
-                if (nodeList.size() != 0) {
+
                     for (JSONObject node : nodeList) {
 
                         Double latitude = node.getDouble("latitude");
@@ -58,11 +58,7 @@ public class MapController extends BaseController{
                         if(latitude!= null && longitude!= null){
                             Double[] doubles ={latitude,longitude};
                             list.add(doubles);
-                        }else{
-                            Double[] doubles ={Double.parseDouble(Constants.INVALID_VALUE_LOCATION),Double.parseDouble(Constants.INVALID_VALUE_LOCATION)};
-                            list.add(doubles);
                         }
-                    }
                 }
                 dataOne.putAll(LatitudeAndLongitude(list));
 
