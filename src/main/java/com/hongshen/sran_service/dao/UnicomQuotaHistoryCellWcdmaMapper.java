@@ -35,5 +35,6 @@ public interface UnicomQuotaHistoryCellWcdmaMapper {
     void addQuotaHistoryCellList(@Param("cloumns")List<String> cloumns,
                                     @Param("valueList")List<String> valueList);
 
-    List<JSONObject> getQuotasCell(@Param("start")Date start, @Param("end")Date end,@Param("condition") String condition);
+    List<JSONObject> getQuotasCell(@Param("start")Date start, @Param("end")Date end,
+                                   @Param("condition") String condition);
 }

@@ -2,6 +2,8 @@ package com.hongshen.sran_service.service;
 
 import com.alibaba.fastjson.JSONObject;
 
+import java.util.List;
+
 public interface ScannerService {
 
     String cellCalculation(String time);
@@ -9,4 +11,6 @@ public interface ScannerService {
     JSONObject nodeCalculation(String time);
 
     String groupCalculation(JSONObject params, String time);
+
+    List<JSONObject> groupHasTopTen(String groupName, String quotaName, String time);
 }

@@ -38,7 +38,6 @@ public class NetObj_Unicom_Lte implements NetObjBase {
     @Autowired
     private ScannerService_Unicom_Lte scannerService;
 
-
     @Override
     public AuthorityService getAuthorityService(){ return authorityService; }
 

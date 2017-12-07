@@ -3,6 +3,7 @@ package com.hongshen.sran_service.dao;
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.entity.UnicomFormula;
 import com.hongshen.sran_service.entity.UnicomFormulaWcdma;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
@@ -59,4 +60,6 @@ public interface UnicomFormulaWcdmaMapper {
     int updateByPrimaryKey(UnicomFormulaWcdma record);
 
     List<JSONObject> getFormulaList();
+
+    JSONObject getFourmulaByQuotaName(@Param("quotaName")String quotaName);
 }

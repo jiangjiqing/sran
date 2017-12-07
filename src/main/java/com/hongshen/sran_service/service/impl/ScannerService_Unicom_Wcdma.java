@@ -517,4 +517,76 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
         }
         return result;
     }
+
+    @Override
+    public List<JSONObject> groupHasTopTen(String groupName, String quotaName, String time) {
+
+        List<JSONObject> resultList = new ArrayList<>();
+
+        Map<String, String> counterMap = ScannerHelper.getCounterMap(cacheService.getCounterListProcessed(false));
+
+        JSONObject formula = formulaMapper.getFourmulaByQuotaName(quotaName);
+
+        if (formula == null) {
+
+            return resultList;
+        }
+
+        String expression = formula.getString("expression");
+
+        List<String> variableList = ScannerHelper.parseExpression(expression);
+
+        if (variableList.size() == 0) {
+
+            return resultList;
+        }
+
+        Boolean flag = false;
+
+        for (int i = 0; i < variableList.size(); i ++) {
+
+            String variable = variableList.get(i);
+
+            if (counterMap.get(variable) != null) {
+
+                String counter = counterMap.get(variable);
+
+                if (i != variableList.size() - 1) {
+
+                     expression = expression.replaceAll(variable, counter);
+                } else {
+
+                    expression = expression.replaceAll(variable, counter);
+
+                    flag = true;
+                }
+            }else {
+
+                break;
+            }
+        }
+
+        if (!flag) {
+
+            return resultList;
+        }
+
+        List<String> nodeNameList = nodeMapper.getNodeNameListByGroup(groupName);
+
+        if (nodeNameList.size() == 0) {
+
+            return resultList;
+        }
+
+        List<String> cellList = cellMapper.getCellNameListByNodeNameList(nodeNameList);
+
+        if (cellList.size() == 0) {
+
+            return resultList;
+        }
+
+        resultList = counterHistoryMapper.getCellHasTopTen(expression, cellList, time);
+
+        return resultList;
+    }
 }

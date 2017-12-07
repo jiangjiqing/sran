@@ -127,4 +127,14 @@
     FROM unicom_cell_wcdma
   </select>
 
+  <select id="getCellNameListByNodeNameList" resultType="java.lang.String">
+    SELECT
+    cell_name name
+    FROM unicom_cell_wcdma
+    WHERE
+    node_name in
+    <foreach collection="nodeNameList" item="nodeName" index="index" open="(" separator="," close=")" >
+      #{nodeName}
+    </foreach>
+  </select>
 </mapper>

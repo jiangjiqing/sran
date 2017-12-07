@@ -513,6 +513,12 @@ public class ScannerService_Unicom_Lte implements ScannerService{
         return result;
     }
 
+    @Override
+    public List<JSONObject> groupHasTopTen(String groupName, String quotaName, String time) {
+
+        return null;
+    }
+
     public String groupCalculationOld(JSONObject params, String time){
 
         String result = null;
