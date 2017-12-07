@@ -277,7 +277,7 @@
 
   <select id="getGroupList" resultType="com.alibaba.fastjson.JSONObject">
     SELECT
-      group_name name,
+      group_name name
     FROM  unicom_group_wcdma
   </select>
 
@@ -315,7 +315,7 @@
 
   <select id="getGroupListByRoom" parameterType="java.lang.String" resultType="java.lang.String">
     SELECT
-      group_name groupName,
+      group_name groupName
     FROM unicom_group_wcdma
     WHERE room = #{roomName}
   </select>
