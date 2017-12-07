@@ -25,9 +25,6 @@ public class ScannerService_Unicom_Lte implements ScannerService{
     @Autowired
     private UnicomCounterHistoryLteMapper counterHistoryMapper;
 
-    //@Autowired
-    //private UnicomFormulaLteMapper formulaMapper;
-
     @Autowired
     private UnicomCellLteMapper cellMapper;
 
@@ -36,7 +33,6 @@ public class ScannerService_Unicom_Lte implements ScannerService{
 
     @Autowired
     private CacheService_Unicom_Lte cacheService;
-    //private UnicomCounterLteMapper counterMapper;
 
     @Autowired
     private UnicomQuotaThresholdCellLteMapper quotaThresholdCellMapper;
@@ -349,7 +345,7 @@ public class ScannerService_Unicom_Lte implements ScannerService{
     }
 
     @Override
-    public String groupCalculation(JSONObject params, String time){
+    public String groupCalculation(JSONObject params, String time) {
 
         String result = null;
 
@@ -375,6 +371,7 @@ public class ScannerService_Unicom_Lte implements ScannerService{
         paramcloumns.add("time");
 
         for (JSONObject f : formulaList) {
+
             paramcloumns.add("formula" + f.getString("id"));
         }
 

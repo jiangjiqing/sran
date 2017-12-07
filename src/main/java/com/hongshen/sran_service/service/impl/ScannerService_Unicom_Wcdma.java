@@ -3,8 +3,15 @@ package com.hongshen.sran_service.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.dao.*;
 import com.hongshen.sran_service.service.ScannerService;
+import com.hongshen.sran_service.service.util.ScannerHelper;
+import net.java.dev.eval.Expression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class ScannerService_Unicom_Wcdma implements ScannerService{
@@ -45,18 +52,21 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
     @Autowired
     private UnicomQuotaThresholdGroupWcdmaMapper quotaThresholdGroupMapper;
 
+    @Autowired
+    private CacheService_Unicom_Wcdma cacheService;
+
     @Override
     public String cellCalculation(String time) {
 
         String ret = null;
-/*
+
         Map<String, List<String>> quotaThresholdCellMap =
                 ScannerHelper.getQuotaThresholdMap(quotaThresholdCellMapper.getThresholdCellList());
 
         Map<String, List<String>> expressionSetMap =
                 ScannerHelper.getVariableList(formulaMapper.getFormulaList());
 
-        Map<String, String> counterMap = ScannerHelper.getCounterMap(counterMapper.getCounterList());
+        Map<String, String> counterMap = ScannerHelper.getCounterMap(cacheService.getCounterListProcessed(false));
 
         List<String> paramValues = new ArrayList<>();
 
@@ -65,13 +75,10 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
         paramcloumns.add("name");
         paramcloumns.add("time");
 
-        List<UnicomFormula> formulaList = formulaMapper.getFormulaWcdmaList();
+        List<JSONObject> formulaList = cacheService.getFormulaList(false);
 
-        for (int j = 0; j < formulaList.size(); j ++) {
-
-            UnicomFormula formula = formulaList.get(j);
-
-            paramcloumns.add("formula" + formula.getId());
+        for (JSONObject f : formulaList) {
+            paramcloumns.add("formula" + f.getString("id"));
         }
 
         paramcloumns.add("level");
@@ -95,17 +102,17 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
             paramValue.append("('" + counterHistory.getString("name") + "',");
             paramValue.append("'" + time + "',");
 
-            for (int j = 0; j < formulaList.size(); j ++) {
+            for (JSONObject f : formulaList) {
 
-                UnicomFormula formula = formulaList.get(j);
+                String quotaName = f.getString("quotaName");
 
-                if (expressionSetMap.containsKey(formula.getQuota_name())) {
+                if (expressionSetMap.containsKey(quotaName)) {
 
-                    List<String> variableList = expressionSetMap.get(formula.getQuota_name());
+                    List<String> variableList = expressionSetMap.get(quotaName);
 
                     ScannerHelper.sortStringArray(variableList);
 
-                    String expression = formula.getExpression();
+                    String expression = f.getString("expression");
 
                     boolean flag = false;
 
@@ -152,7 +159,7 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
 
                         int fmLevel =
                                 ScannerHelper
-                                        .levelCalculation(value, quotaThresholdCellMap.get(formula.getQuota_name()));
+                                        .levelCalculation(value, quotaThresholdCellMap.get(quotaName));
 
                         fmLevelList.add(fmLevel);
 
@@ -185,7 +192,6 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
 
             ret = "FAIL";
         }
-*/
         return ret;
     }
 
@@ -193,7 +199,7 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
     public JSONObject nodeCalculation(String time) {
 
         JSONObject resultJson = new JSONObject();
-/*
+
         Map<String, JSONObject> nodeMap = new HashMap<>();
 
         List<String> counterParams = new ArrayList<>();
@@ -204,9 +210,9 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
                 ScannerHelper.getQuotaThresholdMap(quotaThresholdNodeMapper.getThresholdNodeList());
 
         Map<String, List<String>> expressionSetMap =
-                ScannerHelper.getVariableList(formulaMapper.getFormulaList());
+                ScannerHelper.getVariableList(cacheService.getFormulaList(false));
 
-        Map<String, String> counterMap = ScannerHelper.getCounterMap(counterMapper.getCounterList());
+        Map<String, String> counterMap = ScannerHelper.getCounterMap(cacheService.getCounterListProcessed(false));
 
         List<JSONObject> counterList = counterMapper.getCounterList();
 
@@ -215,18 +221,16 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
             counterParams.add("counter" + counter.getString("id"));
         }
 
-        List<UnicomFormula> formulaList = formulaMapper.getFormulaWcdmaList();
+        List<JSONObject> formulaList = cacheService.getFormulaList(false);
 
         List<String> paramcloumns = new ArrayList<>();
 
         paramcloumns.add("name");
         paramcloumns.add("time");
 
-        for (int j = 0; j < formulaList.size(); j ++) {
+        for (JSONObject f : formulaList) {
 
-            UnicomFormula formula = formulaList.get(j);
-
-            paramcloumns.add("formula" + formula.getId());
+            paramcloumns.add("formula" + f.getString("id"));
         }
 
         paramcloumns.add("level");
@@ -252,17 +256,17 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
             paramValue.append("('" + nodeResult.getString("nodeName") + "',");
             paramValue.append("'" + time + "',");
 
-            for (int j = 0; j < formulaList.size(); j ++) {
+            for (JSONObject f : formulaList) {
 
-                UnicomFormula formula = formulaList.get(j);
+                String quotaName = f.getString("quotaName");
 
-                if (expressionSetMap.containsKey(formula.getQuota_name())) {
+                if (expressionSetMap.containsKey(quotaName)) {
 
-                    List<String> variableList = expressionSetMap.get(formula.getQuota_name());
+                    List<String> variableList = expressionSetMap.get(quotaName);
 
                     ScannerHelper.sortStringArray(variableList);
 
-                    String expression = formula.getExpression();
+                    String expression = f.getString("expression");
 
                     boolean flag = false;
 
@@ -310,7 +314,7 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
 
                         int fmLevel =
                                 ScannerHelper
-                                        .levelCalculation(value, quotaThresholdNodeMap.get(formula.getQuota_name()));
+                                        .levelCalculation(value, quotaThresholdNodeMap.get(quotaName));
 
                         fmLevelList.add(fmLevel);
 
@@ -345,7 +349,6 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
             resultJson.put("nodeMap", null);
             resultJson.put("message", "FAIL");
         }
-*/
         return resultJson;
     }
 
@@ -353,7 +356,7 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
     public String groupCalculation(JSONObject params, String time){
 
         String result = null;
-/*
+
         if (params == null || time == null) {
 
             return null;
@@ -368,18 +371,16 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
 
         List<String> paramValues = new ArrayList<>();
 
-        List<UnicomFormula> formulaList = formulaMapper.getFormulaWcdmaList();
+        List<JSONObject> formulaList = cacheService.getFormulaList(false);
 
         List<String> paramcloumns = new ArrayList<>();
 
         paramcloumns.add("name");
         paramcloumns.add("time");
 
-        for (int j = 0; j < formulaList.size(); j ++) {
+        for (JSONObject f : formulaList) {
 
-            UnicomFormula formula = formulaList.get(j);
-
-            paramcloumns.add("formula" + formula.getId());
+            paramcloumns.add("formula" + f.getString("id"));
         }
 
         paramcloumns.add("level");
@@ -390,9 +391,9 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
                 ScannerHelper.getQuotaThresholdMap(quotaThresholdGroupMapper.getThresholdGroupList());
 
         Map<String, List<String>> expressionSetMap =
-                ScannerHelper.getVariableList(formulaMapper.getFormulaList());
+                ScannerHelper.getVariableList(cacheService.getFormulaList(false));
 
-        Map<String, String> counterMap = ScannerHelper.getCounterMap(counterMapper.getCounterList());
+        Map<String, String> counterMap = ScannerHelper.getCounterMap(cacheService.getCounterListProcessed(false));
 
         for (String groupName : groupNameList) {
 
@@ -427,15 +428,15 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
                 continue;
             }
 
-            for (int j = 0; j < formulaList.size(); j ++) {
+            for (JSONObject f : formulaList) {
 
-                UnicomFormula formula = formulaList.get(j);
+                String quotaName = f.getString("quotaName");
 
-                if (expressionSetMap.containsKey(formula.getQuota_name())) {
+                if (expressionSetMap.containsKey(quotaName)) {
 
-                    List<String> variableList = expressionSetMap.get(formula.getQuota_name());
+                    List<String> variableList = expressionSetMap.get(quotaName);
 
-                    String expression = formula.getExpression();
+                    String expression = f.getString("expression");
 
                     boolean flag = false;
 
@@ -483,7 +484,7 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
 
                         int fmLevel =
                                 ScannerHelper
-                                        .levelCalculation(value, quotaThresholdGroupMap.get(formula.getQuota_name()));
+                                        .levelCalculation(value, quotaThresholdGroupMap.get(quotaName));
 
                         fmLevelList.add(fmLevel);
 
@@ -514,7 +515,6 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
 
             result = "FAIL";
         }
-*/
         return result;
     }
 }
