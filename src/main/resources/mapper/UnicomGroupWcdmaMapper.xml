@@ -308,12 +308,12 @@
     FROM unicom_group_wcdma
   </select>
 
-  <select id="getRoomList" resultType="java.lang.String">
+  <select id="getRoomList" resultType="com.alibaba.fastjson.JSONObject">
     SELECT DISTINCT (room) room
     FROM unicom_group_wcdma
   </select>
 
-  <select id="getGroupListByRoom" parameterType="java.lang.String" resultType="java.lang.String">
+  <select id="getGroupListByRoom" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
     SELECT
       group_name groupName
     FROM unicom_group_wcdma

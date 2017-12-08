@@ -7,6 +7,8 @@ import com.hongshen.sran_service.service.util.MapHelper;
 import com.hongshen.sran_service.service.util.NetObjBase;
 import com.hongshen.sran_service.service.util.NetObjFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -55,14 +57,14 @@ public class TopologyController extends BaseController {
     public JSONObject getGroupList(@PathParam("supplier")String supplier,
                                    @PathParam("generation")String generation,
                                    @HeaderParam("Auth-Token")String authToken,
-                                   JSONObject param){
+                                   @QueryParam("roomName") String roomName){
         //TODO  chinese roomName
         JSONObject result = new JSONObject();
         List<JSONObject> dataList = new ArrayList<>();
 
         NetObjBase obj = objFactory.getNetObj(supplier,generation);
 
-        List<JSONObject> groupList = obj.getTelecomRoomService().getGroupListByRoom(param.getString("roomName"));
+        List<JSONObject> groupList = obj.getTelecomRoomService().getGroupListByRoom(roomName);
 
         for (JSONObject group : groupList){
 
