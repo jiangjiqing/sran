@@ -39,8 +39,12 @@ public class AlarmLibService_Unicom_Lte implements AlarmLibService {
     }
 
     @Override
+    public int addAlarmIndex(JSONObject param) {
+        return alarmIndexMapper.addAlarmIndex(param);
+    }
+
+    @Override
     public int addAlarm(JSONObject param){
-        //TODO add alarm index
         return alarmLibMapper.addAlarm(param);
     }
 
