@@ -62,7 +62,7 @@ public class TaskController extends BaseController {
         String loginName = "tom";// TODO loginName
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier,generation);
-        int update = obj.getTaskService().startTask(loginName, param);;
+        int update = obj.getTaskService().startTask(loginName, param);
 
         if (update > 0){
             result.put("result", Constants.SUCCESS);
