@@ -115,6 +115,7 @@ public class QuotaController {
                 f.remove("expression");
                 f.remove("status");
                 f.remove("type");
+                f.remove("hasTop10");
 
                 //String value = groupQuota.getString(f.getString("quotaName")); TODO
                 String value = quotas.getString("formula" + f.getString("id"));
@@ -172,6 +173,7 @@ public class QuotaController {
                 f.remove("expression");
                 f.remove("status");
                 f.remove("type");
+                f.remove("hasTop10");
 
                 //String value = groupQuota.getString(f.getString("quotaName")); TODO
                 String value = quotas.getString("formula" + f.getString("id"));

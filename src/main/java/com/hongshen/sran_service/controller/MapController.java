@@ -21,6 +21,7 @@ public class MapController extends BaseController{
     @Autowired
     private NetObjFactory objFactory;
 
+    // Query group list for map
     @GET
     @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/mapinfos")
     @Produces(MediaType.APPLICATION_JSON)
@@ -203,6 +204,7 @@ public class MapController extends BaseController{
         return result;
     }
 
+    // Query one group's node list for map
     @GET
     @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/{groupName}/nodes/mapinfos")
     @Produces(MediaType.APPLICATION_JSON)
@@ -271,6 +273,7 @@ public class MapController extends BaseController{
         return result;
     }
 
+    // Query one node's cell list for map
     @GET
     @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/{groupName}/nodes/{nodeName}/cells/mapinfos")
     @Produces(MediaType.APPLICATION_JSON)
@@ -301,12 +304,12 @@ public class MapController extends BaseController{
                 JSONObject nodeLocation = obj.getElementInfoService().getNodeLocation(nodeName);
                 dataOne.putAll(nodeLocation);
 
-                String latitude = cell.getString("latitude");
+                String latitude = nodeLocation.getString("latitude");
                 if (latitude == null || latitude == ""){
                     dataOne.put("latitude",Constants.INVALID_VALUE_LOCATION);
                 }
 
-                String longitude = cell.getString("longitude");
+                String longitude = nodeLocation.getString("longitude");
                 if (longitude == null || longitude == ""){
                     dataOne.put("longitude",Constants.INVALID_VALUE_LOCATION);
                 }

@@ -40,7 +40,8 @@ public class AlarmLibService_Unicom_Wcdma implements AlarmLibService {
 
     @Override
     public int addAlarm(JSONObject param){
-        return 0;//TODO //add index and lib
+        //TODO add alarm index
+        return alarmLibMapper.addAlarm(param);
     }
 
     @Override

@@ -26,8 +26,8 @@ public class AlarmLibController extends BaseController{
     @Path("/suppliers/{supplier}/generations/{generation}/alarms")
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject getAlarmList(@PathParam("supplier")String supplier,
-                                      @PathParam("generation")String generation,
-                                      @HeaderParam("Auth-Token")String authToken){
+                                   @PathParam("generation")String generation,
+                                   @HeaderParam("Auth-Token")String authToken){
 
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
@@ -50,9 +50,9 @@ public class AlarmLibController extends BaseController{
     @Path("/suppliers/{supplier}/generations/{generation}/alarms/{alarmName}")
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject getAlarmInfo(@PathParam("supplier")String supplier,
-                                               @PathParam("generation")String generation,
-                                               @PathParam("alarmName")String alarmName,
-                                               @HeaderParam("Auth-Token")String authToken){
+                                   @PathParam("generation")String generation,
+                                   @PathParam("alarmName")String alarmName,
+                                   @HeaderParam("Auth-Token")String authToken){
 
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier,generation);
@@ -71,14 +71,14 @@ public class AlarmLibController extends BaseController{
     }
 
     // Update specified alarm lib
-    @POST
+    @PUT
     @Path("/suppliers/{supplier}/generations/{generation}/alarms/{alarmName}")
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject updateAlarmInfo(@PathParam("supplier")String supplier,
-                                                  @PathParam("generation")String generation,
-                                                  @PathParam("alarmName")String alarmName,
-                                                  @HeaderParam("Auth-Token")String authToken,
-                                                  JSONObject param){
+                                      @PathParam("generation")String generation,
+                                      @PathParam("alarmName")String alarmName,
+                                      @HeaderParam("Auth-Token")String authToken,
+                                      JSONObject param){
 
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier,generation);
@@ -97,13 +97,13 @@ public class AlarmLibController extends BaseController{
     }
 
     // Add specified alarm
-    @PUT
+    @POST
     @Path("/suppliers/{supplier}/generations/{generation}/alarms")
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject addAlarmInfo(@PathParam("supplier")String supplier,
-                                          @PathParam("generation")String generation,
-                                          @HeaderParam("Auth-Token")String authToken,
-                                          JSONObject param){
+                                   @PathParam("generation")String generation,
+                                   @HeaderParam("Auth-Token")String authToken,
+                                   JSONObject param){
 
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier,generation);
