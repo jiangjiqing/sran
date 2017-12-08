@@ -68,7 +68,7 @@ public class MapController extends BaseController{
                 // level
                 JSONObject level = obj.getQuotaService().getGroupLevel(groupName);
                 if(level != null && level.getIntValue("level") != -1){
-                    dataOne.put("level", level);
+                    dataOne.putAll(level);
                 }else{
                     dataOne.put("level",Constants.INVALID_VALUE_LEVEL);
                 }
@@ -249,7 +249,7 @@ public class MapController extends BaseController{
                 JSONObject level = obj.getQuotaService().getNodeLevel(nodeName);
 
                 if(level != null && level.getIntValue("level") != -1){
-                    dataOne.put("level", level);
+                    dataOne.putAll(level);
                 }else{
                     dataOne.put("level",Constants.INVALID_VALUE_LEVEL);
                 }
@@ -315,7 +315,7 @@ public class MapController extends BaseController{
                 JSONObject level = obj.getQuotaService().getCellLevel(cellName);
 
                 if (level != null && level.getIntValue("level") != -1) {
-                    dataOne.put("level", level);
+                    dataOne.putAll(level);
                 } else {
                     dataOne.put("level", Constants.INVALID_VALUE_LEVEL);
                 }
