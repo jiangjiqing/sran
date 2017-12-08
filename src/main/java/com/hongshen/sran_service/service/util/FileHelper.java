@@ -47,6 +47,7 @@ public class FileHelper {
             return false;
         }
     }
+
     public static void main(String[] args) throws Exception{
 ////        创建目录
 //        String dir = "/home/poplar/aa/";
@@ -57,10 +58,8 @@ public class FileHelper {
         String desFilePath ="/home/poplar/ccc/";
         String desFileName ="aa.tar";
         FileHelper.compressFile(srcFilePath,desFilePath,desFileName);
-
-
-
     }
+
     public static boolean compressFile(String srcFilePath, String desFilePath, String desFileName){
         Process process =null;
         String command = "mkdir "+desFilePath;
