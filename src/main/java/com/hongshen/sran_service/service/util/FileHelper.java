@@ -47,13 +47,6 @@ public class FileHelper {
             return false;
         }
     }
-//    public static void main(String[] args) {
-//        // 创建目录
-//        String dir = "/home/poplar/aa/";
-//        // 创建文件
-//        String fileName = "aaFile.txt";
-//        FileHelper.createFile(dir,fileName);
-//    }
     public static void main(String[] args) throws Exception{
 ////        创建目录
 //        String dir = "/home/poplar/aa/";
@@ -63,16 +56,12 @@ public class FileHelper {
         String srcFilePath ="/home/poplar/aa/";
         String desFilePath ="/home/poplar/ccc/";
         String desFileName ="aa.tar";
-//        String creatFile ="mkdir /home/poplar/ccc";
         FileHelper.compressFile(srcFilePath,desFilePath,desFileName);
 
 
 
     }
-//    tar -cf /home/poplar/aa/aa.tar /home/poplar/aa/
     public static boolean compressFile(String srcFilePath, String desFilePath, String desFileName){
-        String shpath="/test/test.sh";   //程序路径
-
         Process process =null;
         String command = "mkdir "+desFilePath;
         try {
