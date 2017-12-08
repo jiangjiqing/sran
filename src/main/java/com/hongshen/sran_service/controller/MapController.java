@@ -12,8 +12,6 @@ import javax.ws.rs.core.MediaType;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * Created by poplar on 11/13/17.
@@ -345,41 +343,5 @@ public class MapController extends BaseController{
 
         return  result;
     }
-
-
-
-
-    @GET
-    @Path("/qqq/{ss}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject  task( @PathParam("ss")String ss) {
-
-
-        ExecutorService fixedThreadPool = Executors.newFixedThreadPool(2/*Runtime.getRuntime().availableProcessors()*/);
-
-            JSONObject J = new JSONObject();
-            fixedThreadPool.execute(new Runnable() {
-                int index = 0;
-                public void run() {
-                    for (int i = 0; i <= 10; i++) {
-
-                        fixedThreadPool.shutdown();
-
-                    try {
-                        System.out.println(index);
-                        index = index +i;
-                        Thread.sleep(2000);
-
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }}
-
-
-                }
-
-            });
-        J.put(ss,"sad");
-            return J;
-        }
 
 }
