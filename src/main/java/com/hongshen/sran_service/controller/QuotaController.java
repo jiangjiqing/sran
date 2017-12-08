@@ -30,32 +30,48 @@ public class QuotaController {
                                     @HeaderParam("Auth-Token")String authToken) {
 
         JSONObject result = new JSONObject();
+        JSONObject data = new JSONObject();
 
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        JSONObject groupQuota = obj.getQuotaService().getGroupQuota(groupName);
 
-        List<JSONObject> quotaList = new ArrayList<JSONObject>();
-
-        //TODO :get data from formula and history
-        List<JSONObject> formulaList = obj.getCacheService().getFormulaList(true);
-
-        for (JSONObject f : formulaList) {
-
-            JSONObject quota = new JSONObject();
-
-            quota.putAll(quota);
-            quota.put("value", Constants.INVALID_VALUE_QUOTA);
-
-            quotaList.add(quota);
-        }
-
-        if (quotaList.isEmpty()) {
+        String time = "2017-12-07 00:01:53";
+        //String time = obj.getCacheService().getUpdateTime(); TODO
+        if (time == null || time == ""){
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
 
-        } else {
+        }else {
+            data.put("time", time);
+
+            JSONObject quotas = obj.getQuotaService().getGroupQuota(groupName);
+
+            if (quotas == null || quotas.isEmpty()){
+                result.put("result", Constants.FAIL);
+                result.put("msg", Constants.MSG_NO_DATA);
+                return result;
+            }
+
+            List<JSONObject> formulaList = obj.getCacheService().getFormulaList(true);
+
+            for (JSONObject f : formulaList) {
+                f.remove("id");
+                f.remove("expression");
+                f.remove("status");
+                f.remove("type");
+
+                //String value = groupQuota.getString(f.getString("quotaName")); TODO
+                String value = quotas.getString("formula" + f.getString("id"));
+
+                if (value == null || value == "") {
+                    f.put("value", Constants.INVALID_VALUE_QUOTA);
+                } else {
+                    f.put("value", value);
+                }
+            }
+            data.put("quotas", formulaList);
+
             result.put("result", Constants.SUCCESS);
-            result.put("data", quotaList);
+            result.put("data", data);
         }
 
         return result;
@@ -71,32 +87,48 @@ public class QuotaController {
                                    @HeaderParam("Auth-Token")String authToken) {
 
         JSONObject result = new JSONObject();
+        JSONObject data = new JSONObject();
 
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        JSONObject nodeQuota = obj.getQuotaService().getNodeQuota(nodeName);
 
-        List<JSONObject> quotaList = new ArrayList<JSONObject>();
-
-        //TODO :get data from formula and history
-        List<JSONObject> formulaList = obj.getCacheService().getFormulaList(true);
-
-        for (JSONObject f : formulaList) {
-
-            JSONObject quota = new JSONObject();
-
-            quota.putAll(quota);
-            quota.put("value", Constants.INVALID_VALUE_QUOTA);
-
-            quotaList.add(quota);
-        }
-
-        if (quotaList.isEmpty()) {
+        String time = "2017-12-07 00:01:53";
+        //String time = obj.getCacheService().getUpdateTime(); TODO
+        if (time == null || time == ""){
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
 
-        } else {
+        }else {
+            data.put("time", time);
+
+            JSONObject quotas = obj.getQuotaService().getNodeQuota(nodeName);
+
+            if (quotas == null || quotas.isEmpty()){
+                result.put("result", Constants.FAIL);
+                result.put("msg", Constants.MSG_NO_DATA);
+                return result;
+            }
+
+            List<JSONObject> formulaList = obj.getCacheService().getFormulaList(true);
+
+            for (JSONObject f : formulaList) {
+                f.remove("id");
+                f.remove("expression");
+                f.remove("status");
+                f.remove("type");
+
+                //String value = groupQuota.getString(f.getString("quotaName")); TODO
+                String value = quotas.getString("formula" + f.getString("id"));
+
+                if (value == null || value == "") {
+                    f.put("value", Constants.INVALID_VALUE_QUOTA);
+                } else {
+                    f.put("value", value);
+                }
+            }
+            data.put("quotas", formulaList);
+
             result.put("result", Constants.SUCCESS);
-            result.put("data", quotaList);
+            result.put("data", data);
         }
 
         return result;
@@ -106,36 +138,54 @@ public class QuotaController {
     @GET
     @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/{groupName}/nodes/{nodeName}/cells/{cellName}/quotas")
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject getCellQuota(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
-                                   @PathParam("cellName")String cellName, @HeaderParam("Auth-Token")String authToken) {
+    public JSONObject getCellQuota(@PathParam("supplier")String supplier,
+                                   @PathParam("generation")String generation,
+                                   @PathParam("cellName")String cellName,
+                                   @HeaderParam("Auth-Token")String authToken) {
 
         JSONObject result = new JSONObject();
+        JSONObject data = new JSONObject();
 
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        JSONObject cellQuota = obj.getQuotaService().getCellQuota(cellName);
 
-        List<JSONObject> quotaList = new ArrayList<JSONObject>();
-
-        //TODO :get data from formula and history
-        List<JSONObject> formulaList = obj.getCacheService().getFormulaList(true);
-
-        for (JSONObject f : formulaList) {
-
-            JSONObject quota = new JSONObject();
-
-            quota.putAll(quota);
-            quota.put("value", Constants.INVALID_VALUE_QUOTA);
-
-            quotaList.add(quota);
-        }
-
-        if (quotaList.isEmpty()) {
+        String time = "2017-12-07 00:01:53";
+        //String time = obj.getCacheService().getUpdateTime(); TODO
+        if (time == null || time == ""){
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
 
-        } else {
+        }else {
+            data.put("time", time);
+
+            JSONObject quotas = obj.getQuotaService().getCellQuota(cellName);
+
+            if (quotas == null || quotas.isEmpty()){
+                result.put("result", Constants.FAIL);
+                result.put("msg", Constants.MSG_NO_DATA);
+                return result;
+            }
+
+            List<JSONObject> formulaList = obj.getCacheService().getFormulaList(true);
+
+            for (JSONObject f : formulaList) {
+                f.remove("id");
+                f.remove("expression");
+                f.remove("status");
+                f.remove("type");
+
+                //String value = groupQuota.getString(f.getString("quotaName")); TODO
+                String value = quotas.getString("formula" + f.getString("id"));
+
+                if (value == null || value == "") {
+                    f.put("value", Constants.INVALID_VALUE_QUOTA);
+                } else {
+                    f.put("value", value);
+                }
+            }
+            data.put("quotas", formulaList);
+
             result.put("result", Constants.SUCCESS);
-            result.put("data", quotaList);
+            result.put("data", data);
         }
 
         return result;

@@ -22,11 +22,11 @@ public interface QuotaService {
 
     JSONObject getCellLevel(String cellName);
 
-    Integer setGroup(JSONObject quotaThres);
+    Integer setGroupThreshold(JSONObject quotaThres);
 
-    Integer setNode(JSONObject quotaThres);
+    Integer setNodeThreshold(JSONObject quotaThres);
 
-    Integer setCell(JSONObject quotaThres);
+    Integer setCellThreshold(JSONObject quotaThres);
 
     List<JSONObject> getQuotas(Date start, Date end, String condition);
 

@@ -69,7 +69,7 @@ public class TopologyController extends BaseController {
             JSONObject dataOne = new JSONObject();
             String groupName = group.getString("groupName");
 
-            if (groupName == ""){
+            if (groupName  == null || groupName == ""){
                 continue;
 
             }else {

@@ -172,6 +172,7 @@
       alarm_scope alarmScope,
       recommend
     FROM unicom_alarm_library_lte
+    ORDER BY alarm_name ASC
   </select>
 
   <select id="getAlarmByName" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">&gt;

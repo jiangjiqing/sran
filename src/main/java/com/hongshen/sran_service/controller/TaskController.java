@@ -129,14 +129,14 @@ public class TaskController extends BaseController {
         }
 
         if (filePath == ""){
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_NO_DATA);
+
+        } else {
             file.put("filePath", filePath);
 
             result.put("result", Constants.SUCCESS);
             result.put("data", file);
-
-        } else {
-            result.put("result", Constants.FAIL);
-            result.put("msg", Constants.MSG_NO_DATA);
         }
 
         return result;

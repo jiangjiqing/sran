@@ -17,7 +17,11 @@ import java.util.Map;
 public class QuotaService_Unicom_Wcdma implements QuotaService {
 
     @Autowired
-    private  UnicomCounterHistoryWcdmaMapper   counterHistoryWcdmaMapper;
+    private CacheService_Unicom_Wcdma cacheService;
+
+    @Autowired
+    private UnicomCounterHistoryWcdmaMapper counterHistoryWcdmaMapper;
+
     @Autowired
     private UnicomQuotaHistoryGroupWcdmaMapper quotaHistoryGroupMapper;
 
@@ -38,46 +42,54 @@ public class QuotaService_Unicom_Wcdma implements QuotaService {
 
     @Override
     public JSONObject getGroupQuota(String groupName) {
-        return quotaHistoryGroupMapper.getQuota(groupName);
+        String time = cacheService.getUpdateTimeForQuotaData();
+        return quotaHistoryGroupMapper.getQuota(groupName, time);
     }
 
     @Override
     public JSONObject getNodeQuota(String nodeName){
-        return quotaHistoryNodeMapper.getQuota(nodeName);
+        String time = cacheService.getUpdateTimeForQuotaData();
+        return quotaHistoryNodeMapper.getQuota(nodeName, time);
     }
 
     @Override
     public JSONObject getCellQuota(String cellName){
-        return quotaHistoryCellMapper.getQuota(cellName);
+        String time = cacheService.getUpdateTimeForQuotaData();
+        return quotaHistoryCellMapper.getQuota(cellName, time);
     }
 
     @Override
     public JSONObject getGroupLevel(String groupName) {
-        return quotaHistoryGroupMapper.getLevel(groupName);
+        String time = cacheService.getUpdateTimeForQuotaData();
+        return quotaHistoryGroupMapper.getLevel(groupName, time);
     }
 
     @Override
     public JSONObject getNodeLevel(String nodeName) {
-        return quotaHistoryNodeMapper.getLevel(nodeName);
+        String time = cacheService.getUpdateTimeForQuotaData();
+        return quotaHistoryNodeMapper.getLevel(nodeName, time);
     }
 
     @Override
     public JSONObject getCellLevel(String cellName) {
-        return quotaHistoryCellMapper.getLevel(cellName);
+        String time = cacheService.getUpdateTimeForQuotaData();
+        return quotaHistoryCellMapper.getLevel(cellName, time);
     }
 
     @Override
-    public Integer setGroup(JSONObject quotaThres) {
+    public Integer setGroupThreshold(JSONObject quotaThres) {
         return quotaThresholdGroupMapper.setGroup(quotaThres);
     }
 
     @Override
-    public Integer setNode(JSONObject quotaThres) {
+    public Integer setNodeThreshold(JSONObject quotaThres) {
+
         return quotaThresholdNodeMapper.setNode(quotaThres);
     }
 
     @Override
-    public Integer setCell(JSONObject quotaThres) {
+    public Integer setCellThreshold(JSONObject quotaThres) {
+
         return quotaThresholdCellMapper.setCell(quotaThres);
     }
 
@@ -100,76 +112,4 @@ public class QuotaService_Unicom_Wcdma implements QuotaService {
     public List<JSONObject> getCounterExportGroup(Date start, Date end, String condition) {
         return counterHistoryWcdmaMapper.dowloadCounter(start,end,condition);
     }
-
-//    @Override
-//    public Map<String, Object> getQuotaInfo() {
-//        return unicomQuotaHistoryGroupWcdmaMapper.getQuotaInfo();
-	
-	/*add
-	@Override
-    public List<JSONObject> getGroups(String userName, String time) {
-
-        List<JSONObject> results = new ArrayList<>();
-
-        String authList = null;
-
-        authList = authorityWcdmaMapper.getAuthorityList(userName);
-
-        if (authList != null) {
-
-            String [] list = authList.split(",");
-
-            for (String node : list) {
-
-                JSONObject result = quotaWcdmaMapper.getHistoryData(node, time);
-
-                if (!result.isEmpty()) {
-
-                    results.add(result);
-                }
-            }
-
-        } else {
-
-            return results;
-        }
-
-        return results;
-    }*/
-	
-	/*del
-    @Override
-    public List<JSONObject> getNodes(String userName, String groupName, String time) {
-
-        List<JSONObject> results = new ArrayList<>();
-
-        results = quotaHistoryNodeWcdmaMapper.getNodeHistoryDataWcdma(groupName, time);
-
-        if (!results.isEmpty()) {
-
-            return results;
-        }
-
-        return results;
-    }*/
-	
-	/*del
-    @Override
-    public List<JSONObject> getCells(String userName, String nodeName, String time) {
-
-        List<JSONObject> results = new ArrayList<>();
-
-        quotaHistoryCellWcdmaMapper.getCellHistoryDataWcdma(nodeName, time);
-
-        if (!results.isEmpty()) {
-
-            return results;
-        }
-
-        return results;
-    }*/
-	
-
-
-	
 }

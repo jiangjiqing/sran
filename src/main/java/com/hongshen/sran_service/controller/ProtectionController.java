@@ -38,7 +38,7 @@ public class ProtectionController extends BaseController{
 
             String nodeName = protect.getString("nodeName");
 
-            if (nodeName == "") {
+            if (nodeName == null || nodeName == "") {
                 continue;
 
             }else{

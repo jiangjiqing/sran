@@ -14,8 +14,7 @@ import java.util.List;
 @Service
 public class CacheService_Unicom_Lte implements CacheService {
 
-    @Autowired
-    private static String updateTimeForQuotaData = "";
+    private String updateTimeForQuotaData;
 
     @Autowired
     private UnicomCounterLteMapper counterMapper;
@@ -215,5 +214,13 @@ public class CacheService_Unicom_Lte implements CacheService {
             resetThresholdCellList();
         }
         return thresholdCellList;
+    }
+
+    public String getUpdateTimeForQuotaData() {
+        return updateTimeForQuotaData;
+    }
+
+    public void setUpdateTimeForQuotaData(String updateTimeForQuotaData) {
+        this.updateTimeForQuotaData = updateTimeForQuotaData;
     }
 }

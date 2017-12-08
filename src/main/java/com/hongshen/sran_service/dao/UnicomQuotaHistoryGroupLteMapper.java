@@ -26,11 +26,15 @@ public interface UnicomQuotaHistoryGroupLteMapper {
      */
     int insertSelective(UnicomQuotaHistoryGroupLte record);
 
-    JSONObject getQuota(@Param("groupName")String groupName);
+    JSONObject getQuota(@Param("groupName")String groupName,
+                        @Param("time")String time);
 
-    JSONObject getLevel(@Param("groupName") String groupName);
+    JSONObject getLevel(@Param("groupName") String groupName,
+                        @Param("time")String time);
 
-    List<JSONObject>  getQuotas(@Param("start")Date start, @Param("end")Date end,@Param("condition")String condition);
+    List<JSONObject>  getQuotas(@Param("start")Date start,
+                                @Param("end")Date end,
+                                @Param("condition")String condition);
 
     void addQuotaHistoryGroupList(@Param("cloumns")List<String> cloumns,
                                   @Param("valueList")List<String> valueList);

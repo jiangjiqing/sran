@@ -241,16 +241,17 @@
     </trim>
   </insert>
 
-  <select id="getQuota" resultType="com.alibaba.fastjson.JSONObject">
+  <select id="getQuota" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
+--     TODO
     SELECT *
     FROM unicom_quota_history_group_wcdma
-    WHERE name = #{groupName} ORDER BY NOW() LIMIT 1
+    WHERE name = #{groupName} ORDER BY time DESC LIMIT 1
   </select>
 
   <select id="getLevel" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
     SELECT level
     FROM unicom_quota_history_group_wcdma
-    WHERE name = #{groupName} ORDER BY NOW() LIMIT 1
+    WHERE name = #{groupName} ORDER BY time DESC LIMIT 1
   </select>
 
   <!--<select id="getGroupLevel" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">-->

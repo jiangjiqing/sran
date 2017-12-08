@@ -18,7 +18,11 @@ import java.util.Map;
 public class QuotaService_Unicom_Lte implements QuotaService {
 
     @Autowired
-    private  UnicomCounterHistoryLteMapper    counterHistoryLteMapper;
+    private CacheService_Unicom_Lte cacheService;
+
+    @Autowired
+    private UnicomCounterHistoryLteMapper counterHistoryLteMapper;
+
     @Autowired
     private UnicomQuotaHistoryGroupLteMapper quotaHistoryGroupMapper;
 
@@ -40,46 +44,52 @@ public class QuotaService_Unicom_Lte implements QuotaService {
 
     @Override
     public JSONObject getGroupQuota(String groupName) {
-        return quotaHistoryGroupMapper.getQuota(groupName);
+        String time = cacheService.getUpdateTimeForQuotaData();
+        return quotaHistoryGroupMapper.getQuota(groupName, time);
     }
 
     @Override
     public JSONObject getNodeQuota(String nodeName){
-        return quotaHistoryNodeMapper.getQuota(nodeName);
+        String time = cacheService.getUpdateTimeForQuotaData();
+        return quotaHistoryNodeMapper.getQuota(nodeName, time);
     }
 
     @Override
     public JSONObject getCellQuota(String cellName){
-        return quotaHistoryCellMapper.getQuota(cellName);
+        String time = cacheService.getUpdateTimeForQuotaData();
+        return quotaHistoryCellMapper.getQuota(cellName, time);
     }
 
     @Override
     public JSONObject getGroupLevel(String groupName) {
-        return quotaHistoryGroupMapper.getLevel(groupName);
+        String time = cacheService.getUpdateTimeForQuotaData();
+        return quotaHistoryGroupMapper.getLevel(groupName, time);
     }
 
     @Override
     public JSONObject getNodeLevel(String nodeName) {
-        return quotaHistoryNodeMapper.getLevel(nodeName);
+        String time = cacheService.getUpdateTimeForQuotaData();
+        return quotaHistoryNodeMapper.getLevel(nodeName, time);
     }
 
     @Override
     public JSONObject getCellLevel(String cellName) {
-        return quotaHistoryCellMapper.getLevel(cellName);
+        String time = cacheService.getUpdateTimeForQuotaData();
+        return quotaHistoryCellMapper.getLevel(cellName, time);
     }
 
     @Override
-    public Integer setGroup(JSONObject quotaThres) {
+    public Integer setGroupThreshold(JSONObject quotaThres) {
         return quotaThresholdGroupMapper.setGroup(quotaThres);
     }
 
     @Override
-    public Integer setNode(JSONObject quotaThres) {
+    public Integer setNodeThreshold(JSONObject quotaThres) {
         return quotaThresholdNodeMapper.setNode(quotaThres);
     }
 
     @Override
-    public Integer setCell(JSONObject quotaThres) {
+    public Integer setCellThreshold(JSONObject quotaThres) {
         return quotaThresholdCellMapper.setCell(quotaThres);
     }
 
@@ -103,39 +113,4 @@ public class QuotaService_Unicom_Lte implements QuotaService {
         return counterHistoryLteMapper.dowloadCounter(start,end,condition);
     }
 
-//    @Override
-//    public Map<String, Object> getQuotaInfo() {
-//        return unicomQuotaHistoryGroupLteMapper.getQuotaInfo();
-//    }
-   /*add
-    @Override
-    public List<JSONObject> getNodes(String userName, String groupName, String time) {
-
-        List<JSONObject> results = new ArrayList<>();
-
-        results = quotaHistoryNodeLteMapper.getNodeHistoryDataLte(groupName, time);
-
-        if (!results.isEmpty()) {
-
-            return results;
-        }
-
-        return results;
-    }*/
-	
-   /*add
-    @Override
-    public List<JSONObject> getCells(String userName, String nodeName, String time) {
-
-        List<JSONObject> results = new ArrayList<>();
-
-        quotaHistoryCellLteMapper.getCellHistoryDataLte(nodeName, time);
-
-        if (!results.isEmpty()) {
-
-            return results;
-        }
-
-        return results;
-    }*/
 }

@@ -87,17 +87,17 @@ public class QuotaThresholdController extends BaseController{
         switch (level)
         {
             case "groups":
-                num = obj.getQuotaService().setGroup(quotaThres);
+                num = obj.getQuotaService().setGroupThreshold(quotaThres);
                 obj.getCacheService().resetThresholdGroupList();
                 break;
 
             case "nodes":
-                num = obj.getQuotaService().setNode(quotaThres);
+                num = obj.getQuotaService().setNodeThreshold(quotaThres);
                 obj.getCacheService().resetThresholdNodeList();
                 break;
 
             case "cells":
-                num = obj.getQuotaService().setCell(quotaThres);
+                num = obj.getQuotaService().setCellThreshold(quotaThres);
                 obj.getCacheService().resetThresholdCellList();
                 break;
 

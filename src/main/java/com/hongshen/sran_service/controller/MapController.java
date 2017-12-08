@@ -38,7 +38,7 @@ public class MapController extends BaseController{
 
             String groupName = group.getString("name");
 
-            if (groupName == "") {
+            if (groupName == null || groupName == "") {
                 continue;
 
             }else{
@@ -221,17 +221,20 @@ public class MapController extends BaseController{
 
             String nodeName = node.getString("name");
 
-            if (nodeName == "") {
+            if (nodeName == null || nodeName == "") {
                 continue;
 
             }else{
                 JSONObject dataOne = new JSONObject();
                 dataOne.putAll(node);
 
-                if (node.getString("latitude") == ""){
+                String latitude = node.getString("latitude");
+                if (latitude == null || latitude == ""){
                     dataOne.put("latitude",Constants.INVALID_VALUE_LOCATION);
                 }
-                if (node.getString("longitude") == ""){
+
+                String longitude = node.getString("longitude");
+                if (longitude == null || longitude == ""){
                     dataOne.put("longitude",Constants.INVALID_VALUE_LOCATION);
                 }
 
@@ -287,21 +290,24 @@ public class MapController extends BaseController{
 
             String cellName = cell.getString("name");
 
-            if (cellName == "") {
+            if (cellName == null || cellName == "") {
                 continue;
 
             }else{
                 JSONObject dataOne = new JSONObject();
                 dataOne.putAll(cell);
 
-                // longitude and latitude from node (TODO)
+                // longitude and latitude from node (TODO : confirm)
                 JSONObject nodeLocation = obj.getElementInfoService().getNodeLocation(nodeName);
                 dataOne.putAll(nodeLocation);
 
-                if (nodeLocation.getString("latitude") == ""){
+                String latitude = cell.getString("latitude");
+                if (latitude == null || latitude == ""){
                     dataOne.put("latitude",Constants.INVALID_VALUE_LOCATION);
                 }
-                if (nodeLocation.getString("longitude") == ""){
+
+                String longitude = cell.getString("longitude");
+                if (longitude == null || longitude == ""){
                     dataOne.put("longitude",Constants.INVALID_VALUE_LOCATION);
                 }
 

@@ -171,7 +171,8 @@
       alarm_type alarmType,
       alarm_scope alarmScope,
       recommend
-    FROM unicom_alarm_library_wcdma;
+    FROM unicom_alarm_library_wcdma
+    ORDER BY alarm_name ASC
   </select>
 
   <select id="getAlarmByName" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">&gt;
@@ -183,7 +184,7 @@
       alarm_scope alarmScope,
       recommend
     FROM unicom_alarm_library_wcdma
-    WHERE alarm_name = #{alarmName};
+    WHERE alarm_name = #{alarmName}
   </select>
   
   <update id="updateAlarmByName" parameterType="com.alibaba.fastjson.JSONObject">
