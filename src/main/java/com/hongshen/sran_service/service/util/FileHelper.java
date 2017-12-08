@@ -48,17 +48,17 @@ public class FileHelper {
         }
     }
 
-    public static void main(String[] args) throws Exception{
-////        创建目录
-//        String dir = "/home/poplar/aa/";
-//        // 创建文件
-//        String fileName = "aaFile.txt";
-//        FileHelper.createFile(dir,fileName);
-        String srcFilePath ="/home/poplar/aa/";
-        String desFilePath ="/home/poplar/ccc/";
-        String desFileName ="aa.tar";
-        FileHelper.compressFile(srcFilePath,desFilePath,desFileName);
-    }
+//    public static void main(String[] args) throws Exception{
+//////        创建目录
+////        String dir = "/home/poplar/aa/";
+////        // 创建文件
+////        String fileName = "aaFile.txt";
+////        FileHelper.createFile(dir,fileName);
+//        String srcFilePath ="/home/poplar/aa/";
+//        String desFilePath ="/home/poplar/ccc/";
+//        String desFileName ="aa.tar";
+//        FileHelper.compressFile(srcFilePath,desFilePath,desFileName);
+//    }
 
     public static boolean compressFile(String srcFilePath, String desFilePath, String desFileName){
         Process process =null;
