@@ -23,16 +23,17 @@ public class TaskController extends BaseController {
     @GET
     @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/task")
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject getTaskInfo(@PathParam("supplier")String supplier,
-                                  @PathParam("generation")String generation,
-                                  @HeaderParam("Auth-Token")String authToken){
+    public JSONObject getTaskInfo(@PathParam("supplier") String supplier,
+                                  @PathParam("generation") String generation,
+                                  @HeaderParam("Auth-Token") String authToken) {
 
         String loginName = "tom";// TODO loginName
         JSONObject result = new JSONObject();
-        NetObjBase obj = objFactory.getNetObj(supplier,generation);
-        JSONObject taskInfo = obj.getTaskService().getTaskInfo(loginName);;
+        NetObjBase obj = objFactory.getNetObj(supplier, generation);
+        JSONObject taskInfo = obj.getTaskService().getTaskInfo(loginName);
+        ;
 
-        if (taskInfo.isEmpty()){
+        if (taskInfo.isEmpty()) {
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
 
@@ -54,17 +55,17 @@ public class TaskController extends BaseController {
     @GET
     @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/task/start")
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject startTask(@PathParam("supplier")String supplier,
-                                     @PathParam("generation")String generation,
-                                     @HeaderParam("Auth-Token")String authToken,
-                                     JSONObject param){
+    public JSONObject startTask(@PathParam("supplier") String supplier,
+                                @PathParam("generation") String generation,
+                                @HeaderParam("Auth-Token") String authToken,
+                                JSONObject param) {
 
         String loginName = "tom";// TODO loginName
         JSONObject result = new JSONObject();
-        NetObjBase obj = objFactory.getNetObj(supplier,generation);
+        NetObjBase obj = objFactory.getNetObj(supplier, generation);
         int update = obj.getTaskService().startTask(loginName, param);
 
-        if (update > 0){
+        if (update > 0) {
             result.put("result", Constants.SUCCESS);
             result.put("data", Constants.MSG_UPDATE_OK);
 
@@ -80,16 +81,16 @@ public class TaskController extends BaseController {
     @GET
     @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/task/cacel")
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject cacelTask(@PathParam("supplier")String supplier,
-                                     @PathParam("generation")String generation,
-                                     @HeaderParam("Auth-Token")String authToken){
+    public JSONObject cacelTask(@PathParam("supplier") String supplier,
+                                @PathParam("generation") String generation,
+                                @HeaderParam("Auth-Token") String authToken) {
 
         String loginName = "tom";// TODO loginName
         JSONObject result = new JSONObject();
-        NetObjBase obj = objFactory.getNetObj(supplier,generation);
+        NetObjBase obj = objFactory.getNetObj(supplier, generation);
         int cacelTask = obj.getTaskService().cacelTask(loginName);
 
-        if (cacelTask > 0){
+        if (cacelTask > 0) {
             result.put("result", Constants.SUCCESS);
             result.put("data", Constants.MSG_CACEL_OK);
 
@@ -105,30 +106,30 @@ public class TaskController extends BaseController {
     @GET
     @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/task/log/{isUseScript}/download")
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject downloadTasklog(@PathParam("supplier")String supplier,
-                                      @PathParam("generation")String generation,
-                                      @PathParam("isUseScript")String isUseScript,
-                                      @HeaderParam("Auth-Token")String authToken){
+    public JSONObject downloadTasklog(@PathParam("supplier") String supplier,
+                                      @PathParam("generation") String generation,
+                                      @PathParam("isUseScript") String isUseScript,
+                                      @HeaderParam("Auth-Token") String authToken) {
 
         String loginName = "tom";// TODO loginName
         JSONObject result = new JSONObject();
         JSONObject file = new JSONObject();
         String filePath = "";
 
-        NetObjBase obj = objFactory.getNetObj(supplier,generation);
+        NetObjBase obj = objFactory.getNetObj(supplier, generation);
 
         if (isUseScript.equalsIgnoreCase("true") &&
-                obj.getTaskService().hasScriptLog(loginName)){
+                obj.getTaskService().hasScriptLog(loginName)) {
 
             filePath = loginName + Constants.TASK_LOG_PATH_SCRIPT;
 
-        }else if(isUseScript.equalsIgnoreCase("false") &&
-                obj.getTaskService().hasOriginalLog(loginName)){
+        } else if (isUseScript.equalsIgnoreCase("false") &&
+                obj.getTaskService().hasOriginalLog(loginName)) {
 
             filePath = loginName + Constants.TASK_LOG_PATH_ORIGINAL;
         }
 
-        if (filePath == ""){
+        if (filePath == "") {
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
 
