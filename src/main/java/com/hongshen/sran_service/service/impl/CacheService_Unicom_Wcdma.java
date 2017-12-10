@@ -21,34 +21,34 @@ public class CacheService_Unicom_Wcdma implements CacheService {
     @Autowired
     private UnicomCounterWcdmaMapper counterMapper;
 
-    @Autowired
+
     private static List<JSONObject> counterList = new ArrayList<JSONObject>();
 
-    @Autowired
+
     private static List<JSONObject> counterListProcessed  = new ArrayList<JSONObject>();
 
     @Autowired
     private UnicomFormulaWcdmaMapper formulaMapper;
 
-    @Autowired
+
     private static List<JSONObject> formulaList = new ArrayList<JSONObject>();
 
     @Autowired
     private UnicomQuotaThresholdGroupWcdmaMapper thresholdGroupMapper;
 
-    @Autowired
+
     private  static  List<JSONObject> thresholdGroupList = new ArrayList<>();
 
     @Autowired
     private UnicomQuotaThresholdNodeWcdmaMapper thresholdNodeMapper;
 
-    @Autowired
+
     private  static  List<JSONObject> thresholdNodeList = new ArrayList<>();
 
     @Autowired
     private UnicomQuotaThresholdCellWcdmaMapper thresholdCellMapper;
 
-    @Autowired
+
     private  static  List<JSONObject> thresholdCellList = new ArrayList<>();
 
     @Override

@@ -19,35 +19,35 @@ public class CacheService_Unicom_Lte implements CacheService {
     @Autowired
     private UnicomCounterLteMapper counterMapper;
 
-    @Autowired
+
     private static List<JSONObject> counterList = new ArrayList<JSONObject>();
 
-    @Autowired
+
     private static List<JSONObject> counterListProcessed  = new ArrayList<JSONObject>();
 
     @Autowired
     private UnicomFormulaLteMapper formulaMapper;
 
-    @Autowired
+
     private static List<JSONObject> formulaList = new ArrayList<JSONObject>();
 
     @Autowired
     private UnicomQuotaThresholdGroupLteMapper thresholdGroupMapper;
 
-    @Autowired
+
     private  static  List<JSONObject> thresholdGroupList = new ArrayList<>();
 
 
     @Autowired
     private UnicomQuotaThresholdNodeLteMapper thresholdNodeMapper;
 
-    @Autowired
+
     private  static  List<JSONObject> thresholdNodeList = new ArrayList<>();
 
     @Autowired
     private UnicomQuotaThresholdCellLteMapper thresholdCellMapper;
 
-    @Autowired
+
     private  static  List<JSONObject> thresholdCellList = new ArrayList<>();
 
     @Override

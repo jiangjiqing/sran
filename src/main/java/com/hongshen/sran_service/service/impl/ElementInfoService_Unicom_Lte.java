@@ -111,6 +111,11 @@ public class ElementInfoService_Unicom_Lte implements ElementInfoService {
     }
 
     @Override
+    public List<String> getOssNameList() {
+        return null;
+    } // 4g no oss info
+
+    @Override
     public JSONObject getTable(String gettableName) {
         return favoriteMapper.getTable(gettableName);
     }

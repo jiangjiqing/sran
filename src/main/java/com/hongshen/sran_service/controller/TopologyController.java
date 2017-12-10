@@ -117,15 +117,15 @@ public class TopologyController extends BaseController {
         JSONObject result = new JSONObject();
 
         NetObjBase obj = objFactory.getNetObj(supplier,generation);
-        List<JSONObject> roomList = obj.getTelecomRoomService().getRoomList();
+        List<String> roomNameList = obj.getTelecomRoomService().getRoomNameList();
 
-        if (roomList.isEmpty()){
+        if (roomNameList.isEmpty()){
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
 
         } else {
             result.put("result", Constants.SUCCESS);
-            result.put("data", roomList);
+            result.put("data", roomNameList);
         }
 
         return result;
