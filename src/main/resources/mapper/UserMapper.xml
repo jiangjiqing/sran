@@ -142,10 +142,42 @@
       a.status,
       a.email,
       a.phone,
-      b.role_id roleId
+      b.role_id role
     FROM user a
     LEFT JOIN user_role b
       ON a.login_name = b.login_name
   </select>
-
+<update id="updateUserInfo" parameterType="com.alibaba.fastjson.JSONObject">
+  UPDATE user a
+  JOIN user_role b
+  ON a.login_name=b.login_name
+  SET a.login_name=#{param.loginName},a.password=#{param.password},a.nice_name=#{param.nickName},a.status=#{param.status},a.email=#{param.email},a.phone=#{param.phone},b.role_id=#{param.role}
+  WHERE a.login_name = #{param.loginName}
+</update>
+  <!--<update id="updateWcdmaAuth" parameterType="com.alibaba.fastjson.JSONObject">-->
+    <!--UPDATE unicom_user_authority_wcdma SET authority_name = #{roleList} WHERE login_name = #{loginName}-->
+  <!--</update>-->
+  <!--<update id="updateLteAuth" parameterType="com.alibaba.fastjson.JSONObject">-->
+    <!--UPDATE unicom_user_authority_lte SET authority_name = #{roleList} WHERE login_name = #{loginName}-->
+  <!--</update>-->
+  <update id="delteWcdmaAuth" parameterType="java.lang.String">
+    DELETE FROM unicom_user_authority_wcdma WHERE login_name = #{loginName}
+  </update>
+  <update id="delteLteAuth" parameterType="java.lang.String">
+    DELETE FROM unicom_user_authority_lte WHERE login_name = #{loginName}
+  </update>
+  <insert id="addWcdmaAuth" parameterType="com.alibaba.fastjson.JSONObject">
+    INSERT INTO unicom_user_authority_wcdma (login_name,authority_name)
+    VALUES
+    <foreach collection="roleList" index="index" item="authorityName" separator=",">
+      (#{loginName},#{authorityName})
+    </foreach>
+  </insert>
+  <insert id="addLteAuth" parameterType="com.alibaba.fastjson.JSONObject">
+    INSERT INTO unicom_user_authority_lte (login_name,authority_name)
+    VALUES
+    <foreach collection="roleList" index="index" item="authorityName" separator=",">
+      (#{loginName},#{authorityName})
+    </foreach>
+  </insert>
 </mapper>

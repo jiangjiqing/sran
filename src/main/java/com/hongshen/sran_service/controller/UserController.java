@@ -61,6 +61,16 @@ public class UserController extends BaseController{
                 List<JSONObject> authList = new ArrayList<>();
                 String loginName = user.getString("loginName");
 
+                // get wcdma authority info
+                List<String> wcdmaAuth = userAgentService.getWcdmaAuth(loginName);
+
+                if (!wcdmaAuth.isEmpty()){
+                    JSONObject resultWcdmaAuth = new JSONObject();
+                    resultWcdmaAuth.put("generation", Constants.WCDMA);
+                    resultWcdmaAuth.put("list", wcdmaAuth);
+
+                    authList.add(resultWcdmaAuth);
+                }
                 // get lte authority info
                 List<String> lteAuth = userAgentService.getLteAuth(loginName);
 
@@ -72,16 +82,7 @@ public class UserController extends BaseController{
                     authList.add(resultLteAuth);
                 }
 
-                // get wcdma authority info
-                List<String> wcdmaAuth = userAgentService.getWcdmaAuth(loginName);
 
-                if (!wcdmaAuth.isEmpty()){
-                    JSONObject resultWcdmaAuth = new JSONObject();
-                    resultWcdmaAuth.put("generation", Constants.WCDMA);
-                    resultWcdmaAuth.put("list", wcdmaAuth);
-
-                    authList.add(resultWcdmaAuth);
-                }
 
                 user.put("authority",authList);
             }
@@ -130,28 +131,55 @@ public class UserController extends BaseController{
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject updateUser (@HeaderParam("Auth-Token")String authToken,JSONObject param,@PathParam("loginName") String loginNmae){
 
-    JSONObject result = new JSONObject();
-    Map<String, Object> map = null;
+        JSONObject result = new JSONObject();
+        Map<String, Object> map = null;
 
-        int i = userAgentService.updateUser(param);
-
-        if (i != 0){
-//                String loginName = param.getString("loginName");
-            String authorityName = param.getString("role");
-            int j = userAgentService.updateLteUserAuthory(loginNmae, authorityName);
-
-            int z = userAgentService.updateWcdmaUserAuthory(loginNmae, authorityName);
-            if (j != 0 || z != 0){
-                result.put("result", Constants.SUCCESS);
-                result.put("msg", "update user info ok");
-            }else {
-                result.put("result",Constants.FAIL);
-                result.put("msg", "update user info fail");
+        int i = userAgentService.updateUserInfo(param);
+        if ( i > 0 ){
+            List<JSONObject> list = (List<JSONObject>) param.get("authority");
+            String loginName = param.getString("loginName");
+            for (JSONObject list1 :list) {
+//                JSONObject data = (JSONObject) list1;
+                String generation = (String) list1.get("generation");
+                if (generation.equals("wcdma")) {
+                    List<JSONObject> roleList = (List<JSONObject>) list1.get("list");
+//                    1 delte 2 add
+                    int j = userAgentService.delteWcdmaAuth(loginName);
+                    if (j > 0 ){
+                        int k = userAgentService.addWcdmaAuth(roleList,loginName);
+                    }
+//                    int j = userAgentService.updateWcdmaAuth(roleList,loginName);
+                }else if (generation.equals("lte")){
+                    List<JSONObject> roleList = (List<JSONObject>) list1.get("list");
+                    int j = userAgentService.delteLteAuth(loginName);
+                    if (j > 0 ){
+                        int k = userAgentService.addLteAuth(roleList,loginName);
+                    }
+//                    int j = userAgentService.updateLteAuth(roleList,loginName);
+                }
             }
-        } else {
-            result.put("result",Constants.FAIL);
-            result.put("msg", "add user info fail");
+
         }
+
+//        int i = userAgentService.updateUser(param);
+//
+//        if (i != 0){
+////                String loginName = param.getString("loginName");
+//            String authorityName = param.getString("role");
+//            int j = userAgentService.updateLteUserAuthory(loginNmae, authorityName);
+//
+//            int z = userAgentService.updateWcdmaUserAuthory(loginNmae, authorityName);
+//            if (j != 0 || z != 0){
+//                result.put("result", Constants.SUCCESS);
+//                result.put("msg", "update user info ok");
+//            }else {
+//                result.put("result",Constants.FAIL);
+//                result.put("msg", "update user info fail");
+//            }
+//        } else {
+//            result.put("result",Constants.FAIL);
+//            result.put("msg", "add user info fail");
+//        }
 
         return result;
     }
