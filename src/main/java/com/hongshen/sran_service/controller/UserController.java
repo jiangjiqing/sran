@@ -30,30 +30,38 @@ public class UserController extends BaseController{
 //        String url = Constants.ZB_ELEMENT;
         String method = Constants.METHOD_GET;
 
-//        if (check(url, method, authToken)) {
-            List RoleList = userAgentService.getRoleList();
-            Map<String,Object> UserInfo = userAgentService.getUserInfo();
-            String name = (String) UserInfo.get("name");
-            List<JSONObject> lteAuth = userAgentService.getLteAuth(name);
-            List<JSONObject> wcdmaAuth = userAgentService.getWcdmaAuth(name);
-            if (RoleList != null || UserInfo != null || lteAuth != null || wcdmaAuth != null){
-                map.put("lteAuth",lteAuth);
-                map.put("wcdmaAuth",wcdmaAuth);
-                map.put("RoleList",RoleList);
-                map.put("UserInfo",UserInfo);
+            List<JSONObject> RoleList = userAgentService.getUserList();
+//            List RoleList = userAgentService.getRoleList();
+//            Map<String,Object> UserInfo = userAgentService.getUserInfo();
+//            String name = (String) UserInfo.get("name");
+//            List<JSONObject> lteAuth = userAgentService.getLteAuth(name);
+//            List<JSONObject> wcdmaAuth = userAgentService.getWcdmaAuth(name);
+//            if (RoleList != null || UserInfo != null || lteAuth != null || wcdmaAuth != null){
+//                map.put("lteAuth",lteAuth);
+//                map.put("wcdmaAuth",wcdmaAuth);
+//                map.put("RoleList",RoleList);
+//                map.put("UserInfo",UserInfo);
+//
+//                result.put("data", map);
+//                result.put("result", Constants.SUCCESS);
+//            } else {
+//
+//                result.put("result", Constants.FAIL);
+//            }
+        if (RoleList == null) {
 
-                result.put("data", map);
-                result.put("result", Constants.SUCCESS);
-            } else {
+            result.put("msg", Constants.MSG_NO_DATA);
+            result.put("result", Constants.FAIL);
 
-                result.put("result", Constants.FAIL);
-            }
+        } else {
+
+            result.put("data", RoleList);
+            result.put("result", Constants.SUCCESS);
+
+        }
 
             return result;
-//        } else {
-//
-//            return result;
-//        }
+
     }
     //    add user            (Step1)
     @POST

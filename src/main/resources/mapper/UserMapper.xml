@@ -133,4 +133,27 @@
       phone = #{phone,jdbcType=VARCHAR}
     where login_name = #{loginName,jdbcType=VARCHAR}
   </update>
+  <select id="getUserList" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT
+
+      a.login_name loginName,
+
+      a.password,
+
+      a.nice_name niceName,
+
+      a.status,
+
+      a.email,
+
+      a.phone,
+
+      b.role_id roleId
+
+    FROM user a
+
+    LEFT JOIN user_role b
+
+      ON a.login_name = b.login_name
+  </select>
 </mapper>

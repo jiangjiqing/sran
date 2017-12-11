@@ -3,6 +3,7 @@ package com.hongshen.sran_service.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.dao.UnicomUserAuhorityLteMapper;
 import com.hongshen.sran_service.dao.UnicomUserAuthorityWcdmaMapper;
+import com.hongshen.sran_service.dao.UserMapper;
 import com.hongshen.sran_service.service.util.Httpclient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,8 @@ public class UserAgentService {
     private static UnicomUserAuhorityLteMapper userAuhorityLteMapper;
     @Autowired
     private static UnicomUserAuthorityWcdmaMapper userAuhorityWcdmaMapper;
+    @Autowired
+    private UserMapper userMapper;
 //    @Autowired
 //    private UserMapper userMapper;
 
@@ -125,5 +128,10 @@ public class UserAgentService {
     public static int deletewcdmaUserAuthory(String loginName) {
         return userAuhorityWcdmaMapper.deletewcdmaUserAuthory(loginName);
 
+    }
+
+
+    public List<JSONObject> getUserList() {
+        return userMapper.getUserList();
     }
 }
