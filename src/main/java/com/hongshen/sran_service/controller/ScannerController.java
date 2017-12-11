@@ -54,30 +54,4 @@ public class ScannerController extends BaseController {
 
         return ret;
     }
-
-    @GET
-    @Path("/suppliers/{supplier}/generations/{generation}/quotas/groupName/{groupName}/remark/{remark}/hasTopTen")
-    @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject groupHasTopTen(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
-                            @PathParam("groupName")String groupName, @PathParam("remark")String remark) {
-
-        JSONObject result = new JSONObject();
-
-        List<JSONObject> resultList = new ArrayList<>();
-
-        if (groupName == null || remark == null) {
-
-            return result;
-        }
-
-        NetObjBase netObj = objFactory.getNetObj(supplier, generation);
-
-        String time = caCheService.getUpdateTimeForQuotaData();
-
-        resultList = netObj.getScannerService().groupHasTopTen(groupName, remark, time);
-
-        result.put("list", resultList);
-
-        return result;
-    }
 }

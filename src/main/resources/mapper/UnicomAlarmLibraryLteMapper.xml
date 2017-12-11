@@ -210,7 +210,7 @@
   </update>
 
   <insert id="addAlarm" parameterType="com.alibaba.fastjson.JSONObject">
-    INSERT INTO unicom_alarm_library_lte (
+    INSERT IGNORE INTO unicom_alarm_library_lte (
       alarm_name,
       alarm_meaning,
       alarm_level_id,

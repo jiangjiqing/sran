@@ -56,7 +56,7 @@ public interface UnicomUserAuhorityLteMapper {
      */
     int updateByPrimaryKey(UnicomUserAuhorityLte record);
 
-    List<JSONObject> getLteAuth(@Param("name") String name);
+    List<String> getLteAuth(@Param("name") String name);
 
     int addLteUserAuthory(@Param("authorityName") String authorityName,@Param("loginName") String loginName);
 

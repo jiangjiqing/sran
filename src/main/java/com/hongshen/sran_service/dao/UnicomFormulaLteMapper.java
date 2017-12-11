@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.entity.UnicomFormula;
 import com.hongshen.sran_service.entity.UnicomFormulaLte;
 import com.hongshen.sran_service.entity.UnicomFormulaWcdma;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
@@ -60,4 +61,6 @@ public interface UnicomFormulaLteMapper {
     int updateByPrimaryKey(UnicomFormulaLte record);
 
     List<JSONObject> getFormulaList();
+
+    JSONObject getFormulaByName(@Param("quotaName")String quotaName);
 }

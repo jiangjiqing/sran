@@ -87,4 +87,14 @@
     set alarm_name = #{alarmName,jdbcType=VARCHAR}
     where alarm_name_id = #{alarmNameId,jdbcType=VARCHAR}
   </update>
+
+  <insert id="addAlarmIndex" parameterType="com.alibaba.fastjson.JSONObject">
+    INSERT IGNORE INTO unicom_alarm_index (
+      alarm_name_id,
+      alarm_name)
+    VALUES (
+      #{param.alarmNameId, jdbcType=VARCHAR},
+      #{param.alarmName, jdbcType=VARCHAR})
+  </insert>
+
 </mapper>

@@ -47,39 +47,61 @@ public class FileHelper {
             return false;
         }
     }
-//    public static void main(String[] args) {
-//        // 创建目录
+
+//    public static void main(String[] args) throws Exception{
+//        创建目录
 //        String dir = "/home/poplar/aa/";
 //        // 创建文件
 //        String fileName = "aaFile.txt";
 //        FileHelper.createFile(dir,fileName);
+//        String srcFilePath ="/home/poplar/aa/";
+//        String desFilePath ="/home/poplar/ccc/";
+//        String desFileName ="aa.tar";
+//        FileHelper.compressFile(srcFilePath,desFilePath,desFileName);
 //    }
-    public static void main(String[] args) throws Exception{
-//        创建目录
-        String dir = "/home/poplar/aa/";
-        // 创建文件
-        String fileName = "aaFile.txt";
-        FileHelper.createFile(dir,fileName);
 
+    public static boolean compressFile(String srcFilePath, String desFilePath, String desFileName){
+        Process process =null;
+        String command = "mkdir "+desFilePath;
         try {
-            String[] cmd = new String[]{"/bin/sh","-c"," java -jar "};
-            Process ps = Runtime.getRuntime().exec(cmd);
-
-            BufferedReader br = new BufferedReader(new InputStreamReader(ps.getInputStream()));
-            StringBuffer sb = new StringBuffer();
-            String line;
-            while ((line = br.readLine()) != null) {
-                sb.append(line).append("\n");
+            process = Runtime.getRuntime().exec(command);
+            try {
+                process.waitFor();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-            String result = sb.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String command1 ="tar -cf "+desFilePath+desFileName+" "+srcFilePath;
+        try {
+            process = Runtime.getRuntime().exec(command1);
 
-            System.out.println(result);
-        } catch (Exception e) {
+                InputStreamReader ir=new InputStreamReader(process.getErrorStream());
+
+                BufferedReader input = new BufferedReader (ir);
+
+                String line;
+
+                while ((line = input.readLine ()) != null){
+
+                    System.out.println(line);
+
+                }
+            try {
+                process.waitFor();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            int i = process.exitValue();
+            if (i == 0){
+                return true;
+            }
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
-
-
+        return false;
     }
 
 

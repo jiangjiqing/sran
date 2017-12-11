@@ -16,6 +16,8 @@ public interface AlarmLibService {
 
     int updateAlarmByName(String alarmName, JSONObject param);
 
+    int addAlarmIndex(JSONObject param);
+
     int addAlarm(JSONObject param);
 
     int deleteAlarmByName(String alarmName);

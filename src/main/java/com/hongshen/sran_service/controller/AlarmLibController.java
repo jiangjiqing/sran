@@ -106,16 +106,29 @@ public class AlarmLibController extends BaseController{
                                    JSONObject param){
 
         JSONObject result = new JSONObject();
+        String msg = "";
         NetObjBase obj = objFactory.getNetObj(supplier,generation);
-        int i = obj.getAlarmLibService().addAlarm(param);
 
-        if (i > 0){
+        if (param.getString("alarmNameId") != ""){
+            int i = obj.getAlarmLibService().addAlarmIndex(param);
+            if (i == 0){
+                msg = "alarmNameId is exist.";
+            }
+        }
+        if (msg.length() == 0 && param.getString("alarmName") != "") {
+            int i = obj.getAlarmLibService().addAlarm(param);
+            if (i == 0){
+                msg = "alarmName is exist.";
+            }
+        }
+
+        if (msg.length() == 0){
             result.put("result", Constants.SUCCESS);
             result.put("msg", Constants.MSG_ADD_OK);
 
         } else {
             result.put("result", Constants.FAIL);
-            result.put("msg", Constants.MSG_ADD_FAILED);
+            result.put("msg", msg);
 
         }
 

@@ -2,11 +2,9 @@ package com.hongshen.sran_service.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.service.util.Constants;
-import com.hongshen.sran_service.service.util.Httpclient;
 import com.hongshen.sran_service.service.util.NetObjBase;
 import com.hongshen.sran_service.service.util.NetObjFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -21,10 +19,7 @@ public class ElementController {
     @Autowired
     private NetObjFactory objFactory;
 
-    @Autowired
-    private Httpclient httpclient;
-
-//   Query specified group information container
+    // Query specified group info
     @GET
     @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/{groupName}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -37,17 +32,15 @@ public class ElementController {
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         JSONObject groupInfo = obj.getElementInfoService().getGroupInfo(groupName);
 
-            if (groupInfo != null){
+        if (groupInfo.isEmpty() || groupInfo == null){
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_NO_DATA);
 
-                result.put("data", groupInfo);
-                result.put("result", Constants.SUCCESS);
-
-            } else {
-
-                result.put("msg", Constants.MSG_NO_DATA);
-                result.put("result", Constants.FAIL);
-
+        } else {
+            result.put("result", Constants.SUCCESS);
+            result.put("data", groupInfo);
         }
+
         return result;
     }
 
@@ -64,22 +57,18 @@ public class ElementController {
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         JSONObject nodeInfo = obj.getElementInfoService().getNodeInfo(nodeName);
 
-        if (nodeInfo != null){
-
-            result.put("data", nodeInfo);
-            result.put("result", Constants.SUCCESS);
-
-        } else {
-
-            result.put("msg", Constants.MSG_NO_DATA);
+        if (nodeInfo.isEmpty() || nodeInfo == null){
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
 
+        } else {
+            result.put("result", Constants.SUCCESS);
+            result.put("data", nodeInfo);
         }
         return result;
     }
 
-    //    Query specified cell information container
+    // Query specified cell info
     @GET
     @Path("/suppliers/{supplier}/generations/{generation}/nets/cells/{cellName}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -92,7 +81,7 @@ public class ElementController {
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         JSONObject cellInfo = obj.getElementInfoService().getCellInfo(cellName);
 
-        if (cellInfo.isEmpty()){
+        if (cellInfo.isEmpty() || cellInfo == null){
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
 
@@ -116,49 +105,38 @@ public class ElementController {
         List<JSONObject> groupInfoList = obj.getElementInfoService().getGroupInfoList();
 
         if (groupInfoList.isEmpty()) {
-
+            result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
+
         } else {
             result.put("result", Constants.SUCCESS);
             result.put("data", groupInfoList);
         }
+
         return result;
-//        } else {
-//
-//            return result;
-//        }
     }
 
-//// Query group 3G infoList
-//    @GET
-//    @Path("/suppliers/{supplier}/generations/{generation}/nets/groups")
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public JSONObject getGroupInfoList(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
-//                                           @HeaderParam("Auth-Token")String authToken) {
-//        JSONObject result = new JSONObject();
-//        String url = Constants.PATH_DUMMY;
-//        String method = Constants.METHOD_GET;
-////        if (check(url, method, authToken)) {
-//            NetObjBase obj = objFactory.getNetObj(supplier, generation);
-//
-//            List<JSONObject> GroupInfoList = obj.getElementInfoService().getGroupInfoList();
-//
-//            if (!GroupInfoList.isEmpty()) {
-//
-//                result.put("data", GroupInfoList);
-//                result.put("result", Constants.SUCCESS);
-//
-//            } else {
-//
-//                result.put("msg", Constants.MSG_NO_DATA);
-//                result.put("result", Constants.FAIL);
-//
-//            }
-//        return result;
-//
-////        } else {
-////
-////            return result;
-////        }
-//    }
+    // Query oss list (3G)
+    @GET
+    @Path("/suppliers/{supplier}/generations/{generation}/nets/osslist")
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject getOSSList(@PathParam("supplier")String supplier,
+                                 @PathParam("generation")String generation,
+                                 @HeaderParam("Auth-Token")String authToken) {
+
+        JSONObject result = new JSONObject();
+        NetObjBase obj = objFactory.getNetObj(supplier, generation);
+        List<String> ossNameList = obj.getElementInfoService().getOssNameList();
+
+        if (ossNameList.isEmpty()) {
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_NO_DATA);
+
+        } else {
+            result.put("result", Constants.SUCCESS);
+            result.put("data", ossNameList);
+        }
+        return result;
+
+    }
 }

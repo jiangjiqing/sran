@@ -160,4 +160,10 @@
     ORDER BY id ASC;
   </select>
 
+  <select id="getFormulaByName" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT *
+    FROM unicom_formula_wcdma
+    WHERE quota_name = #{quotaName}
+  </select>
+
 </mapper>

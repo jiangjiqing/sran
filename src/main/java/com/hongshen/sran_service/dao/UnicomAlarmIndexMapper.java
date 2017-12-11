@@ -1,6 +1,8 @@
 package com.hongshen.sran_service.dao;
 
+import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.entity.UnicomAlarmIndex;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -52,4 +54,6 @@ public interface UnicomAlarmIndexMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(UnicomAlarmIndex record);
+
+    int addAlarmIndex(@Param("param")JSONObject param);
 }

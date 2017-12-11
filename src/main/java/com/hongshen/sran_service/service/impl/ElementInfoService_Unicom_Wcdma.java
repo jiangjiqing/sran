@@ -109,6 +109,11 @@ public class ElementInfoService_Unicom_Wcdma implements ElementInfoService {
     }
 
     @Override
+    public List<String> getOssNameList() {
+        return groupMapper.getOssNameList();
+    }
+
+    @Override
     public JSONObject getTable(String gettableName) {
         return favoriteMapper.getTable(gettableName);
     }

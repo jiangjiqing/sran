@@ -3,6 +3,7 @@ package com.hongshen.sran_service.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.dao.UnicomUserAuhorityLteMapper;
 import com.hongshen.sran_service.dao.UnicomUserAuthorityWcdmaMapper;
+import com.hongshen.sran_service.dao.UserMapper;
 import com.hongshen.sran_service.service.util.Httpclient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,14 +17,18 @@ import java.util.Map;
  */
 @Service
 public class UserAgentService {
+
     @Autowired
-    private static Httpclient httpclient;
+    private Httpclient httpclient;
+
     @Autowired
-    private static UnicomUserAuhorityLteMapper userAuhorityLteMapper;
+    private UnicomUserAuhorityLteMapper userAuhorityLteMapper;
+
     @Autowired
-    private static UnicomUserAuthorityWcdmaMapper userAuhorityWcdmaMapper;
-//    @Autowired
-//    private UserMapper userMapper;
+    private UnicomUserAuthorityWcdmaMapper userAuhorityWcdmaMapper;
+
+    @Autowired
+    private UserMapper userMapper; // TODO delete
 
     public List getRoleList() {
         String method = "getRole";
@@ -48,7 +53,9 @@ public class UserAgentService {
         return A;
     }
 
-    public static int addUser(JSONObject param) {
+
+
+    public int addUser(JSONObject param) {
         try {
            int i =  httpclient.addUser(param);
            if (i == 1){
@@ -60,7 +67,7 @@ public class UserAgentService {
         return 0;
     }
 
-    public static int updateUser(JSONObject param) {
+    public int updateUser(JSONObject param) {
 
         try {
             int i =  httpclient.updateUser(param);
@@ -73,7 +80,7 @@ public class UserAgentService {
         return 0;
     }
 
-    public static int deleteUser(String loginName) {
+    public int deleteUser(String loginName) {
 
         try {
             int i =  httpclient.deleteUser(loginName);
@@ -86,44 +93,45 @@ public class UserAgentService {
         return 0;
     }
 
-
-    public List<JSONObject> getLteAuth(String name) {
+    public List<String> getLteAuth(String name) {
         return userAuhorityLteMapper.getLteAuth(name);
     }
 
-    public List<JSONObject> getWcdmaAuth(String name) {
+    public List<String> getWcdmaAuth(String name) {
         return userAuhorityWcdmaMapper.getWcdmaAuth(name);
     }
 
-
-
-
-    public static int addLteUserAuthory(String loginName, String authorityName) {
+    public int addLteUserAuthory(String loginName, String authorityName) {
         return userAuhorityLteMapper.addLteUserAuthory(authorityName,loginName);
     }
 
-    public static int addWcdmaUserAuthory(String loginName, String authorityName) {
+    public int addWcdmaUserAuthory(String loginName, String authorityName) {
         return userAuhorityWcdmaMapper.addWcdmaUserAuthory(authorityName,loginName);
 
     }
 
-    public static int updateLteUserAuthory(String loginName, String authorityName) {
+    public int updateLteUserAuthory(String loginName, String authorityName) {
         return userAuhorityLteMapper.updateLteUserAuthory(authorityName,loginName);
 
     }
 
-    public static int updateWcdmaUserAuthory(String loginName, String authorityName) {
+    public int updateWcdmaUserAuthory(String loginName, String authorityName) {
         return userAuhorityWcdmaMapper.updateWcdmaUserAuthory(authorityName,loginName);
 
     }
 
-    public static int deleteLteUserAuthory(String loginName) {
+    public int deleteLteUserAuthory(String loginName) {
         return userAuhorityLteMapper.deleteLteUserAuthory(loginName);
 
     }
 
-    public static int deletewcdmaUserAuthory(String loginName) {
+    public int deletewcdmaUserAuthory(String loginName) {
         return userAuhorityWcdmaMapper.deletewcdmaUserAuthory(loginName);
 
+    }
+
+    public List<JSONObject> getUserList(){
+        // TODO delete
+        return userMapper.getUserList();
     }
 }

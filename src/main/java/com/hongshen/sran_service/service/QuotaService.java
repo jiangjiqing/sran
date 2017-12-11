@@ -35,4 +35,6 @@ public interface QuotaService {
     List<JSONObject> getQuotasCell(Date start, Date end, String condition);
 
     List<JSONObject> getCounterExportGroup(Date start,Date end,String condition);
+
+    List<JSONObject> getGroupQuotaBadTenCell(String groupName, String quotaName);
 }

@@ -33,6 +33,11 @@ public class TelecomRoomService_Unicom_Wcdma implements TelecomRoomService {
     }
 
     @Override
+    public List<String> getRoomNameList() {
+        return groupMapper.getRoomNameList();
+    }
+
+    @Override
     public List<JSONObject> getGroupListByRoom(String roomName) {
         return groupMapper.getGroupListByRoom(roomName);
     }

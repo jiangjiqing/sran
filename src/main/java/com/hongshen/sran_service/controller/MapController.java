@@ -12,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * Created by poplar on 11/13/17.
  */
@@ -342,4 +343,5 @@ public class MapController extends BaseController{
 
         return  result;
     }
+
 }

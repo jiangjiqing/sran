@@ -56,7 +56,7 @@ public interface UnicomUserAuthorityWcdmaMapper {
      */
     int updateByPrimaryKey(UnicomUserAuthorityWcdma record);
 
-    List<JSONObject> getWcdmaAuth(@Param("name")String name);
+    List<String> getWcdmaAuth(@Param("name")String name);
 
     int addWcdmaUserAuthory(@Param("authorityName")String authorityName,@Param("loginName")String loginName);
 

@@ -309,8 +309,20 @@
   </select>
 
   <select id="getRoomList" resultType="com.alibaba.fastjson.JSONObject">
-    SELECT DISTINCT (room) room
+    SELECT DISTINCT (room)
     FROM unicom_group_wcdma
+  </select>
+
+  <select id="getRoomNameList" resultType="java.lang.String">
+    SELECT DISTINCT (room)
+    FROM unicom_group_wcdma
+    ORDER BY room ASC
+  </select>
+
+  <select id="getOssNameList" resultType="java.lang.String">
+    SELECT DISTINCT (oss)
+    FROM unicom_group_wcdma
+    ORDER BY oss ASC
   </select>
 
   <select id="getGroupListByRoom" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">

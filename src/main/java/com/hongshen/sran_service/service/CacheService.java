@@ -12,15 +12,27 @@ public interface CacheService {
 
     void resetCounterList();
 
-    List<JSONObject> getCounterList(Boolean isValid);
-
     void resetCounterListProcessed();
+
+    List<JSONObject> getCounterList(Boolean isValid);
 
     List<JSONObject> getCounterListProcessed(Boolean isValid);
 
+    JSONObject getCounterByName(String name);
+
+    JSONObject getCounterProcessedByName(String name);
+
     void resetFormulaList();
 
+    void resetFormulaListProcessed();
+
     List<JSONObject> getFormulaList(Boolean isVisible);
+
+    List<JSONObject> getFormulaListProcessed(Boolean isVisible);
+
+    JSONObject getFormulaByName(String quotaName);
+
+    JSONObject getFormulaProcessedByName(String quotaName);
 
     void  resetThresholdGroupList();
 

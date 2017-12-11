@@ -193,4 +193,28 @@ public class QuotaController {
         return result;
     }
 
+    // Query group quota's bad top 10 cells
+    @GET
+    @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/{groupName}/quotas/{quotaName}/badcells")
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject getGroupQuotaBadTopTenCells(@PathParam("supplier")String supplier,
+                                   @PathParam("generation")String generation,
+                                   @PathParam("groupName")String groupName,
+                                   @PathParam("quotaName")String quotaName,
+                                   @HeaderParam("Auth-Token")String authToken) {
+
+        JSONObject result = new JSONObject();
+
+        NetObjBase obj = objFactory.getNetObj(supplier, generation);
+        List<JSONObject> cellList = obj.getQuotaService().getGroupQuotaBadTenCell(groupName,quotaName);
+
+        if (cellList.isEmpty()){
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_NO_DATA);
+        }else{
+            result.put("result", Constants.SUCCESS);
+            result.put("data", cellList);
+        }
+        return result;
+    }
 }
