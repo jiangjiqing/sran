@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -18,19 +19,19 @@ import java.util.Map;
 @Path("/sran/service/user")
 @Controller
 public class UserController extends BaseController{
+
     @Autowired
     private UserAgentService userAgentService;
-    //   Query all user lists and info     (Step1)
+
+    // Query all user lists and info (Step1)
     @GET
     @Path("/users")
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject getUserListsAndInfo(@HeaderParam("Auth-Token")String authToken){
-        JSONObject result = new JSONObject();
-        Map<String, Object> map = null;
-//        String url = Constants.ZB_ELEMENT;
-        String method = Constants.METHOD_GET;
 
-            List<JSONObject> RoleList = userAgentService.getUserList();
+        JSONObject result = new JSONObject();
+//        Map<String, Object> map = null;
+//            List<JSONObject> RoleList = userAgentService.getUserList();
 //            List RoleList = userAgentService.getRoleList();
 //            Map<String,Object> UserInfo = userAgentService.getUserInfo();
 //            String name = (String) UserInfo.get("name");
@@ -48,149 +49,155 @@ public class UserController extends BaseController{
 //
 //                result.put("result", Constants.FAIL);
 //            }
-        if (RoleList == null) {
+        List<JSONObject> userList = userAgentService.getUserList();
 
-            result.put("msg", Constants.MSG_NO_DATA);
+        if (userList.isEmpty()){
             result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_NO_DATA);
 
-        } else {
+        }else{
 
-            result.put("data", RoleList);
+            for (JSONObject user : userList){
+                List<JSONObject> authList = new ArrayList<>();
+                String loginName = user.getString("loginName");
+
+                // get lte authority info
+                List<JSONObject> lteAuth = userAgentService.getLteAuth(loginName);
+
+                if (!lteAuth.isEmpty()){
+                    JSONObject resultLteAuth = new JSONObject();
+                    resultLteAuth.put("generation", Constants.LTE);
+                    resultLteAuth.put("list", lteAuth);
+
+                    authList.add(resultLteAuth);
+                }
+
+                // get wcdma authority info
+                List<JSONObject> wcdmaAuth = userAgentService.getWcdmaAuth(loginName);
+
+                if (!wcdmaAuth.isEmpty()){
+                    JSONObject resultWcdmaAuth = new JSONObject();
+                    resultWcdmaAuth.put("generation", Constants.WCDMA);
+                    resultWcdmaAuth.put("list", wcdmaAuth);
+
+                    authList.add(resultWcdmaAuth);
+                }
+
+                user.put("authority",authList);
+            }
+
             result.put("result", Constants.SUCCESS);
-
+            result.put("data", userList);
         }
 
-            return result;
-
+        return result;
     }
-    //    add user            (Step1)
+
+    // Add user (Step1)
     @POST
     @Path("/users")
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject addUser (@HeaderParam("Auth-Token")String authToken,JSONObject param){
+
         JSONObject result = new JSONObject();
         Map<String, Object> map = null;
-//        String url = Constants.ZB_ELEMENT;
-        String method = Constants.METHOD_GET;
 
-//        if (check(url, method, authToken)) {
-            int i = UserAgentService.addUser(param);
-            if(i != 0) {
-                String loginName = param.getString("loginName");
-                String authorityName = param.getString("role");
+        int i = userAgentService.addUser(param);
+        if(i != 0) {
+            String loginName = param.getString("loginName");
+            String authorityName = param.getString("role");
 
-                int j = UserAgentService.addLteUserAuthory(loginName, authorityName);
+            int j = userAgentService.addLteUserAuthory(loginName, authorityName);
 
-                int z = UserAgentService.addWcdmaUserAuthory(loginName, authorityName);
-                if (j != 0 || z != 0){
-                    result.put("result", Constants.SUCCESS);
-                    result.put("msg", "add user info ok");
-                }else {
-                    result.put("result",Constants.FAIL);
-                    result.put("msg", "add user info fail");
-                }
+            int z = userAgentService.addWcdmaUserAuthory(loginName, authorityName);
+            if (j != 0 || z != 0){
+                result.put("result", Constants.SUCCESS);
+                result.put("msg", "add user info ok");
             }else {
                 result.put("result",Constants.FAIL);
                 result.put("msg", "add user info fail");
             }
-            return result;
-//        } else {
-//
-//            return result;
-//        }
+        }else {
+            result.put("result",Constants.FAIL);
+            result.put("msg", "add user info fail");
+        }
+        return result;
     }
-//    update specified user
+
+    // Update specified user
     @POST
     @Path("/users/{loginName}")
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject updateUser (@HeaderParam("Auth-Token")String authToken,JSONObject param,@PathParam("loginName") String loginNmae){
-        JSONObject result = new JSONObject();
-        Map<String, Object> map = null;
-//        String url = Constants.ZB_ELEMENT;
-        String method = Constants.METHOD_POST;
 
-//        if (check(url, method, authToken)) {
-            int i = UserAgentService.updateUser(param);
+    JSONObject result = new JSONObject();
+    Map<String, Object> map = null;
 
-            if (i != 0){
+        int i = userAgentService.updateUser(param);
+
+        if (i != 0){
 //                String loginName = param.getString("loginName");
-                String authorityName = param.getString("role");
-                int j = UserAgentService.updateLteUserAuthory(loginNmae, authorityName);
+            String authorityName = param.getString("role");
+            int j = userAgentService.updateLteUserAuthory(loginNmae, authorityName);
 
-                int z = UserAgentService.updateWcdmaUserAuthory(loginNmae, authorityName);
-                if (j != 0 || z != 0){
-                    result.put("result", Constants.SUCCESS);
-                    result.put("msg", "update user info ok");
-                }else {
-                    result.put("result",Constants.FAIL);
-                    result.put("msg", "update user info fail");
-                }
-            } else {
+            int z = userAgentService.updateWcdmaUserAuthory(loginNmae, authorityName);
+            if (j != 0 || z != 0){
+                result.put("result", Constants.SUCCESS);
+                result.put("msg", "update user info ok");
+            }else {
                 result.put("result",Constants.FAIL);
-                result.put("msg", "add user info fail");
+                result.put("msg", "update user info fail");
             }
+        } else {
+            result.put("result",Constants.FAIL);
+            result.put("msg", "add user info fail");
+        }
 
-            return result;
-//        } else {
-//
-//            return result;
-//        }
+        return result;
     }
-//    delete specified user
+
+    // Delete specified user
     @DELETE
     @Path("/users/{loginName}")
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject deleteUser (@HeaderParam("Auth-Token")String authToken,@PathParam("loginName")String loginName){
+
         JSONObject result = new JSONObject();
         Map<String, Object> map = null;
-//        String url = Constants.ZB_ELEMENT;
-        String method = Constants.METHOD_POST;
 
-//        if (check(url, method, authToken)) {
-            int i =  UserAgentService.deleteUser(loginName);
-            if (i != 0 ){
-                int j =UserAgentService.deleteLteUserAuthory(loginName);
-                int z =UserAgentService.deletewcdmaUserAuthory(loginName);
-            }
-            result.put("data", map);
-            result.put("result", Constants.SUCCESS);
+        int i =  userAgentService.deleteUser(loginName);
+        if (i != 0 ){
+            int j =userAgentService.deleteLteUserAuthory(loginName);
+            int z =userAgentService.deletewcdmaUserAuthory(loginName);
+        }
+        result.put("data", map);
+        result.put("result", Constants.SUCCESS);
 
-            return result;
-//        } else {
-//
-//            return result;
-//        }
+        return result;
     }
-//   Query all role
+
+    // Query all role
     @GET
     @Path("/users/roles")
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject getRoleAll(@HeaderParam("Auth-Token")String authToken){
+
         JSONObject result = new JSONObject();
         Map<String, Object> map = null;
-//        String url = Constants.ZB_ELEMENT;
-        String method = Constants.METHOD_GET;
 
-//        if (check(url, method, authToken)) {
-            List RoleAll = userAgentService.getRoleList();
+        List RoleAll = userAgentService.getRoleList();
 //            Map<String,Object> UserInfo = userAgentService.getUserInfo();
 
-            if (RoleAll != null){
-                map.put("RoleList",RoleAll);
+        if (RoleAll != null){
+            map.put("RoleList",RoleAll);
 //                map.put("UserInfo",UserInfo);
-                result.put("data", map);
-                result.put("result", Constants.SUCCESS);
-            } else {
+            result.put("data", map);
+            result.put("result", Constants.SUCCESS);
+        } else {
 
-                result.put("result", Constants.FAIL);
-            }
+            result.put("result", Constants.FAIL);
+        }
 
-            return result;
-//        } else {
-//
-//            return result;
-//        }
+        return result;
     }
-
-
 }
