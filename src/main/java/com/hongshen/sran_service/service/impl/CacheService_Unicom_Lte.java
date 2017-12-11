@@ -31,6 +31,8 @@ public class CacheService_Unicom_Lte implements CacheService {
 
     private static List<JSONObject> formulaList = new ArrayList<JSONObject>();
 
+    private static List<JSONObject> formulaListProcessed  = new ArrayList<JSONObject>();
+
     @Autowired
     private UnicomQuotaThresholdGroupLteMapper thresholdGroupMapper;
 
@@ -54,7 +56,6 @@ public class CacheService_Unicom_Lte implements CacheService {
     public void resetCounterList(){
 
         counterList.clear();
-
         counterList = counterMapper.getCounterList();
 
         resetCounterListProcessed();
@@ -66,19 +67,32 @@ public class CacheService_Unicom_Lte implements CacheService {
         counterListProcessed.clear();
 
         for (JSONObject counter : counterList){
-            String type = counter.getString("type");
+
             String name = counter.getString("name");
-            if ( type == "EUtranCellFDD" || type == "EUtranCellTDD"){
-                counter.put("name", type + "." + name);
+
+            if (name != null && name.length() != 0) {
+
+                JSONObject temp = new JSONObject();
+
+                String type = counter.getString("type");
+                if ((name != null || name.length() != 0) &&
+                        (type.equals("EUtranCellFDD") || type.equals("EUtranCellTDD"))) {
+                    name = type + "_" + name;
+                }
+
+                temp.put("id", counter.getString("id"));
+                temp.put("name", name);
+                temp.put("type", type);
+                temp.put("status", counter.getString("status"));
+
+                counterListProcessed.add(temp);
             }
-            counterListProcessed.add(counter);
         }
     }
 
     @Override
     public List<JSONObject> getCounterList(Boolean isValid) {
 
-        // check cache
         if (counterList.isEmpty()){
             resetCounterList();
         }
@@ -106,7 +120,6 @@ public class CacheService_Unicom_Lte implements CacheService {
     @Override
     public List<JSONObject> getCounterListProcessed(Boolean isValid) {
 
-        // check cache
         if (counterListProcessed.isEmpty()){
             resetCounterList();
         }
@@ -134,17 +147,47 @@ public class CacheService_Unicom_Lte implements CacheService {
     @Override
     public void resetFormulaList(){
 
-        // clear data
         formulaList.clear();
-
-        // set data
         formulaList = formulaMapper.getFormulaList();
+
+        resetFormulaListProcessed();
+    }
+
+    @Override
+    public void resetFormulaListProcessed() {
+
+        formulaListProcessed.clear();
+
+        for (JSONObject f : formulaList){
+
+            String quotaName = f.getString("quotaName");
+
+            if (quotaName != null && quotaName.length() != 0){
+
+                JSONObject temp = new JSONObject();
+
+                String expression = f.getString("expression");
+                if (expression != null || expression.length() != 0) {
+                    expression = expression.replace(".", "_");
+                }
+
+                temp.put("id" , f.getString("id"));
+                temp.put("quotaName" , quotaName);
+                temp.put("expression" , expression);
+                temp.put("remark" , f.getString("remark"));
+                temp.put("status" , f.getString("status"));
+                temp.put("type" , f.getString("type"));
+                temp.put("hasTop10" , f.getString("hasTop10"));
+
+                formulaListProcessed.add(temp);
+
+            }
+        }
     }
 
     @Override
     public List<JSONObject> getFormulaList(Boolean isVisible){
 
-        // check cache
         if (formulaList.isEmpty()){
             resetFormulaList();
         }
@@ -171,15 +214,44 @@ public class CacheService_Unicom_Lte implements CacheService {
     }
 
     @Override
+    public List<JSONObject> getFormulaListProcessed(Boolean isVisible) {
+
+        if (formulaListProcessed.isEmpty()){
+            resetFormulaList();
+        }
+
+        if (isVisible) {
+
+            List<JSONObject> resultList = new ArrayList<JSONObject>();
+
+            for (JSONObject f : formulaListProcessed) {
+
+                // unvisible quota
+                if (f.getBoolean("status")) {
+                    resultList.add(f);
+
+                } else {
+                    continue;
+                }
+            }
+            return resultList;
+
+        }else{
+
+            return formulaListProcessed;
+        }
+    }
+
+    @Override
     public void resetThresholdGroupList() {
 
         thresholdGroupList.clear();
-
         thresholdGroupList = thresholdGroupMapper.getThresholdGroupList();
     }
 
     @Override
     public List<JSONObject> getThresholdGroupList() {
+
         if (thresholdGroupList.isEmpty()){
             resetThresholdGroupList();
         }
@@ -188,13 +260,14 @@ public class CacheService_Unicom_Lte implements CacheService {
 
     @Override
     public void resetThresholdNodeList() {
-        thresholdNodeList.clear();
 
+        thresholdNodeList.clear();
         thresholdNodeList = thresholdNodeMapper.getThresholdNodeList();
     }
 
     @Override
     public List<JSONObject> getThresholdNodeList() {
+
         if (thresholdNodeList.isEmpty()){
             resetThresholdNodeList();
         }
@@ -203,13 +276,14 @@ public class CacheService_Unicom_Lte implements CacheService {
 
     @Override
     public void resetThresholdCellList() {
-        thresholdCellList.clear();
 
+        thresholdCellList.clear();
         thresholdCellList = thresholdCellMapper.getThresholdCellList();
     }
 
     @Override
     public List<JSONObject> getThresholdCellList() {
+
         if (thresholdCellList.isEmpty()){
             resetThresholdCellList();
         }
@@ -217,10 +291,12 @@ public class CacheService_Unicom_Lte implements CacheService {
     }
 
     public String getUpdateTimeForQuotaData() {
+
         return updateTimeForQuotaData;
     }
 
     public void setUpdateTimeForQuotaData(String updateTimeForQuotaData) {
+
         this.updateTimeForQuotaData = updateTimeForQuotaData;
     }
 }

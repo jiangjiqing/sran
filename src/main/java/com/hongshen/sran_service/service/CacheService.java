@@ -20,7 +20,11 @@ public interface CacheService {
 
     void resetFormulaList();
 
+    void resetFormulaListProcessed();
+
     List<JSONObject> getFormulaList(Boolean isVisible);
+
+    List<JSONObject> getFormulaListProcessed(Boolean isVisible);
 
     void  resetThresholdGroupList();
 
