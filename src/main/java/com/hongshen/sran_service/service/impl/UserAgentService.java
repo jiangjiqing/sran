@@ -93,11 +93,11 @@ public class UserAgentService {
         return 0;
     }
 
-    public List<JSONObject> getLteAuth(String name) {
+    public List<String> getLteAuth(String name) {
         return userAuhorityLteMapper.getLteAuth(name);
     }
 
-    public List<JSONObject> getWcdmaAuth(String name) {
+    public List<String> getWcdmaAuth(String name) {
         return userAuhorityWcdmaMapper.getWcdmaAuth(name);
     }
 

@@ -62,7 +62,7 @@ public class UserController extends BaseController{
                 String loginName = user.getString("loginName");
 
                 // get lte authority info
-                List<JSONObject> lteAuth = userAgentService.getLteAuth(loginName);
+                List<String> lteAuth = userAgentService.getLteAuth(loginName);
 
                 if (!lteAuth.isEmpty()){
                     JSONObject resultLteAuth = new JSONObject();
@@ -73,7 +73,7 @@ public class UserController extends BaseController{
                 }
 
                 // get wcdma authority info
-                List<JSONObject> wcdmaAuth = userAgentService.getWcdmaAuth(loginName);
+                List<String> wcdmaAuth = userAgentService.getWcdmaAuth(loginName);
 
                 if (!wcdmaAuth.isEmpty()){
                     JSONObject resultWcdmaAuth = new JSONObject();
