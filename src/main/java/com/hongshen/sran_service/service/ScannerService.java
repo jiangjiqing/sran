@@ -11,6 +11,4 @@ public interface ScannerService {
     JSONObject nodeCalculation(String time);
 
     String groupCalculation(JSONObject params, String time);
-
-    List<JSONObject> groupHasTopTen(String groupName, String quotaName, String time);
 }

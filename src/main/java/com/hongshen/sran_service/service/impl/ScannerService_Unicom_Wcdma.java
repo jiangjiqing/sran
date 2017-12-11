@@ -512,39 +512,6 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
         return result;
     }
 
-    @Override
-    public List<JSONObject> groupHasTopTen(String groupName, String quotaName, String time) {
-
-        List<JSONObject> resultList = new ArrayList<>();
-
-        JSONObject formula = formulaMapper.getFourmulaByQuotaName(quotaName);
-
-        if (formula == null) {
-
-            return resultList;
-        }
-
-        String expression = formula.getString("expression");
-
-        List<String> nodeNameList = nodeMapper.getNodeNameListByGroup(groupName);
-
-        if (nodeNameList.size() == 0) {
-
-            return resultList;
-        }
-
-        List<String> cellList = cellMapper.getCellNameListByNodeNameList(nodeNameList);
-
-        if (cellList.size() == 0) {
-
-            return resultList;
-        }
-
-        resultList = counterHistoryMapper.getCellHasTopTen(expression, cellList, time);
-
-        return resultList;
-    }
-
     // below method is 12.07 14:39 "counter" update "pmName" previous
     public String cellCalculationOldCounter(String time) {
 
@@ -1012,7 +979,7 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
 
         Map<String, String> counterMap = ScannerHelper.getCounterMap(cacheService.getCounterListProcessed(false));
 
-        JSONObject formula = formulaMapper.getFourmulaByQuotaName(quotaName);
+        JSONObject formula = cacheService.getFormulaProcessedByName(quotaName);
 
         if (formula == null) {
 
@@ -1072,7 +1039,7 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
             return resultList;
         }
 
-        resultList = counterHistoryMapper.getCellHasTopTen(expression, cellList, time);
+        resultList = counterHistoryMapper.getBadTenCell(expression, cellList, time);
 
         return resultList;
     }

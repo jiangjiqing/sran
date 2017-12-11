@@ -454,8 +454,7 @@
     ORDER BY time DESC;
   </select>
 
-  <select id="getCellHasTopTen" parameterType="java.util.List" resultType="com.alibaba.fastjson.JSONObject">
-
+  <select id="getBadTenCell" parameterType="java.util.List" resultType="com.alibaba.fastjson.JSONObject">
     SELECT
     name,
     IFNULL(#{expression},0) expvalue

@@ -145,6 +145,28 @@ public class CacheService_Unicom_Lte implements CacheService {
     }
 
     @Override
+    public JSONObject getCounterByName(String name) {
+
+        for (JSONObject counter : counterList){
+            if (counter.getString("name").equals(name)){
+                return counter;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public JSONObject getCounterProcessedByName(String name) {
+
+        for (JSONObject counter : counterListProcessed){
+            if (counter.getString("name").equals(name)){
+                return counter;
+            }
+        }
+        return null;
+    }
+
+    @Override
     public void resetFormulaList(){
 
         formulaList.clear();
@@ -240,6 +262,28 @@ public class CacheService_Unicom_Lte implements CacheService {
 
             return formulaListProcessed;
         }
+    }
+
+    @Override
+    public JSONObject getFormulaByName(String quotaName) {
+
+        for (JSONObject f : formulaList){
+            if (f.getString("quotaName").equals(quotaName)){
+                return f;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public JSONObject getFormulaProcessedByName(String quotaName) {
+
+        for (JSONObject f : formulaListProcessed){
+            if (f.getString("quotaName").equals(quotaName)){
+                return f;
+            }
+        }
+        return null;
     }
 
     @Override

@@ -113,4 +113,9 @@ public class QuotaService_Unicom_Lte implements QuotaService {
         return counterHistoryLteMapper.dowloadCounter(start,end,condition);
     }
 
+    @Override
+    public List<JSONObject> getGroupQuotaBadTenCell(String groupName, String quotaName) {
+
+        return null;
+    }
 }

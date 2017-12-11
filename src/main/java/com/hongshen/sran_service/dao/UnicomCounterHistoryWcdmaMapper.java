@@ -41,9 +41,11 @@ public interface UnicomCounterHistoryWcdmaMapper {
 
     List<JSONObject> getCounterHistoryListByTime(@Param("time")String time);
 
-    List<JSONObject> dowloadCounter(@Param("start")Date start, @Param("end")Date end,
+    List<JSONObject> dowloadCounter(@Param("start")Date start,
+                                    @Param("end")Date end,
                                     @Param("condition") String condition);
 
-    List<JSONObject> getCellHasTopTen(@Param("expression")String expression, @Param("cellList")List<String> cellList,
-                                      @Param("time")String time);
+    List<JSONObject> getBadTenCell(@Param("expression")String expression,
+                                   @Param("cellList")List<String> cellList,
+                                   @Param("time")String time);
 }

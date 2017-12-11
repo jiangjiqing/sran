@@ -103,6 +103,28 @@ public class CacheService_Unicom_Wcdma implements CacheService {
     }
 
     @Override
+    public JSONObject getCounterByName(String name) {
+
+        for (JSONObject counter : counterList){
+            if (counter.getString("name").equals(name)){
+                return counter;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public JSONObject getCounterProcessedByName(String name) {
+
+        for (JSONObject counter : counterListProcessed){
+            if (counter.getString("name").equals(name)){
+                return counter;
+            }
+        }
+        return null;
+    }
+
+    @Override
     public void resetFormulaList(){
         formulaList.clear();
         formulaList = formulaMapper.getFormulaList();
@@ -146,6 +168,28 @@ public class CacheService_Unicom_Wcdma implements CacheService {
     public List<JSONObject> getFormulaListProcessed(Boolean isVisible){
         // no need to process
         return getCounterList(isVisible);
+    }
+
+    @Override
+    public JSONObject getFormulaByName(String quotaName) {
+
+        for (JSONObject f : formulaList){
+            if (f.getString("quotaName").equals(quotaName)){
+                return f;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public JSONObject getFormulaProcessedByName(String quotaName) {
+
+        for (JSONObject f : formulaListProcessed){
+            if (f.getString("quotaName").equals(quotaName)){
+                return f;
+            }
+        }
+        return null;
     }
 
     @Override

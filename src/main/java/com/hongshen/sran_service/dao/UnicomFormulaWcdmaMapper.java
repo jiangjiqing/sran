@@ -61,5 +61,5 @@ public interface UnicomFormulaWcdmaMapper {
 
     List<JSONObject> getFormulaList();
 
-    JSONObject getFourmulaByQuotaName(@Param("quotaName")String quotaName);
+    JSONObject getFormulaByName(@Param("quotaName")String quotaName);
 }

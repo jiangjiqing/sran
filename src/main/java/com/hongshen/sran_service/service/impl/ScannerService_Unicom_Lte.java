@@ -510,11 +510,7 @@ public class ScannerService_Unicom_Lte implements ScannerService{
         return result;
     }
 
-    @Override
-    public List<JSONObject> groupHasTopTen(String groupName, String quotaName, String time) {
 
-        return null;
-    }
 
     // below method is 12.07 14:39 "counter" update "pmName" previous
     public String cellCalculationOldCounter(String time) {
