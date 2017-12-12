@@ -167,7 +167,7 @@ public class CacheService_Unicom_Wcdma implements CacheService {
     @Override
     public List<JSONObject> getFormulaListProcessed(Boolean isVisible){
         // no need to process
-        return getCounterList(isVisible);
+        return getFormulaList(isVisible);
     }
 
     @Override
