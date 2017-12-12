@@ -8,7 +8,7 @@
     -->
     <id column="login_name" jdbcType="VARCHAR" property="loginName" />
     <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="nick_name" jdbcType="VARCHAR" property="niceName" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
     <result column="status" jdbcType="BIT" property="status" />
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
@@ -45,7 +45,7 @@
     -->
     insert into user (login_name, password, nick_name,
       status, email, phone)
-    values (#{loginName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{niceName,jdbcType=VARCHAR}, 
+    values (#{loginName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR},
       #{status,jdbcType=BIT}, #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.hongshen.sran_service.entity.User">
@@ -62,7 +62,7 @@
         password,
       </if>
       <if test="nickName != null">
-        nice_name,
+        nick_name,
       </if>
       <if test="status != null">
         status,
@@ -81,8 +81,8 @@
       <if test="password != null">
         #{password,jdbcType=VARCHAR},
       </if>
-      <if test="niceName != null">
-        #{niceName,jdbcType=VARCHAR},
+      <if test="nickName != null">
+        #{nickName,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
         #{status,jdbcType=BIT},
@@ -106,7 +106,7 @@
         password = #{password,jdbcType=VARCHAR},
       </if>
       <if test="nickName != null">
-        nice_name = #{niceName,jdbcType=VARCHAR},
+        nick_name = #{nickName,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
         status = #{status,jdbcType=BIT},
