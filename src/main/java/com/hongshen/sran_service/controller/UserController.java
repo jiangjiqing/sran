@@ -126,7 +126,7 @@ public class UserController extends BaseController{
     }
 
     // Update specified user
-    @POST
+    @PUT
     @Path("/users/{loginName}")
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject updateUser (@HeaderParam("Auth-Token")String authToken,JSONObject param,@PathParam("loginName") String loginNmae){
