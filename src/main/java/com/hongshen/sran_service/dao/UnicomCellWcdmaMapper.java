@@ -75,5 +75,7 @@ public interface UnicomCellWcdmaMapper {
 
     List<String> getCellNameList();
 
+    List<JSONObject> getCellInfoList();
+
     List<String> getCellNameListByNodeNameList(@Param("nodeNameList")List<String> nodeNameList);
 }

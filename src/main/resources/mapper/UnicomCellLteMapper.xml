@@ -127,4 +127,12 @@
     FROM unicom_cell_lte
   </select>
 
+  <select id="getCellInfoList" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT
+      cell_name cellName,
+      node_name nodeName,
+      cell_id cellId
+    FROM unicom_cell_lte
+  </select>
+
 </mapper>

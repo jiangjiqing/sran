@@ -54,7 +54,7 @@ public class TopologyController extends BaseController {
                                    @PathParam("generation")String generation,
                                    @HeaderParam("Auth-Token")String authToken,
                                    @QueryParam("roomName") String roomName){
-        //TODO  chinese roomName
+
         JSONObject result = new JSONObject();
         List<JSONObject> dataList = new ArrayList<>();
 

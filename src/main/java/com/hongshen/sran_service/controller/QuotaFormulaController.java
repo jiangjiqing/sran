@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.service.util.Constants;
 import com.hongshen.sran_service.service.util.NetObjBase;
 import com.hongshen.sran_service.service.util.NetObjFactory;
+import com.hongshen.sran_service.service.util.QuotaHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.*;
@@ -51,9 +52,20 @@ public class QuotaFormulaController {
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject modifyQuotaInfo(@PathParam("supplier")String supplier,
                                       @PathParam("generation")String generation,
-                                      @HeaderParam("Auth-Token")String authToken){
+                                      @PathParam("quotaName")String quotaName,
+                                      @HeaderParam("Auth-Token")String authToken,
+                                      JSONObject param){
 
         JSONObject result = new JSONObject();
+        NetObjBase obj = objFactory.getNetObj(supplier, generation);
+
+        String expression = QuotaHelper.convertExpression(param.getString("expression"));
+        if (expression.equals("")){
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_EXPRESSION_INVALID);
+            return result;
+        }
+        //List<JSONObject> quotaList = obj.getCacheService().;
         //TODO
         return result;
     }

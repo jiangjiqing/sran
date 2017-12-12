@@ -42,6 +42,7 @@ public class Constants {
 
     public static final String MSG_NO_DATA = "Data is empty.";
 	public static final String MSG_NO_PERMISSION = "Permission denied.";
+    public static final String MSG_EXPRESSION_INVALID = "Invalid expression.";
 
 	public static final String MSG_DELETE_OK = "Delete ok.";
 	public static final String MSG_DELETE_FAILED = "Delete failed.";
