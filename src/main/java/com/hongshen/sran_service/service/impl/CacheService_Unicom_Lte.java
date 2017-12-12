@@ -76,7 +76,7 @@ public class CacheService_Unicom_Lte implements CacheService {
 
                 String type = counter.getString("type");
                 if ((name != null || name.length() != 0) &&
-                        (type.equals("EUtranCellFDD") || type.equals("EUtranCellTDD"))) {
+                        (type != null || type.length() != 0)) {
                     name = type + "_" + name;
                 }
 
