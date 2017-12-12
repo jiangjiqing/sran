@@ -6,9 +6,11 @@ import com.hongshen.sran_service.service.util.Constants;
 import com.hongshen.sran_service.service.util.NetObjBase;
 import com.hongshen.sran_service.service.util.NetObjFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.io.IOException;
+import static com.hongshen.sran_service.controller.TaskWSController.taskStatusMap;
+import static com.hongshen.sran_service.controller.TaskWSController.taskStatusSession;
 
 /**
  * Created by poplar on 11/13/17.
@@ -139,6 +141,27 @@ public class TaskController extends BaseController {
             result.put("data", file);
         }
 
+        return result;
+    }
+
+    @GET
+    @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/task/cacel1")
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject stopTasklog( @PathParam("supplier") String supplier,
+                            @PathParam("generation") String generation,
+                            @HeaderParam("Auth-Token") String authToken) throws IOException {
+        JSONObject result =new JSONObject();
+        String loginName = "66";//TODO
+        taskStatusMap.put(loginName,false);
+        result.put("result",Constants.SUCCESS);
+        result.put("mag",Constants.MSG_TASK_CANCLE_OK);
+        /*if(authToken!=null&&authToken.equals("")){
+            String loginName = authToken;
+            taskStatusMap.put(loginName,false);
+            result.put("result",Constants.SUCCESS);
+        }else{
+            result.put("result",Constants.FAIL);
+        }*/
         return result;
     }
 }
