@@ -143,6 +143,7 @@ public class TaskController extends BaseController {
 
         return result;
     }
+
     @GET
     @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/task/cacel1")
     @Produces(MediaType.APPLICATION_JSON)

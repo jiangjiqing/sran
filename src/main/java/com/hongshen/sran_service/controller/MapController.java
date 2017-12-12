@@ -83,6 +83,9 @@ public class MapController extends BaseController{
                 }
 
                 // favorite TODO
+
+
+
                 dataOne.put("favorite",false);
 
                 dataList.add(dataOne);

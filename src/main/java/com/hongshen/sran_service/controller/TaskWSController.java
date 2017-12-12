@@ -135,22 +135,6 @@ public class TaskWSController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
- /*           }else{
-                try {
-                    result.put("result","failed");
-                    this.session.getBasicRemote().sendText(result.toJSONString());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }else{
-            result.put("result","failed");
-            try {
-                this.session.getBasicRemote().sendText(result.toJSONString());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }*/
         }
     }
 }
