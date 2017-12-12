@@ -31,9 +31,8 @@ public class TaskController extends BaseController {
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         JSONObject taskInfo = obj.getTaskService().getTaskInfo(loginName);
-        ;
 
-        if (taskInfo.isEmpty()) {
+        if (taskInfo == null || taskInfo.isEmpty()) {
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
 

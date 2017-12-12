@@ -26,6 +26,12 @@ public interface ElementInfoService {
 
     List<JSONObject> getNodeInfoList();
 
+    List<String> getNodeNameList();
+
+    List<JSONObject> getCellInfoList();
+
+    List<String> getCellNameList();
+
     List<JSONObject> getNodeListByGroup(String groupName);
 
     List<String> getNodeNameListByGroup(String groupName);

@@ -50,8 +50,10 @@ public class ScannerController extends BaseController {
 
         JSONObject params = netObj.getScannerService().nodeCalculation(time);
 
-        ret = netObj.getScannerService().groupCalculation(params, time);
+        if (params != null){
 
+            ret = netObj.getScannerService().groupCalculation(params, time);
+        }
         return ret;
     }
 }

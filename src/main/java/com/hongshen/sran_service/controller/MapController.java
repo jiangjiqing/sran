@@ -65,10 +65,17 @@ public class MapController extends BaseController{
 
                 // group info
                 JSONObject groupInfo = obj.getElementInfoService().getGroupInfo(groupName);
-                dataOne.put("infos",groupInfo);
+
+                if (groupInfo == null){
+                    JSONObject temp = new JSONObject();
+                    dataOne.put("infos",temp);
+                }else {
+                    dataOne.put("infos", groupInfo);
+                }
 
                 // level
                 JSONObject level = obj.getQuotaService().getGroupLevel(groupName);
+
                 if(level != null && level.getIntValue("level") != -1){
                     dataOne.putAll(level);
                 }else{
@@ -243,7 +250,13 @@ public class MapController extends BaseController{
 
                 // infos
                 JSONObject nodeInfo = obj.getElementInfoService().getNodeInfo(nodeName);
-                dataOne.put("infos",nodeInfo);
+
+                if (nodeInfo == null){
+                    JSONObject temp = new JSONObject();
+                    dataOne.put("infos", temp);
+                }else {
+                    dataOne.put("infos", nodeInfo);
+                }
 
                 // favorite TODO
                 dataOne.put("favorite",false);
@@ -301,18 +314,25 @@ public class MapController extends BaseController{
                 JSONObject dataOne = new JSONObject();
                 dataOne.putAll(cell);
 
-                // longitude and latitude from node (TODO : confirm)
+                // longitude and latitude from node
                 JSONObject nodeLocation = obj.getElementInfoService().getNodeLocation(nodeName);
-                dataOne.putAll(nodeLocation);
 
-                String latitude = nodeLocation.getString("latitude");
-                if (latitude == null || latitude == ""){
+                if (nodeLocation == null){
                     dataOne.put("latitude",Constants.INVALID_VALUE_LOCATION);
-                }
-
-                String longitude = nodeLocation.getString("longitude");
-                if (longitude == null || longitude == ""){
                     dataOne.put("longitude",Constants.INVALID_VALUE_LOCATION);
+                }else {
+
+                    dataOne.putAll(nodeLocation);
+
+                    String latitude = nodeLocation.getString("latitude");
+                    if (latitude == null || latitude == ""){
+                        dataOne.put("latitude",Constants.INVALID_VALUE_LOCATION);
+                    }
+
+                    String longitude = nodeLocation.getString("longitude");
+                    if (longitude == null || longitude == ""){
+                        dataOne.put("longitude",Constants.INVALID_VALUE_LOCATION);
+                    }
                 }
 
                 // level
@@ -326,7 +346,13 @@ public class MapController extends BaseController{
 
                 // infos
                 JSONObject cellInfo = obj.getElementInfoService().getCellInfo(cellName);
-                dataOne.put("infos",cellInfo);
+
+                if (cellInfo == null){
+                    JSONObject temp = new JSONObject();
+                    dataOne.put("infos", temp);
+                }else {
+                    dataOne.put("infos", cellInfo);
+                }
 
                 dataList.add(dataOne);
             }

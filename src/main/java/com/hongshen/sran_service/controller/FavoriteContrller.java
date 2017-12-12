@@ -37,7 +37,13 @@ public class FavoriteContrller {
         String TableName = tableName + loginName;
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         JSONObject table = obj.getElementInfoService().getTable(gettableName);
-        if (table != null) {
+
+        if (table == null) {
+            result.put("msg", Constants.MSG_NO_DATA);
+            result.put("result", Constants.FAIL);
+
+        }else{
+
             List<JSONObject> favoriteList = obj.getElementInfoService().getFavoriteList(TableName);
 
             for (JSONObject node : favoriteList) {
@@ -55,7 +61,6 @@ public class FavoriteContrller {
                     } else {
 
                         node.put("level", Constants.INVALID_VALUE_LEVEL);
-
                     }
 
                 }

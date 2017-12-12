@@ -32,13 +32,13 @@ public class AlarmLibController extends BaseController{
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         List<JSONObject> alarmList = obj.getAlarmLibService().getAlarmList();
 
-        if (!alarmList.isEmpty()){
-            result.put("result", Constants.SUCCESS);
-            result.put("data", alarmList);
-
-        } else {
+        if (alarmList.isEmpty()){
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
+
+        } else {
+            result.put("result", Constants.SUCCESS);
+            result.put("data", alarmList);
         }
 
         return result;
@@ -57,13 +57,13 @@ public class AlarmLibController extends BaseController{
         NetObjBase obj = objFactory.getNetObj(supplier,generation);
         JSONObject alarm = obj.getAlarmLibService().getAlarmByName(alarmName);
 
-        if (!alarm.isEmpty()){
-            result.put("result", Constants.SUCCESS);
-            result.put("data", alarm);
-
-        } else {
+        if (alarm == null || alarm.isEmpty()){
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
+
+        } else {
+            result.put("result", Constants.SUCCESS);
+            result.put("data", alarm);
         }
 
         return result;

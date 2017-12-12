@@ -127,6 +127,13 @@
     FROM unicom_cell_wcdma
   </select>
 
+  <select id="getCellInfoList" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT
+    cell_name cellName,
+    node_name nodeName,
+    cell_id cellId
+    FROM unicom_cell_wcdma
+  </select>
   <select id="getCellNameListByNodeNameList" resultType="java.lang.String">
     SELECT
     cell_name name

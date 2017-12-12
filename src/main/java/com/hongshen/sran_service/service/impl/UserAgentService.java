@@ -28,7 +28,7 @@ public class UserAgentService {
     private UnicomUserAuthorityWcdmaMapper userAuhorityWcdmaMapper;
 
     @Autowired
-    private UserMapper userMapper; // TODO delete
+    private UserMapper userMapper; // TODO move to shiro
 
     public List getRoleList() {
         String method = "getRole";
@@ -131,7 +131,7 @@ public class UserAgentService {
     }
 
     public List<JSONObject> getUserList(){
-        // TODO delete
+        // TODO move to shiro
         return userMapper.getUserList();
     }
 
