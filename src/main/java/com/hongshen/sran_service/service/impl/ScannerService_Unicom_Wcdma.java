@@ -73,7 +73,7 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
         paramcloumns.add("name");
         paramcloumns.add("time");
 
-        List<JSONObject> formulaList = cacheService.getFormulaList(false);
+        List<JSONObject> formulaList = cacheService.getFormulaListProcessed(false);
 
         for (JSONObject f : formulaList) {
             paramcloumns.add(f.getString("quotaName"));
@@ -210,14 +210,14 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
         Map<String, List<String>> expressionSetMap =
                 ScannerHelper.getVariableList(cacheService.getFormulaList(false));
 
-        List<JSONObject> counterList = counterMapper.getCounterList();
+        List<JSONObject> counterList = cacheService.getCounterListProcessed(false);
 
         for (JSONObject counter : counterList) {
 
             counterParams.add(counter.getString("name"));
         }
 
-        List<JSONObject> formulaList = cacheService.getFormulaList(false);
+        List<JSONObject> formulaList = cacheService.getFormulaListProcessed(false);
 
         List<String> paramcloumns = new ArrayList<>();
 
@@ -367,7 +367,7 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
 
         List<String> paramValues = new ArrayList<>();
 
-        List<JSONObject> formulaList = cacheService.getFormulaList(false);
+        List<JSONObject> formulaList = cacheService.getFormulaListProcessed(false);
 
         List<String> paramcloumns = new ArrayList<>();
 

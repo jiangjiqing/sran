@@ -206,6 +206,8 @@ public class ScannerHelper {
 
     public static int maxLevelArray (List<Integer> params) {
 
+        if (params.size() == 0) return 1;
+
         int max = Collections.max(params);
 
         return max;

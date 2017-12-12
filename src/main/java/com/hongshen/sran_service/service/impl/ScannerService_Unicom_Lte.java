@@ -53,7 +53,7 @@ public class ScannerService_Unicom_Lte implements ScannerService{
                 ScannerHelper.getQuotaThresholdMap(quotaThresholdCellMapper.getThresholdCellList());
 
         Map<String, List<String>> expressionSetMap =
-                ScannerHelper.getVariableList(cacheService.getFormulaList(false));
+                ScannerHelper.getVariableList(cacheService.getFormulaListProcessed(false));
 
         List<String> paramValues = new ArrayList<>();
 
@@ -62,7 +62,7 @@ public class ScannerService_Unicom_Lte implements ScannerService{
         paramcloumns.add("name");
         paramcloumns.add("time");
 
-        List<JSONObject> formulaList = cacheService.getFormulaList(false);
+        List<JSONObject> formulaList = cacheService.getFormulaListProcessed(false);
 
         for (JSONObject f : formulaList) {
 
