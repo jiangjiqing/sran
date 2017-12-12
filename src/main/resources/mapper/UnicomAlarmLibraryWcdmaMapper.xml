@@ -211,19 +211,23 @@
 
   <insert id="addAlarm" parameterType="com.alibaba.fastjson.JSONObject">
     INSERT IGNORE INTO unicom_alarm_library_wcdma (
-    alarm_name,
-    alarm_meaning,
-    alarm_level_id,
-    alarm_type,
-    alarm_scope,
-    recommend)
+      alarm_name,
+      alarm_meaning,
+      alarm_level_id,
+      alarm_type,
+      alarm_scope,
+      recommend)
     VALUES (
-    #{param.alarmName, jdbcType=VARCHAR},
-    #{param.alarmMeaning, jdbcType=VARCHAR},
-    #{param.alarmLevelId, jdbcType=TINYINT},
-    #{param.alarmType, jdbcType=VARCHAR},
-    #{param.alarmScope, jdbcType=VARCHAR},
-    #{param.recommend, jdbcType=VARCHAR})
+      #{param.alarmName, jdbcType=VARCHAR},
+      #{param.alarmMeaning, jdbcType=VARCHAR},
+      #{param.alarmLevelId, jdbcType=TINYINT},
+      #{param.alarmType, jdbcType=VARCHAR},
+      #{param.alarmScope, jdbcType=VARCHAR},
+      #{param.recommend, jdbcType=VARCHAR})
   </insert>
 
+  <delete id="deleteAlarmByName" parameterType="com.alibaba.fastjson.JSONObject">
+    DELETE FROM unicom_alarm_library_wcdma
+    WHERE alarm_name = #{alarmName}
+  </delete>
 </mapper>

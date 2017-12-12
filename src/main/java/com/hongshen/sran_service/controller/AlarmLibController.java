@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by poplar on 11/13/17.
@@ -129,6 +128,32 @@ public class AlarmLibController extends BaseController{
         } else {
             result.put("result", Constants.FAIL);
             result.put("msg", msg);
+
+        }
+
+        return result;
+    }
+
+    // Delete specified alarm
+    @DELETE
+    @Path("/suppliers/{supplier}/generations/{generation}/alarms/{alarmName}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject addAlarmInfo(@PathParam("supplier")String supplier,
+                                   @PathParam("generation")String generation,
+                                   @PathParam("alarmName")String alarmName,
+                                   @HeaderParam("Auth-Token")String authToken) {
+
+        JSONObject result = new JSONObject();
+        NetObjBase obj = objFactory.getNetObj(supplier,generation);
+        int ret = obj.getAlarmLibService().deleteAlarmByName(alarmName);
+
+        if (ret > 0){
+            result.put("result", Constants.SUCCESS);
+            result.put("msg", Constants.MSG_DELETE_OK);
+
+        } else {
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_DELETE_FAILED);
 
         }
 

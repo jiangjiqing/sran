@@ -50,7 +50,7 @@ public class AlarmLibService_Unicom_Lte implements AlarmLibService {
 
     @Override
     public int deleteAlarmByName(String alarmName){
-        return 0;//TODO
+        return alarmLibMapper.deleteAlarmByName(alarmName);
     }
 
 }

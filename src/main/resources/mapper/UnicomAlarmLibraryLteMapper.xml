@@ -226,4 +226,9 @@
       #{param.recommend, jdbcType=VARCHAR})
   </insert>
 
+  <delete id="deleteAlarmByName" parameterType="com.alibaba.fastjson.JSONObject">
+    DELETE FROM unicom_alarm_library_lte
+    WHERE alarm_name = #{alarmName}
+  </delete>
+
 </mapper>
