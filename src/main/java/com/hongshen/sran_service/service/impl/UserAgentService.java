@@ -1,5 +1,6 @@
 package com.hongshen.sran_service.service.impl;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.dao.UnicomUserAuhorityLteMapper;
 import com.hongshen.sran_service.dao.UnicomUserAuthorityWcdmaMapper;
@@ -155,11 +156,11 @@ public class UserAgentService {
         return userMapper.delteLteAuth(loginName);
     }
 
-    public int addWcdmaAuth(List<JSONObject> roleList, String loginName) {
+    public int addWcdmaAuth(List<String> roleList, String loginName) {
         return userMapper.addWcdmaAuth(roleList,loginName);
     }
 
-    public int addLteAuth(List<JSONObject> roleList, String loginName) {
+    public int addLteAuth(List<String> roleList, String loginName) {
         return userMapper.addLteAuth(roleList,loginName);
     }
 }

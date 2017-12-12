@@ -1,5 +1,6 @@
 package com.hongshen.sran_service.dao;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.entity.User;
 import org.apache.ibatis.annotations.Param;
@@ -69,7 +70,7 @@ public interface UserMapper {
 
     int delteLteAuth(@Param("loginName")String loginName);
 
-    int addWcdmaAuth(@Param("roleList")List<JSONObject> roleList,@Param("loginName") String loginName);
+    int addWcdmaAuth(@Param("roleList")List<String> roleList, @Param("loginName") String loginName);
 
-    int addLteAuth(@Param("roleList")List<JSONObject> roleList,@Param("loginName") String loginName);
+    int addLteAuth(@Param("roleList")List<String> roleList, @Param("loginName") String loginName);
 }

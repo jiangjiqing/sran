@@ -1,5 +1,7 @@
 package com.hongshen.sran_service.controller;
 
+
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.common.BaseController;
 import com.hongshen.sran_service.service.impl.UserAgentService;
@@ -129,36 +131,71 @@ public class UserController extends BaseController{
     @PUT
     @Path("/users/{loginName}")
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject updateUser (@HeaderParam("Auth-Token")String authToken,JSONObject param,@PathParam("loginName") String loginNmae){
+    public JSONObject updateUser (@HeaderParam("Auth-Token")String authToken,JSONObject param,@PathParam("loginName") String loginNmae) {
 
         JSONObject result = new JSONObject();
         Map<String, Object> map = null;
 
         int i = userAgentService.updateUserInfo(param);
-        if ( i > 0 ){
-            List<JSONObject> list = (List<JSONObject>) param.get("authority");
+        if (i > 0) {
+//            JSONObject jUser = jsonArray.getJSONObject(0).getJSONObject("user");
+//            List<Object> list = (List<Object>) param.get("authority");
+            JSONArray list = param.getJSONArray("authority");
+//            JSONObject a = list.get(0);
+            System.out.println(list);
             String loginName = param.getString("loginName");
-            for (JSONObject list1 :list) {
-//                JSONObject data = (JSONObject) list1;
-                String generation = (String) list1.get("generation");
+//            for (int a = 0;i<list.size();i++){
+//                System.out.println(list.get(a));
+//            }
+            for (Object list1 : list) {
+                System.out.println(list1);
+
+                JSONObject data = JSONObject.parseObject(list1.toString());
+
+                String generation = data.getString("generation");
+                System.out.println(generation);
+
+
                 if (generation.equals("wcdma")) {
-                    List<JSONObject> roleList = (List<JSONObject>) list1.get("list");
+                    JSONArray roleList = data.getJSONArray("list");
+                    List<String> paramList = new ArrayList<>();
+
+                    for (int r = 0; r < roleList.size(); r ++) {
+
+                        paramList.add(roleList.get(r).toString());
+                    }
 //                    1 delte 2 add
                     int j = userAgentService.delteWcdmaAuth(loginName);
-                    if (j > 0 ){
-                        int k = userAgentService.addWcdmaAuth(roleList,loginName);
+
+                    if (paramList.size() > 0) {
+
+                        int k = userAgentService.addWcdmaAuth(paramList, loginName);
                     }
-//                    int j = userAgentService.updateWcdmaAuth(roleList,loginName);
-                }else if (generation.equals("lte")){
-                    List<JSONObject> roleList = (List<JSONObject>) list1.get("list");
+
+                    System.out.println(roleList);
+//                  int j = userAgentService.updateWcdmaAuth(roleList,loginName);
+                } else if (generation.equals("lte")) {
+
+                    JSONArray roleList = data.getJSONArray("list");
+
+                    List<String> paramList = new ArrayList<>();
+
+                    for (int r = 0; r < roleList.size(); r ++) {
+
+                        paramList.add(roleList.get(r).toString());
+                    }
+
                     int j = userAgentService.delteLteAuth(loginName);
-                    if (j > 0 ){
-                        int k = userAgentService.addLteAuth(roleList,loginName);
+
+                    if (paramList.size() > 0) {
+
+                        int k = userAgentService.addLteAuth(paramList, loginName);
                     }
 //                    int j = userAgentService.updateLteAuth(roleList,loginName);
+//                }
                 }
-            }
 
+            }
         }
 
 //        int i = userAgentService.updateUser(param);
@@ -181,8 +218,8 @@ public class UserController extends BaseController{
 //            result.put("msg", "add user info fail");
 //        }
 
-        return result;
-    }
+            return result;
+        }
 
     // Delete specified user
     @DELETE

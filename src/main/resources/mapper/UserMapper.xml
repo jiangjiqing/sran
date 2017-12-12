@@ -155,7 +155,7 @@
     SET
       a.login_name=#{param.loginName},
       a.password=#{param.password},
-      a.nick_name=#{param.nickName},
+      a.nice_name=#{param.nickName},
       a.status=#{param.status},
       a.email=#{param.email},
       a.phone=#{param.phone},
@@ -180,7 +180,7 @@
     WHERE login_name = #{loginName}
   </update>
 
-  <insert id="addWcdmaAuth" parameterType="com.alibaba.fastjson.JSONObject">
+  <insert id="addWcdmaAuth" parameterType="java.util.List">
     INSERT INTO unicom_user_authority_wcdma (login_name,authority_name)
     VALUES
     <foreach collection="roleList" index="index" item="authorityName" separator=",">
@@ -188,7 +188,7 @@
     </foreach>
   </insert>
 
-  <insert id="addLteAuth" parameterType="com.alibaba.fastjson.JSONObject">
+  <insert id="addLteAuth" parameterType="java.util.List">
     INSERT INTO unicom_user_authority_lte (login_name,authority_name)
     VALUES
     <foreach collection="roleList" index="index" item="authorityName" separator=",">
