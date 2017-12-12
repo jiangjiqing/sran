@@ -138,7 +138,7 @@
     SELECT
       a.login_name loginName,
       a.password,
-      a.nice_name niceName,
+      a.nice_name nickName,
       a.status,
       a.email,
       a.phone,
