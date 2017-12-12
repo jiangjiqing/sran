@@ -32,11 +32,11 @@ public class FavoriteContrller {
                                         @HeaderParam("loginName")String loginName) {
 
         JSONObject result = new JSONObject();
-        String tableName = "unicom_favorite_" + generation + "_";
-        String gettableName = "%" + tableName + loginName + "%";
-        String TableName = tableName + loginName;
+        String tableNameBase = "unicom_favorite_" + generation + "_";
+        String tableNameLike = "%" + tableNameBase + loginName + "%";
+        String tableName = tableNameBase + loginName;
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        JSONObject table = obj.getElementInfoService().getTable(gettableName);
+        JSONObject table = obj.getElementInfoService().getTable(tableNameLike);
 
         if (table == null) {
             result.put("msg", Constants.MSG_NO_DATA);
@@ -44,7 +44,7 @@ public class FavoriteContrller {
 
         }else{
 
-            List<JSONObject> favoriteList = obj.getElementInfoService().getFavoriteList(TableName);
+            List<JSONObject> favoriteList = obj.getElementInfoService().getFavoriteList(tableName);
 
             for (JSONObject node : favoriteList) {
 
