@@ -2,6 +2,7 @@ package com.hongshen.sran_service.dao;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.entity.User;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -57,4 +58,18 @@ public interface UserMapper {
     int updateByPrimaryKey(User record);
 
     List<JSONObject> getUserList();
+
+    int updateUserInfo(@Param("param") JSONObject param);
+
+//    int updateWcdmaAuth(@Param("roleList")List<JSONObject> roleList,@Param("loginName") String loginName);
+//
+//    int updateLteAuth(@Param("roleList")List<JSONObject> roleList,@Param("loginName") String loginName);
+
+    int delteWcdmaAuth(@Param("loginName")String loginName);
+
+    int delteLteAuth(@Param("loginName")String loginName);
+
+    int addWcdmaAuth(@Param("roleList")List<JSONObject> roleList,@Param("loginName") String loginName);
+
+    int addLteAuth(@Param("roleList")List<JSONObject> roleList,@Param("loginName") String loginName);
 }

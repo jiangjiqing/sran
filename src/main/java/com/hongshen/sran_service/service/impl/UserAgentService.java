@@ -134,4 +134,32 @@ public class UserAgentService {
         // TODO delete
         return userMapper.getUserList();
     }
+
+    public int updateUserInfo(JSONObject param) {
+        return userMapper.updateUserInfo(param);
+    }
+
+//    public int updateWcdmaAuth(List<JSONObject> roleList, String loginName) {
+//        return userMapper.updateWcdmaAuth(roleList,loginName);
+//    }
+//
+//    public int updateLteAuth(List<JSONObject> roleList, String loginName) {
+//        return userMapper.updateLteAuth(roleList,loginName);
+//    }
+
+    public int delteWcdmaAuth(String loginName) {
+        return userMapper.delteWcdmaAuth(loginName);
+    }
+
+    public int delteLteAuth(String loginName) {
+        return userMapper.delteLteAuth(loginName);
+    }
+
+    public int addWcdmaAuth(List<JSONObject> roleList, String loginName) {
+        return userMapper.addWcdmaAuth(roleList,loginName);
+    }
+
+    public int addLteAuth(List<JSONObject> roleList, String loginName) {
+        return userMapper.addLteAuth(roleList,loginName);
+    }
 }

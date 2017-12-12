@@ -66,4 +66,6 @@ public interface UnicomAlarmLibraryWcdmaMapper {
 
     int addAlarm(@Param("param")JSONObject param);
 
+    int deleteAlarmByName(@Param("alarmName")String alarmName);
+
 }
