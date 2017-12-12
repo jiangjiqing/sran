@@ -88,4 +88,30 @@
       (#{node.name})
     </foreach>
   </insert>
+
+  <select id="getGroupTable" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
+    SHOW   TABLES   LIKE  #{tableNameLike};
+  </select>
+
+  <select id="getNodeNum" parameterType="java.lang.String" resultType="java.lang.Integer">
+    SELECT count(*) from
+    #{tableName} u
+    LEFT JOIN
+    unicom_node_lte l
+    on
+    u.node_name = l.node_name
+    WHERE
+    l.group_name = #{groupName}
+  </select>
+
+  <select id="geNodeTable" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
+    SHOW   TABLES   LIKE  #{tableNameLike};
+  </select>
+
+  <select id="getNodeofNull" parameterType="java.lang.String" resultType="java.lang.Integer">
+    SELECT count(*) from
+    ${tableName}
+    WHERE
+    node_name = #{nodeName}
+  </select>
 </mapper>

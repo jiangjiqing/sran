@@ -28,7 +28,7 @@ public class MapController extends BaseController{
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject  getGroupList(@PathParam("supplier")String supplier,
                                     @PathParam("generation")String generation,
-                                    @HeaderParam("Auth-Token")String authToken) {
+                                    @HeaderParam("loginName")String loginName) {
 
         JSONObject result = new JSONObject();
         List<JSONObject> dataList = new ArrayList<>();
@@ -51,15 +51,15 @@ public class MapController extends BaseController{
                 List<JSONObject> nodeList =  obj.getElementInfoService().getNodeLocationsByGroup(groupName);
                 List<Double[]> list = new ArrayList<>();
 
-                    for (JSONObject node : nodeList) {
+                for (JSONObject node : nodeList) {
 
-                        Double latitude = node.getDouble("latitude");
-                        Double longitude = node.getDouble("longitude");
+                    Double latitude = node.getDouble("latitude");
+                    Double longitude = node.getDouble("longitude");
 
-                        if(latitude!= null && longitude!= null&&latitude!=0.0&&longitude!=0.0){
-                            Double[] doubles ={latitude,longitude};
-                            list.add(doubles);
-                        }
+                    if(latitude!= null && longitude!= null&&latitude!=0.0&&longitude!=0.0){
+                        Double[] doubles ={latitude,longitude};
+                        list.add(doubles);
+                    }
                 }
                 dataOne.putAll(LatitudeAndLongitude(list));
 
@@ -82,11 +82,27 @@ public class MapController extends BaseController{
                     dataOne.put("level",Constants.INVALID_VALUE_LEVEL);
                 }
 
-                // favorite TODO
+                // favorite
+                loginName= "pom";
+                String tableNameBase = "unicom_favorite_" + generation + "_";
+                String tableNameLike = "%" + tableNameBase + loginName + "%";
+                String tableName = tableNameBase + loginName;
+                JSONObject table = obj.getElementInfoService().getGroupInfoTable(tableNameLike);
+                if(table!=null){
+                    Integer nodeNum = obj.getElementInfoService().getNodeNum(tableName,groupName);
+                    if(nodeList.size() == nodeNum){
 
+                        dataOne.put("favorite",true);
 
+                    }else {
 
-                dataOne.put("favorite",false);
+                        dataOne.put("favorite",false);
+                    }
+
+                }else {
+
+                    dataOne.put("favorite",false);
+                }
 
                 dataList.add(dataOne);
             }
@@ -222,7 +238,7 @@ public class MapController extends BaseController{
     public JSONObject  getNodeList(@PathParam("supplier")String supplier,
                                    @PathParam("generation")String generation,
                                    @PathParam("groupName")String groupName,
-                                   @HeaderParam("Auth-Token")String authToken) {
+                                   @HeaderParam("loginName")String loginName) {
 
         JSONObject result = new JSONObject();
         List dataList = new ArrayList();
@@ -261,8 +277,29 @@ public class MapController extends BaseController{
                     dataOne.put("infos", nodeInfo);
                 }
 
-                // favorite TODO
-                dataOne.put("favorite",false);
+                // favorite
+
+                loginName= "pom";
+                String tableNameBase = "unicom_favorite_" + generation + "_";
+                String tableNameLike = "%" + tableNameBase + loginName + "%";
+                String tableName = tableNameBase + loginName;
+                JSONObject table = obj.getElementInfoService().getNodeInfoTable(tableNameLike);
+                if(table!=null){
+                    Integer nodeStatus = obj.getElementInfoService().getNodeofNull(tableName,nodeName);
+                    System.out.println(nodeStatus+"**");
+                    if(nodeStatus<=0){
+
+                        dataOne.put("favorite",false);
+
+                    }else {
+                        System.out.println(nodeName);
+                        dataOne.put("favorite",true);
+                    }
+
+                }else {
+
+                    dataOne.put("favorite",false);
+                }
 
                 // level
                 JSONObject level = obj.getQuotaService().getNodeLevel(nodeName);

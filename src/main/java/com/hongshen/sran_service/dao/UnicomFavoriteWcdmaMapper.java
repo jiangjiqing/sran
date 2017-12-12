@@ -73,4 +73,12 @@ public interface UnicomFavoriteWcdmaMapper {
     int addNode(@Param("tableName")String tableName,@Param("name") String name);
 
     int addNodes(@Param("tableName")String tableName,@Param("nodeNames") List<JSONObject> nodeNames);
+
+    JSONObject getGroupTable(@Param("tableNameLike") String tableNameLike);
+
+    Integer getNodeNum(@Param("tableName") String tableName, @Param("groupName")String groupName);
+
+    JSONObject geNodeTable(@Param("tableNameLike")String tableNameLike);
+
+    Integer getNodeofNull(@Param("tableName")String tableName,@Param("nodeName") String nodeName);
 }

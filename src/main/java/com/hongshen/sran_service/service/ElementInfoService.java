@@ -63,4 +63,12 @@ public interface ElementInfoService {
     List<JSONObject> getNodeLocationsByGroup(String groupName);
 
     List<String> getOssNameList();
+
+    JSONObject getGroupInfoTable(String tableNameLike);
+
+    Integer getNodeNum(String tableName, String groupName);
+
+    JSONObject getNodeInfoTable(String tableNameLike);
+
+    Integer getNodeofNull(String tableName, String nodeName);
 }
