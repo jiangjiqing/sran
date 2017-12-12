@@ -162,7 +162,7 @@
 
   <select id="getFormulaByName" resultType="com.alibaba.fastjson.JSONObject">
     SELECT *
-    FROM unicom_formula_wcdma
+    FROM unicom_formula_lte
     WHERE quota_name = #{quotaName}
   </select>
 
