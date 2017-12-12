@@ -52,6 +52,7 @@ public class Constants {
 	public static final String MSG_UPDATE_FAILED = "Update failed.";
     public static final String MSG_CACEL_OK = "Cacel ok.";
     public static final String MSG_CACEL_FAILED = "Cacel failed.";
+    public static final String MSG_TASK_CANCLE_OK = "task cancle ok";
 
     public static final String INVALID_VALUE_LEVEL = "-1";
     public static final String INVALID_VALUE_LOCATION = "-1";
@@ -60,4 +61,5 @@ public class Constants {
     // task
     public static final String TASK_LOG_PATH_ORIGINAL = "/TASKLOG/XXX.zip";
     public static final String TASK_LOG_PATH_SCRIPT = "/SCRIPTLOG/XXX.log";
+
 }
