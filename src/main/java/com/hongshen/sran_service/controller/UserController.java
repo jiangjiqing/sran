@@ -61,16 +61,7 @@ public class UserController extends BaseController{
                 List<JSONObject> authList = new ArrayList<>();
                 String loginName = user.getString("loginName");
 
-                // get wcdma authority info
-                List<String> wcdmaAuth = userAgentService.getWcdmaAuth(loginName);
 
-                if (!wcdmaAuth.isEmpty()){
-                    JSONObject resultWcdmaAuth = new JSONObject();
-                    resultWcdmaAuth.put("generation", Constants.WCDMA);
-                    resultWcdmaAuth.put("list", wcdmaAuth);
-
-                    authList.add(resultWcdmaAuth);
-                }
                 // get lte authority info
                 List<String> lteAuth = userAgentService.getLteAuth(loginName);
 
@@ -81,7 +72,16 @@ public class UserController extends BaseController{
 
                     authList.add(resultLteAuth);
                 }
+                // get wcdma authority info
+                List<String> wcdmaAuth = userAgentService.getWcdmaAuth(loginName);
 
+                if (!wcdmaAuth.isEmpty()){
+                    JSONObject resultWcdmaAuth = new JSONObject();
+                    resultWcdmaAuth.put("generation", Constants.WCDMA);
+                    resultWcdmaAuth.put("list", wcdmaAuth);
+
+                    authList.add(resultWcdmaAuth);
+                }
 
 
                 user.put("authority",authList);
