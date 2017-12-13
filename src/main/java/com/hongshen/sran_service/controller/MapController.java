@@ -285,8 +285,9 @@ public class MapController extends BaseController{
                 String tableName = tableNameBase + loginName;
                 JSONObject table = obj.getElementInfoService().getTable(tableNameLike);
                 if(table!=null){
+
                     Integer nodeStatus = obj.getElementInfoService().getNodeofNull(tableName,nodeName);
-                    System.out.println(nodeStatus+"**");
+
                     if(nodeStatus<=0){
 
                         dataOne.put("favorite",false);
@@ -305,8 +306,11 @@ public class MapController extends BaseController{
                 JSONObject level = obj.getQuotaService().getNodeLevel(nodeName);
 
                 if(level != null && level.getIntValue("level") != -1){
+
                     dataOne.putAll(level);
+
                 }else{
+
                     dataOne.put("level",Constants.INVALID_VALUE_LEVEL);
                 }
 
@@ -370,7 +374,9 @@ public class MapController extends BaseController{
                     }
 
                     String longitude = nodeLocation.getString("longitude");
+
                     if (longitude == null || longitude == ""){
+
                         dataOne.put("longitude",Constants.INVALID_VALUE_LOCATION);
                     }
                 }
@@ -379,8 +385,11 @@ public class MapController extends BaseController{
                 JSONObject level = obj.getQuotaService().getCellLevel(cellName);
 
                 if (level != null && level.getIntValue("level") != -1) {
+
                     dataOne.putAll(level);
+
                 } else {
+
                     dataOne.put("level", Constants.INVALID_VALUE_LEVEL);
                 }
 
@@ -388,9 +397,12 @@ public class MapController extends BaseController{
                 JSONObject cellInfo = obj.getElementInfoService().getCellInfo(cellName);
 
                 if (cellInfo == null){
+
                     JSONObject temp = new JSONObject();
                     dataOne.put("infos", temp);
+
                 }else {
+
                     dataOne.put("infos", cellInfo);
                 }
 
