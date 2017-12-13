@@ -3,8 +3,6 @@ package com.hongshen.sran_service.common;
 /**
  * Created by poplar on 11/21/17.
  */
-import com.hongshen.sran_service.service.util.websocket.MyWebSocket;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
@@ -22,18 +20,15 @@ import java.io.IOException;
  */
 @Component
 public class CorsFilter extends BaseController implements Filter{
-    @Autowired
-    private MyWebSocket myWebSocket;
+
     final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(CorsFilter.class);
 
 
 
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
+
         HttpServletResponse response = (HttpServletResponse) res;
         HttpServletRequest request = (HttpServletRequest) req;
-
-
-
 
         String authToken = request.getHeader("aaa");
         System.out.println(authToken);
@@ -68,6 +63,8 @@ public class CorsFilter extends BaseController implements Filter{
 
         chain.doFilter(req, res);
     }
+
     public void init(FilterConfig filterConfig) {}
+
     public void destroy() {}
 }

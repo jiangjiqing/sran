@@ -63,7 +63,11 @@ public interface UnicomFormulaWcdmaMapper {
 
     JSONObject getFormulaByName(@Param("quotaName")String quotaName);
 
-    Integer addFormula(JSONObject formulaJson);
+    Integer addFormula(@Param("param")JSONObject param);
 
-    Integer deleteFormulas();
+    Integer updateFormula(@Param("param")JSONObject param);
+
+    Integer deleteFormulaByName(@Param("quotaName")String quotaName);
+
+    Integer deleteAllFormulas();
 }

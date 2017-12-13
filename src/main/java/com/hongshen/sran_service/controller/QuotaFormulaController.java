@@ -62,14 +62,38 @@ public class QuotaFormulaController {
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
 
-        String expression = QuotaHelper.convertExpression(param.getString("expression"));
-        if (expression.equals("")){
-            result.put("result", Constants.FAIL);
-            result.put("msg", Constants.MSG_EXPRESSION_INVALID);
-            return result;
+        String msg = "";
+        String expression = param.getString("expression");
+
+        if (quotaName == null || quotaName.length() == 0){
+            msg += "Formula name is null.";
+
+        }else if (expression == null || expression.length() == 0){
+            msg += "Expression is null.";
+
+        }else if (QuotaHelper.checkExpression(expression) == false){
+            msg += "Invalid expression.";
+
+        }else{
+            expression = QuotaHelper.convertExpression(expression);
+            param.put("expression", expression);
+            param.put("quotaName", quotaName);
+
+            int i = obj.getQuotaService().updateFormula(param);
+            if (i <= 0){
+                msg += "Update to table faild.";
+            }
         }
-        //List<JSONObject> quotaList = obj.getCacheService().;
-        //TODO
+
+        if (msg.length() == 0){
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_UPDATE_FAILED + msg);
+
+        }else{
+            result.put("result", Constants.SUCCESS);
+            result.put("msg", Constants.MSG_UPDATE_OK);
+        }
+
         return result;
     }
 
@@ -79,10 +103,32 @@ public class QuotaFormulaController {
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject deleteQuotaInfo(@PathParam("supplier")String supplier,
                                       @PathParam("generation")String generation,
+                                      @PathParam("quotaName")String quotaName,
                                       @HeaderParam("Auth-Token")String authToken){
 
         JSONObject result = new JSONObject();
-        //TODO
+        NetObjBase obj = objFactory.getNetObj(supplier, generation);
+        String msg = "";
+
+        if (quotaName == null || quotaName.length() == 0){
+            msg += "Formula name is null.";
+
+        }else{
+            int i = obj.getQuotaService().DeleteFormula(quotaName);
+            if (i <= 0){
+                msg += "Delete formula table faild.";
+            }
+        }
+
+        if (msg.length() == 0){
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_DELETE_FAILED + msg);
+
+        }else{
+            result.put("result", Constants.SUCCESS);
+            result.put("msg", Constants.MSG_DELETE_OK);
+        }
+
         return result;
     }
 
@@ -93,6 +139,7 @@ public class QuotaFormulaController {
     public JSONObject getCounterList(@PathParam("supplier")String supplier,
                                      @PathParam("generation")String generation,
                                      @HeaderParam("Auth-Token")String authToken){
+
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         List<JSONObject> counterList = obj.getCacheService().getCounterList(true);
@@ -132,7 +179,7 @@ public class QuotaFormulaController {
     }
 
     @PUT
-    @Path("/suppliers/{supplier}/generations/{generation}/nets/quotas/download")
+    @Path("/suppliers/{supplier}/generations/{generation}/nets/quotas/upload")
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject formulaImport(@RequestParam("formulas")JSONArray formulas,
                                     @PathParam("supplier")String supplier,
@@ -142,7 +189,7 @@ public class QuotaFormulaController {
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         Integer addNum=0;
         if(formulas!=null) {
-            Integer delNum =  obj.getQuotaService().deleteFormulas();
+            Integer delNum =  obj.getQuotaService().deleteAllFormulas();
 
             for (int i = 0; i < formulas.size(); i++) {
                 try {

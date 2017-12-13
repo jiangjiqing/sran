@@ -167,7 +167,7 @@
   </select>
 
 
-  <insert id="addFormula" parameterType="com.hongshen.sran_service.entity.UnicomFormulaWcdma">
+  <insert id="addFormula" parameterType="com.alibaba.fastjson.JSONObject">
     insert into unicom_formula_wcdma
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -193,31 +193,64 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id},
+      <if test="param.id != null">
+        #{param.id,jdbcType=INT},
       </if>
-      <if test="quotaName != null">
-        #{quotaName},
+      <if test="param.quotaName != null">
+        #{param.quotaName,jdbcType=VARCHAR},
       </if>
-      <if test="expression != null">
-        #{expression},
+      <if test="param.expression != null">
+        #{param.expression,jdbcType=VARCHAR},
       </if>
-      <if test="remark != null">
-        #{remark},
+      <if test="param.remark != null">
+        #{param.remark,jdbcType=VARCHAR},
       </if>
-      <if test="status != null">
-        #{status},
+      <if test="param.status != null">
+        #{param.status,jdbcType=TINYINT},
       </if>
-      <if test="type != null">
-        #{type},
+      <if test="param.type != null">
+        #{param.type,jdbcType=VARCHAR},
       </if>
-      <if test="hastop10 != null">
-        #{hastop10}
+      <if test="param.hastop10 != null">
+        #{param.hastop10,jdbcType=TINYINT}
       </if>
     </trim>
   </insert>
 
-  <delete id="deleteFormulas">
-    DELETE FROM unicom_formula_wcdma;
+  <update id="updateFormula" parameterType="com.alibaba.fastjson.JSONObject">
+    UPDATE unicom_formula_wcdma
+    <set>
+      <!--<if test="param.id != null">-->
+      <!--id = #{param.id,jdbcType=INT},-->
+      <!--</if>-->
+      <!--<if test="param.quotaName != null">-->
+      <!--quota_name = #{param.quotaName,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <if test="param.expression != null">
+        expression = #{param.expression,jdbcType=VARCHAR},
+      </if>
+      <if test="param.remark != null">
+        remark = #{param.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="param.status != null">
+        status = #{param.status,jdbcType=TINYINT},
+      </if>
+      <if test="param.type != null">
+        type = #{param.type,jdbcType=VARCHAR},
+      </if>
+      <if test="param.hastop10 != null">
+        hastop10 = #{param.hastop10,jdbcType=TINYINT}
+      </if>
+    </set>
+    WHERE quota_name = #{param.quotaName,jdbcType=VARCHAR}
+  </update>
+
+  <delete id="deleteFormulaByName" parameterType="com.alibaba.fastjson.JSONObject">
+    DELETE FROM unicom_formula_wcdma
+    WHERE quota_name = #{quotaName}
+  </delete>
+
+  <delete id="deleteAllFormulas">
+    DELETE FROM unicom_formula_wcdma
   </delete>
 </mapper>

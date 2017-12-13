@@ -1,9 +1,8 @@
 package com.hongshen.sran_service.common;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hongshen.sran_service.service.util.Httpclient;
 import com.hongshen.sran_service.service.util.NetObjFactory;
-import com.hongshen.sran_service.service.util.websocket.MyWebSocket;
+import com.hongshen.sran_service.controller.NoticeWSController;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.GET;
@@ -17,7 +16,7 @@ import javax.ws.rs.Path;
 @Path("/test")
 public class TestResource extends BaseController{
     @Autowired
-    private MyWebSocket myWebSocket;
+    private NoticeWSController myWebSocket;
     @Autowired
     private NetObjFactory objFactory;
 //    @Autowired

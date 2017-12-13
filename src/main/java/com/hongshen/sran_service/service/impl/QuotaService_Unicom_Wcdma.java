@@ -168,12 +168,22 @@ public class QuotaService_Unicom_Wcdma implements QuotaService {
     }
 
     @Override
-    public Integer addFormula(JSONObject formulaJson) {
-        return formulaMapper.addFormula(formulaJson);
+    public Integer addFormula(JSONObject formula) {
+        return formulaMapper.addFormula(formula);
     }
 
     @Override
-    public Integer deleteFormulas() {
-        return formulaMapper.deleteFormulas();
+    public Integer updateFormula(JSONObject formula) {
+        return formulaMapper.updateFormula(formula);
+    }
+
+    @Override
+    public Integer DeleteFormula(String quotaName) {
+        return formulaMapper.deleteFormulaByName(quotaName);
+    }
+
+    @Override
+    public Integer deleteAllFormulas() {
+        return formulaMapper.deleteAllFormulas();
     }
 }

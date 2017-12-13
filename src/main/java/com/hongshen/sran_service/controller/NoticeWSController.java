@@ -1,5 +1,6 @@
-package com.hongshen.sran_service.service.util.websocket;
+package com.hongshen.sran_service.controller;
 
+import com.hongshen.sran_service.service.util.websocket.HttpSessionConfigurator;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpSession;
@@ -13,10 +14,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * Created by poplar on 11/28/17.
  */
-@ServerEndpoint(value = "/websocket", configurator = HttpSessionConfigurator.class )
+@ServerEndpoint(value = "/sran/service/notice", configurator = HttpSessionConfigurator.class )
 //
 @Component
-public class MyWebSocket {
+public class NoticeWSController {
 
 
     //与某个客户端的连接会话，需要通过它来给客户端发送数据
@@ -26,7 +27,7 @@ public class MyWebSocket {
     private static final String GUEST_PREFIX = "Guest";
     private static final Map<String,Object> connections = new HashMap<String,Object>();
     private final String nickname;
-    public MyWebSocket(){
+    public NoticeWSController(){
         nickname = GUEST_PREFIX + connectionIds.getAndIncrement();     }
     /**
      * 连接成功*/
@@ -76,9 +77,9 @@ public class MyWebSocket {
     }
     public void sendAll(String msg) {
         for (String key : connections.keySet()) {
-            MyWebSocket client = null;
+            NoticeWSController client = null;
 
-            client = (MyWebSocket) connections.get(key);
+            client = (NoticeWSController) connections.get(key);
             synchronized (client) {
                 client.session.getAsyncRemote().sendText(msg);
             }

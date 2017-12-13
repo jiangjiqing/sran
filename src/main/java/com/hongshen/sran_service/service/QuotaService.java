@@ -42,5 +42,9 @@ public interface QuotaService {
 
     Integer addFormula(JSONObject formulaJson);
 
-    Integer deleteFormulas();
+    Integer updateFormula(JSONObject formula);
+
+    Integer DeleteFormula(String quotaName);
+
+    Integer deleteAllFormulas();
 }

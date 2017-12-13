@@ -5,6 +5,7 @@ import com.hongshen.sran_service.common.BaseController;
 import com.hongshen.sran_service.service.util.Constants;
 import com.hongshen.sran_service.service.util.NetObjBase;
 import com.hongshen.sran_service.service.util.NetObjFactory;
+import com.hongshen.sran_service.service.util.QuotaHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.*;
@@ -29,17 +30,23 @@ public class AlarmLibController extends BaseController{
                                    @HeaderParam("Auth-Token")String authToken){
 
         JSONObject result = new JSONObject();
-        NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        List<JSONObject> alarmList = obj.getAlarmLibService().getAlarmList();
-
-        if (alarmList == null || alarmList.isEmpty()){
-            result.put("result", Constants.FAIL);
-            result.put("msg", Constants.MSG_NO_DATA);
-
-        } else {
-            result.put("result", Constants.SUCCESS);
-            result.put("data", alarmList);
+        //String e = "(EUtranCellRelation.pmHoPrepAttLteInterF+EUtranCellRelation.pmHoPrepAttLteIntraF)==0?100:100*(EUtranCellRelation.pmHoExeSuccLteInterF+EUtranCellRelation.pmHoExeSuccLteIntraF)/(EUtranCellRelation.pmHoPrepAttLteInterF+EUtranCellRelation.pmHoPrepAttLteIntraF)";
+        String e = "(pmErab_LevSa.mp)*5 == -0?0:100*((1-(pmCellDowntimeAuto)/((pmErabLevSamp)*5))) ";
+        int l = e.length();
+        if (QuotaHelper.checkExpression(e)){
+            String c = QuotaHelper.convertExpression(e);
         }
+//        NetObjBase obj = objFactory.getNetObj(supplier, generation);
+//        List<JSONObject> alarmList = obj.getAlarmLibService().getAlarmList();
+//
+//        if (alarmList == null || alarmList.isEmpty()){
+//            result.put("result", Constants.FAIL);
+//            result.put("msg", Constants.MSG_NO_DATA);
+//
+//        } else {
+//            result.put("result", Constants.SUCCESS);
+//            result.put("data", alarmList);
+//        }
 
         return result;
     }
