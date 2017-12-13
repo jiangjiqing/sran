@@ -105,11 +105,6 @@ public class ScannerHelper {
 
         Set<String> variableSet = new HashSet<>();
 
-        if (expression.contains(".")) {
-
-            expression = expression.replaceAll("\\.", "_");
-        }
-
         String regEx="[-`/?!@#$%^&*()<+=|{}':;',]";
 
         Pattern pattern = Pattern.compile(regEx);
@@ -129,17 +124,7 @@ public class ScannerHelper {
 
         for (String variable : variableSet) {
 
-            String fmVar = "";
-
-            if (variable.contains("_")) {
-
-                fmVar = variable.replaceAll("_", "\\.");
-            }else {
-
-                fmVar = variable;
-            }
-
-            resultList.add(fmVar);
+            resultList.add(variable);
         }
 
         return resultList;

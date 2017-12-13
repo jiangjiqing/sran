@@ -199,7 +199,7 @@ public class ScannerService_Unicom_Lte implements ScannerService{
                 ScannerHelper.getQuotaThresholdMap(quotaThresholdNodeMapper.getThresholdNodeList());
 
         Map<String, List<String>> expressionSetMap =
-                ScannerHelper.getVariableList(cacheService.getFormulaList(false));
+                ScannerHelper.getVariableList(cacheService.getFormulaListProcessed(false));
 
         List<JSONObject> counterList = cacheService.getCounterListProcessed(false);
 
@@ -208,7 +208,7 @@ public class ScannerService_Unicom_Lte implements ScannerService{
             counterParams.add(counter.getString("name"));
         }
 
-        List<JSONObject> formulaList = cacheService.getFormulaList(false);
+        List<JSONObject> formulaList = cacheService.getFormulaListProcessed(false);
 
         List<String> paramcloumns = new ArrayList<>();
 
@@ -362,7 +362,7 @@ public class ScannerService_Unicom_Lte implements ScannerService{
 
         List<String> paramValues = new ArrayList<>();
 
-        List<JSONObject> formulaList = cacheService.getFormulaList(false);
+        List<JSONObject> formulaList = cacheService.getFormulaListProcessed(false);
 
         List<String> paramcloumns = new ArrayList<>();
 
@@ -382,7 +382,7 @@ public class ScannerService_Unicom_Lte implements ScannerService{
                 ScannerHelper.getQuotaThresholdMap(quotaThresholdGroupMapper.getThresholdGroupList());
 
         Map<String, List<String>> expressionSetMap =
-                ScannerHelper.getVariableList(cacheService.getFormulaList(false));
+                ScannerHelper.getVariableList(cacheService.getFormulaListProcessed(false));
 
         for (String groupName : groupNameList) {
 
