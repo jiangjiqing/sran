@@ -1,6 +1,5 @@
 package com.hongshen.sran_service.service.impl;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.dao.RoleMapper;
 import com.hongshen.sran_service.dao.UnicomUserAuhorityLteMapper;
@@ -188,5 +187,23 @@ public class UserAgentService {
 
     public int addLteAuth(List<String> roleList, String loginName) {
         return userMapper.addLteAuth(roleList,loginName);
+    }
+
+    public int addUserInfo(JSONObject param) {
+        return userMapper.addUserInfo(param);
+    }
+
+
+    public List<JSONObject> getUserlistInfo(JSONObject param) {
+        return userMapper.getUserlistInfo(param);
+    }
+
+    public List<JSONObject> getUserRolelistInfo(JSONObject param) {
+        return userMapper.getUserRolelistInfo(param);
+
+    }
+
+    public int addUserRoleInfo(JSONObject param) {
+        return userMapper.addUserRoleInfo(param);
     }
 }

@@ -73,4 +73,12 @@ public interface UserMapper {
     int addWcdmaAuth(@Param("roleList")List<String> roleList, @Param("loginName") String loginName);
 
     int addLteAuth(@Param("roleList")List<String> roleList, @Param("loginName") String loginName);
+
+    int addUserInfo(@Param("param") JSONObject param);
+
+    List<JSONObject> getUserlistInfo(@Param("param")JSONObject param);
+
+    List<JSONObject> getUserRolelistInfo(@Param("param")JSONObject param);
+
+    int addUserRoleInfo(@Param("param")JSONObject param);
 }

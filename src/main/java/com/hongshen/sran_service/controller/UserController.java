@@ -86,27 +86,70 @@ public class UserController extends BaseController{
                                JSONObject param){
 
         JSONObject result = new JSONObject();
+        String msg = "";
+        List<JSONObject> userList = userAgentService.getUserlistInfo(param);
+        List<JSONObject> userRoleList = userAgentService.getUserRolelistInfo(param);
+        if (userList == null && userRoleList == null){
+            int i = userAgentService.addUserInfo(param);//TODO shiro
+            int j = userAgentService.addUserRoleInfo(param);
+            if(i > 0 && j > 0) {
+                JSONArray list = param.getJSONArray("authority");
+                for (Object l : list) {
+                    JSONObject data = JSONObject.parseObject(l.toString());
+                    String generation = data.getString("generation");
+                    String loginName = param.getString("loginName");
+                    if (generation.equals("wcdma")) {
 
-        int i = userAgentService.addUser(param);//TODO shiro
-//        int i = userAgentService.addUserFromShiro(param);
-        if(i != 0) {
-            String loginName = param.getString("loginName");
-            String authorityName = param.getString("authority");//TODO
+                        JSONArray authList = data.getJSONArray("list");
+                        List<String> paramList = new ArrayList<>();
 
-            int j = userAgentService.addLteUserAuthory(loginName, authorityName);
-            int z = userAgentService.addWcdmaUserAuthory(loginName, authorityName);
+                        for (int r = 0; r < authList.size(); r ++) {
 
-            if (j != 0 || z != 0){
-                result.put("result", Constants.SUCCESS);
-                result.put("msg", Constants.MSG_ADD_OK);
+                            paramList.add(authList.get(r).toString());
+                        }
+                        if (paramList.size() > 0) {
+
+                            int k = userAgentService.addWcdmaAuth(paramList, loginName);
+                            if (k <= 0){
+                                msg += "add user authority info("+ generation +"-step2) failed.";
+                            }
+                        }
+
+                    } else if (generation.equals("lte")) {
+
+                        JSONArray authList = data.getJSONArray("list");
+                        List<String> paramList = new ArrayList<>();
+
+                        for (int r = 0; r < authList.size(); r ++) {
+
+                            paramList.add(authList.get(r).toString());
+                        }
+                        if (paramList.size() > 0) {
+
+                            int k = userAgentService.addLteAuth(paramList, loginName);
+                            if (k <= 0){
+                                msg += "add user authority info("+ generation +"-step2) failed.";
+                            }
+                        }
+                    }
+                }
+
             }else {
-                result.put("result",Constants.FAIL);
-                result.put("msg", Constants.MSG_ADD_FAILED);
-            }
+               msg += "Add user err.";
 
+            }
         }else {
-            result.put("result",Constants.FAIL);
-            result.put("msg", "add user info fail");
+            msg += "Table is not null.";
+
+        }
+//        int i = userAgentService.addUserFromShiro(param);
+        if (msg.length() == 0){
+            result.put("result", Constants.SUCCESS);
+            result.put("msg", Constants.MSG_ADD_OK);
+
+        }else{
+            result.put("result", Constants.SUCCESS);
+            result.put("msg", Constants.MSG_ADD_FAILED + msg);
         }
 
         return result;

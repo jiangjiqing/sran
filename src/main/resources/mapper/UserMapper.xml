@@ -195,5 +195,16 @@
       (#{loginName},#{authorityName})
     </foreach>
   </insert>
-
+<select id="getUserlistInfo" resultType="com.alibaba.fastjson.JSONObject" parameterType="com.alibaba.fastjson.JSONObject">
+  SELECT * FROM user WHERE login_name = #{param.loginName}
+</select>
+  <insert id="addUserInfo" parameterType="com.alibaba.fastjson.JSONObject">
+     INSERT INTO user VALUES (#{param.loginName},#{param.password},#{param.nickName},#{param.status},#{param.email},#{param.phone})
+  </insert>
+  <select id="getUserRolelistInfo" resultType="com.alibaba.fastjson.JSONObject" parameterType="com.alibaba.fastjson.JSONObject">
+    SELECT * FROM user_role WHERE login_name = #{param.loginName}
+  </select>
+  <insert id="addUserRoleInfo" parameterType="com.alibaba.fastjson.JSONObject">
+    INSERT INTO user_role VALUES (#{param.loginName},#{param.role})
+  </insert>
 </mapper>
