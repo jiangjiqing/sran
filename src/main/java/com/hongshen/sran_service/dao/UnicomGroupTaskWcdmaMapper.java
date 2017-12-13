@@ -2,6 +2,7 @@ package com.hongshen.sran_service.dao;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.entity.UnicomGroupTaskWcdma;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -54,5 +55,7 @@ public interface UnicomGroupTaskWcdmaMapper {
      */
     int updateByPrimaryKey(UnicomGroupTaskWcdma record);
 
-    JSONObject getTaskInfo(String loginName);
+    JSONObject getTaskInfo(@Param("loginName")String loginName);
+
+    int addTask(@Param("param")JSONObject param);
 }

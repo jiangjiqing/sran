@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ public class ElementController {
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         JSONObject groupInfo = obj.getElementInfoService().getGroupInfo(groupName);
 
-        if (groupInfo.isEmpty() || groupInfo == null){
+        if (groupInfo == null || groupInfo.isEmpty()){
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
 
@@ -57,7 +58,7 @@ public class ElementController {
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         JSONObject nodeInfo = obj.getElementInfoService().getNodeInfo(nodeName);
 
-        if (nodeInfo.isEmpty() || nodeInfo == null){
+        if (nodeInfo == null || nodeInfo.isEmpty()){
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
 
@@ -81,7 +82,7 @@ public class ElementController {
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         JSONObject cellInfo = obj.getElementInfoService().getCellInfo(cellName);
 
-        if (cellInfo.isEmpty() || cellInfo == null){
+        if (cellInfo == null || cellInfo.isEmpty()){
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
 
@@ -92,25 +93,85 @@ public class ElementController {
         return result;
     }
 
-    // Query group info list (3G)
+    // Query group info list
     @GET
-    @Path("/suppliers/{supplier}/generations/{generation}/nets/groups")
+    @Path("/suppliers/{supplier}/generations/{generation}/nets/{level}")
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject getGroupInfoList(@PathParam("supplier")String supplier,
                                        @PathParam("generation")String generation,
+                                       @PathParam("level")String level,
                                        @HeaderParam("Auth-Token")String authToken) {
 
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        List<JSONObject> groupInfoList = obj.getElementInfoService().getGroupInfoList();
+        List<JSONObject> infoList = new ArrayList<>();
 
-        if (groupInfoList.isEmpty()) {
+        switch (level){
+            case "groups":
+                infoList = obj.getElementInfoService().getGroupInfoList();
+                break;
+
+            case "nodes":
+                infoList = obj.getElementInfoService().getNodeInfoList();
+                break;
+
+            case "cells":
+                infoList = obj.getElementInfoService().getCellInfoList();
+                break;
+
+            default:
+                break;
+        }
+
+        if (infoList == null || infoList.isEmpty()) {
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
 
         } else {
             result.put("result", Constants.SUCCESS);
-            result.put("data", groupInfoList);
+            result.put("data", infoList);
+        }
+
+        return result;
+    }
+
+    // Query net elements name list
+    @GET
+    @Path("/suppliers/{supplier}/generations/{generation}/nets/{level}/namelist")
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject getOSSList(@PathParam("supplier")String supplier,
+                                 @PathParam("generation")String generation,
+                                 @PathParam("level")String level,
+                                 @HeaderParam("Auth-Token")String authToken) {
+
+        JSONObject result = new JSONObject();
+        NetObjBase obj = objFactory.getNetObj(supplier, generation);
+        List<String> infoList = new ArrayList<>();
+
+        switch (level){
+            case "groups":
+                infoList = obj.getElementInfoService().getGroupNameList();
+                break;
+
+            case "nodes":
+                infoList = obj.getElementInfoService().getNodeNameList();
+                break;
+
+            case "cells":
+                infoList = obj.getElementInfoService().getCellNameList();
+                break;
+
+            default:
+                break;
+        }
+
+        if (infoList == null || infoList.isEmpty()) {
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_NO_DATA);
+
+        } else {
+            result.put("result", Constants.SUCCESS);
+            result.put("data", infoList);
         }
 
         return result;
@@ -128,7 +189,7 @@ public class ElementController {
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         List<String> ossNameList = obj.getElementInfoService().getOssNameList();
 
-        if (ossNameList.isEmpty()) {
+        if (ossNameList == null || ossNameList.isEmpty()) {
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
 
@@ -136,7 +197,7 @@ public class ElementController {
             result.put("result", Constants.SUCCESS);
             result.put("data", ossNameList);
         }
-        return result;
 
+        return result;
     }
 }

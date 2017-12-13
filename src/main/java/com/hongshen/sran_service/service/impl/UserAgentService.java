@@ -2,6 +2,7 @@ package com.hongshen.sran_service.service.impl;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.hongshen.sran_service.dao.RoleMapper;
 import com.hongshen.sran_service.dao.UnicomUserAuhorityLteMapper;
 import com.hongshen.sran_service.dao.UnicomUserAuthorityWcdmaMapper;
 import com.hongshen.sran_service.dao.UserMapper;
@@ -31,7 +32,18 @@ public class UserAgentService {
     @Autowired
     private UserMapper userMapper; // TODO move to shiro
 
-    public List getRoleList() {
+    @Autowired
+    private RoleMapper roleMapper; // TODO move to shiro
+
+
+    // role
+
+    public List<JSONObject> getRoleList() {
+        return roleMapper.getRoleList();
+    }
+
+    public List getRoleListFromShiro() {
+
         String method = "getRole";
         List a = null;
         try {
@@ -42,8 +54,16 @@ public class UserAgentService {
         return a;
     }
 
-    public Map<String,Object> getUserInfo() {
-//        httpclient.
+    //TODO add role and delete role
+
+    // user
+
+    public List<JSONObject> getUserList(){
+        return userMapper.getUserList();
+    }
+
+    public Map<String,Object> getUserListFromShiro() {
+
         String method = "getUser";
         Map A = null;
         try {
@@ -54,9 +74,12 @@ public class UserAgentService {
         return A;
     }
 
+    public int addUser(JSONObject param){
+        //TODO
+        return 0;
+    }
 
-
-    public int addUser(JSONObject param) {
+    public int addUserFromShiro(JSONObject param) {
         try {
            int i =  httpclient.addUser(param);
            if (i == 1){
@@ -68,7 +91,12 @@ public class UserAgentService {
         return 0;
     }
 
+
     public int updateUser(JSONObject param) {
+        return userMapper.updateUser(param);
+    }
+
+    public int updateUserFromShiro(JSONObject param) {
 
         try {
             int i =  httpclient.updateUser(param);
@@ -82,6 +110,11 @@ public class UserAgentService {
     }
 
     public int deleteUser(String loginName) {
+        //TODO
+        return 0;
+    }
+
+    public int deleteUserFromShiro(String loginName) {
 
         try {
             int i =  httpclient.deleteUser(loginName);
@@ -93,6 +126,8 @@ public class UserAgentService {
         }
         return 0;
     }
+
+    // authority
 
     public List<String> getLteAuth(String name) {
         return userAuhorityLteMapper.getLteAuth(name);
@@ -129,15 +164,6 @@ public class UserAgentService {
     public int deletewcdmaUserAuthory(String loginName) {
         return userAuhorityWcdmaMapper.deletewcdmaUserAuthory(loginName);
 
-    }
-
-    public List<JSONObject> getUserList(){
-        // TODO move to shiro
-        return userMapper.getUserList();
-    }
-
-    public int updateUserInfo(JSONObject param) {
-        return userMapper.updateUserInfo(param);
     }
 
 //    public int updateWcdmaAuth(List<JSONObject> roleList, String loginName) {

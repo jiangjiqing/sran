@@ -148,7 +148,7 @@
       ON a.login_name = b.login_name
   </select>
 
-  <update id="updateUserInfo" parameterType="com.alibaba.fastjson.JSONObject">
+  <update id="updateUser" parameterType="com.alibaba.fastjson.JSONObject">
     UPDATE user a
     JOIN user_role b
     ON a.login_name=b.login_name

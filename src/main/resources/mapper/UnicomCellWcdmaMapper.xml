@@ -120,11 +120,14 @@
     SELECT cell_name name
     FROM unicom_cell_wcdma
     WHERE node_name = #{nodeName}
+    GROUP BY name
   </select>
 
   <select id="getCellNameList" resultType="java.lang.String">
     SELECT cell_name name
     FROM unicom_cell_wcdma
+    GROUP BY name
+    ORDER BY name
   </select>
 
   <select id="getCellInfoList" resultType="com.alibaba.fastjson.JSONObject">

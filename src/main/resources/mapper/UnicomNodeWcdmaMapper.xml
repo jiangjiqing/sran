@@ -200,10 +200,10 @@
   </select>
   
   <select id="getNodeLocationsByGroup" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
-      SELECT
-        distinct latitude,longitude
+      SELECT latitude,longitude
       FROM unicom_node_wcdma
-      WHERE group_name = #{groupName};
+      WHERE group_name = #{groupName}
+      GROUP BY latitude, longitude
   </select>
 
   <select id="getNodeListByGroup" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
@@ -220,6 +220,7 @@
     SELECT node_name name
     FROM unicom_node_wcdma
     WHERE group_name = #{groupName}
+    GROUP BY name
   </select>
 
   <select id="getNodeLocation" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
@@ -233,6 +234,7 @@
       node_name name
     FROM unicom_node_wcdma
     GROUP BY name
+    ORDER BY name
   </select>
 
   <select id="getNodeNameListByGroupName" resultType="java.lang.String">

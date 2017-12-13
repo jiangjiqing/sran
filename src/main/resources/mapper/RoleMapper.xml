@@ -87,4 +87,12 @@
     set role_name = #{roleName,jdbcType=VARCHAR}
     where role_id = #{roleId,jdbcType=TINYINT}
   </update>
+
+  <select id="getRoleList" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT
+      role_id roleId,
+      role_name roleName
+    FROM role
+    ORDER BY roleId ASC
+  </select>
 </mapper>

@@ -283,8 +283,10 @@
 
   <select id="getGroupNameList" resultType="java.lang.String">
     SELECT
-      group_name groupName
+      group_name name
     FROM unicom_group_wcdma
+    GROUP BY name
+    ORDER BY name
   </select>
 
   <select id="getGroupInfoList" resultType="com.alibaba.fastjson.JSONObject">
@@ -309,20 +311,23 @@
   </select>
 
   <select id="getRoomList" resultType="com.alibaba.fastjson.JSONObject">
-    SELECT DISTINCT (room)
+    SELECT room
     FROM unicom_group_wcdma
+    GROUP BY room
   </select>
 
   <select id="getRoomNameList" resultType="java.lang.String">
-    SELECT DISTINCT (room)
+    SELECT room
     FROM unicom_group_wcdma
-    ORDER BY room ASC
+    GROUP BY room
+    ORDER BY room
   </select>
 
   <select id="getOssNameList" resultType="java.lang.String">
-    SELECT DISTINCT (oss)
+    SELECT oss
     FROM unicom_group_wcdma
-    ORDER BY oss ASC
+    GROUP BY oss
+    ORDER BY oss
   </select>
 
   <select id="getGroupListByRoom" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
@@ -334,9 +339,10 @@
 
   <select id="getGroupNameListByRoom" parameterType="java.lang.String" resultType="java.lang.String">
     SELECT
-      group_name groupName
+      group_name name
     FROM unicom_group_wcdma
     WHERE room = #{roomName}
+    GROUP BY name
   </select>
 
 </mapper>

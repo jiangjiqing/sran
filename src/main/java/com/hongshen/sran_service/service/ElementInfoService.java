@@ -20,9 +20,11 @@ public interface ElementInfoService {
 
     int addCollection(String name);
 
-    List<JSONObject> getGroupList();
+    List<JSONObject> getGroupList(); // key = name
 
-    List<JSONObject> getGroupInfoList();
+    List<JSONObject> getGroupInfoList(); // key = groupName
+
+    List<String> getGroupNameList();
 
     List<JSONObject> getNodeInfoList();
 
@@ -64,11 +66,7 @@ public interface ElementInfoService {
 
     List<String> getOssNameList();
 
-    JSONObject getGroupInfoTable(String tableNameLike);
-
     Integer getNodeNum(String tableName, String groupName);
-
-    JSONObject getNodeInfoTable(String tableNameLike);
 
     Integer getNodeofNull(String tableName, String nodeName);
 }

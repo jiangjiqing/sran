@@ -56,7 +56,8 @@ public class MapController extends BaseController{
                     Double latitude = node.getDouble("latitude");
                     Double longitude = node.getDouble("longitude");
 
-                    if(latitude!= null && longitude!= null&&latitude!=0.0&&longitude!=0.0){
+                    if(latitude != null && longitude!= null &&
+                            latitude!=0.0 && longitude!=0.0){
                         Double[] doubles ={latitude,longitude};
                         list.add(doubles);
                     }
@@ -83,11 +84,11 @@ public class MapController extends BaseController{
                 }
 
                 // favorite
-                loginName= "pom";
+                loginName= "pom";//TODO
                 String tableNameBase = "unicom_favorite_" + generation + "_";
                 String tableNameLike = "%" + tableNameBase + loginName + "%";
                 String tableName = tableNameBase + loginName;
-                JSONObject table = obj.getElementInfoService().getGroupInfoTable(tableNameLike);
+                JSONObject table = obj.getElementInfoService().getTable(tableNameLike);
                 if(table!=null){
                     Integer nodeNum = obj.getElementInfoService().getNodeNum(tableName,groupName);
                     if(nodeList.size() == nodeNum){
@@ -108,7 +109,7 @@ public class MapController extends BaseController{
             }
         }
 
-        if(dataList.isEmpty()){
+        if(dataList == null || dataList.isEmpty()){
             result.put("result",Constants.FAIL);
             result.put("msg",Constants.MSG_NO_DATA);
 
@@ -148,7 +149,7 @@ public class MapController extends BaseController{
         JSONObject result = new JSONObject();
         List listJson = new ArrayList();
         JSONObject json = new JSONObject();
-        if(!list.isEmpty()){
+        if(list != null && !list.isEmpty()){
             if(list.size() > 3){
 
                 for (int i=0;i<list.size(); i++){
@@ -278,12 +279,11 @@ public class MapController extends BaseController{
                 }
 
                 // favorite
-
-                loginName= "pom";
+                loginName= "pom";//TODO
                 String tableNameBase = "unicom_favorite_" + generation + "_";
                 String tableNameLike = "%" + tableNameBase + loginName + "%";
                 String tableName = tableNameBase + loginName;
-                JSONObject table = obj.getElementInfoService().getNodeInfoTable(tableNameLike);
+                JSONObject table = obj.getElementInfoService().getTable(tableNameLike);
                 if(table!=null){
                     Integer nodeStatus = obj.getElementInfoService().getNodeofNull(tableName,nodeName);
                     System.out.println(nodeStatus+"**");
@@ -315,7 +315,7 @@ public class MapController extends BaseController{
 
         }
 
-        if(dataList.isEmpty()){
+        if(dataList == null || dataList.isEmpty()){
             result.put("result",Constants.FAIL);
             result.put("msg",Constants.MSG_NO_DATA);
 
@@ -398,7 +398,7 @@ public class MapController extends BaseController{
             }
         }
 
-        if(dataList.isEmpty()){
+        if(dataList == null || dataList.isEmpty()){
             result.put("result",Constants.FAIL);
             result.put("msg",Constants.MSG_NO_DATA);
 

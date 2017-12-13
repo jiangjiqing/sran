@@ -54,7 +54,7 @@ public class QuotaThresholdController extends BaseController{
                 break;
         }
 
-        if(dataList.isEmpty()){
+        if(dataList == null || dataList.isEmpty()){
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
 

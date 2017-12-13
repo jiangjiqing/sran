@@ -13,7 +13,7 @@ public interface TaskService {
 
     Boolean hasScriptLog(String loginName);
 
-    int startTask(String loginName, JSONObject param);
+    int addTask(String loginName, JSONObject param);
 
     int cacelTask(String loginName);
 }

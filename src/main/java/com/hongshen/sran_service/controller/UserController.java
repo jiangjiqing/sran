@@ -25,35 +25,16 @@ public class UserController extends BaseController{
     @Autowired
     private UserAgentService userAgentService;
 
-    // Query all user lists and info (Step1)
+    // Query user lists (Step1)
     @GET
     @Path("/users")
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject getUserListsAndInfo(@HeaderParam("Auth-Token")String authToken){
 
         JSONObject result = new JSONObject();
-//        Map<String, Object> map = null;
-//            List<JSONObject> RoleList = userAgentService.getUserList();
-//            List RoleList = userAgentService.getRoleList();
-//            Map<String,Object> UserInfo = userAgentService.getUserInfo();
-//            String name = (String) UserInfo.get("name");
-//            List<JSONObject> lteAuth = userAgentService.getLteAuth(name);
-//            List<JSONObject> wcdmaAuth = userAgentService.getWcdmaAuth(name);
-//            if (RoleList != null || UserInfo != null || lteAuth != null || wcdmaAuth != null){
-//                map.put("lteAuth",lteAuth);
-//                map.put("wcdmaAuth",wcdmaAuth);
-//                map.put("RoleList",RoleList);
-//                map.put("UserInfo",UserInfo);
-//
-//                result.put("data", map);
-//                result.put("result", Constants.SUCCESS);
-//            } else {
-//
-//                result.put("result", Constants.FAIL);
-//            }
-        List<JSONObject> userList = userAgentService.getUserList();
+        List<JSONObject> userList = userAgentService.getUserList();//TODO shiro
 
-        if (userList.isEmpty()){
+        if (userList == null || userList.isEmpty()){
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
 
@@ -63,28 +44,29 @@ public class UserController extends BaseController{
                 List<JSONObject> authList = new ArrayList<>();
                 String loginName = user.getString("loginName");
 
-
                 // get lte authority info
                 List<String> lteAuth = userAgentService.getLteAuth(loginName);
 
-                if (!lteAuth.isEmpty()){
+                if (lteAuth != null && !lteAuth.isEmpty()){
+
                     JSONObject resultLteAuth = new JSONObject();
                     resultLteAuth.put("generation", Constants.LTE);
                     resultLteAuth.put("list", lteAuth);
 
                     authList.add(resultLteAuth);
                 }
+
                 // get wcdma authority info
                 List<String> wcdmaAuth = userAgentService.getWcdmaAuth(loginName);
 
-                if (!wcdmaAuth.isEmpty()){
+                if (wcdmaAuth != null && !wcdmaAuth.isEmpty()){
+
                     JSONObject resultWcdmaAuth = new JSONObject();
                     resultWcdmaAuth.put("generation", Constants.WCDMA);
                     resultWcdmaAuth.put("list", wcdmaAuth);
 
                     authList.add(resultWcdmaAuth);
                 }
-
 
                 user.put("authority",authList);
             }
@@ -100,30 +82,33 @@ public class UserController extends BaseController{
     @POST
     @Path("/users")
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject addUser (@HeaderParam("Auth-Token")String authToken,JSONObject param){
+    public JSONObject addUser (@HeaderParam("Auth-Token")String authToken,
+                               JSONObject param){
 
         JSONObject result = new JSONObject();
-        Map<String, Object> map = null;
 
-        int i = userAgentService.addUser(param);
+        int i = userAgentService.addUser(param);//TODO shiro
+//        int i = userAgentService.addUserFromShiro(param);
         if(i != 0) {
             String loginName = param.getString("loginName");
-            String authorityName = param.getString("role");
+            String authorityName = param.getString("authority");//TODO
 
             int j = userAgentService.addLteUserAuthory(loginName, authorityName);
-
             int z = userAgentService.addWcdmaUserAuthory(loginName, authorityName);
+
             if (j != 0 || z != 0){
                 result.put("result", Constants.SUCCESS);
-                result.put("msg", "add user info ok");
+                result.put("msg", Constants.MSG_ADD_OK);
             }else {
                 result.put("result",Constants.FAIL);
-                result.put("msg", "add user info fail");
+                result.put("msg", Constants.MSG_ADD_FAILED);
             }
+
         }else {
             result.put("result",Constants.FAIL);
             result.put("msg", "add user info fail");
         }
+
         return result;
     }
 
@@ -131,95 +116,78 @@ public class UserController extends BaseController{
     @PUT
     @Path("/users/{loginName}")
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject updateUser (@HeaderParam("Auth-Token")String authToken,JSONObject param,@PathParam("loginName") String loginNmae) {
+    public JSONObject updateUser (@PathParam("loginName") String loginName,
+                                  @HeaderParam("Auth-Token")String authToken,
+                                  JSONObject param){
 
         JSONObject result = new JSONObject();
-        Map<String, Object> map = null;
+        String msg = "";
 
-        int i = userAgentService.updateUserInfo(param);
-        if (i > 0) {
-//            JSONObject jUser = jsonArray.getJSONObject(0).getJSONObject("user");
-//            List<Object> list = (List<Object>) param.get("authority");
+        int i = userAgentService.updateUser(param);//TODO shiro
+        if (i <= 0){
+            msg += "Update user info failed.";
+
+        }else{
             JSONArray list = param.getJSONArray("authority");
-//            JSONObject a = list.get(0);
-            System.out.println(list);
-            String loginName = param.getString("loginName");
-//            for (int a = 0;i<list.size();i++){
-//                System.out.println(list.get(a));
-//            }
-            for (Object list1 : list) {
-                System.out.println(list1);
 
-                JSONObject data = JSONObject.parseObject(list1.toString());
+            for (Object l : list) {
 
+                JSONObject data = JSONObject.parseObject(l.toString());
                 String generation = data.getString("generation");
-                System.out.println(generation);
-
 
                 if (generation.equals("wcdma")) {
-                    JSONArray roleList = data.getJSONArray("list");
+
+                    JSONArray authList = data.getJSONArray("list");
                     List<String> paramList = new ArrayList<>();
 
-                    for (int r = 0; r < roleList.size(); r ++) {
+                    for (int r = 0; r < authList.size(); r ++) {
 
-                        paramList.add(roleList.get(r).toString());
+                        paramList.add(authList.get(r).toString());
                     }
-//                    1 delte 2 add
+                    // step1 delete, step2 add
                     int j = userAgentService.delteWcdmaAuth(loginName);
 
                     if (paramList.size() > 0) {
 
                         int k = userAgentService.addWcdmaAuth(paramList, loginName);
+                        if (k <= 0){
+                            msg += "Update user authority info("+ generation +"-step2) failed.";
+                        }
                     }
 
-                    System.out.println(roleList);
-//                  int j = userAgentService.updateWcdmaAuth(roleList,loginName);
                 } else if (generation.equals("lte")) {
 
-                    JSONArray roleList = data.getJSONArray("list");
-
+                    JSONArray authList = data.getJSONArray("list");
                     List<String> paramList = new ArrayList<>();
 
-                    for (int r = 0; r < roleList.size(); r ++) {
+                    for (int r = 0; r < authList.size(); r++) {
 
-                        paramList.add(roleList.get(r).toString());
+                        paramList.add(authList.get(r).toString());
                     }
-
+                    // step1 delete, step2 add
                     int j = userAgentService.delteLteAuth(loginName);
 
                     if (paramList.size() > 0) {
 
                         int k = userAgentService.addLteAuth(paramList, loginName);
+                        if (k <= 0){
+                            msg += "Update user authority info("+ generation +"-step2) failed.";
+                        }
                     }
-//                    int j = userAgentService.updateLteAuth(roleList,loginName);
-//                }
                 }
-
             }
         }
+        if (msg.length() == 0){
+            result.put("result", Constants.SUCCESS);
+            result.put("msg", Constants.MSG_UPDATE_OK);
 
-//        int i = userAgentService.updateUser(param);
-//
-//        if (i != 0){
-////                String loginName = param.getString("loginName");
-//            String authorityName = param.getString("role");
-//            int j = userAgentService.updateLteUserAuthory(loginNmae, authorityName);
-//
-//            int z = userAgentService.updateWcdmaUserAuthory(loginNmae, authorityName);
-//            if (j != 0 || z != 0){
-//                result.put("result", Constants.SUCCESS);
-//                result.put("msg", "update user info ok");
-//            }else {
-//                result.put("result",Constants.FAIL);
-//                result.put("msg", "update user info fail");
-//            }
-//        } else {
-//            result.put("result",Constants.FAIL);
-//            result.put("msg", "add user info fail");
-//        }
-
-            return result;
+        }else{
+            result.put("result", Constants.SUCCESS);
+            result.put("msg", Constants.MSG_UPDATE_FAILED + msg);
         }
+
+        return result;
+    }
 
     // Delete specified user
     @DELETE
@@ -228,15 +196,33 @@ public class UserController extends BaseController{
     public JSONObject deleteUser (@HeaderParam("Auth-Token")String authToken,@PathParam("loginName")String loginName){
 
         JSONObject result = new JSONObject();
-        Map<String, Object> map = null;
+        String msg = "";
 
-        int i =  userAgentService.deleteUser(loginName);
-        if (i != 0 ){
-            int j =userAgentService.deleteLteUserAuthory(loginName);
-            int z =userAgentService.deletewcdmaUserAuthory(loginName);
+        int i = userAgentService.deleteUser(loginName); //TODO shiro
+//        int i = userAgentService.deleteUserFromShiro(loginName);
+        if (i <= 0){
+            msg += "Delete user info failed.";
+
+        }else {
+            int j = userAgentService.deleteLteUserAuthory(loginName);
+            if (j <= 0){
+                msg += "Delete user authory(lte) faild.";
+            }
+
+            int k =userAgentService.deletewcdmaUserAuthory(loginName);
+            if (k <= 0){
+                msg += "Delete user authory(wcdma) faild.";
+            }
         }
-        result.put("data", map);
-        result.put("result", Constants.SUCCESS);
+
+        if (msg.length() == 0){
+            result.put("result", Constants.SUCCESS);
+            result.put("msg", Constants.MSG_DELETE_OK);
+
+        }else{
+            result.put("result", Constants.SUCCESS);
+            result.put("msg", Constants.MSG_DELETE_FAILED + msg);
+        }
 
         return result;
     }
@@ -248,19 +234,16 @@ public class UserController extends BaseController{
     public JSONObject getRoleAll(@HeaderParam("Auth-Token")String authToken){
 
         JSONObject result = new JSONObject();
-        Map<String, Object> map = null;
+        List<JSONObject> roleList = userAgentService.getRoleList(); //TODO shiro
+//        List<JSONObject> roleList = userAgentService.getRoleListFromShiro();
 
-        List RoleAll = userAgentService.getRoleList();
-//            Map<String,Object> UserInfo = userAgentService.getUserInfo();
-
-        if (RoleAll != null){
-            map.put("RoleList",RoleAll);
-//                map.put("UserInfo",UserInfo);
-            result.put("data", map);
-            result.put("result", Constants.SUCCESS);
-        } else {
-
+        if (roleList == null || roleList.isEmpty()) {
             result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_NO_DATA);
+
+        }else{
+            result.put("result", Constants.SUCCESS);
+            result.put("data", roleList);
         }
 
         return result;

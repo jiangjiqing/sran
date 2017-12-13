@@ -67,7 +67,7 @@ public class FavoriteContrller {
 
             }
 
-            if (favoriteList.isEmpty()) {
+            if (favoriteList == null || favoriteList.isEmpty()) {
 
                 result.put("msg", Constants.MSG_NO_DATA);
                 result.put("result", Constants.FAIL);

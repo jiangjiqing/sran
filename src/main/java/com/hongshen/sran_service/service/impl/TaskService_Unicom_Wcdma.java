@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
+import static com.hongshen.sran_service.controller.TaskWSController.taskStatusMap;
+
 /**
  * Created by poplar on 11/13/17.
  */
@@ -35,14 +37,13 @@ public class TaskService_Unicom_Wcdma implements TaskService {
     }
 
     @Override
-    public int startTask(String loginName, JSONObject param) {
-        //TODO : add or update, start task
-        return 0;
+    public int addTask(String loginName, JSONObject param) {
+        return groupTaskMapper.addTask(param);
     }
 
     @Override
     public int cacelTask(String loginName) {
-        //TODO : break thread
-        return 0;
+        taskStatusMap.put(loginName,false);
+        return 1;
     }
 }

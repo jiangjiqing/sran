@@ -57,7 +57,13 @@ public class ElementInfoService_Unicom_Lte implements ElementInfoService {
 
     @Override
     public List<JSONObject> getGroupInfoList() {
-        return nodeMapper.getGroupInfoList();
+        //return nodeMapper.getGroupInfoList(); // 4g no group info
+        return null;
+    }
+
+    @Override
+    public List<String> getGroupNameList() {
+        return nodeMapper.getGroupNameList();
     }
 
     @Override
@@ -131,18 +137,8 @@ public class ElementInfoService_Unicom_Lte implements ElementInfoService {
     } // 4g no oss info
 
     @Override
-    public JSONObject getGroupInfoTable(String tableNameLike) {
-        return favoriteMapper.getGroupTable(tableNameLike);
-    }
-
-    @Override
     public Integer getNodeNum(String tableName, String groupName) {
         return favoriteMapper.getNodeNum(tableName,groupName);
-    }
-
-    @Override
-    public JSONObject getNodeInfoTable(String tableNameLike) {
-        return favoriteMapper.geNodeTable(tableNameLike);
     }
 
     @Override
@@ -151,8 +147,8 @@ public class ElementInfoService_Unicom_Lte implements ElementInfoService {
     }
 
     @Override
-    public JSONObject getTable(String gettableName) {
-        return favoriteMapper.getTable(gettableName);
+    public JSONObject getTable(String tableNameLike) {
+        return favoriteMapper.getTable(tableNameLike);
     }
 
     @Override

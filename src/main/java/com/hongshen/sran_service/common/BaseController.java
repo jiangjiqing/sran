@@ -20,7 +20,8 @@ public class BaseController {
 
         checkResult = checkUrlMethod(url, method, authToken);
 
-        if (!checkResult.isEmpty() && !Constants.FAIL.equals(checkResult.getString("status"))) {
+        if (checkResult != null && !checkResult.isEmpty() &&
+                !Constants.FAIL.equals(checkResult.getString("status"))) {
 
             flag = true;
         }

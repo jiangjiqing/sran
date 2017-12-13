@@ -34,7 +34,7 @@ public class QuotaFormulaController {
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         List<JSONObject> quotaList = obj.getCacheService().getFormulaList(true);
 
-        if (quotaList.isEmpty()) {
+        if (quotaList == null || quotaList.isEmpty()) {
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
 
@@ -94,7 +94,7 @@ public class QuotaFormulaController {
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         List<JSONObject> counterList = obj.getCacheService().getCounterList(true);
 
-        if (counterList.isEmpty()) {
+        if (counterList == null || counterList.isEmpty()) {
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
 

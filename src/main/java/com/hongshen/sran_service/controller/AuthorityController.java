@@ -31,7 +31,7 @@ public class AuthorityController {
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         List<JSONObject> authorityList = obj.getAuthorityService().getAuthorityList();
 
-        if (authorityList.isEmpty()){
+        if (authorityList == null || authorityList.isEmpty()){
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
 

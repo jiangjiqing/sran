@@ -215,10 +215,10 @@
   </select>
 
   <select id="getNodeLocationsByGroup" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
-    SELECT
-        distinct latitude, longitude
+    SELECT latitude, longitude
      FROM unicom_node_lte
      WHERE group_name = #{groupName}
+     GROUP BY latitude, longitude
   </select>
 
   <select id="getNodeListByGroup" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
@@ -235,6 +235,7 @@
     SELECT node_name name
     FROM unicom_node_lte
     WHERE group_name = #{groupName}
+    ORDER BY name
   </select>
 
   <select id="getNodeLocation" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
@@ -243,23 +244,24 @@
     WHERE node_name = #{nodeName}
   </select>
 
-    <select id="getGroupList" resultType="com.alibaba.fastjson.JSONObject">
-        SELECT distinct(group_name) name
-        FROM unicom_node_lte;
-    </select>
-
-  <select id="getNodeNameList" resultType="java.lang.String">
-    SELECT
-      node_name name
+  <select id="getGroupList" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT group_name name
     FROM unicom_node_lte
     GROUP BY name
   </select>
 
   <select id="getGroupNameList" resultType="java.lang.String">
-    SELECT
-      group_name name
+    SELECT group_name name
     FROM unicom_node_lte
     GROUP BY name
+    ORDER BY name
+  </select>
+
+  <select id="getNodeNameList" resultType="java.lang.String">
+    SELECT
+      node_name name
+    FROM unicom_node_lte
+    ORDER BY name
   </select>
 
   <select id="getNodeNameListByGroupName" resultType="java.lang.String">
@@ -269,9 +271,10 @@
     WHERE group_name = #{groupName}
     GROUP BY name
   </select>
+
   <select id="getNodes" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
     SELECT
-    a.node_name
+      a.node_name
     FROM ${tableName} a
     LEFT JOIN  unicom_node_lte b
     ON a.node_name = b.node_name

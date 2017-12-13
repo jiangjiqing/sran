@@ -40,7 +40,8 @@ public class AlarmController {
         List<JSONObject> normalListLte = objLte.getAlarmService().getNormalAlarmInfoList();
 
         // add protect alarm
-        if (!protectListWcdma.isEmpty() || !protectListLte.isEmpty()) {
+        if ((protectListWcdma != null && protectListLte != null) &&
+                (!protectListWcdma.isEmpty() || !protectListLte.isEmpty())) {
 
             JSONObject protect = new JSONObject();
             protect.put("type", "protect");
@@ -70,7 +71,8 @@ public class AlarmController {
         }
 
         // add normal alarm
-        if (!normalListWcdma.isEmpty() || !normalListLte.isEmpty()) {
+        if ((normalListWcdma != null && normalListLte != null) &&
+             (!normalListWcdma.isEmpty() || !normalListLte.isEmpty())) {
 
             JSONObject normal = new JSONObject();
             normal.put("type", "normal");
@@ -99,7 +101,7 @@ public class AlarmController {
             dataList.add(normal);
         }
 
-        if (dataList.isEmpty()){
+        if (dataList == null || dataList.isEmpty()){
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
 
@@ -124,7 +126,7 @@ public class AlarmController {
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         List<JSONObject> dataList = obj.getAlarmService().getGroupAlarmByName(groupname);
 
-        if (dataList.isEmpty()){
+        if (dataList == null || dataList.isEmpty()){
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
 
@@ -150,7 +152,7 @@ public class AlarmController {
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         List<JSONObject> dataList = obj.getAlarmService().getNodeAlarmByName(nodeName);
 
-        if (dataList.isEmpty()){
+        if (dataList == null || dataList.isEmpty()){
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
 
@@ -177,7 +179,7 @@ public class AlarmController {
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         List<JSONObject> dataList = obj.getAlarmService().getCellAlarmByName(cellName);
 
-        if (dataList.isEmpty()){
+        if (dataList == null || dataList.isEmpty()){
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
 

@@ -174,8 +174,42 @@
   </update>
 
   <select id="getTaskInfo" resultType="com.alibaba.fastjson.JSONObject">
-    SELECT *
+    SELECT
+      login_name loginName,
+      rncList,
+      cmdList,
+      isUseScript,
+      logScript,
+      startTime,
+      endTime
     FROM unicom_user_task_group_wcdma
-    WHERE login_name = #{loginName}
+    WHERE loginName = #{loginName}
   </select>
+
+  <insert id="addTask" parameterType="com.alibaba.fastjson.JSONObject">
+    INSERT INTO unicom_user_task_group_wcdma (
+      login_name,
+      rncList,
+      cmdList,
+      isUseScript,
+      logScript,
+      startTime,
+      endTime)
+    VALUES (
+      #{param.loginName, jdbcType=VARCHAR},
+      #{param.rncList, jdbcType=LONGVARCHAR},
+      #{param.cmdList, jdbcType=LONGVARCHAR},
+      #{param.isUseScript, jdbcType=TINYINT},
+      #{param.logScript, jdbcType=LONGVARCHAR},
+      #{param.startTime, jdbcType=TIMESTAMP},
+      #{param.endTime, jdbcType=TIMESTAMP})
+    ON DUPLICATE KEY UPDATE
+      rncList=VALUES(#{param.rncList, jdbcType=LONGVARCHAR}),
+      cmdList=VALUES(#{param.cmdList, jdbcType=LONGVARCHAR}),
+      isUseScript=VALUES(#{param.isUseScript, jdbcType=TINYINT}),
+      logScript=VALUES(#{param.logScript, jdbcType=LONGVARCHAR}),
+      startTime=VALUES(#{param.startTime, jdbcType=TIMESTAMP}),
+      endTime=VALUES(#{param.endTime, jdbcType=TIMESTAMP});
+  </insert>
+
 </mapper>

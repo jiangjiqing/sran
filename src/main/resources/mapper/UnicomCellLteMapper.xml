@@ -120,11 +120,14 @@
     SELECT cell_name name
     FROM unicom_cell_lte
     WHERE node_name = #{nodeName}
+    GROUP BY name
   </select>
 
   <select id="getCellNameList" resultType="java.lang.String">
     SELECT cell_name name
     FROM unicom_cell_lte
+    GROUP BY name
+    ORDER BY name
   </select>
 
   <select id="getCellInfoList" resultType="com.alibaba.fastjson.JSONObject">

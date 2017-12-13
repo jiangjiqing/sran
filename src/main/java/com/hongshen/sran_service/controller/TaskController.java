@@ -32,7 +32,7 @@ public class TaskController extends BaseController {
         String loginName = "tom";// TODO loginName
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        JSONObject taskInfo = obj.getTaskService().getTaskInfo(loginName);
+        JSONObject taskInfo = obj.getTaskService().getTaskInfo(loginName);// TODO bug
 
         if (taskInfo == null || taskInfo.isEmpty()) {
             result.put("result", Constants.FAIL);
@@ -52,9 +52,9 @@ public class TaskController extends BaseController {
         return result;
     }
 
-    // Start task -- Add or Update task info TODO :websocket
-    @GET
-    @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/task/start")
+    // Add task
+    @POST
+    @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/task")
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject startTask(@PathParam("supplier") String supplier,
                                 @PathParam("generation") String generation,
@@ -64,23 +64,23 @@ public class TaskController extends BaseController {
         String loginName = "tom";// TODO loginName
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        int update = obj.getTaskService().startTask(loginName, param);
-
-        if (update > 0) {
-            result.put("result", Constants.SUCCESS);
-            result.put("data", Constants.MSG_UPDATE_OK);
+        int update = obj.getTaskService().addTask(loginName, param);
+        //TODO update start time
+        if (update <= 0) {
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_ADD_FAILED);
 
         } else {
-            result.put("result", Constants.FAIL);
-            result.put("msg", Constants.MSG_UPDATE_FAILED);
+            result.put("result", Constants.SUCCESS);
+            result.put("data", Constants.MSG_ADD_OK);
         }
 
         return result;
     }
 
-    // Cacel task TODO : break thread
-    @GET
-    @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/task/cacel")
+    // Cacel task
+    @DELETE
+    @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/task")
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject cacelTask(@PathParam("supplier") String supplier,
                                 @PathParam("generation") String generation,
@@ -90,14 +90,15 @@ public class TaskController extends BaseController {
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         int cacelTask = obj.getTaskService().cacelTask(loginName);
+        //TODO update end time
 
-        if (cacelTask > 0) {
-            result.put("result", Constants.SUCCESS);
-            result.put("data", Constants.MSG_CACEL_OK);
-
-        } else {
+        if (cacelTask <= 0) {
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_CACEL_FAILED);
+
+        } else {
+            result.put("result", Constants.SUCCESS);
+            result.put("data", Constants.MSG_CACEL_OK);
         }
 
         return result;
@@ -141,27 +142,6 @@ public class TaskController extends BaseController {
             result.put("data", file);
         }
 
-        return result;
-    }
-
-    @GET
-    @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/task/cacel1")
-    @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject stopTasklog( @PathParam("supplier") String supplier,
-                            @PathParam("generation") String generation,
-                            @HeaderParam("Auth-Token") String authToken) throws IOException {
-        JSONObject result =new JSONObject();
-        String loginName = "66";//TODO
-        taskStatusMap.put(loginName,false);
-        result.put("result",Constants.SUCCESS);
-        result.put("mag",Constants.MSG_TASK_CANCLE_OK);
-        /*if(authToken!=null&&authToken.equals("")){
-            String loginName = authToken;
-            taskStatusMap.put(loginName,false);
-            result.put("result",Constants.SUCCESS);
-        }else{
-            result.put("result",Constants.FAIL);
-        }*/
         return result;
     }
 }

@@ -34,7 +34,7 @@ public class TopologyController extends BaseController {
         NetObjBase obj = objFactory.getNetObj(supplier,generation);
         List<JSONObject> locationList = obj.getTelecomRoomService().getRoomLocationList();
 
-        if (locationList.isEmpty()){
+        if (locationList == null || locationList.isEmpty()){
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
 
@@ -90,7 +90,7 @@ public class TopologyController extends BaseController {
             }
         }
 
-        if (dataList.isEmpty()){
+        if (dataList == null || dataList.isEmpty()){
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
 
@@ -115,7 +115,7 @@ public class TopologyController extends BaseController {
         NetObjBase obj = objFactory.getNetObj(supplier,generation);
         List<String> roomNameList = obj.getTelecomRoomService().getRoomNameList();
 
-        if (roomNameList.isEmpty()){
+        if (roomNameList == null || roomNameList.isEmpty()){
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
 

@@ -71,7 +71,7 @@ public interface UnicomNodeLteMapper {
 
     List<JSONObject> getGroupList();
 
-    List<JSONObject> getGroupInfoList();
+    //List<JSONObject> getGroupInfoList(); // 4g no group info
 
     List<String> getGroupNameList();
 

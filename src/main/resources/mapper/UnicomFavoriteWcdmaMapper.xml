@@ -66,21 +66,26 @@
     INSERT INTO unicom_favorite_wcdma (login_name,list)
     VALUES ('m',#{name})
   </insert>
-  <select id="getTable" resultType="com.alibaba.fastjson.JSONObject">
-    SHOW TABLES LIKE #{gettableName}
+
+  <select id="getTable" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
+    SHOW TABLES LIKE #{tableNameLike}
   </select>
+
   <delete id="deleteNode" parameterType="java.lang.String">
     DELETE FROM ${tableName} WHERE node_name = #{name}
   </delete>
+
   <delete id="deleteNodes" parameterType="java.lang.String">
     DELETE FROM ${tableName} WHERE node_name IN (
     SELECT node_name FROM unicom_node_wcdma
     WHERE group_name=#{name}
     )
   </delete>
+
   <insert id="addNode" parameterType="java.lang.String">
     REPLACE INTO ${tableName} (node_name) VALUES (#{name})
   </insert>
+
   <insert id="addNodes" parameterType="java.util.List">
     REPLACE into ${tableName} (node_name)
     values
@@ -88,10 +93,6 @@
       (#{node.name})
     </foreach>
   </insert>
-
-  <select id="getGroupTable" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
-    SHOW   TABLES   LIKE  #{tableNameLike};
-  </select>
 
   <select id="getNodeNum" parameterType="java.lang.String" resultType="java.lang.Integer">
     SELECT count(*) from
@@ -102,10 +103,6 @@
     u.node_name = l.node_name
     WHERE
     l.group_name = #{groupName}
-  </select>
-
-  <select id="geNodeTable" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
-    SHOW   TABLES   LIKE  #{tableNameLike};
   </select>
 
   <select id="getNodeofNull" parameterType="java.lang.String" resultType="java.lang.Integer">

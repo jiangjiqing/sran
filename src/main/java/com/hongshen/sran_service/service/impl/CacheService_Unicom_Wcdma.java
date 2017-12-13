@@ -72,7 +72,10 @@ public class CacheService_Unicom_Wcdma implements CacheService {
     @Override
     public List<JSONObject> getCounterList(Boolean isValid){
 
-        if (counterList.isEmpty()){
+        if (counterList == null){
+            return null;
+
+        }else if (counterList.isEmpty()){
             resetCounterList();
         }
 
@@ -139,7 +142,10 @@ public class CacheService_Unicom_Wcdma implements CacheService {
     @Override
     public List<JSONObject> getFormulaList(Boolean isVisible){
 
-        if (formulaList.isEmpty()){
+        if (formulaList == null){
+            return null;
+
+        }else if (formulaList.isEmpty()){
             resetFormulaList();
         }
 
@@ -202,7 +208,10 @@ public class CacheService_Unicom_Wcdma implements CacheService {
     @Override
     public List<JSONObject> getThresholdGroupList() {
 
-        if (thresholdGroupList.isEmpty()){
+        if (thresholdGroupList == null){
+            return null;
+
+        }else if (thresholdGroupList.isEmpty()){
             resetThresholdGroupList();
         }
         return thresholdGroupList;
@@ -218,7 +227,10 @@ public class CacheService_Unicom_Wcdma implements CacheService {
     @Override
     public List<JSONObject> getThresholdNodeList() {
 
-        if (thresholdNodeList.isEmpty()){
+        if (thresholdNodeList == null){
+            return null;
+
+        }else if (thresholdNodeList.isEmpty()){
             resetThresholdNodeList();
         }
         return thresholdNodeList;
@@ -234,7 +246,10 @@ public class CacheService_Unicom_Wcdma implements CacheService {
     @Override
     public List<JSONObject> getThresholdCellList() {
 
-        if (thresholdCellList.isEmpty()){
+        if (thresholdCellList == null){
+            return null;
+
+        }else if (thresholdCellList.isEmpty()){
             resetThresholdCellList();
         }
         return thresholdCellList;

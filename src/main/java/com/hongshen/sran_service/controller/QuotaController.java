@@ -208,7 +208,7 @@ public class QuotaController {
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         List<JSONObject> cellList = obj.getQuotaService().getGroupQuotaBadTenCell(groupName,quotaName);
 
-        if (cellList.isEmpty()){
+        if (cellList == null || cellList.isEmpty()){
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
         }else{

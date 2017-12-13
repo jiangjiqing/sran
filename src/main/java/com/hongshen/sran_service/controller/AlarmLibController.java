@@ -32,7 +32,7 @@ public class AlarmLibController extends BaseController{
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         List<JSONObject> alarmList = obj.getAlarmLibService().getAlarmList();
 
-        if (alarmList.isEmpty()){
+        if (alarmList == null || alarmList.isEmpty()){
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
 
