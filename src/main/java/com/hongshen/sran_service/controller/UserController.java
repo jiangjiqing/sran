@@ -87,17 +87,18 @@ public class UserController extends BaseController{
 
         JSONObject result = new JSONObject();
         String msg = "";
-        List<JSONObject> userList = userAgentService.getUserlistInfo(param);
-        List<JSONObject> userRoleList = userAgentService.getUserRolelistInfo(param);
+        String loginName = param.getString("loginName");
+
+        List<JSONObject> userList = userAgentService.getUserlistInfo(loginName);
+        List<JSONObject> userRoleList = userAgentService.getUserRolelistInfo(loginName);
         if (userList == null && userRoleList == null){
-            int i = userAgentService.addUserInfo(param);//TODO shiro
+            int i = userAgentService.addUser(param);
             int j = userAgentService.addUserRoleInfo(param);
             if(i > 0 && j > 0) {
                 JSONArray list = param.getJSONArray("authority");
                 for (Object l : list) {
                     JSONObject data = JSONObject.parseObject(l.toString());
                     String generation = data.getString("generation");
-                    String loginName = param.getString("loginName");
                     if (generation.equals("wcdma")) {
 
                         JSONArray authList = data.getJSONArray("list");
@@ -241,23 +242,34 @@ public class UserController extends BaseController{
         JSONObject result = new JSONObject();
         String msg = "";
 
-        int i = userAgentService.deleteUser(loginName); //TODO shiro
+        List<JSONObject> userList = userAgentService.getUserlistInfo(loginName);
+        List<JSONObject> userRoleList = userAgentService.getUserRolelistInfo(loginName);
+        if (userList != null && userRoleList != null) {
+            int i = userAgentService.deleteUser(loginName); //TODO shiro
 //        int i = userAgentService.deleteUserFromShiro(loginName);
-        if (i <= 0){
-            msg += "Delete user info failed.";
+            if (i <= 0) {
+                msg += "Delete user info failed.";
 
+            } else {
+                int r = userAgentService.deleteUserRole(loginName);
+                if (r <= 0) {
+                    msg += "Delete user_role info failed.";
+                } else {
+                    int j = userAgentService.deleteLteUserAuthory(loginName);
+                    if (j <= 0) {
+                        msg += "Delete user authory(lte) faild.";
+                    }
+
+                    int k = userAgentService.deletewcdmaUserAuthory(loginName);
+                    if (k <= 0) {
+                        msg += "Delete user authory(wcdma) faild.";
+                    }
+                }
+            }
         }else {
-            int j = userAgentService.deleteLteUserAuthory(loginName);
-            if (j <= 0){
-                msg += "Delete user authory(lte) faild.";
-            }
+            msg += "userTable or user_roleTable is null";
 
-            int k =userAgentService.deletewcdmaUserAuthory(loginName);
-            if (k <= 0){
-                msg += "Delete user authory(wcdma) faild.";
-            }
         }
-
         if (msg.length() == 0){
             result.put("result", Constants.SUCCESS);
             result.put("msg", Constants.MSG_DELETE_OK);

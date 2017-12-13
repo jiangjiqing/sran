@@ -74,11 +74,15 @@ public interface UserMapper {
 
     int addLteAuth(@Param("roleList")List<String> roleList, @Param("loginName") String loginName);
 
-    int addUserInfo(@Param("param") JSONObject param);
+    int addUser(@Param("param") JSONObject param);
 
-    List<JSONObject> getUserlistInfo(@Param("param")JSONObject param);
+    List<JSONObject> getUserlistInfo(@Param("param")String param);
 
-    List<JSONObject> getUserRolelistInfo(@Param("param")JSONObject param);
+    List<JSONObject> getUserRolelistInfo(@Param("param")String param);
 
     int addUserRoleInfo(@Param("param")JSONObject param);
+
+    int deleteUser(@Param("loginName") String loginName);
+
+    int deleteUserRole(@Param("loginName")String loginName);
 }

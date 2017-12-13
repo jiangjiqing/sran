@@ -73,10 +73,7 @@ public class UserAgentService {
         return A;
     }
 
-    public int addUser(JSONObject param){
-        //TODO
-        return 0;
-    }
+
 
     public int addUserFromShiro(JSONObject param) {
         try {
@@ -109,8 +106,8 @@ public class UserAgentService {
     }
 
     public int deleteUser(String loginName) {
-        //TODO
-        return 0;
+
+        return userMapper.deleteUser(loginName);
     }
 
     public int deleteUserFromShiro(String loginName) {
@@ -189,21 +186,26 @@ public class UserAgentService {
         return userMapper.addLteAuth(roleList,loginName);
     }
 
-    public int addUserInfo(JSONObject param) {
-        return userMapper.addUserInfo(param);
+    public int addUser(JSONObject param) {
+        return userMapper.addUser(param);
     }
 
 
-    public List<JSONObject> getUserlistInfo(JSONObject param) {
-        return userMapper.getUserlistInfo(param);
+    public List<JSONObject> getUserlistInfo(String loginName) {
+        return userMapper.getUserlistInfo(loginName);
     }
 
-    public List<JSONObject> getUserRolelistInfo(JSONObject param) {
-        return userMapper.getUserRolelistInfo(param);
+    public List<JSONObject> getUserRolelistInfo(String loginName) {
+        return userMapper.getUserRolelistInfo(loginName);
 
     }
 
     public int addUserRoleInfo(JSONObject param) {
         return userMapper.addUserRoleInfo(param);
+    }
+
+    public int deleteUserRole(String loginName) {
+        return userMapper.deleteUserRole(loginName);
+
     }
 }

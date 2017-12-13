@@ -195,16 +195,40 @@
       (#{loginName},#{authorityName})
     </foreach>
   </insert>
-<select id="getUserlistInfo" resultType="com.alibaba.fastjson.JSONObject" parameterType="com.alibaba.fastjson.JSONObject">
-  SELECT * FROM user WHERE login_name = #{param.loginName}
+
+<select id="getUserlistInfo" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
+  SELECT * FROM
+  user
+  WHERE login_name = #{loginName}
 </select>
-  <insert id="addUserInfo" parameterType="com.alibaba.fastjson.JSONObject">
-     INSERT INTO user VALUES (#{param.loginName},#{param.password},#{param.nickName},#{param.status},#{param.email},#{param.phone})
+
+  <insert id="addUser" parameterType="com.alibaba.fastjson.JSONObject">
+     INSERT INTO
+     user
+     VALUES (#{param.loginName},#{param.password},#{param.nickName},#{param.status},#{param.email},#{param.phone})
   </insert>
-  <select id="getUserRolelistInfo" resultType="com.alibaba.fastjson.JSONObject" parameterType="com.alibaba.fastjson.JSONObject">
-    SELECT * FROM user_role WHERE login_name = #{param.loginName}
+
+  <select id="getUserRolelistInfo" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
+    SELECT *
+    FROM user_role
+    WHERE login_name = #{loginName}
   </select>
+
   <insert id="addUserRoleInfo" parameterType="com.alibaba.fastjson.JSONObject">
-    INSERT INTO user_role VALUES (#{param.loginName},#{param.role})
+    INSERT INTO
+    user_role
+    VALUES (#{param.loginName},#{param.role})
   </insert>
+
+  <delete id="deleteUser" parameterType="java.lang.String">
+    DELETE
+    FROM user
+    WHERE login_name = #{loginName}
+  </delete>
+
+  <delete id="deleteUserRole" parameterType="java.lang.String">
+    DELETE
+    FROM user_role
+    WHERE login_name = #{loginName}
+  </delete>
 </mapper>
