@@ -18,6 +18,10 @@ public interface CacheService {
 
     List<JSONObject> getCounterListProcessed(Boolean isValid);
 
+//    List<String> getCounterNameList(Boolean isValid);
+//
+//    List<String> getCounterNameListProcessed(Boolean isValid);
+
     JSONObject getCounterByName(String name);
 
     JSONObject getCounterProcessedByName(String name);
@@ -29,6 +33,10 @@ public interface CacheService {
     List<JSONObject> getFormulaList(Boolean isVisible);
 
     List<JSONObject> getFormulaListProcessed(Boolean isVisible);
+
+    List<String> getFormulaNameList(Boolean isVisible);
+
+    List<String> getFormulaNameListProcessed(Boolean isVisible);
 
     JSONObject getFormulaByName(String quotaName);
 

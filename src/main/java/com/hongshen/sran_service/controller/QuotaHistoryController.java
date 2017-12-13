@@ -1,5 +1,6 @@
 package com.hongshen.sran_service.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.common.BaseController;
 import com.hongshen.sran_service.service.util.Constants;
@@ -37,26 +38,19 @@ public class QuotaHistoryController extends BaseController {
         String condition = null;
         Date start = null;
         Date end = null;
-        String[] formula = null;
+        List<String> formulaNameList = new ArrayList<>();
+
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         String unit = quotaHistory.getJSONObject("time").getString("unit");
 
         if(quotaHistory.getJSONObject("quota").getString("range").equals("1")){
+            //formula = quotaHistory.getJSONObject("quota").getString("list").replace("]", "")
+            //        .replace("[", "").replaceAll("\"", "").split(",");
+            formulaNameList = JSONObject.parseArray(quotaHistory.getJSONObject("quota").getString("list"),String.class);
 
-            formula = quotaHistory.getJSONObject("quota").getString("list").replace("]", "")
-                    .replace("[", "").replaceAll("\"", "").split(",");
         }else {
-            formula = new String[]{ "formula1", "formula2", "formula3",
-                                    "formula4", "formula5", "formula6",
-                                    "formula7", "formula8", "formula9",
-                                    "formula10", "formula11", "formula12",
-                                    "formula13", "formula14", "formula15",
-                                    "formula16", "formula17", "formula18",
-                                    "formula19", "formula20", "formula21",
-                                    "formula22", "formula23", "formula24",
-                                    "formula25"};//TODO
-
-                                          }
+            formulaNameList = obj.getCacheService().getFormulaNameList(false);
+        }
 
         if(quotaHistory.getJSONObject("time").getString("range").equals("1")){
             start = quotaHistory.getJSONObject("time").getDate("start");
@@ -89,7 +83,7 @@ public class QuotaHistoryController extends BaseController {
         }
 
         if (min != 0 && quotaList.size()>0) {
-            dataList = getValue(start, end, quotaList,formula,min,quotaList.get(quotaList.size()-1).getDate("time"),quotaList.get(0).getDate("time"));
+            dataList = getValue(start, end, quotaList,formulaNameList,min,quotaList.get(quotaList.size()-1).getDate("time"),quotaList.get(0).getDate("time"));
             result.put("result", Constants.SUCCESS);
             result.put("date", dataList);
 
@@ -101,7 +95,7 @@ public class QuotaHistoryController extends BaseController {
         return result;
     }
 
-    public static long getDatePoor(Date endDate, Date nowDate,String msg) {
+    private static long getDatePoor(Date endDate, Date nowDate,String msg) {
         long pramary = 0;
         long nd = 1000 * 24 * 60 * 60;
         long nh = 1000 * 60 * 60;
@@ -125,7 +119,7 @@ public class QuotaHistoryController extends BaseController {
         return pramary;
     }
 
-    public static List getValue(Date start, Date end, List<JSONObject> quotaList,  String[] formula,int min,Date start1,Date end1) {
+    private static List getValue(Date start, Date end, List<JSONObject> quotaList,  List<String> formulaNameList,int min,Date start1,Date end1) {
         List list = new ArrayList();
         if (start==null||end==null){
             start = start1;
@@ -157,8 +151,9 @@ public class QuotaHistoryController extends BaseController {
                 int num = 0;
                 double d = 0.0;
                 JSONObject Time = new JSONObject();
-                for (int i = 0; i < formula.length; i++) {
-                    String formulaName =null;
+
+                for (String formulaName : formulaNameList){
+
                     d = 0.0;
                     num = 0;
                     JSONObject result1 = new JSONObject();
@@ -169,13 +164,13 @@ public class QuotaHistoryController extends BaseController {
 
                         if (time >= getMath(start, j, min).getTime()
                                 && time < getMath(start, j + 1, min).getTime() && time <= end.getTime()) {
-                            if (quolist.getDouble(formula[i]) != null
-                                    && quolist.getDouble(formula[i]) > 0) {
 
-                                formulaName =formula[i];
+                            if (quolist.getDouble(formulaName) != null
+                                    && quolist.getDouble(formulaName) > 0) {
+
                                 Time.put("time", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(getMath(start, j, min)));
                                 num++;
-                                d = d + quolist.getDouble(formula[i]);
+                                d = d + quolist.getDouble(formulaName);
 
                             }
                         }
@@ -187,16 +182,17 @@ public class QuotaHistoryController extends BaseController {
                         result.putAll(Time);
                     }
                 }
-                   if(list1.size()>0) {
-                       result.put("quotas", list1);
-                       list.add(result);
-                   }
+
+               if(list1.size()>0) {
+                   result.put("quotas", list1);
+                   list.add(result);
+               }
             }
 
         return list;
     }
 
-    public static Date getMath(Date satrtDate,int num,int min){
+    private static Date getMath(Date satrtDate,int num,int min){
         Calendar cal = Calendar.getInstance();
         cal.setTime(satrtDate);//设置起时间
         if(min == 1){
@@ -211,7 +207,7 @@ public class QuotaHistoryController extends BaseController {
         return cal.getTime();
     }
 
-    public static String Condition(String[] st){
+    private static String Condition(String[] st){
         String name = "";
         String  condition = null;
         if(st.length>0){
@@ -230,7 +226,7 @@ public class QuotaHistoryController extends BaseController {
 
     }
 
-    public static List<JSONObject> getQuotas(String level,NetObjBase obj,Date start,Date end,String condition){
+    private static List<JSONObject> getQuotas(String level,NetObjBase obj,Date start,Date end,String condition){
         List<JSONObject> quotaListexport = new ArrayList<JSONObject>();
 
         switch (level){
@@ -248,17 +244,20 @@ public class QuotaHistoryController extends BaseController {
     }
 
     @POST
-    @Path("/suppliers/{supplier}/generations/{generation}/nets/{level}/history/quotas/export")
+    @Path("/suppliers/{supplier}/generations/{generation}/nets/{level}/history/quotas/download")
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject quotaHistoryExport(@RequestParam(value = "quotaHistory") JSONObject quotaHistoryExport,
-                                         @PathParam("supplier") String supplier, @PathParam("generation") String generation,
-                                         @HeaderParam("Auth-Token") String authToken, @PathParam("level") String level) {
+                                         @PathParam("supplier") String supplier,
+                                         @PathParam("generation") String generation,
+                                         @PathParam("level") String level,
+                                         @HeaderParam("Auth-Token") String authToken) {
 
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         String condition = null;
         Date start = null;
         Date end = null;
-        String[] formula = null;
+        List<String> formulaNameList = new ArrayList<>();
+
         if(quotaHistoryExport.getJSONObject("time").getString("range").equals("1")){
             start = quotaHistoryExport.getJSONObject("time").getDate("start");
             end = quotaHistoryExport.getJSONObject("time").getDate("end");
@@ -274,19 +273,10 @@ public class QuotaHistoryController extends BaseController {
         }
 
         if(quotaHistoryExport.getJSONObject("quota").getString("range").equals("1")){
+            formulaNameList = JSONObject.parseArray(quotaHistoryExport.getJSONObject("quota").getString("list"),String.class);
 
-            formula = quotaHistoryExport.getJSONObject("quota").getString("list").replace("]", "")
-                    .replace("[", "").replaceAll("\"", "").split(",");
         }else {
-            formula = new String[]{ "formula1", "formula2", "formula3",
-                    "formula4", "formula5", "formula6",
-                    "formula7", "formula8", "formula9",
-                    "formula10", "formula11", "formula12",
-                    "formula13", "formula14", "formula15",
-                    "formula16", "formula17", "formula18",
-                    "formula19", "formula20", "formula21",
-                    "formula22", "formula23", "formula24",
-                    "formula25"};//TODO
+            formulaNameList = obj.getCacheService().getFormulaNameList(false);
         }
 
         List<JSONObject> quotaListexport = getQuotas(level,obj,start,end,condition);
@@ -299,9 +289,9 @@ public class QuotaHistoryController extends BaseController {
             JSONObject json = new JSONObject();
             result1.put("name",export.getString("name"));
             result1.put("time",new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(export.getDate("time")));
-            for (int i=0;i<formula.length;i++){
+            for (String formulaName : formulaNameList){
 
-                json.put(formula[i],export.getString(formula[i]));
+                json.put(formulaName,export.getString(formulaName));
             }
 
             result1.putAll(json);
@@ -311,6 +301,7 @@ public class QuotaHistoryController extends BaseController {
         result.put("data",list);
         return result;
     }
+
     @POST
     @Path("/suppliers/{supplier}/generations/{generation}/nets/{level}/history/counters/download")
     @Produces(MediaType.APPLICATION_JSON)

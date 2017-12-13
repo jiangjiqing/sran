@@ -177,6 +177,37 @@ public class CacheService_Unicom_Wcdma implements CacheService {
     }
 
     @Override
+    public List<String> getFormulaNameList(Boolean isVisible) {
+
+        if (formulaList == null){
+            return null;
+
+        }else if (formulaList.isEmpty()){
+            resetFormulaList();
+        }
+
+        List<String> resultList = new ArrayList<>();
+
+        for (JSONObject formula : formulaList) {
+
+            // unvisible quota
+            if (isVisible && formula.getBoolean("status")) {
+                resultList.add(formula.getString("quotaName"));
+
+            } else if (!isVisible){
+                resultList.add(formula.getString("quotaName"));
+            }
+        }
+        return resultList;
+    }
+
+    @Override
+    public List<String> getFormulaNameListProcessed(Boolean isVisible) {
+        // no need to process
+        return getFormulaNameList(isVisible);
+    }
+
+    @Override
     public JSONObject getFormulaByName(String quotaName) {
 
         for (JSONObject f : formulaList){
