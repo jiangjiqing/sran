@@ -52,4 +52,17 @@
     FROM unicom_protect_wcdma a
       LEFT JOIN unicom_node_wcdma b ON a.node_name = b.node_name
   </select>
+
+  <delete id="clearNodes">
+    delete  FROM unicom_protect_lte
+  </delete>
+
+  <insert id="addProdectNode" parameterType="java.lang.String">
+    INSERT INTO unicom_protect_wcdma (node_name) VALUE (#{nodeName})
+  </insert>
+
+  <select id="getProtectListnodeName" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT node_name nodeName FROM  unicom_protect_wcdma;
+  </select>
+
 </mapper>

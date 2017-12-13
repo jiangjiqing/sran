@@ -37,4 +37,10 @@ public interface QuotaService {
     List<JSONObject> getCounterExportGroup(Date start,Date end,String condition);
 
     List<JSONObject> getGroupQuotaBadTenCell(String groupName, String quotaName);
+
+    List<JSONObject> getFormula(Boolean isVisible);
+
+    Integer addFormula(JSONObject formulaJson);
+
+    Integer deleteFormulas();
 }

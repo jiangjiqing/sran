@@ -72,4 +72,6 @@ public interface UnicomNodeWcdmaMapper {
     List<JSONObject> getNodes(@Param("tableName") String TableName,@Param("name")String name);
 
     List<JSONObject> getNodeLocationsByGroup(@Param("groupName") String groupName);
+
+    Integer updateNode(JSONObject jsonObject);
 }

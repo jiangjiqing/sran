@@ -53,10 +53,14 @@ public class Constants {
     public static final String MSG_CACEL_OK = "Cacel ok.";
     public static final String MSG_CACEL_FAILED = "Cacel failed.";
     public static final String MSG_TASK_CANCLE_OK = "task cancle ok";
-
+    public static final String MSG_DOWNLOAD_FORMULAS_FAILED = "download formulas file failed";
+    public static final String MSG_DOWNLOAD_FORMULAS_OK = "download formulas file ok";
+    public static final String UPLOAD_RNC_INFOS_OK = "upload rnc infos ok";
+    public static final String UPLOAD_RNC_INFOS_FAILED = "upload rnc infos failed";
     public static final String INVALID_VALUE_LEVEL = "-1";
     public static final String INVALID_VALUE_LOCATION = "-1";
     public static final String INVALID_VALUE_QUOTA = "-1";
+
 
     // task
     public static final String TASK_LOG_PATH_ORIGINAL = "/TASKLOG/XXX.zip";

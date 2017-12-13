@@ -280,4 +280,13 @@
     ON a.node_name = b.node_name
     WHERE b.group_name = #{name}
   </select>
+
+  <update id="updateNode" parameterType="com.alibaba.fastjson.JSONObject">
+    update unicom_node_lte
+    <set>
+      <if test="stationName != null">
+        station_name = #{stationName},
+      </if>    </set>
+    where node_name = #{nodeName}
+  </update>
 </mapper>

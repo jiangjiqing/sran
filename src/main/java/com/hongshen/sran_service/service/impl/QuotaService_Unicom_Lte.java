@@ -21,6 +21,9 @@ public class QuotaService_Unicom_Lte implements QuotaService {
     private CacheService_Unicom_Lte cacheService;
 
     @Autowired
+    private UnicomFormulaLteMapper formulaMapper;
+
+    @Autowired
     private UnicomCounterHistoryLteMapper counterHistoryLteMapper;
 
     @Autowired
@@ -117,5 +120,20 @@ public class QuotaService_Unicom_Lte implements QuotaService {
     public List<JSONObject> getGroupQuotaBadTenCell(String groupName, String quotaName) {
 
         return null;
+    }
+
+    @Override
+    public List<JSONObject> getFormula(Boolean isVisible) {
+        return cacheService.getFormulaList(isVisible);
+    }
+
+    @Override
+    public Integer addFormula(JSONObject formulaJson) {
+        return formulaMapper.addFormula(formulaJson);
+    }
+
+    @Override
+    public Integer deleteFormulas() {
+        return formulaMapper.deleteFormulas();
     }
 }

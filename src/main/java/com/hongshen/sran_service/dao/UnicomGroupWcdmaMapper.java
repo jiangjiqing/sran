@@ -83,4 +83,9 @@ public interface UnicomGroupWcdmaMapper {
 
     List<String> getGroupNameListByRoom(@Param("roomName")String roomName);
 
+    Integer addRnc(JSONObject jsonObject);
+
+    Integer deleteGroup();
+
+    Integer getGroupCounter();
 }

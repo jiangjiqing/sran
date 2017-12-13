@@ -21,6 +21,9 @@ public class QuotaService_Unicom_Wcdma implements QuotaService {
     private CacheService_Unicom_Wcdma cacheService;
 
     @Autowired
+    private UnicomFormulaWcdmaMapper formulaMapper;
+
+    @Autowired
     private UnicomCounterHistoryWcdmaMapper counterHistoryWcdmaMapper;
 
     @Autowired
@@ -157,5 +160,20 @@ public class QuotaService_Unicom_Wcdma implements QuotaService {
         resultList = counterHistoryMapper.getBadTenCell(expression, cellList, cacheService.getUpdateTimeForQuotaData());
 
         return resultList;
+    }
+
+    @Override
+    public List<JSONObject> getFormula(Boolean isVisible) {
+        return cacheService.getCounterList(isVisible);
+    }
+
+    @Override
+    public Integer addFormula(JSONObject formulaJson) {
+        return formulaMapper.addFormula(formulaJson);
+    }
+
+    @Override
+    public Integer deleteFormulas() {
+        return formulaMapper.deleteFormulas();
     }
 }

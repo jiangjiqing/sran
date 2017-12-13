@@ -2,6 +2,7 @@ package com.hongshen.sran_service.dao;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.entity.UnicomProtectLte;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -32,4 +33,10 @@ public interface UnicomProtectLteMapper {
     int insertSelective(UnicomProtectLte record);
 
     List<JSONObject> getProtectList();
+
+    Integer addProdectNode(@Param("nodeName")String nodeName);
+
+    Integer clearNodes();
+
+    List<JSONObject> getProtectListnodeName();
 }

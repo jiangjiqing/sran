@@ -144,6 +144,41 @@ public class ElementInfoService_Unicom_Wcdma implements ElementInfoService {
     }
 
     @Override
+    public Integer addProdectNode(String nodeName) {
+        return protectMapper.addProdectNode(nodeName);
+    }
+
+    @Override
+    public Integer clearNodes() {
+        return protectMapper.clearNodes();
+    }
+
+    @Override
+    public List<JSONObject> getProtectListnodeName() {
+        return protectMapper.getProtectListnodeName();
+    }
+
+    @Override
+    public Integer updateNode(JSONObject jsonObject) {
+        return nodeMapper.updateNode(jsonObject);
+    }
+
+    @Override
+    public Integer addRnc(JSONObject jsonObject) {
+        return groupMapper.addRnc(jsonObject);
+    }
+
+    @Override
+    public Integer deleteGroup() {
+        return groupMapper.deleteGroup();
+    }
+
+    @Override
+    public Integer getGroupCounter() {
+        return groupMapper.getGroupCounter();
+    }
+
+    @Override
     public JSONObject getTable(String tableNameLike) {
         return favoriteMapper.getTable(tableNameLike);
     }

@@ -79,4 +79,5 @@ public interface UnicomNodeLteMapper {
 
     List<JSONObject> getNodes(@Param("tableName") String tableName,@Param("name")String name);
 
+    Integer updateNode(JSONObject jsonObject);
 }

@@ -165,4 +165,59 @@
     FROM unicom_formula_wcdma
     WHERE quota_name = #{quotaName}
   </select>
+
+
+  <insert id="addFormula" parameterType="com.hongshen.sran_service.entity.UnicomFormulaWcdma">
+    insert into unicom_formula_wcdma
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="quotaName != null">
+        quota_name,
+      </if>
+      <if test="expression != null">
+        expression,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="hastop10 != null">
+        hasTop10
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id},
+      </if>
+      <if test="quotaName != null">
+        #{quotaName},
+      </if>
+      <if test="expression != null">
+        #{expression},
+      </if>
+      <if test="remark != null">
+        #{remark},
+      </if>
+      <if test="status != null">
+        #{status},
+      </if>
+      <if test="type != null">
+        #{type},
+      </if>
+      <if test="hastop10 != null">
+        #{hastop10}
+      </if>
+    </trim>
+  </insert>
+
+  <delete id="deleteFormulas">
+    DELETE FROM unicom_formula_wcdma;
+  </delete>
 </mapper>

@@ -69,4 +69,18 @@ public interface ElementInfoService {
     Integer getNodeNum(String tableName, String groupName);
 
     Integer getNodeofNull(String tableName, String nodeName);
+
+    Integer addProdectNode(String nodeName);
+
+    Integer clearNodes();
+
+    List<JSONObject> getProtectListnodeName();
+
+    Integer updateNode(JSONObject jsonObject);
+
+    Integer addRnc(JSONObject jsonObject);
+
+    Integer deleteGroup();
+
+    Integer getGroupCounter();
 }

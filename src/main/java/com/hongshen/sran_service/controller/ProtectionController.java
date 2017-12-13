@@ -1,15 +1,19 @@
 package com.hongshen.sran_service.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.common.BaseController;
 import com.hongshen.sran_service.service.util.Constants;
 import com.hongshen.sran_service.service.util.NetObjBase;
 import com.hongshen.sran_service.service.util.NetObjFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -17,7 +21,7 @@ import java.util.List;
  */
 @Path("/sran/service/net/protection")
 public class ProtectionController extends BaseController{
-	
+
     @Autowired
     private NetObjFactory objFactory;
 
@@ -115,7 +119,7 @@ public class ProtectionController extends BaseController{
 //            //
 //            NetObjBase obj = objFactory.getNetObj(supplier,generation);
 
-//            role1 = dataProvider.getGroupQuotaInfo(id);
+    //            role1 = dataProvider.getGroupQuotaInfo(id);
 //
 //            role2.put("id",role1.getRoleId());
 //            role2.put("name",role1.getRoleName());
@@ -128,5 +132,59 @@ public class ProtectionController extends BaseController{
 //
 //        return jsonResult;
 //    }
+    @POST
+    @Path("/suppliers/{supplier}/generations/{generation}/nets/nodes/protections/upload")
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject protectImport(@RequestParam(value = "importJson") JSONArray importJson,
+                                    @PathParam("supplier") String supplier,
+                                    @PathParam("generation") String generation,
+                                    @HeaderParam("Auth-Token") String authToken) {
+        NetObjBase obj = objFactory.getNetObj(supplier, generation);
+        JSONObject result = new JSONObject();
+
+        Integer deleteNum = obj.getElementInfoService().clearNodes();
+
+        Integer addNum = 0;
+
+        for (int i = 0; i < importJson.size(); i++) {
+
+            addNum = obj.getElementInfoService().addProdectNode(importJson.getJSONObject(i).getString("nodeName"));
+        }
+        if (addNum > 0) {
+
+            result.put("result", Constants.SUCCESS);
+            result.put("msg", Constants.MSG_ADD_FAILED);
+        }
+
+
+        return result;
+    }
+
+    @GET
+    @Path("/suppliers/{supplier}/generations/{generation}/nets/nodes/protections/download")
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject protectExport(@PathParam("supplier") String supplier,
+                                    @PathParam("generation") String generation,
+                                    @HeaderParam("Auth-Token") String authToken) {
+        NetObjBase obj = objFactory.getNetObj(supplier, generation);
+        List list = new ArrayList();
+        JSONObject result = new JSONObject();
+
+        List<JSONObject> protectList = obj.getElementInfoService().getProtectListnodeName();
+        if(protectList!=null && protectList.size()!=0) {
+
+            for (JSONObject nodeName : protectList) {
+
+                list.add(nodeName);
+
+            }
+
+            result.put("result", Constants.SUCCESS);
+            result.put("data", list);
+        }else {
+            result.put("result", Constants.FAIL);
+        }
+        return result;
+    }
 
 }

@@ -147,6 +147,41 @@ public class ElementInfoService_Unicom_Lte implements ElementInfoService {
     }
 
     @Override
+    public Integer addProdectNode(String nodeName) {
+        return protectMapper.addProdectNode(nodeName);
+    }
+
+    @Override
+    public Integer clearNodes() {
+        return protectMapper.clearNodes();
+    }
+
+    @Override
+    public List<JSONObject> getProtectListnodeName() {
+        return protectMapper.getProtectListnodeName() ;
+    }
+
+    @Override
+    public Integer updateNode(JSONObject jsonObject) {
+        return nodeMapper.updateNode(jsonObject);
+    }
+
+    @Override
+    public Integer addRnc(JSONObject jsonObject) {
+        return null;
+    }
+
+    @Override
+    public Integer deleteGroup() {
+        return null;
+    }
+
+    @Override
+    public Integer getGroupCounter() {
+        return null;
+    }
+
+    @Override
     public JSONObject getTable(String tableNameLike) {
         return favoriteMapper.getTable(tableNameLike);
     }
