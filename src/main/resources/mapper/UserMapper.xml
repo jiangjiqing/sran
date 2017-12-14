@@ -155,7 +155,7 @@
     SET
       a.login_name=#{param.loginName},
       a.password=#{param.password},
-      a.nice_name=#{param.nickName},
+      a.nick_name=#{param.nickName},
       a.status=#{param.status},
       a.email=#{param.email},
       a.phone=#{param.phone},
