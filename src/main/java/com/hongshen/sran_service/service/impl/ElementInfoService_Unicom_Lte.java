@@ -182,6 +182,11 @@ public class ElementInfoService_Unicom_Lte implements ElementInfoService {
     }
 
     @Override
+    public int createTable(String tableName) {
+        return favoriteMapper.createTable(tableName);
+    }
+
+    @Override
     public JSONObject getTable(String tableNameLike) {
         return favoriteMapper.getTable(tableNameLike);
     }
