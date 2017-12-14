@@ -237,7 +237,7 @@ public class UserController extends BaseController{
     @DELETE
     @Path("/users/{loginName}")
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject deleteUser (@HeaderParam("Auth-Token")String authToken,@PathParam("loginName")String loginName){
+    public JSONObject deleteUser (@HeaderParam("Auth-Token")String authToken,@PathParam("loginName")String loginName) {
 
         JSONObject result = new JSONObject();
         String msg = "";
@@ -266,27 +266,25 @@ public class UserController extends BaseController{
                     }
                 }
             }
-        }else {
-            msg += "userTable or user_roleTable is null";
-
         }
-        if (msg.length() == 0){
+        if (msg.length() == 0) {
             result.put("result", Constants.SUCCESS);
             result.put("msg", Constants.MSG_DELETE_OK);
 
-        }else{
+        } else {
             result.put("result", Constants.SUCCESS);
             result.put("msg", Constants.MSG_DELETE_FAILED + msg);
         }
 
         return result;
+
     }
 
-    // Query all role
+        // Query all role
     @GET
     @Path("/users/roles")
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject getRoleAll(@HeaderParam("Auth-Token")String authToken){
+    public JSONObject getRoleAll (@HeaderParam("Auth-Token") String authToken){
 
         JSONObject result = new JSONObject();
         List<JSONObject> roleList = userAgentService.getRoleList(); //TODO shiro
@@ -296,11 +294,12 @@ public class UserController extends BaseController{
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
 
-        }else{
+        } else {
             result.put("result", Constants.SUCCESS);
             result.put("data", roleList);
         }
 
         return result;
     }
+
 }
