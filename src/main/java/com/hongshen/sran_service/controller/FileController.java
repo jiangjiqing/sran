@@ -11,20 +11,20 @@ import java.io.File;
 /**
  * Created by poplar on 12/14/17.
  */
-@Path("/sran/service/net/file")
+@Path("/sran/service/file")
 public class FileController {
     @Autowired
     private HttpServletRequest request;
 
-    @POST
-    @Path("/dowload")
+    @GET
+    @Path("/templates/{fileName}")
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject getGroupList(@RequestParam("fileName")JSONObject fileNames,
+    public JSONObject getGroupList(@PathParam("fileName") String  fileName,
                                    @HeaderParam("loginName")String loginName) {
 
         JSONObject result =new JSONObject();
-        String filePath = System.getProperty("user.dir")+"/src/main/resources/templates/"+fileNames.getString("fileName");
-        String path = "/SRAN_SERVICE/src/main/resources/templates/"+fileNames.getString("fileName");
+        String filePath = System.getProperty("user.dir")+"/src/main/resources/templates/"+fileName;
+        String path = "/SRAN_SERVICE/src/main/resources/templates/"+fileName;
 
         File file = new File(filePath);
 
