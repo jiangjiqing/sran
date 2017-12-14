@@ -6,7 +6,7 @@
 	<groupId>com.hongshen</groupId>
 	<artifactId>sran_service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>sran_service</name>
 	<description>sran_service project for Spring Boot</description>
