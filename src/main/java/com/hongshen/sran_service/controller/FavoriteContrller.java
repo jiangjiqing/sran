@@ -70,11 +70,13 @@ public class FavoriteContrller {
             if (favoriteList == null || favoriteList.isEmpty()) {
 
                 result.put("msg", Constants.MSG_NO_DATA);
+
                 result.put("result", Constants.FAIL);
 
             } else {
 
                 result.put("data", favoriteList);
+
                 result.put("result", Constants.SUCCESS);
 
             }
@@ -94,46 +96,66 @@ public class FavoriteContrller {
                                        @HeaderParam("loginName")String loginName) {
 
         JSONObject result = new JSONObject();
+
+        String msg = "";
         String tableNameBase = "unicom_favorite_"+generation+"_";
         String gettableName = "%"+tableNameBase+loginName+"%";
         String tableName = tableNameBase+loginName;
+
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         JSONObject table =  obj.getElementInfoService().getTable(gettableName);
 
         if (table != null){
+
             if (level.equals("nodes")){
+
                 String nodeName = name;
+
                 int i = obj.getElementInfoService().deleteNode(tableName,nodeName);
-                if (i > 0) {
-                    System.out.println(i);
-                    result.put("msg", Constants.MSG_DELETE_OK);
-                    result.put("result", Constants.SUCCESS);
-                } else {
-                    System.out.println(i);
-                    result.put("msg", Constants.MSG_DELETE_FAILED);
-                    result.put("result", Constants.FAIL);
+
+                if (i <= 0) {
+
+                    msg += "Delete Node is failed.";
+
                 }
+
             }else if (level.equals("groups")){
 
                     int i = obj.getElementInfoService().deleteNodes(tableName,name);
-                    if (i > 0) {
 
-                        result.put("msg", Constants.MSG_DELETE_OK);
-                        result.put("result", Constants.SUCCESS);
-                    } else {
+                    if (i <= 0) {
 
-                        result.put("msg", Constants.MSG_DELETE_FAILED);
-                        result.put("result", Constants.FAIL);
+                        msg += "Delete Node is failed.";
+
                     }
 
             }else {
-                result.put("msg", Constants.MSG_DELETE_FAILED);
-                result.put("result", Constants.FAIL);
+
+                msg += "Delete Node is failed.";
+
             }
+
         }else {
-            result.put("msg", Constants.MSG_DELETE_FAILED);
-            result.put("result", Constants.FAIL);
+
+            msg += "Delete Node is failed.";
+
         }
+
+        if (msg.length() == 0){
+
+            result.put("result", Constants.SUCCESS);
+
+            result.put("msg", Constants.MSG_DELETE_OK);
+
+
+        }else{
+
+            result.put("result", Constants.SUCCESS);
+
+            result.put("msg", Constants.MSG_DELETE_FAILED + msg);
+
+        }
+
         return result;
 
     }
@@ -147,48 +169,89 @@ public class FavoriteContrller {
                                     @PathParam("name")String name,JSONObject param,
                                     @HeaderParam("loginName")String loginName) {
         JSONObject result = new JSONObject();
+
+        String msg = "";
         String tableNameBase = "unicom_favorite_"+generation+"_";
         String gettableName = "%"+tableNameBase+loginName+"%";
         String tableName = tableNameBase+loginName;
+
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         JSONObject table =  obj.getElementInfoService().getTable(gettableName);
-        if (table != null){
-            if(level.equals("nodes")){
-                int i = obj.getElementInfoService().addNode(tableName, name);
-                if (i > 0) {
-                    result.put("msg", Constants.MSG_ADD_OK);
-                    result.put("result", Constants.SUCCESS);
-                } else {
-                    result.put("msg", Constants.MSG_ADD_FAILED);
-                    result.put("result", Constants.FAIL);
-                }
-            }else if (level.equals("groups")) {
-                List<JSONObject> nodeNames = obj.getElementInfoService().getNodeListByGroup(name);
-                    if (nodeNames.size() != 0) {
-                        int i = obj.getElementInfoService().addNodes(tableName, nodeNames);
-                        if (i > 0) {
-                            result.put("msg", Constants.MSG_ADD_OK);
-                            result.put("result", Constants.SUCCESS);
-                        } else {
-                            result.put("msg", Constants.MSG_ADD_FAILED);
-                            result.put("result", Constants.FAIL);
-                        }
-                    } else {
+        Boolean tableExist = false;
 
-                        result.put("msg", Constants.MSG_ADD_FAILED);
-                        result.put("result", Constants.FAIL);
-                    }
-            }else {
+        if (table == null){
 
-                result.put("msg", Constants.MSG_ADD_FAILED);
-                result.put("result", Constants.FAIL);
+            msg += "Table dose not exist.";
+
+            int j = obj.getElementInfoService().createTable(tableName);
+            if (j <= 0){
+
+                msg += "Create table failed.";
+
             }
+
         }else {
 
-            result.put("msg", Constants.MSG_ADD_FAILED);
-            result.put("result", Constants.FAIL);
+            tableExist = true;
+
         }
+
+        if (tableExist) {
+
+            if (level.equals("nodes")) {
+
+                int i = obj.getElementInfoService().addNode(tableName, name);
+
+                if (i <= 0) {
+
+                    msg += "Add node is failed.";
+
+                }
+
+            } else if (level.equals("groups")) {
+
+                List<JSONObject> nodeNames = obj.getElementInfoService().getNodeListByGroup(name);
+
+                if (nodeNames.size() != 0) {
+
+                    int i = obj.getElementInfoService().addNodes(tableName, nodeNames);
+
+                    if (i <= 0) {
+
+                        msg += "Add nodes is failed.";
+
+                    }
+
+                } else {
+
+                    msg += "Node is null";
+
+                }
+
+            } else {
+
+                msg += "Level dose not belong to nodes or groups";
+
+            }
+
+        }
+
+        if (msg.length() == 0){
+
+            result.put("result", Constants.SUCCESS);
+
+            result.put("msg", Constants.MSG_DELETE_OK);
+
+        }else{
+
+            result.put("result", Constants.SUCCESS);
+
+            result.put("msg", Constants.MSG_DELETE_FAILED + msg);
+
+        }
+
         return result;
+
     }
 
 }

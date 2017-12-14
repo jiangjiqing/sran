@@ -77,4 +77,6 @@ public interface UnicomFavoriteWcdmaMapper {
     Integer getNodeNum(@Param("tableName") String tableName, @Param("groupName")String groupName);
 
     Integer getNodeofNull(@Param("tableName")String tableName,@Param("nodeName") String nodeName);
+
+    int createTable(@Param("tableName") String tableName);
 }

@@ -78,4 +78,5 @@ public interface UnicomFavoriteLteMapper {
 
     Integer getNodeofNull(@Param("tableName")String tableName,@Param("nodeName") String nodeName);
 
- }
+    int createTable(@Param("tableName") String tableName);
+}

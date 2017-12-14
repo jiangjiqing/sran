@@ -111,4 +111,10 @@
     WHERE
     node_name = #{nodeName}
   </select>
+  <update id="createTable" parameterType="java.lang.String">
+    CREATE  TABLE ${tableName}
+    (
+    node_name VARCHAR(255)
+    )
+  </update>
 </mapper>

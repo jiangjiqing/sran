@@ -83,4 +83,6 @@ public interface ElementInfoService {
     Integer deleteGroup();
 
     Integer getGroupCounter();
+
+    int createTable(String tableName);
 }
