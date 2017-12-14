@@ -51,7 +51,7 @@
       b.longitude longitude
     FROM unicom_protect_lte a
       LEFT JOIN unicom_node_lte b ON a.node_name = b.node_name
-      ORDER BY b.group_name
+    ORDER BY b.group_name
  </select>
 
  <insert id="addProdectNode" parameterType="java.lang.String">

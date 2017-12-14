@@ -25,6 +25,9 @@ public class SranServiceMain {
 	@Bean
 	public ServletRegistrationBean jerseyServlet() {
 
+		System.out.println("==================================");
+		System.out.println("       无线网络智能管控平台         ");
+		System.out.println("==================================");
 		ServletRegistrationBean registration =
 				new ServletRegistrationBean(new ServletContainer(), "/*");
 

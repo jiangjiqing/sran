@@ -27,15 +27,19 @@ public class CorsFilter extends BaseController implements Filter{
 
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
 
+        System.out.println("********************************* SRAN 过滤器被使用 **************************");
+
         HttpServletResponse response = (HttpServletResponse) res;
         HttpServletRequest request = (HttpServletRequest) req;
 
         String authToken = request.getHeader("aaa");
-        System.out.println(authToken);
         String method = request.getMethod();
-        System.out.println(method);
         StringBuffer url = request.getRequestURL();
-        System.out.println(url);
+
+        System.out.println("authToken = " + authToken);
+        System.out.println("method = " + method);
+        System.out.println("url =" + url);
+
         HttpSession session = request.getSession();
         session.setAttribute("user","ooo");
         String message = "aaaaaa";
@@ -57,7 +61,6 @@ public class CorsFilter extends BaseController implements Filter{
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE");
         response.setHeader("Access-Control-Max-Age", "3600");
         response.setHeader("Access-Control-Allow-Headers", "x-requested-with,content-Type");
-        System.out.println("*********************************过滤器被使用**************************");
 
 //        request.getHeader("aaa");
 
