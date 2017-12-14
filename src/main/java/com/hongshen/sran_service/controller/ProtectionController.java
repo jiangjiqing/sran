@@ -132,7 +132,7 @@ public class ProtectionController extends BaseController{
 //
 //        return jsonResult;
 //    }
-    @POST
+    @PUT
     @Path("/suppliers/{supplier}/generations/{generation}/nets/nodes/protections/upload")
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject protectImport(@RequestParam(value = "importJson") JSONArray importJson,
