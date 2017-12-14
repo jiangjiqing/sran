@@ -22,22 +22,24 @@ public class FileController {
     public JSONObject getGroupList(@RequestParam("fileName")JSONObject fileNames,
                                    @HeaderParam("loginName")String loginName) {
 
-
+        JSONObject result =new JSONObject();
         String filePath = System.getProperty("user.dir")+"/src/main/resources/templates/"+fileNames.getString("fileName");
         String path = "/SRAN_SERVICE/src/main/resources/templates/"+fileNames.getString("fileName");
-        JSONObject result =new JSONObject();
 
         File file = new File(filePath);
-        System.out.println(file.isFile());
 
         if(file.isFile()){
+
             result.put("result", Constants.SUCCESS);
             result.put("data",request.getHeader("Host")+path);
+
         }else{
+
             result.put("result", Constants.FAIL);
             result.put("msg", "file does not exist");
         }
-        System.out.println(request.getHeader("Host")+filePath);
+
+
         return result;
     }
 }
