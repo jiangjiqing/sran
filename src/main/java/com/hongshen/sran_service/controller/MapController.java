@@ -162,7 +162,6 @@ public class MapController extends BaseController{
                     if(list.get(i)[1]>t2){
                         l2 = list.get(i)[0];
                         t2 = list.get(i)[1];
-                        System.out.println(i);
                     }
                     //MINlatitude
                     if(list.get(i)[0]<=l3||l3==0.0){
@@ -228,7 +227,6 @@ public class MapController extends BaseController{
 
         result.put("scope",listJson);
         result.putAll(json);
-        System.out.println(result);
         return result;
     }
 
@@ -293,7 +291,7 @@ public class MapController extends BaseController{
                         dataOne.put("favorite",false);
 
                     }else {
-                        System.out.println(nodeName);
+
                         dataOne.put("favorite",true);
                     }
 
