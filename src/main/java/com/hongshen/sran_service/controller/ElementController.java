@@ -271,7 +271,8 @@ public class ElementController {
         Integer addNum = 0;
         Integer counter = obj.getElementInfoService().getGroupCounter();
         Integer delNum = obj.getElementInfoService().deleteGroup();
-
+        String msg = "";
+        String msg1 = "";
             for (int i = 0; i < importJson.size(); i++) {
 
                 try {
@@ -280,22 +281,35 @@ public class ElementController {
 
                     if(addNum!=null||addNum>0){
 
-                        result.put("result",Constants.SUCCESS);
-
                         if(counter>importJson.size()){
 
-                            result.put("msg",Constants.MSG_ADD_OK
-                                    +" and the data of the file is less than the table data");
-                        }else {
-                            result.put("msg",Constants.MSG_ADD_OK);
-                        }
+                            msg =" and the data of the file is less than the table data";
 
+                        }else {
+
+                        }
                     }
                 }catch (Exception e){
 
-                    result.put("result",Constants.FAIL);
-                    result.put("msg","DB Exception");
+                    msg1 = "DB Exception";
                 }
+            }
+
+            if(msg.equals("")){
+
+                result.put("result",Constants.SUCCESS);
+                result.put("msg",Constants.MSG_ADD_OK);
+
+            }else if(!msg.equals("")){
+
+                result.put("result",Constants.SUCCESS);
+                result.put("msg",Constants.MSG_ADD_OK+msg);
+
+            }else if(!msg1.equals("")){
+
+                result.put("result",Constants.FAIL);
+                result.put("msg",Constants.MSG_ADD_FAILED+msg1);
+
             }
         return result;
     }

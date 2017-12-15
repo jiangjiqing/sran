@@ -64,7 +64,7 @@ public interface UnicomFormulaLteMapper {
 
     JSONObject getFormulaByName(@Param("quotaName")String quotaName);
 
-    Integer addFormula(@Param("param")JSONObject param);
+    Integer addFormula(JSONObject param);
 
     Integer updateFormula(@Param("param")JSONObject param);
 

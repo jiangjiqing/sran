@@ -409,10 +409,12 @@ public class MapController extends BaseController{
         }
 
         if(dataList == null || dataList.isEmpty()){
+
             result.put("result",Constants.FAIL);
             result.put("msg",Constants.MSG_NO_DATA);
 
         }else {
+
             result.put("result", Constants.SUCCESS);
             result.put("data", dataList);
         }

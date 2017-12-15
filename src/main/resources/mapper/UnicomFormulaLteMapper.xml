@@ -192,26 +192,26 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="param.id != null">
-        #{param.id,jdbcType=INT},
+      <if test="id != null">
+        #{id},
       </if>
-      <if test="param.quotaName != null">
-        #{param.quotaName,jdbcType=VARCHAR},
+      <if test="quotaName != null">
+        #{quotaName},
       </if>
-      <if test="param.expression != null">
-        #{param.expression,jdbcType=VARCHAR},
+      <if test="expression != null">
+        #{expression},
       </if>
-      <if test="param.remark != null">
-        #{param.remark,jdbcType=VARCHAR},
+      <if test="remark != null">
+        #{remark},
       </if>
-      <if test="param.status != null">
-        #{param.status,jdbcType=TINYINT},
+      <if test="status != null">
+        #{status},
       </if>
-      <if test="param.type != null">
-        #{param.type,jdbcType=VARCHAR},
+      <if test="type != null">
+        #{type},
       </if>
-      <if test="param.hastop10 != null">
-        #{param.hastop10,jdbcType=TINYINT}
+      <if test="hastop10 != null">
+        #{hastop10}
       </if>
     </trim>
   </insert>

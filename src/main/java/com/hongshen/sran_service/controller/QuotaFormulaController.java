@@ -166,11 +166,15 @@ public class QuotaFormulaController {
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
 
         List<JSONObject> formulaList = obj.getQuotaService().getFormula(false);
+
         if(formulaList!=null&&formulaList.size()>0){
+
             result.put("result",Constants.MSG_DOWNLOAD_FORMULAS_OK);
             result.put("result",Constants.SUCCESS);
             result.put("data",formulaList);
+
         }else {
+
             result.put("result",Constants.MSG_DOWNLOAD_FORMULAS_FAILED);
             result.put("result",Constants.FAIL);
         }
@@ -188,23 +192,31 @@ public class QuotaFormulaController {
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         Integer addNum=0;
+
         if(formulas!=null) {
             Integer delNum =  obj.getQuotaService().deleteAllFormulas();
 
             for (int i = 0; i < formulas.size(); i++) {
                 try {
+
                     addNum = obj.getQuotaService().addFormula(formulas.getJSONObject(i));
+
                 } catch (Exception e) {
+                    System.out.println(e.getMessage());
                     result.put("result",Constants.FAIL);
                     result.put("msg","DB Exception");
+
                 }
+
             }
             if(addNum>0){
+
                 obj.getCacheService().resetCounterList();
                 result.put("result",Constants.SUCCESS);
                 result.put("msg",Constants.MSG_ADD_OK);
             }
         }else {
+
             result.put("result",Constants.FAIL);
             result.put("msg",Constants.MSG_ADD_FAILED);
         }

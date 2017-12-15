@@ -7,11 +7,13 @@ import com.hongshen.sran_service.service.util.Constants;
 import com.hongshen.sran_service.service.util.NetObjBase;
 import com.hongshen.sran_service.service.util.NetObjFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.support.SQLErrorCodes;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.lang.reflect.Array;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -141,21 +143,19 @@ public class ProtectionController extends BaseController{
                                     @HeaderParam("Auth-Token") String authToken) {
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         JSONObject result = new JSONObject();
-
+        Integer addNum = 0;
+        String msg = "";
         Integer deleteNum = obj.getElementInfoService().clearNodes();
 
-        Integer addNum = 0;
+            for (int i = 0; i < importJson.size(); i++) {
 
-        for (int i = 0; i < importJson.size(); i++) {
-
-            addNum = obj.getElementInfoService().addProdectNode(importJson.getJSONObject(i).getString("nodeName"));
-        }
+                addNum = obj.getElementInfoService().addProdectNode(importJson.getJSONObject(i).getString("nodeName"));
+            }
         if (addNum > 0) {
 
             result.put("result", Constants.SUCCESS);
-            result.put("msg", Constants.MSG_ADD_FAILED);
+            result.put("msg", Constants.MSG_ADD_OK);
         }
-
 
         return result;
     }

@@ -55,7 +55,7 @@
   </select>
 
   <delete id="clearNodes">
-    delete  FROM unicom_protect_lte
+    delete  FROM unicom_protect_wcdma
   </delete>
 
   <insert id="addProdectNode" parameterType="java.lang.String">
