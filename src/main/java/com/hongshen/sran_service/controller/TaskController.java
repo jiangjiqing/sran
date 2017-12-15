@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
+import java.util.List;
+
 import static com.hongshen.sran_service.controller.TaskWSController.taskStatusMap;
 import static com.hongshen.sran_service.controller.TaskWSController.taskStatusSession;
 
@@ -27,14 +29,14 @@ public class TaskController extends BaseController {
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject getTaskInfo(@PathParam("supplier") String supplier,
                                   @PathParam("generation") String generation,
-                                  @HeaderParam("Auth-Token") String authToken) {
+                                  @HeaderParam("loginName") String loginName) {
 
-        String loginName = "tom";// TODO loginName
+//        String loginName = "tom";// TODO loginName
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        JSONObject taskInfo = obj.getTaskService().getTaskInfo(loginName);// TODO bug
+        List<JSONObject> taskInfo = obj.getTaskService().getTaskInfo(loginName);
 
-        if (taskInfo == null || taskInfo.isEmpty()) {
+        if (taskInfo.size() == 0 || taskInfo.isEmpty()) {
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
 
@@ -58,10 +60,10 @@ public class TaskController extends BaseController {
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject startTask(@PathParam("supplier") String supplier,
                                 @PathParam("generation") String generation,
-                                @HeaderParam("Auth-Token") String authToken,
+                                @HeaderParam("loginNmae") String loginName,
                                 JSONObject param) {
 
-        String loginName = "tom";// TODO loginName
+//        String loginName = "tom";// TODO loginName
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         int update = obj.getTaskService().addTask(loginName, param);
@@ -84,9 +86,9 @@ public class TaskController extends BaseController {
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject cacelTask(@PathParam("supplier") String supplier,
                                 @PathParam("generation") String generation,
-                                @HeaderParam("Auth-Token") String authToken) {
+                                @HeaderParam("loginName") String loginName) {
 
-        String loginName = "tom";// TODO loginName
+//        String loginName = "tom";// TODO loginName
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         int cacelTask = obj.getTaskService().cacelTask(loginName);
@@ -111,9 +113,9 @@ public class TaskController extends BaseController {
     public JSONObject downloadTasklog(@PathParam("supplier") String supplier,
                                       @PathParam("generation") String generation,
                                       @PathParam("isUseScript") String isUseScript,
-                                      @HeaderParam("Auth-Token") String authToken) {
+                                      @HeaderParam("loginName") String loginName) {
 
-        String loginName = "tom";// TODO loginName
+//        String loginName = "tom";// TODO loginName
         JSONObject result = new JSONObject();
         JSONObject file = new JSONObject();
         String filePath = "";

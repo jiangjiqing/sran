@@ -183,7 +183,7 @@
       startTime,
       endTime
     FROM unicom_user_task_group_wcdma
-    WHERE loginName = #{loginName}
+    WHERE login_name = #{loginName}
   </select>
 
   <insert id="addTask" parameterType="com.alibaba.fastjson.JSONObject">

@@ -5,6 +5,8 @@ import com.hongshen.sran_service.entity.UnicomGroupTaskWcdma;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface UnicomGroupTaskWcdmaMapper {
     /**
@@ -55,7 +57,6 @@ public interface UnicomGroupTaskWcdmaMapper {
      */
     int updateByPrimaryKey(UnicomGroupTaskWcdma record);
 
-    JSONObject getTaskInfo(@Param("loginName")String loginName);
 
-    int addTask(@Param("param")JSONObject param);
+
 }

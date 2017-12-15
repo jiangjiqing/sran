@@ -2,11 +2,12 @@ package com.hongshen.sran_service.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.dao.UnicomGroupTaskWcdmaMapper;
+import com.hongshen.sran_service.dao.UnicomUserTaskGroupWcdmaMapper;
 import com.hongshen.sran_service.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
+import java.util.List;
 
 import static com.hongshen.sran_service.controller.TaskWSController.taskStatusMap;
 
@@ -19,9 +20,12 @@ public class TaskService_Unicom_Wcdma implements TaskService {
     @Autowired
     private UnicomGroupTaskWcdmaMapper groupTaskMapper;
 
+    @Autowired
+    private UnicomUserTaskGroupWcdmaMapper TaskGroupMapper;
+
     @Override
-    public JSONObject getTaskInfo(String loginName) {
-        return groupTaskMapper.getTaskInfo(loginName);
+    public List<JSONObject> getTaskInfo(String loginName) {
+        return TaskGroupMapper.getTaskInfo(loginName);
     }
 
     @Override
@@ -38,7 +42,7 @@ public class TaskService_Unicom_Wcdma implements TaskService {
 
     @Override
     public int addTask(String loginName, JSONObject param) {
-        return groupTaskMapper.addTask(param);
+        return TaskGroupMapper.addTask(param);
     }
 
     @Override
