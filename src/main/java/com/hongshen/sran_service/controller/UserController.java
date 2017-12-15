@@ -91,7 +91,7 @@ public class UserController extends BaseController{
 
         List<JSONObject> userList = userAgentService.getUserlistInfo(loginName);
         List<JSONObject> userRoleList = userAgentService.getUserRolelistInfo(loginName);
-        if (userList == null && userRoleList == null){
+        if (userList.size() ==0 && userRoleList.size()==0){
             int i = userAgentService.addUser(param);
             int j = userAgentService.addUserRoleInfo(param);
             if(i > 0 && j > 0) {
@@ -140,7 +140,7 @@ public class UserController extends BaseController{
 
             }
         }else {
-            msg += "Table is not null.";
+            msg += "loginName is exist.";
 
         }
 //        int i = userAgentService.addUserFromShiro(param);
@@ -149,7 +149,7 @@ public class UserController extends BaseController{
             result.put("msg", Constants.MSG_ADD_OK);
 
         }else{
-            result.put("result", Constants.SUCCESS);
+            result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_ADD_FAILED + msg);
         }
 

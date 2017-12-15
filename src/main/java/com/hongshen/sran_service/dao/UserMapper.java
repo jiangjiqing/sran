@@ -76,9 +76,9 @@ public interface UserMapper {
 
     int addUser(@Param("param") JSONObject param);
 
-    List<JSONObject> getUserlistInfo(@Param("param")String param);
+    List<JSONObject> getUserlistInfo(@Param("loginName")String loginName);
 
-    List<JSONObject> getUserRolelistInfo(@Param("param")String param);
+    List<JSONObject> getUserRolelistInfo(@Param("loginName")String loginName);
 
     int addUserRoleInfo(@Param("param")JSONObject param);
 

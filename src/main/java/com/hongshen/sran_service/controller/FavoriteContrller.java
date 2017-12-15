@@ -70,13 +70,11 @@ public class FavoriteContrller {
             if (favoriteList == null || favoriteList.isEmpty()) {
 
                 result.put("msg", Constants.MSG_NO_DATA);
-
                 result.put("result", Constants.FAIL);
 
             } else {
 
                 result.put("data", favoriteList);
-
                 result.put("result", Constants.SUCCESS);
 
             }
@@ -231,27 +229,18 @@ public class FavoriteContrller {
             } else {
 
                 msg += "Level dose not belong to nodes or groups";
-
             }
-
         }
 
         if (msg.length() == 0){
-
             result.put("result", Constants.SUCCESS);
-
             result.put("msg", Constants.MSG_DELETE_OK);
 
         }else{
-
             result.put("result", Constants.SUCCESS);
-
             result.put("msg", Constants.MSG_DELETE_FAILED + msg);
-
         }
-
         return result;
-
     }
 
 }
