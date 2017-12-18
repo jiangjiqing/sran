@@ -48,7 +48,7 @@ public class TopologyController extends BaseController {
 
     // Query group list by room
     @GET
-    @Path("/suppliers/{supplier}/generations/{generation}/nets/rooms/groups")
+    @Path("/suppliers/{supplier}/generations/{generation}/nets/rooms/one/groups")
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject getGroupList(@PathParam("supplier")String supplier,
                                    @PathParam("generation")String generation,

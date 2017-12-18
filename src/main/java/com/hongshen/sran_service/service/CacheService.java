@@ -54,4 +54,6 @@ public interface CacheService {
 
     List<JSONObject> getThresholdCellList();
 
+    String getUpdateTimeForQuotaData();
+
 }

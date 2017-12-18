@@ -34,8 +34,7 @@ public class QuotaController {
 
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
 
-        String time = "2017-12-07 00:01:53";
-        //String time = obj.getCacheService().getUpdateTime(); TODO
+        String time = obj.getCacheService().getUpdateTimeForQuotaData();
         if (time == null || time == ""){
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
@@ -59,8 +58,8 @@ public class QuotaController {
                 f.remove("status");
                 f.remove("type");
 
-                //String value = groupQuota.getString(f.getString("quotaName")); TODO
-                String value = quotas.getString("formula" + f.getString("id"));
+                String value = f.getString(f.getString("quotaName"));
+                //String value = quotas.getString("formula" + f.getString("id"));
 
                 if (value == null || value == "") {
                     f.put("value", Constants.INVALID_VALUE_QUOTA);
@@ -91,8 +90,7 @@ public class QuotaController {
 
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
 
-        String time = "2017-12-07 00:01:53";
-        //String time = obj.getCacheService().getUpdateTime(); TODO
+        String time = obj.getCacheService().getUpdateTimeForQuotaData();
         if (time == null || time == ""){
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
@@ -117,8 +115,8 @@ public class QuotaController {
                 f.remove("type");
                 f.remove("hasTop10");
 
-                //String value = groupQuota.getString(f.getString("quotaName")); TODO
-                String value = quotas.getString("formula" + f.getString("id"));
+                String value = f.getString(f.getString("quotaName"));
+                //String value = quotas.getString("formula" + f.getString("id"));
 
                 if (value == null || value == "") {
                     f.put("value", Constants.INVALID_VALUE_QUOTA);
@@ -149,8 +147,7 @@ public class QuotaController {
 
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
 
-        String time = "2017-12-07 00:01:53";
-        //String time = obj.getCacheService().getUpdateTime(); TODO
+        String time = obj.getCacheService().getUpdateTimeForQuotaData();
         if (time == null || time == ""){
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
@@ -175,8 +172,8 @@ public class QuotaController {
                 f.remove("type");
                 f.remove("hasTop10");
 
-                //String value = groupQuota.getString(f.getString("quotaName")); TODO
-                String value = quotas.getString("formula" + f.getString("id"));
+                String value = f.getString(f.getString("quotaName"));
+                //String value = quotas.getString("formula" + f.getString("id"));
 
                 if (value == null || value == "") {
                     f.put("value", Constants.INVALID_VALUE_QUOTA);

@@ -287,8 +287,8 @@ public class CacheService_Unicom_Wcdma implements CacheService {
     }
 
     public String getUpdateTimeForQuotaData() {
-
-        return updateTimeForQuotaData;
+        return "2017-01-20 09:15:00";//TOOD
+        //return updateTimeForQuotaData;
     }
 
     public void setUpdateTimeForQuotaData(String updateTimeForQuotaData) {
