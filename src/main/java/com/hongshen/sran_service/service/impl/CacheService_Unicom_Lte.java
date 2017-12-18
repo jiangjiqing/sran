@@ -328,7 +328,9 @@ public class CacheService_Unicom_Lte implements CacheService {
 
     @Override
     public JSONObject getFormulaByName(String quotaName) {
-
+        if (formulaList.isEmpty()){
+            resetFormulaList();
+        }
         for (JSONObject f : formulaList){
             if (f.getString("quotaName").equals(quotaName)){
                 return f;
@@ -339,7 +341,9 @@ public class CacheService_Unicom_Lte implements CacheService {
 
     @Override
     public JSONObject getFormulaProcessedByName(String quotaName) {
-
+        if (formulaListProcessed.isEmpty()){
+            resetFormulaList();
+        }
         for (JSONObject f : formulaListProcessed){
             if (f.getString("quotaName").equals(quotaName)){
                 return f;

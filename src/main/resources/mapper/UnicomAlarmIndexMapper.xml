@@ -93,7 +93,7 @@
       alarm_name_id,
       alarm_name)
     VALUES (
-      #{param.alarmNameId, jdbcType=VARCHAR},
+      #{param.alarmNameId},
       #{param.alarmName, jdbcType=VARCHAR})
   </insert>
 
