@@ -169,13 +169,13 @@ public class QuotaFormulaController {
 
         if(formulaList!=null&&formulaList.size()>0){
 
-            result.put("result",Constants.MSG_DOWNLOAD_FORMULAS_OK);
+            result.put("msg",Constants.MSG_DOWNLOAD_FORMULAS_OK);
             result.put("result",Constants.SUCCESS);
             result.put("data",formulaList);
 
         }else {
 
-            result.put("result",Constants.MSG_DOWNLOAD_FORMULAS_FAILED);
+            result.put("msg",Constants.MSG_DOWNLOAD_FORMULAS_FAILED);
             result.put("result",Constants.FAIL);
         }
 
@@ -202,7 +202,6 @@ public class QuotaFormulaController {
                     addNum = obj.getQuotaService().addFormula(formulas.getJSONObject(i));
 
                 } catch (Exception e) {
-                    System.out.println(e.getMessage());
                     result.put("result",Constants.FAIL);
                     result.put("msg","DB Exception");
 
