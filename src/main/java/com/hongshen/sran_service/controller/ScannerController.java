@@ -25,6 +25,9 @@ public class ScannerController extends BaseController {
     @Autowired
     private CacheService_Unicom_Wcdma caCheService;
 
+    @Autowired
+    private  NoticeWSController noticeWS;
+
     private static final Logger logger = LoggerFactory.getLogger(ScannerController.class);
 
     @GET
@@ -53,8 +56,16 @@ public class ScannerController extends BaseController {
             String path = Constants.SCANNER_SEND_WCDMA;
 
             ScannerHelper.httpclient(path);
+
         }
 
 
     }
+    @GET
+    @Path("/suppliers/{supplier}/generations/{generation}/send")
+    @Produces(MediaType.APPLICATION_JSON)
+    public void srnd(@PathParam("supplier")String supplier, @PathParam("generation")String generation, JSONObject param) {
+        noticeWS.sendAll(param);
+    }
+
 }

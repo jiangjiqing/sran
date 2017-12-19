@@ -1,5 +1,6 @@
 package com.hongshen.sran_service.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.service.util.websocket.HttpSessionConfigurator;
 import org.springframework.stereotype.Component;
 
@@ -75,13 +76,13 @@ public class NoticeWSController {
         this.session.getBasicRemote().sendText(message);//同步
         //this.session.getAsyncRemote().sendText(message);//异步
     }
-    public void sendAll(String msg) {
+    public void sendAll(JSONObject msg) {
         for (String key : connections.keySet()) {
             NoticeWSController client = null;
 
             client = (NoticeWSController) connections.get(key);
             synchronized (client) {
-                client.session.getAsyncRemote().sendText(msg);
+                client.session.getAsyncRemote().sendText(String.valueOf(msg));
             }
             try {
                 client.session.close();
