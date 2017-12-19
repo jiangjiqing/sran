@@ -1,12 +1,40 @@
 package com.hongshen.sran_service.service.util;
 
 import com.alibaba.fastjson.JSONObject;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ScannerHelper {
+
+    public static void httpclient(String paramPath) throws IOException {
+
+        String url = paramPath;
+
+        CloseableHttpClient httpclient = null;
+
+        try {
+
+            httpclient = HttpClients.createDefault();
+
+            HttpGet httpget = new HttpGet(url);
+
+            httpget.addHeader("Go", "true");
+
+            httpclient.execute(httpget);
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        } finally {
+
+            httpclient.close(); // httpClient关闭
+        }
+    }
 
     public static Map<String, List<String>> getVariableList (List<JSONObject> formulaList) {
 

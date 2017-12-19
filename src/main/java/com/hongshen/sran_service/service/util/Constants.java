@@ -66,4 +66,15 @@ public class Constants {
     public static final String TASK_LOG_PATH_ORIGINAL = "/TASKLOG/XXX.zip";
     public static final String TASK_LOG_PATH_SCRIPT = "/SCRIPTLOG/XXX.log";
 
+    public final static String SCANNER_SEND_HAND = "http://192.168.0.145:8080";
+
+    public final static String SCANNER_SEND_UTIL = "/sran/service/net/scanner/suppliers/unicom";
+
+    public final static String SCANNER_SEND_TYPE_WCDMA = "/generations/wcdma/send";
+
+    public final static String SCANNER_SEND_TYPE_LTE = "/generations/lte/send";
+
+    public final static String SCANNER_SEND_WCDMA = SCANNER_SEND_HAND + SCANNER_SEND_UTIL + SCANNER_SEND_TYPE_WCDMA;
+
+    public final static String SCANNER_SEND_LTE = SCANNER_SEND_HAND + SCANNER_SEND_UTIL + SCANNER_SEND_TYPE_LTE;
 }
