@@ -75,17 +75,19 @@
 
   <select id="getAlarmInfoList" resultType="com.alibaba.fastjson.JSONObject">
     SELECT
-      node_name nodeName,
-      mo,
-      alarm_time alarmTime,
-      alarm_level_id alarmLevelId,
-      alarm_name_id alarmNameId,
-      cell_name cellName
-    FROM unicom_alarm_wcdma;
+    b.alarm_name alarmName,
+      a.node_name nodeName,
+      a.mo,
+      a.alarm_time alarmTime,
+      a.alarm_level_id alarmLevelId,
+      a.alarm_name_id alarmNameId,
+      a.cell_name cellName
+    FROM unicom_alarm_wcdma a LEFT JOIN unicom_alarm_index c ON a.alarm_name_id = b.alarm_name_id;
   </select>
 
   <select id="getProtectAlarmInfoList" resultType="com.alibaba.fastjson.JSONObject">
     SELECT
+c.alarm_name alarmName,
       a.node_name nodeName,
       a.mo,
       a.alarm_time alarmTime,
@@ -94,24 +96,26 @@
       a.cell_name cellName
     FROM unicom_alarm_wcdma a
     INNER JOIN unicom_protect_wcdma b
-      on a.node_name = b.node_name
+      on a.node_name = b.node_name LEFT JOIN unicom_alarm_index c ON a.alarm_name_id = c.alarm_name_id
   </select>
 
   <select id="getNormalAlarmInfoList" resultType="com.alibaba.fastjson.JSONObject">
     SELECT
-      node_name nodeName,
-      mo,
-      alarm_time alarmTime,
-      alarm_level_id alarmLevelId,
-      alarm_name_id alarmNameId,
-      cell_name cellName
-    FROM unicom_alarm_lte
-	WHERE node_name
+    c.alarm_name alarmName,
+      a.node_name nodeName,
+      a.mo,
+      a.alarm_time alarmTime,
+      a.alarm_level_id alarmLevelId,
+      a.alarm_name_id alarmNameId,
+      a.cell_name cellName
+    FROM unicom_alarm_lte a LEFT JOIN unicom_alarm_index c ON a.alarm_name_id = c.alarm_name_id
+	WHERE a.node_name
 	  NOT IN (SELECT node_name FROM unicom_protect_lte)
   </select>
 
   <select id="getGroupAlarmByName" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
     SELECT
+    c.alarm_name alarmName,
       a.node_name nodeName,
       a.cell_name cellName,
       a.alarm_time alarmTime,
@@ -120,30 +124,33 @@
       a.mo
     FROM unicom_alarm_wcdma  a
 	LEFT JOIN unicom_node_wcdma b ON a.node_name = b.node_name
+	LEFT JOIN unicom_alarm_index c ON a.alarm_name_id = c.alarm_name_id
 	WHERE b.group_name = #{groupName}
   </select>
 
   <select id="getNodeAlarmByName" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
     select
-      node_name nodeName,
-      mo,
-      alarm_time alarmTime,
-      alarm_level_id alarmLevelId,
-      alarm_name_id alarmNameId,
-      cell_name cellName
-    from unicom_alarm_wcdma
-    where node_name = #{nodeName}
+    c.alarm_name alarmName,
+      a.node_name nodeName,
+      a.mo,
+      a.alarm_time alarmTime,
+      a.alarm_level_id alarmLevelId,
+      a.alarm_name_id alarmNameId,
+      a.cell_name cellName
+    from unicom_alarm_wcdma a LEFT JOIN unicom_alarm_index c ON a.alarm_name_id = c.alarm_name_id
+    where a.node_name = #{nodeName}
   </select>
 
   <select id="getCellAlarmByName" resultType="com.alibaba.fastjson.JSONObject">
     select
-      node_name nodeName,
-      mo,
-      alarm_time alarmTime,
-      alarm_level_id alarmLevelId,
-      alarm_name_id alarmNameId,
-      cell_name cellName
-    from unicom_alarm_wcdma
-    where cell_name = #{cellName}
+    c.alarm_name alarmName
+      a.node_name nodeName,
+      a.mo,
+      a.alarm_time alarmTime,
+      a.alarm_level_id alarmLevelId,
+      a.alarm_name_id alarmNameId,
+      a.cell_name cellName
+    from unicom_alarm_wcdma a LEFT JOIN unicom_alarm_index c ON a.alarm_name_id = c.alarm_name_id
+    where a.cell_name = #{cellName}
   </select>
 </mapper>
