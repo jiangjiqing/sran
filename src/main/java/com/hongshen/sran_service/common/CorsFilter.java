@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  *
@@ -35,9 +37,14 @@ public class CorsFilter extends BaseController implements Filter{
         String authToken = request.getHeader("aaa");
         String method = request.getMethod();
         StringBuffer url = request.getRequestURL();
-
+        String ip=request.getRemoteAddr();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        if (ip != null) {
+            System.out.println("Visit IP:"+ip);
+        }
         System.out.println("authToken = " + authToken);
         System.out.println("method = " + method);
+        System.out.println(df.format(new Date()));
         System.out.println("url =" + url);
 
         HttpSession session = request.getSession();
