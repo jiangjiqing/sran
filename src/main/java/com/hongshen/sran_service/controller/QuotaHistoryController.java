@@ -92,7 +92,7 @@ public class QuotaHistoryController extends BaseController {
         if (min != 0 && quotaList.size()>0) {
             dataList = getValue(start, end, quotaList,formulaNameList,min,quotaList.get(quotaList.size()-1).getDate("time"),quotaList.get(0).getDate("time"));
             result.put("result", Constants.SUCCESS);
-            result.put("date", dataList);
+            result.put("data", dataList);
 
         } else {
             result.put("result", Constants.FAIL);
@@ -257,7 +257,7 @@ public class QuotaHistoryController extends BaseController {
                                          @PathParam("supplier") String supplier,
                                          @PathParam("generation") String generation,
                                          @PathParam("level") String level,
-                                         @HeaderParam("Auth-Token") String authToken) {
+                                         @HeaderParam("Auth-Token") String authToken) throws ParseException {
 
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         String condition = null;
@@ -266,8 +266,12 @@ public class QuotaHistoryController extends BaseController {
         List<String> formulaNameList = new ArrayList<>();
 
         if(quotaHistoryExport.getJSONObject("time").getString("range").equals("1")){
-            start = quotaHistoryExport.getJSONObject("time").getDate("start");
-            end = quotaHistoryExport.getJSONObject("time").getDate("end");
+
+            SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            String startExport = quotaHistoryExport.getJSONObject("time").getString("start");
+            String endExport = quotaHistoryExport.getJSONObject("time").getString("end");
+            start = date.parse(startExport);
+            end = date.parse(endExport);
         }
 
         if(quotaHistoryExport.getJSONObject("element").getString("range").equals("1")){
@@ -316,7 +320,7 @@ public class QuotaHistoryController extends BaseController {
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject quotaHistoryCounterExport(@RequestParam(value = "quotaHistory") JSONObject quotaHistoryExport,
                                                 @PathParam("supplier") String supplier, @PathParam("generation") String generation,
-                                                @HeaderParam("Auth-Token") String authToken, @PathParam("level") String level) {
+                                                @HeaderParam("Auth-Token") String authToken, @PathParam("level") String level) throws ParseException {
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         String condition = null;
         Date start =null;
@@ -325,8 +329,12 @@ public class QuotaHistoryController extends BaseController {
         List list = new ArrayList();
 
         if(quotaHistoryExport.getJSONObject("time").getString("range").equals("1")){
-            start = quotaHistoryExport.getJSONObject("time").getDate("start");
-            end = quotaHistoryExport.getJSONObject("time").getDate("end");
+
+            SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            String startExport = quotaHistoryExport.getJSONObject("time").getString("start");
+            String endExport = quotaHistoryExport.getJSONObject("time").getString("end");
+            start = date.parse(startExport);
+            end = date.parse(endExport);
         }
         if(quotaHistoryExport.getJSONObject("element").getString("range").equals("1")){
 
