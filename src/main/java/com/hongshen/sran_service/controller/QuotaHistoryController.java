@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestParam;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -27,14 +28,14 @@ public class QuotaHistoryController extends BaseController {
                                    @PathParam("supplier") String supplier,
                                    @PathParam("generation") String generation,
                                    @PathParam("level") String level,
-                                   @HeaderParam("Auth-Token") String authToken) {
+                                   @HeaderParam("Auth-Token") String authToken) throws ParseException {
 
         JSONObject result = new JSONObject();
         List dataList = new ArrayList();
 
         String condition = null;
         Date start = null;
-        Date end = null;
+        Date  end = null;
         List<String> formulaNameList = new ArrayList<>();
         String[] formula = null;
 
@@ -55,8 +56,12 @@ public class QuotaHistoryController extends BaseController {
             formulaNameList = obj.getCacheService().getFormulaNameList(false);
         }
         if(quotaHistory.getJSONObject("time").getString("range").equals("1")){
-            start = quotaHistory.getJSONObject("time").getDate("start");
-            end = quotaHistory.getJSONObject("time").getDate("end");
+            SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            String start1 = quotaHistory.getJSONObject("time").getString("start");
+            String end1 = quotaHistory.getJSONObject("time").getString("end");
+            start = date.parse(start1);
+            end = date.parse(end1);
+
         }
 
         if(quotaHistory.getJSONObject("element").getString("range").equals("1")){
