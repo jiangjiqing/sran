@@ -30,75 +30,75 @@ public class QuotaHistoryController extends BaseController {
                                    @PathParam("level") String level,
                                    @HeaderParam("Auth-Token") String authToken) throws ParseException {
 
-        JSONObject result = new JSONObject();
-        List dataList = new ArrayList();
+            JSONObject result = new JSONObject();
 
-        String condition = null;
-        Date start = null;
-        Date  end = null;
-        List<String> formulaNameList = new ArrayList<>();
-        String[] formula = null;
+            List dataList = new ArrayList();
 
-        NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        String unit = quotaHistory.getJSONObject("time").getString("unit");
+            String condition = null;
+            Date start = null;
+            Date end = null;
+            List<String> formulaNameList = new ArrayList<>();
+            String[] formula = null;
 
-       if(quotaHistory.getJSONObject("quota").getString("range").equals("1")){
-           formula = quotaHistory.getJSONObject("quota").getString("list").replace("]", "")
-                   .replace("[", "").replaceAll("\"", "").split(",");
+            NetObjBase obj = objFactory.getNetObj(supplier, generation);
+            String unit = quotaHistory.getJSONObject("time").getString("unit");
 
-           for(String str: formula){
+            if (quotaHistory.getJSONObject("quota").getString("range").equals("1")) {
+                formula = quotaHistory.getJSONObject("quota").getString("list").replace("]", "")
+                        .replace("[", "").replaceAll("\"", "").split(",");
 
-               formulaNameList.add(str);
-           }
+                for (String str : formula) {
 
-        }else if(quotaHistory.getJSONObject("quota").getString("range").equals("0")){
+                    formulaNameList.add(str);
+                }
 
-            formulaNameList = obj.getCacheService().getFormulaNameList(false);
-        }
-        if(quotaHistory.getJSONObject("time").getString("range").equals("1")){
-            SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-            String start1 = quotaHistory.getJSONObject("time").getString("start");
-            String end1 = quotaHistory.getJSONObject("time").getString("end");
-            start = date.parse(start1);
-            end = date.parse(end1);
+            } else if (quotaHistory.getJSONObject("quota").getString("range").equals("0")) {
 
-        }
+                formulaNameList = obj.getCacheService().getFormulaNameList(false);
+            }
+            if (quotaHistory.getJSONObject("time").getString("range").equals("1")) {
+                SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                String start1 = quotaHistory.getJSONObject("time").getString("start");
+                String end1 = quotaHistory.getJSONObject("time").getString("end");
+                start = date.parse(start1);
+                end = date.parse(end1);
 
-        if(quotaHistory.getJSONObject("element").getString("range").equals("1")){
+            }
 
-            String[] st = quotaHistory.getJSONObject("element").getString("list").replace("]", "")
-                    .replace("[", "").replaceAll("\"", "").split(",");
+            if (quotaHistory.getJSONObject("element").getString("range").equals("1")) {
 
-           condition = Condition(st);
+                String[] st = quotaHistory.getJSONObject("element").getString("list").replace("]", "")
+                        .replace("[", "").replaceAll("\"", "").split(",");
 
-        }
-        List<JSONObject> quotaList = getQuotas(level,obj,start,end,condition);
+                condition = Condition(st);
 
-        int min = 0;
-        if (unit.equals("0") && quotaList != null) {//min
+            }
+            List<JSONObject> quotaList = getQuotas(level, obj, start, end, condition);
 
-            min = 4;
-        } else if (unit.equals("1") && quotaList != null) {//hh
+            int min = 0;
+            if (unit.equals("0") && quotaList != null) {//min
 
-            min = 1;
-        } else if (unit.equals("2") && quotaList != null) {//date
+                min = 4;
+            } else if (unit.equals("1") && quotaList != null) {//hh
 
-            min = 2;
-        } else if (unit.equals("3") && quotaList != null) {//month
+                min = 1;
+            } else if (unit.equals("2") && quotaList != null) {//date
 
-            min = 3;
-        }
+                min = 2;
+            } else if (unit.equals("3") && quotaList != null) {//month
 
-        if (min != 0 && quotaList.size()>0) {
-            dataList = getValue(start, end, quotaList,formulaNameList,min,quotaList.get(quotaList.size()-1).getDate("time"),quotaList.get(0).getDate("time"));
-            result.put("result", Constants.SUCCESS);
-            result.put("data", dataList);
+                min = 3;
+            }
 
-        } else {
-            result.put("result", Constants.FAIL);
-            result.put("msg", Constants.MSG_NO_DATA);
-        }
+            if (min != 0 && quotaList.size() > 0) {
+                dataList = getValue(start, end, quotaList, formulaNameList, min, quotaList.get(quotaList.size() - 1).getDate("time"), quotaList.get(0).getDate("time"));
+                result.put("result", Constants.SUCCESS);
+                result.put("data", dataList);
 
+            } else {
+                result.put("result", Constants.FAIL);
+                result.put("msg", Constants.MSG_NO_DATA);
+            }
         return result;
     }
 
