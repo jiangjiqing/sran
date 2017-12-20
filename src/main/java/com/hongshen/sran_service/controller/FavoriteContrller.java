@@ -148,7 +148,7 @@ public class FavoriteContrller {
 
         }else{
 
-            result.put("result", Constants.SUCCESS);
+            result.put("result", Constants.FAIL);
 
             result.put("msg", Constants.MSG_DELETE_FAILED + msg);
 
@@ -237,7 +237,7 @@ public class FavoriteContrller {
             result.put("msg", Constants.MSG_DELETE_OK);
 
         }else{
-            result.put("result", Constants.SUCCESS);
+            result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_DELETE_FAILED + msg);
         }
         return result;

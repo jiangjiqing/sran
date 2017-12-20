@@ -38,6 +38,8 @@ public class CorsFilter extends BaseController implements Filter{
         String method = request.getMethod();
         StringBuffer url = request.getRequestURL();
         String ip=request.getRemoteAddr();
+        Object a =request.getCookies();
+        System.out.println(a);
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         if (ip != null) {
             System.out.println("Visit IP:"+ip);
@@ -67,7 +69,7 @@ public class CorsFilter extends BaseController implements Filter{
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE");
         response.setHeader("Access-Control-Max-Age", "3600");
-        response.setHeader("Access-Control-Allow-Headers", "x-requested-with,content-Type");
+        response.setHeader("Access-Control-Allow-Headers", "x-requested-with,content-Type,loginName");
 
 //        request.getHeader("aaa");
 

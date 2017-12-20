@@ -27,17 +27,26 @@ public class AuthorityController {
                                        @PathParam("generation")String generation,
                                        @HeaderParam("Auth-Token")String authToken) {
 
+        String msg ="";
+        List<JSONObject> authorityList = null;
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        List<JSONObject> authorityList = obj.getAuthorityService().getAuthorityList();
+        if (obj == null){
+            msg +="Supplier or Generation is null.";
+        }else {
+            authorityList = obj.getAuthorityService().getAuthorityList();
 
-        if (authorityList == null || authorityList.isEmpty()){
-            result.put("result", Constants.FAIL);
-            result.put("msg", Constants.MSG_NO_DATA);
+            if (authorityList == null || authorityList.isEmpty()) {
 
-        } else {
+                msg += "AuthorityList is null.";
+            }
+        }
+        if (msg.length() == 0){
             result.put("result", Constants.SUCCESS);
             result.put("data", authorityList);
+        } else {
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_NO_DATA + msg);
         }
 
         return result;
@@ -52,20 +61,38 @@ public class AuthorityController {
                                       @PathParam("authorityName")String authorityName,
                                       @HeaderParam("Auth-Token")String authToken,
                                       JSONObject param) {
-
+        String msg ="";
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier,generation);
-        int i =obj.getAuthorityService().updateAuthority(authorityName,param);
+        if (obj == null){
+            msg +="Supplier or Generation is null.";
+        }else {
+            if (authorityName == null){
+                msg += "AuthorityName is NULL.";
+            }else {
+                if (param == null){
+                    msg +="Param is null.";
+                }else {
+                    try {
+                        int i = obj.getAuthorityService().updateAuthority(authorityName, param);
 //        NetObjBase obj = objFactory.getNetObj(supplier, generation);
 //        int i = obj.getAuthorityService().updateAuthority(authorityName,param);
 
-        if (i > 0){
+                        if (i <= 0) {
+                            msg +="UpdateAuthority Failed";
+                        }
+                    }catch (Exception e){
+                        msg += "Parameters is Error.";
+                    }
+                }
+            }
+        }
+        if (msg.length() == 0){
             result.put("result", Constants.SUCCESS);
             result.put("msg", Constants.MSG_UPDATE_OK);
-
         } else {
             result.put("result", Constants.FAIL);
-            result.put("msg", Constants.MSG_UPDATE_FAILED);
+            result.put("msg", Constants.MSG_UPDATE_FAILED + msg);
         }
 
         return result;
@@ -79,24 +106,38 @@ public class AuthorityController {
                                    @PathParam("generation")String generation,
                                    @HeaderParam("Auth-Token")String authToken,
                                    JSONObject param) {
-
+        String msg ="";
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        JSONObject authority = obj.getAuthorityService().getAuthByName(param);
-        if(authority == null) {
-            int i = obj.getAuthorityService().addAuthority(param);
-
-            if (i > 0) {
-                result.put("result", Constants.SUCCESS);
-                result.put("msg", Constants.MSG_ADD_OK);
-
-            } else {
-                result.put("result", Constants.FAIL);
-                result.put("msg", Constants.MSG_ADD_FAILED);
-            }
+        if (obj == null){
+            msg +="Supplier or Generation is null.";
         }else {
+            if (param == null){
+                msg += "Param is null.";
+            }else {
+                JSONObject authority = obj.getAuthorityService().getAuthByName(param);
+                if (authority == null) {
+                    try {
+                        int i = obj.getAuthorityService().addAuthority(param);
+
+                        if (i <= 0) {
+                            msg += "AddAuthority Failed.";
+                        }
+                    }catch (Exception e){
+                        msg += "Parameters is Error.";
+                    }
+
+                } else {
+                    msg +="AuthorityName exity.";
+                }
+            }
+        }
+        if (msg.length() == 0){
+            result.put("result", Constants.SUCCESS);
+            result.put("msg", Constants.MSG_ADD_OK);
+        } else {
             result.put("result", Constants.FAIL);
-            result.put("msg", "authorityName exity");
+            result.put("msg", Constants.MSG_ADD_FAILED + msg);
         }
         return result;
     }
@@ -110,17 +151,32 @@ public class AuthorityController {
                                       @PathParam("authorityName")String authorityName,
                                       @HeaderParam("Auth-Token")String authToken) {
 
+        String msg ="";
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        int i = obj.getAuthorityService().deleteAuthority(authorityName);
+        if (obj == null){
+            msg +="Supplier or Generation is null.";
+        }else {
+            if (authorityName == null){
+                msg +="AuthorityName is null.";
+            }else {
+                try {
+                    int i = obj.getAuthorityService().deleteAuthority(authorityName);
 
-        if (i > 0){
+                    if (i <= 0) {
+                        msg +="DeleteAuthority Failed";
+                    }
+                }catch (Exception e){
+                    msg += "Parameters is Error.";
+                }
+            }
+        }
+        if (msg.length() == 0){
             result.put("result", Constants.SUCCESS);
             result.put("msg", Constants.MSG_DELETE_OK);
-
         } else {
             result.put("result", Constants.FAIL);
-            result.put("msg", Constants.MSG_DELETE_FAILED);
+            result.put("msg", Constants.MSG_DELETE_FAILED + msg);
         }
 
         return result;
