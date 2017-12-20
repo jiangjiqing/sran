@@ -23,9 +23,8 @@ public class FileController {
                                    @HeaderParam("loginName")String loginName) {
 
         JSONObject result =new JSONObject();
-        String filePath = System.getProperty("user.dir")+"/src/main/resources/templates/"+fileName;
-        String path = "/SRAN_SERVICE/src/main/resources/templates/"+fileName;
-
+        String filePath = System.getProperty("user.dir")+"/src/main/resources/templates/"+fileName+"_template.xlsx";
+        String path = "/SRAN_SERVICE/src/main/resources/templates/"+fileName+"_template.xlsx";
         File file = new File(filePath);
 
         if(file.isFile()){
