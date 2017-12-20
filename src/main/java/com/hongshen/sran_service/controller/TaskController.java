@@ -50,7 +50,7 @@ public class TaskController extends BaseController {
                 result1.put("hasOriginalLog", hasOriginalLog);
                 result1.put("hasScriptLog", hasScriptLog);
                 result1.put("logScript", taskInfo.get(i).getString("logScript"));
-                result1.put("isUseScript", taskInfo.get(i).getString("isUseScript"));
+                result1.put("isUseScript", taskInfo.get(i).getBoolean("isUseScript"));
                 result1.put("cmdList", taskInfo.get(i).getString("cmdList"));
                 result1.put("loginName", taskInfo.get(i).getString("loginName"));
                 result1.put("rncList", taskInfo.get(i).getString("rncList"));
