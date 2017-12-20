@@ -102,7 +102,7 @@
   </update>
 
   <insert id="addAuthority" parameterType="com.alibaba.fastjson.JSONObject">
-    INSERT INTO unicom_authority_wcdma
+    INSERT INTO unicom_authority_lte
     VALUES (#{param.authorityName},#{param.list})
   </insert>
 
@@ -110,4 +110,8 @@
     DELETE FROM unicom_authority_lte
     WHERE authority_name = #{authorityName}
   </delete>
+
+  <select id="getAuthByName" resultType="com.alibaba.fastjson.JSONObject" parameterType="com.alibaba.fastjson.JSONObject">
+    SELECT * FROM unicom_authority_lte WHERE authority_name = #{param.authorityName}
+  </select>
 </mapper>

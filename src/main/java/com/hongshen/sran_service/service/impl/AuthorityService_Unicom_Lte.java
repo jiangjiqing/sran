@@ -39,6 +39,11 @@ public class AuthorityService_Unicom_Lte implements AuthorityService {
         return authorityMapper.deleteAuthority(authorityName);
     }
 
+    @Override
+    public JSONObject getAuthByName(JSONObject param) {
+        return authorityMapper.getAuthByName(param);
+    }
+
 //    @Autowired
 //    private UnicomAuthorityLteMapper authorityMapper;
 

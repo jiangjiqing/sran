@@ -16,5 +16,9 @@ public interface AuthorityService {
     int addAuthority(JSONObject param);
 
     int deleteAuthority(String authorityName);
+
+    JSONObject getAuthByName(JSONObject param);
+
+
 //    Map<String,Object> getUserAuthorty(String name);
 }

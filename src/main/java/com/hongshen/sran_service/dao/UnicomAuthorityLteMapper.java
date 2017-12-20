@@ -63,4 +63,6 @@ public interface UnicomAuthorityLteMapper {
     int addAuthority(@Param("param") JSONObject param);
 
     int deleteAuthority(@Param("authorityName")String authorityName);
+
+    JSONObject getAuthByName(@Param("param") JSONObject param);
 }

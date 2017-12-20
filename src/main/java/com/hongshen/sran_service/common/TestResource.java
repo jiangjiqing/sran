@@ -27,7 +27,7 @@ public class TestResource extends BaseController{
         JSONObject json = new JSONObject();
 
         json.put("c","c");
-        myWebSocket.sendAll(String.valueOf(json));
+//        myWebSocket.sendAll(String.valueOf(json));
 //        WebSocketSession session = new WebSocketSession();
 //        System.out.println(session.getAttribute(arg0))
 //        try {

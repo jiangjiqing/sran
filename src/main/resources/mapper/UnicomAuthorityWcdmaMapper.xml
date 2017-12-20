@@ -110,4 +110,8 @@
     DELETE FROM unicom_authority_wcdma
     WHERE authority_name = #{authorityName}
   </delete>
+
+  <select id="getAuthByName" resultType="com.alibaba.fastjson.JSONObject" parameterType="com.alibaba.fastjson.JSONObject">
+    SELECT * FROM unicom_authority_wcdma WHERE authority_name = #{param.authorityName}
+  </select>
 </mapper>

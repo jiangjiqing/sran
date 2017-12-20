@@ -54,8 +54,10 @@ public class AuthorityController {
                                       JSONObject param) {
 
         JSONObject result = new JSONObject();
-        NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        int i = obj.getAuthorityService().updateAuthority(authorityName,param);
+        NetObjBase obj = objFactory.getNetObj(supplier,generation);
+        int i =obj.getAuthorityService().updateAuthority(authorityName,param);
+//        NetObjBase obj = objFactory.getNetObj(supplier, generation);
+//        int i = obj.getAuthorityService().updateAuthority(authorityName,param);
 
         if (i > 0){
             result.put("result", Constants.SUCCESS);
@@ -80,17 +82,22 @@ public class AuthorityController {
 
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        int i = obj.getAuthorityService().addAuthority(param);
+        JSONObject authority = obj.getAuthorityService().getAuthByName(param);
+        if(authority == null) {
+            int i = obj.getAuthorityService().addAuthority(param);
 
-        if (i > 0){
-            result.put("result", Constants.SUCCESS);
-            result.put("msg", Constants.MSG_ADD_OK);
+            if (i > 0) {
+                result.put("result", Constants.SUCCESS);
+                result.put("msg", Constants.MSG_ADD_OK);
 
-        } else {
+            } else {
+                result.put("result", Constants.FAIL);
+                result.put("msg", Constants.MSG_ADD_FAILED);
+            }
+        }else {
             result.put("result", Constants.FAIL);
-            result.put("msg", Constants.MSG_ADD_FAILED);
+            result.put("msg", "authorityName exity");
         }
-
         return result;
     }
 

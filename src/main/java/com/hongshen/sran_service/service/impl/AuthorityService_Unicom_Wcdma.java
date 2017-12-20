@@ -38,6 +38,11 @@ public class AuthorityService_Unicom_Wcdma implements AuthorityService {
         return authorityMapper.deleteAuthority(authorityName);
     }
 
+    @Override
+    public JSONObject getAuthByName(JSONObject param) {
+        return authorityMapper.getAuthByName(param);
+    }
+
 //    @Autowired
 //    private UnicomAuthorityWcdmaMapper authorityMapper;
 

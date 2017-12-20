@@ -190,6 +190,9 @@
     <update id="updateAlarmByName" parameterType="com.alibaba.fastjson.JSONObject">
     UPDATE unicom_alarm_library_lte
       <set>
+        <if test="param.alarmName != null">
+          alarm_name = #{param.alarmName,jdbcType=VARCHAR},
+        </if>
         <if test="param.alarmMeaning != null">
           alarm_meaning = #{param.alarmMeaning,jdbcType=VARCHAR},
         </if>
