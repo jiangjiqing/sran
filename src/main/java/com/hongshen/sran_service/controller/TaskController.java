@@ -33,6 +33,7 @@ public class TaskController extends BaseController {
 
         loginName = "tom";// TODO loginName
         JSONObject result = new JSONObject();
+        JSONObject result1 = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         List<JSONObject> taskInfo = obj.getTaskService().getTaskInfo(loginName);
 
@@ -46,16 +47,17 @@ public class TaskController extends BaseController {
 
             result.put("result", Constants.SUCCESS);
             for(int i=0;i<taskInfo.size();i++) {
-                result.put("hasOriginalLog", hasOriginalLog);
-                result.put("hasScriptLog", hasScriptLog);
-                result.put("logScript", taskInfo.get(i).getString("logScript"));
-                result.put("isUseScript", taskInfo.get(i).getString("isUseScript"));
-                result.put("cmdList", taskInfo.get(i).getString("cmdList"));
-                result.put("loginName", taskInfo.get(i).getString("loginName"));
-                result.put("rncList", taskInfo.get(i).getString("rncList"));
-                result.put("startTime", taskInfo.get(i).getDate("startTime"));
-                result.put("endTime", taskInfo.get(i).getDate("endTime"));
+                result1.put("hasOriginalLog", hasOriginalLog);
+                result1.put("hasScriptLog", hasScriptLog);
+                result1.put("logScript", taskInfo.get(i).getString("logScript"));
+                result1.put("isUseScript", taskInfo.get(i).getString("isUseScript"));
+                result1.put("cmdList", taskInfo.get(i).getString("cmdList"));
+                result1.put("loginName", taskInfo.get(i).getString("loginName"));
+                result1.put("rncList", taskInfo.get(i).getString("rncList"));
+                result1.put("startTime", taskInfo.get(i).getDate("startTime"));
+                result1.put("endTime", taskInfo.get(i).getDate("endTime"));
             }
+            result.put("data",result1);
         }
 
         return result;
