@@ -31,9 +31,8 @@ public class TaskController extends BaseController {
                                   @PathParam("generation") String generation,
                                   @HeaderParam("loginName") String loginName) {
 
-//        String loginName = "tom";// TODO loginName
+        loginName = "tom";// TODO loginName
         JSONObject result = new JSONObject();
-        JSONObject result1 = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         List<JSONObject> taskInfo = obj.getTaskService().getTaskInfo(loginName);
 
@@ -46,11 +45,17 @@ public class TaskController extends BaseController {
             Boolean hasScriptLog = obj.getTaskService().hasScriptLog(loginName);
 
             result.put("result", Constants.SUCCESS);
-
-            result1.put("hasOriginalLog", hasOriginalLog);
-            result1.put("hasScriptLog", hasScriptLog);
-            taskInfo.add(result1);
-            result.put("data", taskInfo);
+            for(int i=0;i<taskInfo.size();i++) {
+                result.put("hasOriginalLog", hasOriginalLog);
+                result.put("hasScriptLog", hasScriptLog);
+                result.put("logScript", taskInfo.get(i).getString("logScript"));
+                result.put("isUseScript", taskInfo.get(i).getString("isUseScript"));
+                result.put("cmdList", taskInfo.get(i).getString("cmdList"));
+                result.put("loginName", taskInfo.get(i).getString("loginName"));
+                result.put("rncList", taskInfo.get(i).getString("rncList"));
+                result.put("startTime", taskInfo.get(i).getDate("startTime"));
+                result.put("endTime", taskInfo.get(i).getDate("endTime"));
+            }
         }
 
         return result;
