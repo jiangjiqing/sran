@@ -2,11 +2,14 @@ package com.hongshen.sran_service.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.service.util.websocket.HttpSessionConfigurator;
 import org.springframework.stereotype.Component;
+import com.hongshen.sran_service.service.util.Constants;
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -94,8 +97,12 @@ public class TaskWSController {
 
     }
 
-    public void requstSoxket(String loginName) {//TODO
-        System.out.println(System.getProperty("user.dir"));
+    public void requstSoxket(String loginName) throws IOException {//TODO
+       /* File outfile = new File("/home/poplar/Task/"+loginName);
+        if(!outfile.exists()){
+            outfile.mkdir();
+        }*/
+
        JSONObject result = new JSONObject();
 
 
@@ -109,16 +116,22 @@ public class TaskWSController {
             int num=0;
 
             try {
-                Process process = Runtime.getRuntime().exec("ping 192.168.0.145");//TODO
+                /*Process process = Runtime.getRuntime().exec(Constants.MOSHELL_URL+Constants.MOSHELL_SITE_URL+" /home/poplar/Task/"+loginName);*/
+                Process process = Runtime.getRuntime().exec("ping 192.168.0.145");
                 BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-
+                Date date1 = new Date();
+                result.put("timeStart",date1);
+                this.sendMessage(String.valueOf(result));
                 while (taskStatusMap.get(loginName) == true && null != reader.readLine()) {
+                    Date date = new Date();
                     num++;
-                    result.put("total",20);
+                    result.put("total",110);
                     result.put("complete",num);
-                    this.sendMessage(result.toJSONString());
+                    result.put("time",date);
+                    System.out.println(reader.readLine());
+                    this.sendMessage(String.valueOf(result));
                     //TODO delete
-                    if(num==20){
+                    if(num==22){
                         break;
                     }
                 }

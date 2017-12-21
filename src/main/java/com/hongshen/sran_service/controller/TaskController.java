@@ -3,6 +3,7 @@ package com.hongshen.sran_service.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.common.BaseController;
 import com.hongshen.sran_service.service.util.Constants;
+import com.hongshen.sran_service.service.util.FileHelper;
 import com.hongshen.sran_service.service.util.NetObjBase;
 import com.hongshen.sran_service.service.util.NetObjFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,10 +75,11 @@ public class TaskController extends BaseController {
                                 @HeaderParam("loginNmae") String loginName,
                                 @RequestParam("param") JSONObject param) {
 
-        loginName = "tom123";// TODO loginName
+        loginName = "admin";// TODO loginName
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         int update = obj.getTaskService().addTask(loginName, param);
+        FileHelper.createFile("/home/poplar/Task",loginName);
         //TODO update start time
         if (update <= 0) {
             result.put("result", Constants.FAIL);
