@@ -121,7 +121,6 @@ public class TaskWSController {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
                 Date date1 = new Date();
                 result.put("timeStart",date1);
-                this.sendMessage(String.valueOf(result));
                 while (taskStatusMap.get(loginName) == true && null != reader.readLine()) {
                     Date date = new Date();
                     num++;
