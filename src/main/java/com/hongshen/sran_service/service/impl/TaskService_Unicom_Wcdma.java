@@ -42,7 +42,7 @@ public class TaskService_Unicom_Wcdma implements TaskService {
 
     @Override
     public int addTask(String loginName, JSONObject param) {
-        return TaskGroupMapper.addTask(param);
+        return TaskGroupMapper.addTask(loginName, param);
     }
 
     @Override

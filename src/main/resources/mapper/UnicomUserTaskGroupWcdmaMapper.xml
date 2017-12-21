@@ -186,7 +186,8 @@
     WHERE login_name = #{loginName}
   </select>
 
-  <insert id="addTask" parameterType="com.alibaba.fastjson.JSONObject">
+
+  <insert id="FaddTask" parameterType="com.alibaba.fastjson.JSONObject">
     INSERT INTO unicom_user_task_group_wcdma (
       login_name,
       rncList,
@@ -196,7 +197,7 @@
       startTime,
       endTime)
     VALUES (
-      #{param.loginName, jdbcType=VARCHAR},
+      #{loginName},
       #{param.rncList, jdbcType=LONGVARCHAR},
       #{param.cmdList, jdbcType=LONGVARCHAR},
       #{param.isUseScript, jdbcType=TINYINT},
@@ -204,12 +205,12 @@
       #{param.startTime, jdbcType=TIMESTAMP},
       #{param.endTime, jdbcType=TIMESTAMP})
     ON DUPLICATE KEY UPDATE
-      rncList=VALUES(#{param.rncList, jdbcType=LONGVARCHAR}),
-      cmdList=VALUES(#{param.cmdList, jdbcType=LONGVARCHAR}),
-      isUseScript=VALUES(#{param.isUseScript, jdbcType=TINYINT}),
-      logScript=VALUES(#{param.logScript, jdbcType=LONGVARCHAR}),
-      startTime=VALUES(#{param.startTime, jdbcType=TIMESTAMP}),
-      endTime=VALUES(#{param.endTime, jdbcType=TIMESTAMP});
+      rncList=#{param.rncList, jdbcType=LONGVARCHAR},
+      cmdList=#{param.cmdList, jdbcType=LONGVARCHAR},
+      isUseScript=#{param.isUseScript, jdbcType=TINYINT},
+      logScript=#{param.logScript, jdbcType=LONGVARCHAR},
+      startTime=#{param.startTime, jdbcType=TIMESTAMP},
+      endTime=#{param.endTime, jdbcType=TIMESTAMP};
   </insert>
 
 </mapper>

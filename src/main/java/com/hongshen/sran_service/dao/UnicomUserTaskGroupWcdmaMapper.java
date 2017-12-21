@@ -68,6 +68,6 @@ public interface UnicomUserTaskGroupWcdmaMapper {
 
     List<JSONObject> getTaskInfo(@Param("loginName")String loginName);
 
-    int addTask(@Param("param")JSONObject param);
+    int addTask(@Param("loginName")String loginName ,@Param("param")JSONObject param );
 
 }

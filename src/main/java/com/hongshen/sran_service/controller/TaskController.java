@@ -74,7 +74,7 @@ public class TaskController extends BaseController {
                                 @HeaderParam("loginNmae") String loginName,
                                 @RequestParam("param") JSONObject param) {
 
-//      String loginName = "tom";// TODO loginName
+        loginName = "tom1";// TODO loginName
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         int update = obj.getTaskService().addTask(loginName, param);
@@ -126,7 +126,7 @@ public class TaskController extends BaseController {
                                       @PathParam("isUseScript") String isUseScript,
                                       @HeaderParam("loginName") String loginName) {
 
-//        String loginName = "tom";// TODO loginName
+        loginName = "tom";// TODO loginName
         JSONObject result = new JSONObject();
         JSONObject file = new JSONObject();
         String filePath = "";
@@ -139,6 +139,7 @@ public class TaskController extends BaseController {
             filePath = loginName + Constants.TASK_LOG_PATH_SCRIPT;
 
         } else if (isUseScript.equalsIgnoreCase("false") &&
+
                 obj.getTaskService().hasOriginalLog(loginName)) {
 
             filePath = loginName + Constants.TASK_LOG_PATH_ORIGINAL;
