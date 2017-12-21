@@ -11,7 +11,10 @@ public class Constants {
     public static final String UNICOM = "unicom";//中国联通   
     public static final String SHIRO_URI = "http://localhost:8989/service/v1/check";
 
-
+    // level
+    public static final String LEVEL_GROUP = "groups";
+    public static final String LEVEL_NODE = "nodes";
+    public static final String LEVEL_CELL = "cells";
 
     public static final String GROUP_QUERY = "";
     public static final String GROUP_ALARM = "";

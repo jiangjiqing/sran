@@ -3,6 +3,7 @@ package com.hongshen.sran_service.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.dao.*;
 import com.hongshen.sran_service.service.QuotaService;
+import com.hongshen.sran_service.service.util.Constants;
 import org.hibernate.procedure.spi.ParameterRegistrationImplementor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,37 +49,61 @@ public class QuotaService_Unicom_Lte implements QuotaService {
     @Override
     public JSONObject getGroupQuota(String groupName) {
         String time = cacheService.getUpdateTimeForQuotaData();
-        return quotaHistoryGroupMapper.getQuota(groupName, time);
+        if (time == null || time.length() == 0){
+            return null;
+        }else{
+            return quotaHistoryGroupMapper.getQuota(groupName, time);
+        }
     }
 
     @Override
     public JSONObject getNodeQuota(String nodeName){
         String time = cacheService.getUpdateTimeForQuotaData();
-        return quotaHistoryNodeMapper.getQuota(nodeName, time);
+        if (time == null || time.length() == 0){
+            return null;
+        }else {
+            return quotaHistoryNodeMapper.getQuota(nodeName, time);
+        }
     }
 
     @Override
     public JSONObject getCellQuota(String cellName){
         String time = cacheService.getUpdateTimeForQuotaData();
-        return quotaHistoryCellMapper.getQuota(cellName, time);
+        if (time == null || time.length() == 0){
+            return null;
+        }else {
+            return quotaHistoryCellMapper.getQuota(cellName, time);
+        }
     }
 
     @Override
     public JSONObject getGroupLevel(String groupName) {
         String time = cacheService.getUpdateTimeForQuotaData();
-        return quotaHistoryGroupMapper.getLevel(groupName, time);
+        if (time == null || time.length() == 0){
+            return null;
+        }else {
+            return quotaHistoryGroupMapper.getLevel(groupName, time);
+        }
     }
 
     @Override
     public JSONObject getNodeLevel(String nodeName) {
         String time = cacheService.getUpdateTimeForQuotaData();
-        return quotaHistoryNodeMapper.getLevel(nodeName, time);
+        if (time == null || time.length() == 0){
+            return null;
+        }else {
+            return quotaHistoryNodeMapper.getLevel(nodeName, time);
+        }
     }
 
     @Override
     public JSONObject getCellLevel(String cellName) {
         String time = cacheService.getUpdateTimeForQuotaData();
-        return quotaHistoryCellMapper.getLevel(cellName, time);
+        if (time == null || time.length() == 0){
+            return null;
+        }else {
+            return quotaHistoryCellMapper.getLevel(cellName, time);
+        }
     }
 
     @Override

@@ -26,6 +26,9 @@ public interface UnicomQuotaHistoryNodeLteMapper {
      */
     int insertSelective(UnicomQuotaHistoryNodeLte record);
 
+
+    JSONObject getQuotaLastUpdateTime();
+
     JSONObject getQuota(@Param("nodeName")String nodeName,
                         @Param("time")String time);
 

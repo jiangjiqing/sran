@@ -202,6 +202,12 @@
     </trim>
   </insert>
 
+  <select id="getQuotaLastUpdateTime" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT time
+    FROM unicom_quota_history_node_wcdma
+    ORDER BY time DESC LIMIT 1
+  </select>
+
     <select id="getQuota" resultType="com.alibaba.fastjson.JSONObject">
         SELECT *
         FROM unicom_quota_history_node_wcdma

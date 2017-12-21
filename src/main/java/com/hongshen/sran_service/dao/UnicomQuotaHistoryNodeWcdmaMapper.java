@@ -26,6 +26,9 @@ public interface UnicomQuotaHistoryNodeWcdmaMapper {
      */
     int insertSelective(UnicomQuotaHistoryNodeWcdma record);
 
+
+    JSONObject getQuotaLastUpdateTime();
+    
     JSONObject getQuota(@Param("nodeName")String nodeName,
                         @Param("time")String time);
 

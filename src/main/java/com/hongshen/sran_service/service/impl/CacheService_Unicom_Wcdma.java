@@ -4,6 +4,7 @@ package com.hongshen.sran_service.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.dao.*;
 import com.hongshen.sran_service.service.CacheService;
+import com.hongshen.sran_service.service.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,19 +22,28 @@ public class CacheService_Unicom_Wcdma implements CacheService {
     @Autowired
     private UnicomCounterWcdmaMapper counterMapper;
 
+    @Autowired
+    private UnicomQuotaHistoryGroupWcdmaMapper quotaGroupMapper;
 
-    private static List<JSONObject> counterList = new ArrayList<JSONObject>();
+    @Autowired
+    private UnicomQuotaHistoryNodeWcdmaMapper quotaNodeMapper;
+
+    @Autowired
+    private UnicomQuotaHistoryCellWcdmaMapper quotaCellMapper;
 
 
-    private static List<JSONObject> counterListProcessed  = new ArrayList<JSONObject>();
+    private List<JSONObject> counterList = new ArrayList<JSONObject>();
+
+
+    private List<JSONObject> counterListProcessed  = new ArrayList<JSONObject>();
 
     @Autowired
     private UnicomFormulaWcdmaMapper formulaMapper;
 
 
-    private static List<JSONObject> formulaList = new ArrayList<JSONObject>();
+    private List<JSONObject> formulaList = new ArrayList<JSONObject>();
 
-    private static List<JSONObject> formulaListProcessed = new ArrayList<JSONObject>();
+    private List<JSONObject> formulaListProcessed = new ArrayList<JSONObject>();
 
     @Autowired
     private UnicomQuotaThresholdGroupWcdmaMapper thresholdGroupMapper;
@@ -72,31 +82,22 @@ public class CacheService_Unicom_Wcdma implements CacheService {
     @Override
     public List<JSONObject> getCounterList(Boolean isValid){
 
-        if (counterList == null){
-            return null;
+        List<JSONObject> resultList = new ArrayList<JSONObject>();
 
-        }else if (counterList.isEmpty()){
+        if (counterList == null || counterList.isEmpty()){
             resetCounterList();
         }
 
-        if(isValid){
+        for(JSONObject counter : counterList) {
 
-            List<JSONObject> resultList = new ArrayList<JSONObject>();
+            if (isValid && !counter.getBoolean("status")){
+                continue;
 
-            for(JSONObject counter : counterList) {
-
-                if (counter.getBoolean("status")){
-                    resultList.add(counter);
-
-                }else{
-                    continue;
-                }
+            }else{
+                resultList.add(counter);
             }
-            return resultList;
-
-        }else {
-            return counterList;
         }
+        return resultList;
     }
 
     @Override
@@ -143,32 +144,23 @@ public class CacheService_Unicom_Wcdma implements CacheService {
     @Override
     public List<JSONObject> getFormulaList(Boolean isVisible){
 
-        if (formulaList == null){
-            return null;
+        List<JSONObject> resultList = new ArrayList<JSONObject>();
 
-        }else if (formulaList.isEmpty()){
+        if (formulaList == null || formulaList.isEmpty()){
             resetFormulaList();
         }
 
-        if (isVisible) {
+        for (JSONObject formula : formulaList) {
 
-            List<JSONObject> resultList = new ArrayList<JSONObject>();
+            // unvisible quota
+            if (isVisible && !formula.getBoolean("status")) {
+                continue;
 
-            for (JSONObject formula : formulaList) {
-
-                // unvisible quota
-                if (formula.getBoolean("status")) {
-                    resultList.add(formula);
-
-                } else {
-                    continue;
-                }
+            } else {
+                resultList.add(formula);
             }
-            return resultList;
-
-        }else{
-            return formulaList;
         }
+        return resultList;
     }
 
     @Override
@@ -180,10 +172,7 @@ public class CacheService_Unicom_Wcdma implements CacheService {
     @Override
     public List<String> getFormulaNameList(Boolean isVisible) {
 
-        if (formulaList == null){
-            return null;
-
-        }else if (formulaList.isEmpty()){
+        if (formulaList == null || formulaList.isEmpty()){
             resetFormulaList();
         }
 
@@ -192,10 +181,10 @@ public class CacheService_Unicom_Wcdma implements CacheService {
         for (JSONObject formula : formulaList) {
 
             // unvisible quota
-            if (isVisible && formula.getBoolean("status")) {
-                resultList.add(formula.getString("quotaName"));
+            if (isVisible && !formula.getBoolean("status")) {
+                continue;
 
-            } else if (!isVisible){
+            } else {
                 resultList.add(formula.getString("quotaName"));
             }
         }
@@ -210,7 +199,7 @@ public class CacheService_Unicom_Wcdma implements CacheService {
 
     @Override
     public JSONObject getFormulaByName(String quotaName) {
-        if (formulaList.isEmpty()){
+        if (formulaList == null || formulaList.isEmpty()){
             resetFormulaList();
         }
         for (JSONObject f : formulaList){
@@ -223,7 +212,7 @@ public class CacheService_Unicom_Wcdma implements CacheService {
 
     @Override
     public JSONObject getFormulaProcessedByName(String quotaName) {
-        if (formulaListProcessed.isEmpty()){
+        if (formulaListProcessed == null || formulaListProcessed.isEmpty()){
             resetFormulaList();
         }
         for (JSONObject f : formulaListProcessed){
@@ -244,10 +233,7 @@ public class CacheService_Unicom_Wcdma implements CacheService {
     @Override
     public List<JSONObject> getThresholdGroupList() {
 
-        if (thresholdGroupList == null){
-            return null;
-
-        }else if (thresholdGroupList.isEmpty()){
+        if (thresholdGroupList == null || thresholdGroupList.isEmpty()){
             resetThresholdGroupList();
         }
         return thresholdGroupList;
@@ -263,10 +249,7 @@ public class CacheService_Unicom_Wcdma implements CacheService {
     @Override
     public List<JSONObject> getThresholdNodeList() {
 
-        if (thresholdNodeList == null){
-            return null;
-
-        }else if (thresholdNodeList.isEmpty()){
+        if (thresholdNodeList == null || thresholdNodeList.isEmpty()){
             resetThresholdNodeList();
         }
         return thresholdNodeList;
@@ -282,22 +265,49 @@ public class CacheService_Unicom_Wcdma implements CacheService {
     @Override
     public List<JSONObject> getThresholdCellList() {
 
-        if (thresholdCellList == null){
-            return null;
-
-        }else if (thresholdCellList.isEmpty()){
+        if (thresholdCellList == null || thresholdCellList.isEmpty()){
             resetThresholdCellList();
         }
         return thresholdCellList;
     }
 
-    public String getUpdateTimeForQuotaData() {
-        return "2017-01-20 09:15:00";//TOOD
-        //return updateTimeForQuotaData;
+    public String getUpdateTimeForQuotaData(){
+
+        String time = this.updateTimeForQuotaData;
+
+        if (time == null || time.length() == 0){
+            time = getUpdateTimeForQuotaData(Constants.LEVEL_GROUP);
+        }
+
+        if (time == null || time.length() == 0){
+            time = getUpdateTimeForQuotaData(Constants.LEVEL_NODE);
+        }
+
+        if (time == null || time.length() == 0){
+            time = getUpdateTimeForQuotaData(Constants.LEVEL_CELL);
+        }
+
+        return time;
+    }
+
+    public String getUpdateTimeForQuotaData(String level) {
+
+        switch (level){
+            case Constants.LEVEL_GROUP:
+                return quotaGroupMapper.getQuotaLastUpdateTime().getString("time");
+
+            case Constants.LEVEL_NODE:
+                return quotaNodeMapper.getQuotaLastUpdateTime().getString("time");
+
+            case Constants.LEVEL_CELL:
+                return quotaCellMapper.getQuotaLastUpdateTime().getString("time");
+
+            default:
+                return "";
+        }
     }
 
     public void setUpdateTimeForQuotaData(String updateTimeForQuotaData) {
-
         this.updateTimeForQuotaData = updateTimeForQuotaData;
     }
 }

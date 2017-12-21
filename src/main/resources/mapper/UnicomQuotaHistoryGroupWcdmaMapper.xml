@@ -248,6 +248,12 @@
     WHERE name = #{groupName} ORDER BY time DESC LIMIT 1
   </select>
 
+  <select id="getQuotaLastUpdateTime" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT time
+    FROM unicom_quota_history_group_wcdma
+    ORDER BY time DESC LIMIT 1
+  </select>
+
   <select id="getLevel" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
     SELECT level
     FROM unicom_quota_history_group_wcdma

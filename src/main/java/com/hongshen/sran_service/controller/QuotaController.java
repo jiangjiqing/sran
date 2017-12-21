@@ -50,24 +50,27 @@ public class QuotaController {
                 return result;
             }
 
+            List<JSONObject> formulaResultList = new ArrayList<>();
             List<JSONObject> formulaList = obj.getCacheService().getFormulaList(true);
 
             for (JSONObject f : formulaList) {
-                f.remove("id");
-                f.remove("expression");
-                f.remove("status");
-                f.remove("type");
 
-                String value = f.getString(f.getString("quotaName"));
+                JSONObject temp = new JSONObject();
+                temp.put("quotaName",f.getString("quotaName"));
+                temp.put("remark",f.getString("remark"));
+                temp.put("hasTop10",f.getString("hasTop10"));
+
+                String value = quotas.getString(f.getString("quotaName"));
                 //String value = quotas.getString("formula" + f.getString("id"));
 
                 if (value == null || value == "") {
-                    f.put("value", Constants.INVALID_VALUE_QUOTA);
+                    temp.put("value", Constants.INVALID_VALUE_QUOTA);
                 } else {
-                    f.put("value", value);
+                    temp.put("value", value);
                 }
+                formulaResultList.add(temp);
             }
-            data.put("quotas", formulaList);
+            data.put("quotas", formulaResultList);
 
             result.put("result", Constants.SUCCESS);
             result.put("data", data);
@@ -106,25 +109,27 @@ public class QuotaController {
                 return result;
             }
 
+            List<JSONObject> formulaResultList = new ArrayList<>();
             List<JSONObject> formulaList = obj.getCacheService().getFormulaList(true);
 
             for (JSONObject f : formulaList) {
-                f.remove("id");
-                f.remove("expression");
-                f.remove("status");
-                f.remove("type");
-                f.remove("hasTop10");
 
-                String value = f.getString(f.getString("quotaName"));
+                JSONObject temp = new JSONObject();
+                temp.put("quotaName",f.getString("quotaName"));
+                temp.put("remark",f.getString("remark"));
+                temp.put("hasTop10",f.getString("hasTop10"));
+
+                String value = quotas.getString(f.getString("quotaName"));
                 //String value = quotas.getString("formula" + f.getString("id"));
 
                 if (value == null || value == "") {
-                    f.put("value", Constants.INVALID_VALUE_QUOTA);
+                    temp.put("value", Constants.INVALID_VALUE_QUOTA);
                 } else {
-                    f.put("value", value);
+                    temp.put("value", value);
                 }
+                formulaResultList.add(temp);
             }
-            data.put("quotas", formulaList);
+            data.put("quotas", formulaResultList);
 
             result.put("result", Constants.SUCCESS);
             result.put("data", data);
@@ -163,25 +168,27 @@ public class QuotaController {
                 return result;
             }
 
+            List<JSONObject> formulaResultList = new ArrayList<>();
             List<JSONObject> formulaList = obj.getCacheService().getFormulaList(true);
 
             for (JSONObject f : formulaList) {
-                f.remove("id");
-                f.remove("expression");
-                f.remove("status");
-                f.remove("type");
-                f.remove("hasTop10");
 
-                String value = f.getString(f.getString("quotaName"));
+                JSONObject temp = new JSONObject();
+                temp.put("quotaName",f.getString("quotaName"));
+                temp.put("remark",f.getString("remark"));
+                temp.put("hasTop10",f.getString("hasTop10"));
+
+                String value = quotas.getString(f.getString("quotaName"));
                 //String value = quotas.getString("formula" + f.getString("id"));
 
                 if (value == null || value == "") {
-                    f.put("value", Constants.INVALID_VALUE_QUOTA);
+                    temp.put("value", Constants.INVALID_VALUE_QUOTA);
                 } else {
-                    f.put("value", value);
+                    temp.put("value", value);
                 }
+                formulaResultList.add(temp);
             }
-            data.put("quotas", formulaList);
+            data.put("quotas", formulaResultList);
 
             result.put("result", Constants.SUCCESS);
             result.put("data", data);
