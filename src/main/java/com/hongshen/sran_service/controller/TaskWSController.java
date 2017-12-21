@@ -95,8 +95,8 @@ public class TaskWSController {
     }
 
     public void requstSoxket(String loginName) {//TODO
-
-        JSONObject result = new JSONObject();
+        System.out.println(System.getProperty("user.dir"));
+       JSONObject result = new JSONObject();
 
 
         if(!taskStatusSession.keySet().contains(loginName)||!taskStatusMap.keySet().contains(loginName)){
@@ -109,7 +109,7 @@ public class TaskWSController {
             int num=0;
 
             try {
-                Process process = Runtime.getRuntime().exec("ping 192.168.0.129");//TODO
+                Process process = Runtime.getRuntime().exec("/home/poplar/moShell/moshell123/moshell/mobatch /home/poplar/Task/site/iprnc /home/poplar/Task/cmd/zl /home/poplar/Task/logs");//TODO
                 BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 
                 while (taskStatusMap.get(loginName) == true && null != reader.readLine()) {

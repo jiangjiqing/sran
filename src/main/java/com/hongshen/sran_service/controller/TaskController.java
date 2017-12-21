@@ -6,6 +6,8 @@ import com.hongshen.sran_service.service.util.Constants;
 import com.hongshen.sran_service.service.util.NetObjBase;
 import com.hongshen.sran_service.service.util.NetObjFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
@@ -70,9 +72,9 @@ public class TaskController extends BaseController {
     public JSONObject startTask(@PathParam("supplier") String supplier,
                                 @PathParam("generation") String generation,
                                 @HeaderParam("loginNmae") String loginName,
-                                JSONObject param) {
+                                @RequestParam("param") JSONObject param) {
 
-//        String loginName = "tom";// TODO loginName
+//      String loginName = "tom";// TODO loginName
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         int update = obj.getTaskService().addTask(loginName, param);
