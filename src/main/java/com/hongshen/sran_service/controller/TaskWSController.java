@@ -100,17 +100,13 @@ public class TaskWSController {
 
 
         if(!taskStatusSession.keySet().contains(loginName)||!taskStatusMap.keySet().contains(loginName)){
+
             result.put("result","failed");
             result.put("msg","server error");
+
         }else {
 
-
-
-
             int num=0;
-/*
-            if (taskStatusSession.get(loginName) == this.session) {
-*/
 
             try {
                 Process process = Runtime.getRuntime().exec("ping 192.168.0.129");//TODO
