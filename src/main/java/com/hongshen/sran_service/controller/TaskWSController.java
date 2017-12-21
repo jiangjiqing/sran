@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 //该注解用来指定一个URI，客户端可以通过这个URI来连接到WebSocket。类似Servlet的注解mapping。无需在web.xml中配置。
-@ServerEndpoint(value = "/sran/service/task", configurator = HttpSessionConfigurator.class)
+@ServerEndpoint(value = "/sran/service/net/task", configurator = HttpSessionConfigurator.class)
 @Component
 public class TaskWSController {
 
@@ -47,8 +47,8 @@ public class TaskWSController {
      * @param session 可选的参数
      */
     @OnMessage
-    public void onMessage(final String loginName, final Session session) throws IOException {
-
+    public void onMessage(String loginName, final Session session) throws IOException {
+        //loginName="666";
         JSONObject result = new JSONObject();
 
         if (loginName == null || loginName.equals("")) {
@@ -109,7 +109,7 @@ public class TaskWSController {
             int num=0;
 
             try {
-                Process process = Runtime.getRuntime().exec("/home/poplar/moShell/moshell123/moshell/mobatch /home/poplar/Task/site/iprnc /home/poplar/Task/cmd/zl /home/poplar/Task/logs");//TODO
+                Process process = Runtime.getRuntime().exec("ping 192.168.0.145");//TODO
                 BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 
                 while (taskStatusMap.get(loginName) == true && null != reader.readLine()) {

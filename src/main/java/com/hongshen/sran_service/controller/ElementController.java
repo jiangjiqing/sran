@@ -31,19 +31,35 @@ public class ElementController {
                                    @PathParam("groupName")String groupName,
                                    @HeaderParam("Auth-Token")String authToken) {
 
+        String msg ="";
+        JSONObject groupInfo = null;
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        JSONObject groupInfo = obj.getElementInfoService().getGroupInfo(groupName);
+        if (obj == null){
+            msg +="Supplier or Generation is null.";
+        }else {
+            if (groupName == null){
+                msg +="GroupName is null.";
+            }else {
+                try {
+                    groupInfo = obj.getElementInfoService().getGroupInfo(groupName);
 
-        if (groupInfo == null || groupInfo.isEmpty()){
-            result.put("result", Constants.FAIL);
-            result.put("msg", Constants.MSG_NO_DATA);
+                    if (groupInfo == null || groupInfo.isEmpty()) {
+                        msg += "GetGroupInfo is Failed.";
+                    }
+                }catch (Exception e){
+                    msg += "GroupName is Error.";
+                }
 
-        } else {
+            }
+        }
+        if (msg.length() == 0){
             result.put("result", Constants.SUCCESS);
             result.put("data", groupInfo);
+        } else {
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_NO_DATA + msg);
         }
-
         return result;
     }
 
@@ -55,18 +71,32 @@ public class ElementController {
                                   @PathParam("generation")String generation,
                                   @PathParam("nodeName")String nodeName,
                                   @HeaderParam("Auth-Token")String authToken) {
-
+        String msg ="";
+        JSONObject nodeInfo = null;
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        JSONObject nodeInfo = obj.getElementInfoService().getNodeInfo(nodeName);
-
-        if (nodeInfo == null || nodeInfo.isEmpty()){
-            result.put("result", Constants.FAIL);
-            result.put("msg", Constants.MSG_NO_DATA);
-
-        } else {
+        if (obj == null){
+            msg +="Supplier or Generation is null.";
+        }else {
+            if (nodeName == null){
+                msg +="NodeName is null.";
+            }else {
+                try {
+                    nodeInfo = obj.getElementInfoService().getNodeInfo(nodeName);
+                    if (nodeInfo == null || nodeInfo.isEmpty()) {
+                        msg +="GetNodeInfo is Failed.";
+                    }
+                }catch (Exception e){
+                    msg += "NodeName is Error.";
+                }
+            }
+        }
+        if (msg.length() == 0){
             result.put("result", Constants.SUCCESS);
             result.put("data", nodeInfo);
+        } else {
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_NO_DATA + msg);
         }
         return result;
     }
@@ -80,17 +110,32 @@ public class ElementController {
                                   @PathParam("cellName")String cellName,
                                   @HeaderParam("Auth-Token")String authToken) {
 
+        String msg ="";
+        JSONObject cellInfo = null;
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        JSONObject cellInfo = obj.getElementInfoService().getCellInfo(cellName);
-
-        if (cellInfo == null || cellInfo.isEmpty()){
-            result.put("result", Constants.FAIL);
-            result.put("msg", Constants.MSG_NO_DATA);
-
-        } else {
+        if (obj == null){
+            msg +="Supplier or Generation is null.";
+        }else {
+            if (cellName == null){
+                msg +="NodeName is null.";
+            }else {
+                try {
+                    cellInfo = obj.getElementInfoService().getCellInfo(cellName);
+                    if (cellInfo == null || cellInfo.isEmpty()) {
+                        msg += "GetCellInfo is Failed.";
+                    }
+                }catch (Exception e){
+                    msg += "CellName is Error.";
+                }
+            }
+        }
+        if (msg.length() == 0){
             result.put("result", Constants.SUCCESS);
             result.put("data", cellInfo);
+        } else {
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_NO_DATA + msg);
         }
         return result;
     }
@@ -104,30 +149,34 @@ public class ElementController {
                                        @PathParam("level")String level,
                                        @HeaderParam("Auth-Token")String authToken) {
 
+        String msg = "";
+        List<JSONObject> infoList = new ArrayList<>();
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        List<JSONObject> infoList = new ArrayList<>();
+        if (obj == null){
+            msg +="Supplier or Generation is null.";
+        }else {
+            switch (level) {
+                case "groups":
+                    infoList = obj.getElementInfoService().getGroupInfoList();
+                    break;
 
-        switch (level){
-            case "groups":
-                infoList = obj.getElementInfoService().getGroupInfoList();
-                break;
+                case "nodes":
+                    infoList = obj.getElementInfoService().getNodeInfoList();
+                    break;
 
-            case "nodes":
-                infoList = obj.getElementInfoService().getNodeInfoList();
-                break;
+                case "cells":
+                    infoList = obj.getElementInfoService().getCellInfoList();
+                    break;
 
-            case "cells":
-                infoList = obj.getElementInfoService().getCellInfoList();
-                break;
-
-            default:
-                break;
+                default:
+                    break;
+            }
         }
 
-        if (infoList == null || infoList.isEmpty()) {
+        if (infoList == null || infoList.isEmpty() || msg.length() == 0) {
             result.put("result", Constants.FAIL);
-            result.put("msg", Constants.MSG_NO_DATA);
+            result.put("msg", Constants.MSG_NO_DATA + msg);
 
         } else {
             result.put("result", Constants.SUCCESS);
@@ -146,28 +195,31 @@ public class ElementController {
                                  @PathParam("level")String level,
                                  @HeaderParam("Auth-Token")String authToken) {
 
+        String msg = "";
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         List<String> infoList = new ArrayList<>();
+        if (obj == null){
+            msg +="Supplier or Generation is null.";
+        }else {
+            switch (level) {
+                case "groups":
+                    infoList = obj.getElementInfoService().getGroupNameList();
+                    break;
 
-        switch (level){
-            case "groups":
-                infoList = obj.getElementInfoService().getGroupNameList();
-                break;
+                case "nodes":
+                    infoList = obj.getElementInfoService().getNodeNameList();
+                    break;
 
-            case "nodes":
-                infoList = obj.getElementInfoService().getNodeNameList();
-                break;
+                case "cells":
+                    infoList = obj.getElementInfoService().getCellNameList();
+                    break;
 
-            case "cells":
-                infoList = obj.getElementInfoService().getCellNameList();
-                break;
-
-            default:
-                break;
+                default:
+                    break;
+            }
         }
-
-        if (infoList == null || infoList.isEmpty()) {
+        if (infoList == null || infoList.isEmpty() || msg.length() != 0) {
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
 
@@ -187,19 +239,26 @@ public class ElementController {
                                  @PathParam("generation")String generation,
                                  @HeaderParam("Auth-Token")String authToken) {
 
+        String msg = "";
+        List<String> ossNameList = new ArrayList<>();
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        List<String> ossNameList = obj.getElementInfoService().getOssNameList();
+        if (obj == null){
+            msg +="Supplier or Generation is null.";
+        }else {
+             ossNameList = obj.getElementInfoService().getOssNameList();
 
-        if (ossNameList == null || ossNameList.isEmpty()) {
-            result.put("result", Constants.FAIL);
-            result.put("msg", Constants.MSG_NO_DATA);
-
-        } else {
+            if (ossNameList == null || ossNameList.isEmpty()) {
+                msg += "GetOssNameList is Failed";
+            }
+        }
+        if (msg.length() == 0){
             result.put("result", Constants.SUCCESS);
             result.put("data", ossNameList);
+        } else {
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_NO_DATA + msg);
         }
-
         return result;
     }
 
@@ -210,24 +269,36 @@ public class ElementController {
     public JSONObject groupExport(@PathParam("supplier") String supplier,
                                    @PathParam("generation") String generation,
                                    @HeaderParam("Auth-Token") String authToken) {
+        String msg = "";
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         List list = new ArrayList();
         JSONObject result = new JSONObject();
 
-        List<JSONObject> groupList = obj.getElementInfoService().getGroupInfoList();
-        if (groupList!=null&&groupList.size()>0) {
-
-
-            for (JSONObject group : groupList) {
-
-                list.add(group);
-            }
-
-            result.put("result",Constants.SUCCESS);
-            result.put("data", list);
+        if (obj == null){
+            msg +="Supplier or Generation is null.";
         }else {
 
-            result.put("result",Constants.FAIL);
+            List<JSONObject> groupList = obj.getElementInfoService().getGroupInfoList();
+            if (groupList != null && groupList.size() > 0) {
+
+
+                for (JSONObject group : groupList) {
+
+                    list.add(group);
+                }
+
+
+            } else {
+
+                msg +="GetGroupInfoList is Failed.";
+            }
+        }
+        if (msg.length() == 0){
+            result.put("result", Constants.SUCCESS);
+            result.put("data", list);
+        } else {
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_NO_DATA + msg);
         }
         return result;
     }
@@ -240,21 +311,33 @@ public class ElementController {
                                   @PathParam("supplier") String supplier,
                                   @PathParam("generation") String generation,
                                   @HeaderParam("Auth-Token") String authToken) {
+
+        String msg = "";
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         JSONObject result = new JSONObject();
-        if(importJson!=null) {
-            Integer Num = 0;
-            for (int i=0;i<importJson.size();i++) {
-
-                Num = obj.getElementInfoService().updateNode(importJson.getJSONObject(i));
-            }
-            if(Num!=0){
-                result.put("result",Constants.SUCCESS);
-                result.put("msg",Constants.UPLOAD_RNC_INFOS_OK);
-            }
+        if (obj == null){
+            msg +="Supplier or Generation is null.";
         }else {
-            result.put("result",Constants.FAIL);
-            result.put("msg",Constants.UPLOAD_RNC_INFOS_FAILED);
+            if (importJson == null) {
+                msg +="ImportJson is Null.";
+            } else {
+                Integer Num = 0;
+                for (int i = 0; i < importJson.size(); i++) {
+
+                    Num = obj.getElementInfoService().updateNode(importJson.getJSONObject(i));
+                }
+                if (Num == 0) {
+
+                    msg +="UpdateNode is Failed.";
+                }
+            }
+        }
+        if (msg.length() == 0){
+            result.put("result", Constants.SUCCESS);
+            result.put("msg", Constants.UPLOAD_RNC_INFOS_OK);
+        } else {
+            result.put("result", Constants.FAIL);
+                result.put("msg", Constants.UPLOAD_RNC_INFOS_FAILED + msg);
         }
         return result;
     }
@@ -266,35 +349,39 @@ public class ElementController {
                                 @PathParam("supplier") String supplier,
                                 @PathParam("generation") String generation,
                                 @HeaderParam("Auth-Token") String authToken) {
-        NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        JSONObject result = new JSONObject();
-        Integer addNum = 0;
-        Integer counter = obj.getElementInfoService().getGroupCounter();
-        Integer delNum = obj.getElementInfoService().deleteGroup();
         String msg = "";
         String msg1 = "";
+        NetObjBase obj = objFactory.getNetObj(supplier, generation);
+        JSONObject result = new JSONObject();
+        if (obj == null){
+            msg +="Supplier or Generation is null.";
+        }else {
+            Integer addNum = 0;
+            Integer counter = obj.getElementInfoService().getGroupCounter();
+            Integer delNum = obj.getElementInfoService().deleteGroup();
+
             for (int i = 0; i < importJson.size(); i++) {
 
                 try {
 
                     addNum = obj.getElementInfoService().addRnc(importJson.getJSONObject(i));
 
-                    if(addNum!=null||addNum>0){
+                    if (addNum != null || addNum > 0) {
 
-                        if(counter>importJson.size()){
+                        if (counter > importJson.size()) {
 
-                            msg =" and the data of the file is less than the table data";
+                            msg = " and the data of the file is less than the table data";
 
-                        }else {
+                        } else {
 
                         }
                     }
-                }catch (Exception e){
+                } catch (Exception e) {
 
                     msg1 = "DB Exception";
                 }
             }
-
+        }
             if(msg.equals("")){
 
                 result.put("result",Constants.SUCCESS);
