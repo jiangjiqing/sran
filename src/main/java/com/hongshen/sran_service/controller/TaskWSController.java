@@ -124,7 +124,7 @@ public class TaskWSController {
                 while (taskStatusMap.get(loginName) == true && null != reader.readLine()) {
                     Date date = new Date();
                     num++;
-                    result.put("total",110);
+                    result.put("total",22);
                     result.put("complete",num);
                     result.put("time",date);
                     System.out.println(reader.readLine());
