@@ -127,7 +127,7 @@ public class TaskWSController {
                     result.put("total",22);
                     result.put("complete",num);
                     result.put("time",date);
-                    System.out.println(reader.readLine());
+//                    System.out.println(reader.readLine());
                     this.sendMessage(String.valueOf(result));
                     //TODO delete
                     if(num==22){

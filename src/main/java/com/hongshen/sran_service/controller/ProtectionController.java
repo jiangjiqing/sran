@@ -34,48 +34,56 @@ public class ProtectionController extends BaseController{
                                         @PathParam("generation")String generation,
                                         @HeaderParam("Auth-Token")String authToken) {
 
+        String msg = "";
         JSONObject result = new JSONObject();
         List<JSONObject> dataList = new ArrayList<JSONObject>();
 
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        List<JSONObject> protectList = obj.getElementInfoService().getProtectList();
+        if (obj == null){
+            msg +="Supplier or Generation is null.";
+        }else {
+            List<JSONObject> protectList = obj.getElementInfoService().getProtectList();
+            if (protectList == null){
+                msg +="getProtectList is Failed.";
+            }else {
+                for (JSONObject protect : protectList) {
 
-        for (JSONObject protect : protectList) {
+                    String nodeName = protect.getString("nodeName");
 
-            String nodeName = protect.getString("nodeName");
+                    if (nodeName == null || nodeName == "") {
+                        continue;
 
-            if (nodeName == null || nodeName == "") {
-                continue;
+                    } else {
+                        // alarm
+                        List<JSONObject> alarmList = obj.getAlarmService().getNodeAlarmByName(nodeName);
+                        protect.put("alarmList", alarmList);
 
-            }else{
-                // alarm
-                List<JSONObject> alarmList = obj.getAlarmService().getNodeAlarmByName(nodeName);
-                protect.put("alarmList",alarmList);
+                        if (alarmList.size() != 0) {
+                            protect.put("alarmStatus", true);
 
-                if(alarmList.size() != 0){
-                    protect.put("alarmStatus",true);
+                        } else {
+                            protect.put("alarmStatus", false);
+                        }
 
-                }else {
-                    protect.put("alarmStatus",false);
+                        // level
+                        JSONObject level = obj.getQuotaService().getNodeLevel(nodeName);
+
+                        if (level != null && level.getIntValue("level") != -1) {
+                            protect.put("level", level);
+
+                        } else {
+                            protect.put("level", Constants.INVALID_VALUE_LEVEL);
+
+                        }
+                        dataList.add(protect);
+                    }
                 }
-
-                // level
-                JSONObject level = obj.getQuotaService().getNodeLevel(nodeName);
-
-                if (level != null && level.getIntValue("level") != -1) {
-                    protect.put("level", level);
-
-                }else {
-                    protect.put("level", Constants.INVALID_VALUE_LEVEL);
-
-                }
-                dataList.add(protect);
             }
         }
 
-        if (dataList == null || dataList.isEmpty()) {
+        if (dataList == null || dataList.isEmpty() || msg.length() != 0) {
             result.put("result", Constants.FAIL);
-            result.put("msg", Constants.MSG_NO_DATA);
+            result.put("msg", Constants.MSG_NO_DATA + msg);
 
         } else {
             result.put("result", Constants.SUCCESS);
@@ -145,18 +153,38 @@ public class ProtectionController extends BaseController{
         JSONObject result = new JSONObject();
         Integer addNum = 0;
         String msg = "";
-        Integer deleteNum = obj.getElementInfoService().clearNodes();
+        if (obj == null){
+            msg +="Supplier or Generation is null.";
+        }else {
+            Integer deleteNum = obj.getElementInfoService().clearNodes();
+            if (deleteNum <= 0){
+                msg +="ClearNodes is Failed.";
+            }else {
+                for (int i = 0; i < importJson.size(); i++) {
+                    if (importJson.getJSONObject(i).getString("nodeName") == null){
+                        msg +="NodeName is null.";
+                    }else {
+                        try{
+                            addNum = obj.getElementInfoService().addProdectNode(importJson.getJSONObject(i).getString("nodeName"));
+                        }catch (Exception e){
+                            msg += "NodeName is Error.";
+                        }
+                    }
+                }
+                if (addNum <= 0) {
+                    msg += "AddProdectNode is Failed.";
 
-            for (int i = 0; i < importJson.size(); i++) {
-
-                addNum = obj.getElementInfoService().addProdectNode(importJson.getJSONObject(i).getString("nodeName"));
+                }
             }
-        if (addNum > 0) {
+        }
+        if (msg.length() != 0) {
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_NO_DATA + msg);
 
+        } else {
             result.put("result", Constants.SUCCESS);
             result.put("msg", Constants.MSG_ADD_OK);
         }
-
         return result;
     }
 
@@ -166,23 +194,38 @@ public class ProtectionController extends BaseController{
     public JSONObject protectExport(@PathParam("supplier") String supplier,
                                     @PathParam("generation") String generation,
                                     @HeaderParam("Auth-Token") String authToken) {
+        String msg ="";
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         List list = new ArrayList();
         JSONObject result = new JSONObject();
+        if (obj == null){
+            msg +="Supplier or Generation is null.";
+        }else {
+            try {
+                List<JSONObject> protectList = obj.getElementInfoService().getProtectListnodeName();
+                if (protectList != null && protectList.size() != 0) {
 
-        List<JSONObject> protectList = obj.getElementInfoService().getProtectListnodeName();
-        if(protectList!=null && protectList.size()!=0) {
+                    for (JSONObject nodeName : protectList) {
 
-            for (JSONObject nodeName : protectList) {
+                        list.add(nodeName);
 
-                list.add(nodeName);
+                    }
 
+                } else {
+                    result.put("result", Constants.FAIL);
+                    msg +="GetProtectListnodeName is Failed.";
+                }
+            }catch (Exception e){
+                msg += "Parameters is Error.";
             }
+        }
+        if (msg.length() != 0) {
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_NO_DATA + msg);
 
+        } else {
             result.put("result", Constants.SUCCESS);
             result.put("data", list);
-        }else {
-            result.put("result", Constants.FAIL);
         }
         return result;
     }

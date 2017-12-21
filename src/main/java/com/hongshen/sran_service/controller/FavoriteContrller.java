@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,55 +32,58 @@ public class FavoriteContrller {
                                         @PathParam("generation")String generation,
                                         @HeaderParam("loginName")String loginName) {
 
+        String msg = "";
         JSONObject result = new JSONObject();
         String tableNameBase = "unicom_favorite_" + generation + "_";
         String tableNameLike = "%" + tableNameBase + loginName + "%";
         String tableName = tableNameBase + loginName;
+        List<JSONObject> favoriteList = new ArrayList<>();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        JSONObject table = obj.getElementInfoService().getTable(tableNameLike);
+        if (obj == null){
+            msg +="Supplier or Generation is null.";
+        }else {
+            JSONObject table = obj.getElementInfoService().getTable(tableNameLike);
 
-        if (table == null) {
-            result.put("msg", Constants.MSG_NO_DATA);
-            result.put("result", Constants.FAIL);
-
-        }else{
-
-            List<JSONObject> favoriteList = obj.getElementInfoService().getFavoriteList(tableName);
-
-            for (JSONObject node : favoriteList) {
-
-                String nodeName = String.valueOf(node.getString("nodeName"));
-
-                if (nodeName != null || nodeName != "") {
-
-                    JSONObject level = obj.getQuotaService().getNodeLevel(nodeName);
-
-                    if (level != null && level.getIntValue("level") != -1) {
-
-                        node.put("level", level);
-
-                    } else {
-
-                        node.put("level", Constants.INVALID_VALUE_LEVEL);
-                    }
-
-                }
-
-            }
-
-            if (favoriteList == null || favoriteList.isEmpty()) {
-
-                result.put("msg", Constants.MSG_NO_DATA);
-                result.put("result", Constants.FAIL);
+            if (table == null) {
+                msg +="Table is Null.";
 
             } else {
 
-                result.put("data", favoriteList);
-                result.put("result", Constants.SUCCESS);
+                favoriteList = obj.getElementInfoService().getFavoriteList(tableName);
 
+                for (JSONObject node : favoriteList) {
+
+                    String nodeName = String.valueOf(node.getString("nodeName"));
+
+                    if (nodeName != null || nodeName != "") {
+
+                        JSONObject level = obj.getQuotaService().getNodeLevel(nodeName);
+
+                        if (level != null && level.getIntValue("level") != -1) {
+
+                            node.put("level", level);
+
+                        } else {
+
+                            node.put("level", Constants.INVALID_VALUE_LEVEL);
+                        }
+
+                    }
+
+                }
             }
         }
+        if (favoriteList == null || favoriteList.isEmpty() || msg.length() != 0) {
 
+            result.put("msg", Constants.MSG_NO_DATA + msg);
+            result.put("result", Constants.FAIL);
+
+        } else {
+
+            result.put("data", favoriteList);
+            result.put("result", Constants.SUCCESS);
+
+        }
         return result;
 
     }
@@ -101,25 +105,17 @@ public class FavoriteContrller {
         String tableName = tableNameBase+loginName;
 
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        JSONObject table =  obj.getElementInfoService().getTable(gettableName);
+        if (obj == null){
+            msg +="Supplier or Generation is null.";
+        }else {
+            JSONObject table = obj.getElementInfoService().getTable(gettableName);
+            if (table != null) {
 
-        if (table != null){
+                if (level.equals("nodes")) {
 
-            if (level.equals("nodes")){
+                    String nodeName = name;
 
-                String nodeName = name;
-
-                int i = obj.getElementInfoService().deleteNode(tableName,nodeName);
-
-                if (i <= 0) {
-
-                    msg += "Delete Node is failed.";
-
-                }
-
-            }else if (level.equals("groups")){
-
-                    int i = obj.getElementInfoService().deleteNodes(tableName,name);
+                    int i = obj.getElementInfoService().deleteNode(tableName, nodeName);
 
                     if (i <= 0) {
 
@@ -127,16 +123,27 @@ public class FavoriteContrller {
 
                     }
 
-            }else {
+                } else if (level.equals("groups")) {
+
+                    int i = obj.getElementInfoService().deleteNodes(tableName, name);
+
+                    if (i <= 0) {
+
+                        msg += "Delete Node is failed.";
+
+                    }
+
+                } else {
+
+                    msg += "Delete Node is failed.";
+
+                }
+
+            } else {
 
                 msg += "Delete Node is failed.";
 
             }
-
-        }else {
-
-            msg += "Delete Node is failed.";
-
         }
 
         if (msg.length() == 0){
@@ -174,61 +181,65 @@ public class FavoriteContrller {
         String tableName = tableNameBase+loginName;
 
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        JSONObject table =  obj.getElementInfoService().getTable(gettableName);
-        Boolean tableExist = false;
-
-        if (table == null){
-
-            msg += "Table dose not exist.";
-
-            int j = obj.getElementInfoService().createTable(tableName);
-            if (j <= 0){
-
-                msg += "Create table failed.";
-
-            }
-
+        if (obj == null){
+            msg +="Supplier or Generation is null.";
         }else {
+            JSONObject table = obj.getElementInfoService().getTable(gettableName);
+            Boolean tableExist = false;
 
-            tableExist = true;
+            if (table == null) {
 
-        }
+                msg += "Table dose not exist.";
 
-        if (tableExist) {
+                int j = obj.getElementInfoService().createTable(tableName);
+                if (j <= 0) {
 
-            if (level.equals("nodes")) {
-
-                int i = obj.getElementInfoService().addNode(tableName, name);
-
-                if (i <= 0) {
-
-                    msg += "Add node is failed.";
-
-                }
-
-            } else if (level.equals("groups")) {
-
-                List<JSONObject> nodeNames = obj.getElementInfoService().getNodeListByGroup(name);
-
-                if (nodeNames.size() != 0) {
-
-                    int i = obj.getElementInfoService().addNodes(tableName, nodeNames);
-
-                    if (i <= 0) {
-
-                        msg += "Add nodes is failed.";
-
-                    }
-
-                } else {
-
-                    msg += "Node is null";
+                    msg += "Create table failed.";
 
                 }
 
             } else {
 
-                msg += "Level dose not belong to nodes or groups";
+                tableExist = true;
+
+            }
+
+            if (tableExist) {
+
+                if (level.equals("nodes")) {
+
+                    int i = obj.getElementInfoService().addNode(tableName, name);
+
+                    if (i <= 0) {
+
+                        msg += "Add node is failed.";
+
+                    }
+
+                } else if (level.equals("groups")) {
+
+                    List<JSONObject> nodeNames = obj.getElementInfoService().getNodeListByGroup(name);
+
+                    if (nodeNames.size() != 0) {
+
+                        int i = obj.getElementInfoService().addNodes(tableName, nodeNames);
+
+                        if (i <= 0) {
+
+                            msg += "Add nodes is failed.";
+
+                        }
+
+                    } else {
+
+                        msg += "Node is null";
+
+                    }
+
+                } else {
+
+                    msg += "Level dose not belong to nodes or groups";
+                }
             }
         }
 

@@ -30,88 +30,93 @@ public class MapController extends BaseController{
                                     @PathParam("generation")String generation,
                                     @HeaderParam("loginName")String loginName) {
 
+        String msg = "";
         JSONObject result = new JSONObject();
         List<JSONObject> dataList = new ArrayList<>();
 
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        List<JSONObject> groupList = obj.getElementInfoService().getGroupList();
+        if (obj == null){
+            msg +="Supplier or Generation is null.";
+        }else {
+            List<JSONObject> groupList = obj.getElementInfoService().getGroupList();
 
-        for (JSONObject group : groupList){
+            for (JSONObject group : groupList) {
 
-            String groupName = group.getString("name");
+                String groupName = group.getString("name");
 
-            if (groupName == null || groupName == "") {
-                continue;
+                if (groupName == null || groupName == "") {
+                    continue;
 
-            }else{
-                JSONObject dataOne = new JSONObject();
-                dataOne.put("name",groupName);
+                } else {
+                    JSONObject dataOne = new JSONObject();
+                    dataOne.put("name", groupName);
 
-                // longitude \ latitude and scope
-                List<JSONObject> nodeList =  obj.getElementInfoService().getNodeLocationsByGroup(groupName);
-                List<Double[]> list = new ArrayList<>();
+                    // longitude \ latitude and scope
+                    List<JSONObject> nodeList = obj.getElementInfoService().getNodeLocationsByGroup(groupName);
+                    List<Double[]> list = new ArrayList<>();
 
-                for (JSONObject node : nodeList) {
+                    for (JSONObject node : nodeList) {
 
-                    Double latitude = node.getDouble("latitude");
-                    Double longitude = node.getDouble("longitude");
+                        Double latitude = node.getDouble("latitude");
+                        Double longitude = node.getDouble("longitude");
 
-                    if(latitude != null && longitude!= null &&
-                            latitude!=0.0 && longitude!=0.0){
-                        Double[] doubles ={latitude,longitude};
-                        list.add(doubles);
+                        if (latitude != null && longitude != null &&
+                                latitude != 0.0 && longitude != 0.0) {
+                            Double[] doubles = {latitude, longitude};
+                            list.add(doubles);
+                        }
                     }
-                }
-                dataOne.putAll(LatitudeAndLongitude(list));
+                    dataOne.putAll(LatitudeAndLongitude(list));
 
-                // group info
-                JSONObject groupInfo = obj.getElementInfoService().getGroupInfo(groupName);
+                    // group info
+                    JSONObject groupInfo = obj.getElementInfoService().getGroupInfo(groupName);
 
-                if (groupInfo == null){
-                    JSONObject temp = new JSONObject();
-                    dataOne.put("infos",temp);
-                }else {
-                    dataOne.put("infos", groupInfo);
-                }
-
-                // level
-                JSONObject level = obj.getQuotaService().getGroupLevel(groupName);
-
-                if(level != null && level.getIntValue("level") != -1){
-                    dataOne.putAll(level);
-                }else{
-                    dataOne.put("level",Constants.INVALID_VALUE_LEVEL);
-                }
-
-                // favorite
-                loginName= "pom";//TODO
-                String tableNameBase = "unicom_favorite_" + generation + "_";
-                String tableNameLike = "%" + tableNameBase + loginName + "%";
-                String tableName = tableNameBase + loginName;
-                JSONObject table = obj.getElementInfoService().getTable(tableNameLike);
-                if(table!=null){
-                    Integer nodeNum = obj.getElementInfoService().getNodeNum(tableName,groupName);
-                    if(nodeList.size() == nodeNum){
-
-                        dataOne.put("favorite",true);
-
-                    }else {
-
-                        dataOne.put("favorite",false);
+                    if (groupInfo == null) {
+                        JSONObject temp = new JSONObject();
+                        dataOne.put("infos", temp);
+                    } else {
+                        dataOne.put("infos", groupInfo);
                     }
 
-                }else {
+                    // level
+                    JSONObject level = obj.getQuotaService().getGroupLevel(groupName);
 
-                    dataOne.put("favorite",false);
+                    if (level != null && level.getIntValue("level") != -1) {
+                        dataOne.putAll(level);
+                    } else {
+                        dataOne.put("level", Constants.INVALID_VALUE_LEVEL);
+                    }
+
+                    // favorite
+                    loginName = "pom";//TODO
+                    String tableNameBase = "unicom_favorite_" + generation + "_";
+                    String tableNameLike = "%" + tableNameBase + loginName + "%";
+                    String tableName = tableNameBase + loginName;
+                    JSONObject table = obj.getElementInfoService().getTable(tableNameLike);
+                    if (table != null) {
+                        Integer nodeNum = obj.getElementInfoService().getNodeNum(tableName, groupName);
+                        if (nodeList.size() == nodeNum) {
+
+                            dataOne.put("favorite", true);
+
+                        } else {
+
+                            dataOne.put("favorite", false);
+                        }
+
+                    } else {
+
+                        dataOne.put("favorite", false);
+                    }
+
+                    dataList.add(dataOne);
                 }
-
-                dataList.add(dataOne);
             }
         }
 
-        if(dataList == null || dataList.isEmpty()){
+        if(dataList == null || dataList.isEmpty() || msg.length() != 0){
             result.put("result",Constants.FAIL);
-            result.put("msg",Constants.MSG_NO_DATA);
+            result.put("msg",Constants.MSG_NO_DATA + msg);
 
         }else {
             result.put("result", Constants.SUCCESS);
@@ -239,87 +244,121 @@ public class MapController extends BaseController{
                                    @PathParam("groupName")String groupName,
                                    @HeaderParam("loginName")String loginName) {
 
+        String msg = "";
         JSONObject result = new JSONObject();
         List dataList = new ArrayList();
 
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        List<JSONObject> nodeList = obj.getElementInfoService().getNodeListByGroup(groupName);
-
-        for(JSONObject node : nodeList){
-
-            String nodeName = node.getString("name");
-
-            if (nodeName == null || nodeName == "") {
-                continue;
-
-            }else{
-                JSONObject dataOne = new JSONObject();
-                dataOne.putAll(node);
-
-                String latitude = node.getString("latitude");
-                if (latitude == null || latitude == ""){
-                    dataOne.put("latitude",Constants.INVALID_VALUE_LOCATION);
-                }
-
-                String longitude = node.getString("longitude");
-                if (longitude == null || longitude == ""){
-                    dataOne.put("longitude",Constants.INVALID_VALUE_LOCATION);
-                }
-
-                // infos
-                JSONObject nodeInfo = obj.getElementInfoService().getNodeInfo(nodeName);
-
-                if (nodeInfo == null){
-                    JSONObject temp = new JSONObject();
-                    dataOne.put("infos", temp);
-                }else {
-                    dataOne.put("infos", nodeInfo);
-                }
-
-                // favorite
-                loginName= "pom";//TODO
-                String tableNameBase = "unicom_favorite_" + generation + "_";
-                String tableNameLike = "%" + tableNameBase + loginName + "%";
-                String tableName = tableNameBase + loginName;
-                JSONObject table = obj.getElementInfoService().getTable(tableNameLike);
-                if(table!=null){
-
-                    Integer nodeStatus = obj.getElementInfoService().getNodeofNull(tableName,nodeName);
-
-                    if(nodeStatus<=0){
-
-                        dataOne.put("favorite",false);
-
+        if (obj == null){
+            msg +="Supplier or Generation is null.";
+        }else {
+            if (groupName == null){
+                msg +="Group or Generation is null.";
+            }else {
+                try {
+                    List<JSONObject> nodeList = obj.getElementInfoService().getNodeListByGroup(groupName);
+                    if (nodeList == null){
+                        msg +="GetNodeListByGroup is null.";
                     }else {
+                        for (JSONObject node : nodeList) {
 
-                        dataOne.put("favorite",true);
+                            String nodeName = node.getString("name");
+
+                            if (nodeName == null || nodeName == "") {
+                                continue;
+
+                            } else {
+                                JSONObject dataOne = new JSONObject();
+                                dataOne.putAll(node);
+
+                                String latitude = node.getString("latitude");
+                                if (latitude == null || latitude == "") {
+                                    dataOne.put("latitude", Constants.INVALID_VALUE_LOCATION);
+                                }
+
+                                String longitude = node.getString("longitude");
+                                if (longitude == null || longitude == "") {
+                                    dataOne.put("longitude", Constants.INVALID_VALUE_LOCATION);
+                                }
+
+                                // infos
+                                try {
+                                    JSONObject nodeInfo = obj.getElementInfoService().getNodeInfo(nodeName);
+
+                                    if (nodeInfo == null) {
+                                        JSONObject temp = new JSONObject();
+                                        dataOne.put("infos", temp);
+                                    } else {
+                                        dataOne.put("infos", nodeInfo);
+                                    }
+
+                                    // favorite
+                                    loginName = "pom";//TODO
+                                    if (loginName == null){
+                                        msg +="LoginName is null.";
+                                    }else {
+                                        String tableNameBase = "unicom_favorite_" + generation + "_";
+                                        String tableNameLike = "%" + tableNameBase + loginName + "%";
+                                        String tableName = tableNameBase + loginName;
+                                        try {
+                                            JSONObject table = obj.getElementInfoService().getTable(tableNameLike);
+                                            if (table != null) {
+                                                try {
+                                                    Integer nodeStatus = obj.getElementInfoService().getNodeofNull(tableName, nodeName);
+
+                                                    if (nodeStatus <= 0) {
+
+                                                        dataOne.put("favorite", false);
+
+                                                    } else {
+
+                                                        dataOne.put("favorite", true);
+                                                    }
+                                                }catch (Exception e) {
+                                                    msg += "Parameters is Error.";
+                                                }
+                                            } else {
+
+                                                dataOne.put("favorite", false);
+                                            }
+
+                                            // level
+                                            try {
+                                                JSONObject level = obj.getQuotaService().getNodeLevel(nodeName);
+
+                                                if (level != null && level.getIntValue("level") != -1) {
+
+                                                    dataOne.putAll(level);
+
+                                                } else {
+
+                                                    dataOne.put("level", Constants.INVALID_VALUE_LEVEL);
+                                                }
+                                            }catch (Exception e) {
+                                                msg += "Parameters is Error.";
+                                            }
+                                        }catch (Exception e) {
+                                            msg += "Parameters is Error.";
+                                        }
+                                    }
+                                }catch (Exception e){
+                                    msg += "Parameters is Error.";
+                                }
+                                dataList.add(dataOne);
+                            }
+
+                        }
                     }
-
-                }else {
-
-                    dataOne.put("favorite",false);
+                }catch (Exception e){
+                    msg += "Parameters is Error.";
                 }
 
-                // level
-                JSONObject level = obj.getQuotaService().getNodeLevel(nodeName);
-
-                if(level != null && level.getIntValue("level") != -1){
-
-                    dataOne.putAll(level);
-
-                }else{
-
-                    dataOne.put("level",Constants.INVALID_VALUE_LEVEL);
-                }
-
-                dataList.add(dataOne);
             }
-
         }
 
-        if(dataList == null || dataList.isEmpty()){
+        if(dataList == null || dataList.isEmpty() || msg.length() != 0){
             result.put("result",Constants.FAIL);
-            result.put("msg",Constants.MSG_NO_DATA);
+            result.put("msg",Constants.MSG_NO_DATA + msg);
 
         }else {
             result.put("result", Constants.SUCCESS);
@@ -341,77 +380,95 @@ public class MapController extends BaseController{
 
         JSONObject result = new JSONObject();
         List dataList = new ArrayList();
-
+        String msg = "";
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        List<JSONObject> cellList = obj.getElementInfoService().getCellListByNode(nodeName);
+        if (obj == null){
+            msg +="Supplier or Generation is null.";
+        }else {
+            if (nodeName == null){
+                msg +="NodeName is null.";
+            }else {
+                try{
+                    List<JSONObject> cellList = obj.getElementInfoService().getCellListByNode(nodeName);
+                    if (cellList == null){
+                        msg +="GetCellListByNode is Failed.";
+                    }else {
+                        for (JSONObject cell : cellList) {
 
-        for (JSONObject cell : cellList){
+                            String cellName = cell.getString("name");
 
-            String cellName = cell.getString("name");
+                            if (cellName == null || cellName == "") {
+                                continue;
 
-            if (cellName == null || cellName == "") {
-                continue;
+                            } else {
+                                JSONObject dataOne = new JSONObject();
+                                dataOne.putAll(cell);
 
-            }else{
-                JSONObject dataOne = new JSONObject();
-                dataOne.putAll(cell);
+                                // longitude and latitude from node
+                                try{
+                                    JSONObject nodeLocation = obj.getElementInfoService().getNodeLocation(nodeName);
 
-                // longitude and latitude from node
-                JSONObject nodeLocation = obj.getElementInfoService().getNodeLocation(nodeName);
+                                    if (nodeLocation == null) {
+                                        dataOne.put("latitude", Constants.INVALID_VALUE_LOCATION);
+                                        dataOne.put("longitude", Constants.INVALID_VALUE_LOCATION);
+                                    } else {
 
-                if (nodeLocation == null){
-                    dataOne.put("latitude",Constants.INVALID_VALUE_LOCATION);
-                    dataOne.put("longitude",Constants.INVALID_VALUE_LOCATION);
-                }else {
+                                        dataOne.putAll(nodeLocation);
 
-                    dataOne.putAll(nodeLocation);
+                                        String latitude = nodeLocation.getString("latitude");
+                                        if (latitude == null || latitude == "") {
+                                            dataOne.put("latitude", Constants.INVALID_VALUE_LOCATION);
+                                        }
 
-                    String latitude = nodeLocation.getString("latitude");
-                    if (latitude == null || latitude == ""){
-                        dataOne.put("latitude",Constants.INVALID_VALUE_LOCATION);
+                                        String longitude = nodeLocation.getString("longitude");
+
+                                        if (longitude == null || longitude == "") {
+
+                                            dataOne.put("longitude", Constants.INVALID_VALUE_LOCATION);
+                                        }
+                                    }
+
+                                    // level
+                                    JSONObject level = obj.getQuotaService().getCellLevel(cellName);
+
+                                    if (level != null && level.getIntValue("level") != -1) {
+
+                                        dataOne.putAll(level);
+
+                                    } else {
+
+                                        dataOne.put("level", Constants.INVALID_VALUE_LEVEL);
+                                    }
+
+                                    // infos
+                                    JSONObject cellInfo = obj.getElementInfoService().getCellInfo(cellName);
+
+                                    if (cellInfo == null) {
+
+                                        JSONObject temp = new JSONObject();
+                                        dataOne.put("infos", temp);
+
+                                    } else {
+
+                                        dataOne.put("infos", cellInfo);
+                                    }
+                                }catch (Exception e) {
+                                    msg += "Parameters is Error.";
+                                }
+                                dataList.add(dataOne);
+                            }
+                        }
                     }
-
-                    String longitude = nodeLocation.getString("longitude");
-
-                    if (longitude == null || longitude == ""){
-
-                        dataOne.put("longitude",Constants.INVALID_VALUE_LOCATION);
-                    }
+                }catch (Exception e){
+                    msg += "Parameters is Error.";
                 }
-
-                // level
-                JSONObject level = obj.getQuotaService().getCellLevel(cellName);
-
-                if (level != null && level.getIntValue("level") != -1) {
-
-                    dataOne.putAll(level);
-
-                } else {
-
-                    dataOne.put("level", Constants.INVALID_VALUE_LEVEL);
-                }
-
-                // infos
-                JSONObject cellInfo = obj.getElementInfoService().getCellInfo(cellName);
-
-                if (cellInfo == null){
-
-                    JSONObject temp = new JSONObject();
-                    dataOne.put("infos", temp);
-
-                }else {
-
-                    dataOne.put("infos", cellInfo);
-                }
-
-                dataList.add(dataOne);
             }
         }
 
-        if(dataList == null || dataList.isEmpty()){
+        if(dataList == null || dataList.isEmpty() || msg.length() != 0){
 
             result.put("result",Constants.FAIL);
-            result.put("msg",Constants.MSG_NO_DATA);
+            result.put("msg",Constants.MSG_NO_DATA + msg);
 
         }else {
 
