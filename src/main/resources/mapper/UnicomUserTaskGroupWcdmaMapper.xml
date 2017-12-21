@@ -187,7 +187,7 @@
   </select>
 
 
-  <insert id="FaddTask" parameterType="com.alibaba.fastjson.JSONObject">
+  <insert id="addTask" parameterType="com.alibaba.fastjson.JSONObject">
     INSERT INTO unicom_user_task_group_wcdma (
       login_name,
       rncList,
