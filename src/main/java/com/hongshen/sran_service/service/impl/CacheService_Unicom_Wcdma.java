@@ -292,18 +292,23 @@ public class CacheService_Unicom_Wcdma implements CacheService {
 
     public String getUpdateTimeForQuotaData(String level) {
 
-        switch (level){
-            case Constants.LEVEL_GROUP:
-                return quotaGroupMapper.getQuotaLastUpdateTime().getString("time");
+        if (this.updateTimeForQuotaData == null || this.updateTimeForQuotaData.length() == 0){
 
-            case Constants.LEVEL_NODE:
-                return quotaNodeMapper.getQuotaLastUpdateTime().getString("time");
+            switch (level){
+                case Constants.LEVEL_GROUP:
+                    return quotaGroupMapper.getQuotaLastUpdateTime().getString("time");
 
-            case Constants.LEVEL_CELL:
-                return quotaCellMapper.getQuotaLastUpdateTime().getString("time");
+                case Constants.LEVEL_NODE:
+                    return quotaNodeMapper.getQuotaLastUpdateTime().getString("time");
 
-            default:
-                return "";
+                case Constants.LEVEL_CELL:
+                    return quotaCellMapper.getQuotaLastUpdateTime().getString("time");
+
+                default:
+                    return "";
+            }
+        }else{
+            return this.updateTimeForQuotaData;
         }
     }
 
