@@ -275,7 +275,7 @@ public class ElementController {
             try {
                 ossNameList = obj.getElementInfoService().getOssNameList();
 
-                if (ossNameList == null || ossNameList.isEmpty()) {
+                if (ossNameList == null || ossNameList.isEmpty() || ossNameList.size() == 0) {
                     msg += "GetOssNameList is null.";
                 }
             }catch (Exception e){

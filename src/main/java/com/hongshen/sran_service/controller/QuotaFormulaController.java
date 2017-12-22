@@ -73,10 +73,10 @@ public class QuotaFormulaController {
         String msg = "";
         String expression = param.getString("expression");
 
-        if (quotaName == null || quotaName.length() == 0){
+        if (quotaName == null || quotaName.length() == 0 || quotaName.isEmpty()){
             msg += "Formula name is null.";
 
-        }else if (expression == null || expression.length() == 0){
+        }else if (expression == null || expression.length() == 0 || expression.isEmpty()){
             msg += "Expression is null.";
 
         }else if (QuotaHelper.checkExpression(expression) == false){

@@ -29,12 +29,17 @@ public class TopologyController extends BaseController {
                                       @PathParam("generation")String generation,
                                       @HeaderParam("Auth-Token")String authToken){
 
+        String msg ="";
         JSONObject result = new JSONObject();
-
+        List<JSONObject> locationList = new ArrayList<>();
         NetObjBase obj = objFactory.getNetObj(supplier,generation);
-        List<JSONObject> locationList = obj.getTelecomRoomService().getRoomLocationList();
+        if (obj == null){
+            msg += "Supplier or Generation has error.";
 
-        if (locationList == null || locationList.isEmpty()){
+        }else {
+            locationList = obj.getTelecomRoomService().getRoomLocationList();
+        }
+        if (locationList == null || locationList.isEmpty() || msg.length() != 0){
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
 
@@ -55,42 +60,51 @@ public class TopologyController extends BaseController {
                                    @HeaderParam("Auth-Token")String authToken,
                                    @QueryParam("roomName") String roomName){
 
+        String msg ="";
         JSONObject result = new JSONObject();
         List<JSONObject> dataList = new ArrayList<>();
 
         NetObjBase obj = objFactory.getNetObj(supplier,generation);
+        if (obj == null){
+            msg += "Supplier or Generation has error.";
 
-        List<JSONObject> groupList = obj.getTelecomRoomService().getGroupListByRoom(roomName);
-
-        for (JSONObject group : groupList){
-
-            JSONObject dataOne = new JSONObject();
-            String groupName = group.getString("groupName");
-
-            if (groupName  == null || groupName == ""){
-                continue;
-
+        }else if (roomName == null || roomName.isEmpty()){
+            msg +="RoomName is Null.";
+        }else {
+            List<JSONObject> groupList = obj.getTelecomRoomService().getGroupListByRoom(roomName);
+            if (groupList == null || groupList.isEmpty()){
+                msg += "GroupList is Null.";
             }else {
-                dataOne.put("groupName", groupName);
-                dataOne.put("infos", group);
+                for (JSONObject group : groupList) {
 
-                List<JSONObject> nodeLocationList = obj.getElementInfoService().getNodeLocationsByGroup(groupName);
-                JSONObject location = MapHelper.getGroupLocation(nodeLocationList, "latitude", "longitude");
+                    JSONObject dataOne = new JSONObject();
+                    String groupName = group.getString("groupName");
 
-                if (location.getDoubleValue("latitude") == 0) {
-                    location.put("latitude", Constants.INVALID_VALUE_LOCATION);
+                    if (groupName == null || groupName == "") {
+                        continue;
+
+                    } else {
+                        dataOne.put("groupName", groupName);
+                        dataOne.put("infos", group);
+
+                        List<JSONObject> nodeLocationList = obj.getElementInfoService().getNodeLocationsByGroup(groupName);
+                        JSONObject location = MapHelper.getGroupLocation(nodeLocationList, "latitude", "longitude");
+
+                        if (location.getDoubleValue("latitude") == 0) {
+                            location.put("latitude", Constants.INVALID_VALUE_LOCATION);
+                        }
+
+                        if (location.getDoubleValue("longitude") == 0) {
+                            location.put("longitude", Constants.INVALID_VALUE_LOCATION);
+                        }
+                        dataOne.putAll(location);
+
+                        dataList.add(dataOne);
+                    }
                 }
-
-                if (location.getDoubleValue("longitude") == 0) {
-                    location.put("longitude", Constants.INVALID_VALUE_LOCATION);
-                }
-                dataOne.putAll(location);
-
-                dataList.add(dataOne);
             }
         }
-
-        if (dataList == null || dataList.isEmpty()){
+        if (dataList == null || dataList.isEmpty() || msg.length() != 0){
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
 
@@ -111,13 +125,18 @@ public class TopologyController extends BaseController {
                                    @HeaderParam("Auth-Token")String authToken){
 
         JSONObject result = new JSONObject();
-
+        String msg ="";
+        List<String> roomNameList =new ArrayList<>();
         NetObjBase obj = objFactory.getNetObj(supplier,generation);
-        List<String> roomNameList = obj.getTelecomRoomService().getRoomNameList();
+        if (obj == null){
+            msg += "Supplier or Generation has error.";
 
-        if (roomNameList == null || roomNameList.isEmpty()){
+        }else {
+            roomNameList = obj.getTelecomRoomService().getRoomNameList();
+        }
+        if (roomNameList == null || roomNameList.isEmpty() || msg.length() != 0){
             result.put("result", Constants.FAIL);
-            result.put("msg", Constants.MSG_NO_DATA);
+            result.put("msg", Constants.MSG_NO_DATA + msg);
 
         } else {
             result.put("result", Constants.SUCCESS);

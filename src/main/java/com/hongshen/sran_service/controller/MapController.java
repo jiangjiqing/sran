@@ -252,12 +252,12 @@ public class MapController extends BaseController{
         if (obj == null){
             msg += "Supplier or Generation has error.";
         }else {
-            if (groupName == null){
+            if (groupName == null || groupName.isEmpty()){
                 msg +="Group or Generation is null.";
             }else {
                 try {
                     List<JSONObject> nodeList = obj.getElementInfoService().getNodeListByGroup(groupName);
-                    if (nodeList == null){
+                    if (nodeList == null || nodeList.size() == 0 || nodeList.isEmpty()){
                         msg +="GetNodeListByGroup is null.";
                     }else {
                         for (JSONObject node : nodeList) {
@@ -285,7 +285,7 @@ public class MapController extends BaseController{
                                 try {
                                     JSONObject nodeInfo = obj.getElementInfoService().getNodeInfo(nodeName);
 
-                                    if (nodeInfo == null) {
+                                    if (nodeInfo == null || nodeInfo.isEmpty()|| nodeInfo.size()==0) {
                                         JSONObject temp = new JSONObject();
                                         dataOne.put("infos", temp);
                                     } else {
@@ -294,7 +294,7 @@ public class MapController extends BaseController{
 
                                     // favorite
                                     loginName = "pom";//TODO
-                                    if (loginName == null){
+                                    if (loginName == null || loginName.isEmpty()){
                                         msg +="LoginName is null.";
                                     }else {
                                         String tableNameBase = "unicom_favorite_" + generation + "_";
@@ -302,7 +302,7 @@ public class MapController extends BaseController{
                                         String tableName = tableNameBase + loginName;
                                         try {
                                             JSONObject table = obj.getElementInfoService().getTable(tableNameLike);
-                                            if (table != null) {
+                                            if (table != null || table.isEmpty()) {
                                                 try {
                                                     Integer nodeStatus = obj.getElementInfoService().getNodeofNull(tableName, nodeName);
 
@@ -385,19 +385,19 @@ public class MapController extends BaseController{
         if (obj == null){
             msg += "Supplier or Generation has error.";
         }else {
-            if (nodeName == null){
+            if (nodeName == null || nodeName.isEmpty()){
                 msg +="NodeName is null.";
             }else {
                 try{
                     List<JSONObject> cellList = obj.getElementInfoService().getCellListByNode(nodeName);
-                    if (cellList == null){
+                    if (cellList == null || cellList.isEmpty() || cellList.size()==0){
                         msg +="GetCellListByNode is Failed.";
                     }else {
                         for (JSONObject cell : cellList) {
 
                             String cellName = cell.getString("name");
 
-                            if (cellName == null || cellName == "") {
+                            if (cellName == null || cellName == "" || cell.isEmpty()) {
                                 continue;
 
                             } else {

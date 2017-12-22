@@ -46,7 +46,7 @@ public class FavoriteContrller {
         }else {
             JSONObject table = obj.getElementInfoService().getTable(tableNameLike);
 
-            if (table == null || table.isEmpty()) {
+            if (table == null || table.isEmpty() || table.size() == 0) {
                 msg += "Table is Null.";
 
             } else {
@@ -175,7 +175,7 @@ public class FavoriteContrller {
             JSONObject table = obj.getElementInfoService().getTable(gettableName);
             Boolean tableExist = false;
 
-            if (table == null) {
+            if (table == null || table.size() ==0 || table.isEmpty()) {
                 int j = obj.getElementInfoService().createTable(tableName);
                 if (j <= 0) {
                     msg += "Create table failed.";
@@ -191,7 +191,7 @@ public class FavoriteContrller {
 
                                 List<JSONObject> nodeNames = obj.getElementInfoService().getNodeListByGroup(name);
 
-                                if (nodeNames.size() != 0) {
+                                if (nodeNames.size() != 0 || nodeNames.isEmpty()) {
 
                                     int i = obj.getElementInfoService().addNodes(tableName, nodeNames);
 

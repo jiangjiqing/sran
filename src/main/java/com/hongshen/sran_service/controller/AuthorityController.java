@@ -36,7 +36,7 @@ public class AuthorityController {
         }else {
             authorityList = obj.getAuthorityService().getAuthorityList();
 
-            if (authorityList == null || authorityList.isEmpty()) {
+            if (authorityList == null || authorityList.isEmpty() || authorityList.size() == 0) {
 
                 msg += "AuthorityList is null.";
             }
@@ -67,10 +67,10 @@ public class AuthorityController {
         if (obj == null){
             msg += "Supplier or Generation has error.";
         }else {
-            if (authorityName == null){
+            if (authorityName == null || authorityName.isEmpty()){
                 msg += "AuthorityName is NULL.";
             }else {
-                if (param == null){
+                if (param == null || param.isEmpty()||param.size()==0){
                     msg +="Param is null.";
                 }else {
                     try {
@@ -112,7 +112,7 @@ public class AuthorityController {
         if (obj == null){
             msg += "Supplier or Generation has error.";
         }else {
-            if (param == null){
+            if (param == null || param.isEmpty() || param.size() == 0){
                 msg += "Param is null.";
             }else {
                 JSONObject authority = obj.getAuthorityService().getAuthByName(param);
@@ -157,7 +157,7 @@ public class AuthorityController {
         if (obj == null){
             msg += "Supplier or Generation has error.";
         }else {
-            if (authorityName == null){
+            if (authorityName == null || authorityName.isEmpty() || authorityName.length() == 0){
                 msg +="AuthorityName is null.";
             }else {
                 try {
