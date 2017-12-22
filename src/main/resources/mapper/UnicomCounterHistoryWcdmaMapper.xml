@@ -469,4 +469,8 @@
     ORDER BY expvalue DESC
     LIMIT 10
   </select>
+
+  <select id="getCounterTime" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT time FROM unicom_counter_history_wcdma
+  </select>
 </mapper>

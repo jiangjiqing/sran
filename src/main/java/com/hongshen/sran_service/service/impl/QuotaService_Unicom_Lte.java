@@ -171,4 +171,25 @@ public class QuotaService_Unicom_Lte implements QuotaService {
     public Integer deleteAllFormulas() {
         return formulaMapper.deleteAllFormulas();
     }
+
+    @Override
+    public List<JSONObject> getGroupTime() {
+        return quotaHistoryGroupMapper.getGroupTime();
+    }
+
+    @Override
+    public List<JSONObject> getNodeTime() {
+        return quotaHistoryNodeMapper.getNodeTime();
+    }
+
+    @Override
+    public List<JSONObject> getCellTime() {
+        return quotaHistoryCellMapper.getCellTime();
+    }
+
+    @Override
+    public List<JSONObject> getCounterTime() {
+        return counterHistoryLteMapper.getCounterTime();
+    }
+
 }

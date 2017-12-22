@@ -47,4 +47,12 @@ public interface QuotaService {
     Integer DeleteFormula(String quotaName);
 
     Integer deleteAllFormulas();
+
+    List<JSONObject> getGroupTime();
+
+    List<JSONObject> getNodeTime();
+
+    List<JSONObject> getCellTime();
+
+    List<JSONObject> getCounterTime();
 }

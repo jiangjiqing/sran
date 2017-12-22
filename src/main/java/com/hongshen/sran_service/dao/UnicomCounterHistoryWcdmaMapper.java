@@ -48,4 +48,6 @@ public interface UnicomCounterHistoryWcdmaMapper {
     List<JSONObject> getBadTenCell(@Param("expression")String expression,
                                    @Param("cellList")List<String> cellList,
                                    @Param("time")String time);
+
+    List<JSONObject> getCounterTime();
 }

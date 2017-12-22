@@ -251,4 +251,8 @@
     </if>
     ORDER BY time DESC;
   </select>
+
+  <select id="getNodeTime" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT time FROM unicom_quota_history_node_wcdma
+  </select>
 </mapper>

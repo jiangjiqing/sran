@@ -41,4 +41,6 @@ public interface UnicomQuotaHistoryCellWcdmaMapper {
     List<JSONObject> getQuotasCell(@Param("start")Date start,
                                    @Param("end")Date end,
                                    @Param("condition") String condition);
+
+    List<JSONObject> getCellTime();
 }

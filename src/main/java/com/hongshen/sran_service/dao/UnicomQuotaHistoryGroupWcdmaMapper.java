@@ -40,4 +40,6 @@ public interface UnicomQuotaHistoryGroupWcdmaMapper {
 
     void addQuotaHistoryGroupList(@Param("cloumns")List<String> cloumns,
                                   @Param("valueList")List<String> valueList);
+
+    List<JSONObject> getGroupTime();
 }

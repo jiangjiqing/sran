@@ -370,4 +370,72 @@ public class QuotaHistoryController extends BaseController {
         return result;
 
     }
+    @GET
+    @Path("/suppliers/{supplier}/generations/{generation}/nets/{level}/history/quotas/timelist")
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject quotaHistoryCounterTime(@PathParam("supplier") String supplier, @PathParam("generation") String generation,
+                                              @HeaderParam("Auth-Token") String authToken, @PathParam("level") String level){
+
+        String msg = "";
+        JSONObject result = new JSONObject();
+        NetObjBase obj = objFactory.getNetObj(supplier, generation);
+        List<JSONObject> dataList = new ArrayList<>();
+
+        if (obj == null){
+            msg +="Supplier or Generation is null.";
+        }else {
+            switch (level) {
+                case "groups":
+                    dataList = obj.getQuotaService().getGroupTime();
+                    break;
+
+                case "nodes":
+                    dataList = obj.getQuotaService().getNodeTime();
+                    break;
+
+                case "cells":
+                    dataList = obj.getQuotaService().getCellTime();
+                    break;
+
+                default:
+                    dataList = null;
+                    break;
+            }
+        }
+        if (dataList == null || dataList.size() == 0 || dataList.isEmpty() || msg.length()!=0){
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_NO_DATA + msg);
+        }else {
+            result.put("result", Constants.SUCCESS);
+            result.put("data", dataList);
+        }
+        return result;
+    }
+
+    @GET
+    @Path("/suppliers/{supplier}/generations/{generation}/nets/history/counters/timelist")
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject quotaCounterCounterTime(@PathParam("supplier") String supplier, @PathParam("generation") String generation,
+                                              @HeaderParam("Auth-Token") String authToken){
+
+        String msg = "";
+        JSONObject result = new JSONObject();
+        NetObjBase obj = objFactory.getNetObj(supplier, generation);
+        List<JSONObject> dataList = new ArrayList<>();
+
+        if (obj == null){
+            msg +="Supplier or Generation is null.";
+        }else {
+            dataList = obj.getQuotaService().getCounterTime();
+        }
+
+        if (dataList == null || dataList.size() == 0 || dataList.isEmpty() || msg.length()!=0){
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_NO_DATA + msg);
+        }else {
+            result.put("result", Constants.SUCCESS);
+            result.put("data", dataList);
+        }
+        return result;
+    }
 }

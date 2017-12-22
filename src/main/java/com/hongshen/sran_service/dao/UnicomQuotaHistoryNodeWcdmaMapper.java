@@ -41,4 +41,6 @@ public interface UnicomQuotaHistoryNodeWcdmaMapper {
     List<JSONObject> getQuotasNode(@Param("start")Date start,
                                    @Param("end")Date end,
                                    @Param("condition")String condition);
+
+    List<JSONObject> getNodeTime();
 }

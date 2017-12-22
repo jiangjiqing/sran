@@ -293,4 +293,8 @@
       ${value}
     </foreach>
   </insert>
+
+  <select id="getGroupTime" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT time FROM unicom_quota_history_group_wcdma
+  </select>
 </mapper>

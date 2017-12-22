@@ -600,4 +600,8 @@
     </if>
     ORDER BY time DESC;
   </select>
+
+  <select id="getCounterTime" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT time FROM unicom_counter_history_lte
+  </select>
 </mapper>
