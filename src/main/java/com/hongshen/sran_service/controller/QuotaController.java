@@ -29,51 +29,72 @@ public class QuotaController {
                                     @PathParam("groupName")String groupName,
                                     @HeaderParam("Auth-Token")String authToken) {
 
+        String msg = "";
         JSONObject result = new JSONObject();
         JSONObject data = new JSONObject();
-
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
 
-        String time = obj.getCacheService().getUpdateTimeForQuotaData();
-        if (time == null || time == ""){
-            result.put("result", Constants.FAIL);
-            result.put("msg", Constants.MSG_NO_DATA);
+        if (obj == null){
+            msg +="Supplier or Generation is error.";
 
-        }else {
-            data.put("time", time);
+        }else if (groupName == null || groupName.length() == 0) {
+            msg +="GroupName is null.";
 
-            JSONObject quotas = obj.getQuotaService().getGroupQuota(groupName);
+        }else{
 
-            if (quotas == null || quotas.isEmpty()){
-                result.put("result", Constants.FAIL);
-                result.put("msg", Constants.MSG_NO_DATA);
-                return result;
-            }
+            String time = obj.getCacheService().getUpdateTimeForQuotaData();
+            if (time == null || time == ""){
+                msg +="Time is null.";
 
-            List<JSONObject> formulaResultList = new ArrayList<>();
-            List<JSONObject> formulaList = obj.getCacheService().getFormulaList(true);
+            }else {
+                data.put("time", time);
+                try {
+                    JSONObject quotas = obj.getQuotaService().getGroupQuota(groupName);
 
-            for (JSONObject f : formulaList) {
+                    if (quotas == null || quotas.isEmpty()) {
+                        msg += "Quotas is null.";
 
-                JSONObject temp = new JSONObject();
-                temp.put("quotaName",f.getString("quotaName"));
-                temp.put("remark",f.getString("remark"));
-                temp.put("hasTop10",f.getString("hasTop10"));
+                    }else {
+                        try {
+                            List<JSONObject> formulaResultList = new ArrayList<>();
+                            List<JSONObject> formulaList = obj.getCacheService().getFormulaList(true);
 
-                String value = quotas.getString(f.getString("quotaName"));
-                //String value = quotas.getString("formula" + f.getString("id"));
+                            for (JSONObject f : formulaList) {
 
-                if (value == null || value == "") {
-                    temp.put("value", Constants.INVALID_VALUE_QUOTA);
-                } else {
-                    temp.put("value", value);
+                                JSONObject temp = new JSONObject();
+                                temp.put("quotaName", f.getString("quotaName"));
+                                temp.put("remark", f.getString("remark"));
+                                temp.put("hasTop10", f.getString("hasTop10"));
+
+                                String value = quotas.getString(f.getString("quotaName"));
+                                //String value = quotas.getString("formula" + f.getString("id"));
+
+                                if (value == null || value == "") {
+                                    temp.put("value", Constants.INVALID_VALUE_QUOTA);
+                                } else {
+                                    temp.put("value", value);
+                                }
+                                formulaResultList.add(temp);
+                            }
+                            data.put("quotas", formulaResultList);
+
+                        }catch (Exception e){
+                            msg += "FormulaList has error:" + e.getMessage();
+                        }
+                    }
+                }catch (Exception e){
+                    msg += "Quotas has error:" + e.getMessage();
                 }
-                formulaResultList.add(temp);
             }
-            data.put("quotas", formulaResultList);
+        }
 
+        if (msg.length() == 0){
             result.put("result", Constants.SUCCESS);
             result.put("data", data);
+
+        }else{
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_NO_DATA + msg);
         }
 
         return result;
@@ -88,51 +109,72 @@ public class QuotaController {
                                    @PathParam("nodeName")String nodeName,
                                    @HeaderParam("Auth-Token")String authToken) {
 
+        String msg = "";
         JSONObject result = new JSONObject();
         JSONObject data = new JSONObject();
 
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
 
-        String time = obj.getCacheService().getUpdateTimeForQuotaData();
-        if (time == null || time == ""){
-            result.put("result", Constants.FAIL);
-            result.put("msg", Constants.MSG_NO_DATA);
+        if (obj == null){
+            msg +="Supplier or Generation is error.";
+
+        }else if (nodeName == null || nodeName.length() == 0) {
+            msg +="NodeName is null.";
 
         }else {
-            data.put("time", time);
+            String time = obj.getCacheService().getUpdateTimeForQuotaData();
+            if (time == null || time == ""){
+                msg +="Time is null.";
 
-            JSONObject quotas = obj.getQuotaService().getNodeQuota(nodeName);
+            }else {
+                data.put("time", time);
+                try {
+                    JSONObject quotas = obj.getQuotaService().getNodeQuota(nodeName);
+                    if (quotas == null || quotas.isEmpty()) {
+                        msg += "Quotas is null.";
 
-            if (quotas == null || quotas.isEmpty()){
-                result.put("result", Constants.FAIL);
-                result.put("msg", Constants.MSG_NO_DATA);
-                return result;
-            }
+                    }else {
+                        try {
+                            List<JSONObject> formulaResultList = new ArrayList<>();
 
-            List<JSONObject> formulaResultList = new ArrayList<>();
-            List<JSONObject> formulaList = obj.getCacheService().getFormulaList(true);
+                            List<JSONObject> formulaList = obj.getCacheService().getFormulaList(true);
 
-            for (JSONObject f : formulaList) {
+                            for (JSONObject f : formulaList) {
 
-                JSONObject temp = new JSONObject();
-                temp.put("quotaName",f.getString("quotaName"));
-                temp.put("remark",f.getString("remark"));
-                temp.put("hasTop10",f.getString("hasTop10"));
+                                JSONObject temp = new JSONObject();
+                                temp.put("quotaName", f.getString("quotaName"));
+                                temp.put("remark", f.getString("remark"));
+                                temp.put("hasTop10", f.getString("hasTop10"));
 
-                String value = quotas.getString(f.getString("quotaName"));
-                //String value = quotas.getString("formula" + f.getString("id"));
+                                String value = quotas.getString(f.getString("quotaName"));
+                                //String value = quotas.getString("formula" + f.getString("id"));
 
-                if (value == null || value == "") {
-                    temp.put("value", Constants.INVALID_VALUE_QUOTA);
-                } else {
-                    temp.put("value", value);
+                                if (value == null || value == "") {
+                                    temp.put("value", Constants.INVALID_VALUE_QUOTA);
+                                } else {
+                                    temp.put("value", value);
+                                }
+                                formulaResultList.add(temp);
+                            }
+                            data.put("quotas", formulaResultList);
+
+                        } catch (Exception e) {
+                            msg += "FormulaList has error:" + e.getMessage();
+                        }
+                    }
+                } catch (Exception e){
+                    msg += "Quotas has error:" + e.getMessage();
                 }
-                formulaResultList.add(temp);
             }
-            data.put("quotas", formulaResultList);
+        }
 
+        if (msg.length() == 0){
             result.put("result", Constants.SUCCESS);
             result.put("data", data);
+
+        }else{
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_NO_DATA + msg);
         }
 
         return result;
@@ -147,51 +189,72 @@ public class QuotaController {
                                    @PathParam("cellName")String cellName,
                                    @HeaderParam("Auth-Token")String authToken) {
 
+        String msg = "";
         JSONObject result = new JSONObject();
         JSONObject data = new JSONObject();
 
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
+        if (obj == null){
+            msg +="Supplier or Generation is error.";
 
-        String time = obj.getCacheService().getUpdateTimeForQuotaData();
-        if (time == null || time == ""){
-            result.put("result", Constants.FAIL);
-            result.put("msg", Constants.MSG_NO_DATA);
+        }else if (cellName == null || cellName.length() == 0) {
+            msg +="CellName is null.";
 
         }else {
-            data.put("time", time);
+            String time = obj.getCacheService().getUpdateTimeForQuotaData();
+            if (time == null || time == ""){
+                msg +="Time is null.";
 
-            JSONObject quotas = obj.getQuotaService().getCellQuota(cellName);
+            }else {
+                data.put("time", time);
+                try {
 
-            if (quotas == null || quotas.isEmpty()){
-                result.put("result", Constants.FAIL);
-                result.put("msg", Constants.MSG_NO_DATA);
-                return result;
-            }
+                    JSONObject quotas = obj.getQuotaService().getCellQuota(cellName);
 
-            List<JSONObject> formulaResultList = new ArrayList<>();
-            List<JSONObject> formulaList = obj.getCacheService().getFormulaList(true);
+                    if (quotas == null || quotas.isEmpty()){
+                        msg += "Quotas is null.";
 
-            for (JSONObject f : formulaList) {
+                    }else {
+                        try {
+                            List<JSONObject> formulaResultList = new ArrayList<>();
+                            List<JSONObject> formulaList = obj.getCacheService().getFormulaList(true);
 
-                JSONObject temp = new JSONObject();
-                temp.put("quotaName",f.getString("quotaName"));
-                temp.put("remark",f.getString("remark"));
-                temp.put("hasTop10",f.getString("hasTop10"));
+                            for (JSONObject f : formulaList) {
 
-                String value = quotas.getString(f.getString("quotaName"));
-                //String value = quotas.getString("formula" + f.getString("id"));
+                                JSONObject temp = new JSONObject();
+                                temp.put("quotaName",f.getString("quotaName"));
+                                temp.put("remark",f.getString("remark"));
+                                temp.put("hasTop10",f.getString("hasTop10"));
 
-                if (value == null || value == "") {
-                    temp.put("value", Constants.INVALID_VALUE_QUOTA);
-                } else {
-                    temp.put("value", value);
+                                String value = quotas.getString(f.getString("quotaName"));
+                                //String value = quotas.getString("formula" + f.getString("id"));
+
+                                if (value == null || value == "") {
+                                    temp.put("value", Constants.INVALID_VALUE_QUOTA);
+                                } else {
+                                    temp.put("value", value);
+                                }
+                                formulaResultList.add(temp);
+                            }
+                            data.put("quotas", formulaResultList);
+
+                        } catch (Exception e) {
+                            msg += "FormulaList has error:" + e.getMessage();
+                        }
+                    }
+                } catch (Exception e){
+                    msg += "Quotas has error:" + e.getMessage();
                 }
-                formulaResultList.add(temp);
             }
-            data.put("quotas", formulaResultList);
+        }
 
+        if (msg.length() == 0){
             result.put("result", Constants.SUCCESS);
             result.put("data", data);
+
+        }else{
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_NO_DATA + msg);
         }
 
         return result;
@@ -207,18 +270,40 @@ public class QuotaController {
                                    @PathParam("quotaName")String quotaName,
                                    @HeaderParam("Auth-Token")String authToken) {
 
+        String msg = "";
         JSONObject result = new JSONObject();
-
+        List<JSONObject> cellList = new ArrayList<>();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        List<JSONObject> cellList = obj.getQuotaService().getGroupQuotaBadTenCell(groupName,quotaName);
 
-        if (cellList == null || cellList.isEmpty()){
-            result.put("result", Constants.FAIL);
-            result.put("msg", Constants.MSG_NO_DATA);
-        }else{
-            result.put("result", Constants.SUCCESS);
-            result.put("data", cellList);
+        if (obj == null){
+            msg +="Supplier or Generation is error.";
+
+        }else if (groupName == null || groupName.length() == 0) {
+            msg +="GroupName is null.";
+
+        }else if (quotaName == null || quotaName.length() == 0) {
+            msg += "QuotaName is null.";
+
+        }else {
+            try {
+                cellList = obj.getQuotaService().getGroupQuotaBadTenCell(groupName, quotaName);
+                if (cellList == null || cellList.isEmpty()) {
+                    msg += "CellList is null.";
+                }
+            } catch (Exception e) {
+                msg += "CellList has error:" + e.getMessage();
+            }
         }
+
+        if (msg.length() == 0){
+            result.put("result", Constants.SUCCESS);
+            result.put("data", result);
+
+        }else{
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_NO_DATA + msg);
+        }
+
         return result;
     }
 }

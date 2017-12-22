@@ -48,7 +48,7 @@ public class ElementController {
                         msg += "GetGroupInfo is Failed.";
                     }
                 }catch (Exception e){
-                    msg += "GroupName is Error.";
+                    msg += "GroupName has error:" + e.getMessage();
                 }
 
             }
@@ -87,7 +87,7 @@ public class ElementController {
                         msg +="GetNodeInfo is Failed.";
                     }
                 }catch (Exception e){
-                    msg += "NodeName is Error.";
+                    msg += "NodeName has error:" + e.getMessage();
                 }
             }
         }
@@ -126,7 +126,7 @@ public class ElementController {
                         msg += "GetCellInfo is Failed.";
                     }
                 }catch (Exception e){
-                    msg += "CellName is Error.";
+                    msg += "CellName has error:" + e.getMessage();
                 }
             }
         }
@@ -378,7 +378,7 @@ public class ElementController {
                     }
                 } catch (Exception e) {
 
-                    msg1 = "DB Exception";
+                    msg1 = "DB has error:" + e.getMessage();
                 }
             }
         }

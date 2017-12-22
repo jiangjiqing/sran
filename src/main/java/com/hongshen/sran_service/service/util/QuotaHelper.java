@@ -29,6 +29,7 @@ public class QuotaHelper {
             Double doubleValue = Double.parseDouble(String.valueOf(exp.eval()));
 
         }catch (Exception e){
+            e.printStackTrace();
             return false;
         }
 

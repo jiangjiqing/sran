@@ -315,7 +315,7 @@ public class MapController extends BaseController{
                                                         dataOne.put("favorite", true);
                                                     }
                                                 }catch (Exception e) {
-                                                    msg += "Parameters is Error.";
+                                                    msg += "Parameters has error:" + e.getMessage();
                                                 }
                                             } else {
 
@@ -335,14 +335,14 @@ public class MapController extends BaseController{
                                                     dataOne.put("level", Constants.INVALID_VALUE_LEVEL);
                                                 }
                                             }catch (Exception e) {
-                                                msg += "Parameters is Error.";
+                                                msg += "Parameters has error:" + e.getMessage();
                                             }
                                         }catch (Exception e) {
-                                            msg += "Parameters is Error.";
+                                            msg += "Parameters has error:" + e.getMessage();
                                         }
                                     }
                                 }catch (Exception e){
-                                    msg += "Parameters is Error.";
+                                    msg += "Parameters has error:" + e.getMessage();
                                 }
                                 dataList.add(dataOne);
                             }
@@ -350,7 +350,7 @@ public class MapController extends BaseController{
                         }
                     }
                 }catch (Exception e){
-                    msg += "Parameters is Error.";
+                    msg += "Parameters has error:" + e.getMessage();
                 }
 
             }
@@ -453,14 +453,14 @@ public class MapController extends BaseController{
                                         dataOne.put("infos", cellInfo);
                                     }
                                 }catch (Exception e) {
-                                    msg += "Parameters is Error.";
+                                    msg += "Parameters has error:" + e.getMessage();
                                 }
                                 dataList.add(dataOne);
                             }
                         }
                     }
                 }catch (Exception e){
-                    msg += "Parameters is Error.";
+                    msg += "Parameters has error:" + e.getMessage();
                 }
             }
         }

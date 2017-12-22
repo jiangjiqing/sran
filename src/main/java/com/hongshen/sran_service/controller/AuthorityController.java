@@ -82,7 +82,7 @@ public class AuthorityController {
                             msg +="UpdateAuthority Failed";
                         }
                     }catch (Exception e){
-                        msg += "Parameters is Error.";
+                        msg += "Parameters has error:" + e.getMessage();
                     }
                 }
             }
@@ -124,7 +124,7 @@ public class AuthorityController {
                             msg += "AddAuthority Failed.";
                         }
                     }catch (Exception e){
-                        msg += "Parameters is Error.";
+                        msg += "Parameters has error:" + e.getMessage();
                     }
 
                 } else {
@@ -167,7 +167,7 @@ public class AuthorityController {
                         msg +="DeleteAuthority Failed";
                     }
                 }catch (Exception e){
-                    msg += "Parameters is Error.";
+                    msg += "Parameters has error:" + e.getMessage();
                 }
             }
         }

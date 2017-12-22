@@ -73,7 +73,7 @@ public class AlarmLibController extends BaseController{
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier,generation);
         if(obj == null) {
-            msg +="Supplier or Generation is null.";
+            msg +="Supplier or Generation is error.";
         }else {
             if(alarmName == null) {
                 msg +="Alarm is null";
@@ -133,7 +133,7 @@ public class AlarmLibController extends BaseController{
                             result.put("msg", Constants.MSG_UPDATE_FAILED);
                         }
                     }catch (Exception e){
-                        msg += "Parameters is Error.";
+                        msg += "Parameters has error:" + e.getMessage();
                     }
                 }
             }
@@ -183,7 +183,7 @@ public class AlarmLibController extends BaseController{
                         }
                     }
                 }catch (Exception e){
-                    msg += "Parameters is Error.";
+                    msg += "Parameters has error:" + e.getMessage();
                 }
             }
         }
@@ -223,7 +223,7 @@ public class AlarmLibController extends BaseController{
                     msg +="deleteAlarm is Failed";
                 }
             }catch (Exception e) {
-                msg += "Parameters is Error.";
+                msg += "Parameters has error:" + e.getMessage();
             }
         }
         if (msg.length() == 0){

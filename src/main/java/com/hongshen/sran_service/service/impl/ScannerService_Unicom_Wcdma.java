@@ -150,7 +150,7 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
                         }catch (Exception e){
 
                             value = "-1";
-                            e.getStackTrace();
+                            e.printStackTrace();
                         }
 
                         paramValue.append("'" + value + "',");
@@ -303,7 +303,7 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
                         }catch (Exception e){
 
                             value = "-1";
-                            e.getStackTrace();
+                            e.printStackTrace();
                         }
 
                         paramValue.append("'" + value + "',");
@@ -469,7 +469,7 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
                             value = String.valueOf((double)Math.round(doubleValue*100)/100);
                         }catch (Exception e){
 
-                            e.getStackTrace();
+                            e.printStackTrace();
 
                             value = "-1";
                         }
@@ -609,7 +609,7 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
                         }catch (Exception e){
 
                             value = "-1";
-                            e.getStackTrace();
+                            e.printStackTrace();
                         }
 
                         paramValue.append("'" + value + "',");
@@ -763,7 +763,7 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
                         }catch (Exception e){
 
                             value = "-1";
-                            e.getStackTrace();
+                            e.printStackTrace();
                         }
 
                         paramValue.append("'" + value + "',");
@@ -930,7 +930,7 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
                             value = String.valueOf((double)Math.round(doubleValue*100)/100);
                         }catch (Exception e){
 
-                            e.getStackTrace();
+                            e.printStackTrace();
 
                             value = "-1";
                         }

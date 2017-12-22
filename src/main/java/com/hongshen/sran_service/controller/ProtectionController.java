@@ -167,7 +167,7 @@ public class ProtectionController extends BaseController{
                         try{
                             addNum = obj.getElementInfoService().addProdectNode(importJson.getJSONObject(i).getString("nodeName"));
                         }catch (Exception e){
-                            msg += "NodeName is Error.";
+                            msg += "NodeName has error:" + e.getMessage();
                         }
                     }
                 }
@@ -216,7 +216,7 @@ public class ProtectionController extends BaseController{
                     msg +="GetProtectListnodeName is Failed.";
                 }
             }catch (Exception e){
-                msg += "Parameters is Error.";
+                msg += "Parameters has error:" + e.getMessage();
             }
         }
         if (msg.length() != 0) {

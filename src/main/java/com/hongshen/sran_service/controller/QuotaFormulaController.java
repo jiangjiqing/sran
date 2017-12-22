@@ -203,7 +203,7 @@ public class QuotaFormulaController {
 
                 } catch (Exception e) {
                     result.put("result",Constants.FAIL);
-                    result.put("msg","DB Exception");
+                    result.put("msg","DB has error:" + e.getMessage());
 
                 }
 

@@ -87,6 +87,7 @@ public class NoticeWSController {
             try {
                 client.session.close();
             } catch (IOException e1) {
+                e1.printStackTrace();
 // Ignore
             }
         }
