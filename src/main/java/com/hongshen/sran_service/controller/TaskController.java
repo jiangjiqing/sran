@@ -106,15 +106,15 @@ public class TaskController extends BaseController {
             }
 
             try {
-                String siteDir = Constants.TASK_ROOT_PATH + Constants.TASK_DIR_SITE;
-                String cmdDir = Constants.TASK_ROOT_PATH + Constants.TASK_DIR_CMD;
-                String logDir = Constants.TASK_ROOT_PATH + Constants.TASK_DIR_LOG;
-                String analysisLogDir = Constants.TASK_ROOT_PATH + Constants.TASK_DIR_ANALYSIS_LOG;
+                String siteDir = Constants.TASK_ROOT_PATH + loginName +"/"+Constants.TASK_DIR_SITE;
+                String cmdDir = Constants.TASK_ROOT_PATH + loginName +"/"+Constants.TASK_DIR_CMD;
+                String logDir = Constants.TASK_ROOT_PATH + loginName +"/"+Constants.TASK_DIR_LOG;
+                String analysisLogDir = Constants.TASK_ROOT_PATH + loginName +"/"+Constants.TASK_DIR_ANALYSIS_LOG;
 
-                FileHelper.createFile(siteDir, loginName, param.getString("rncList"));
-                FileHelper.createFile(cmdDir, loginName, param.getString("cmdList"));
-                FileHelper.createDir(logDir + "/" + loginName);
-                FileHelper.createDir(analysisLogDir+ "/" + loginName);
+                FileHelper.createFile(siteDir, Constants.TASK_FILE_SITE, param.getString("rncList"));
+                FileHelper.createFile(cmdDir, Constants.TASK_FILE_CMD, param.getString("cmdList"));
+                FileHelper.createDir(logDir);
+                FileHelper.createDir(analysisLogDir);
 
             }catch  (Exception e){
                 msg += "Create file has error:" + e.getMessage();

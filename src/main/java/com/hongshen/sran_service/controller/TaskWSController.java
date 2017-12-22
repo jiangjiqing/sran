@@ -6,7 +6,6 @@ import com.hongshen.sran_service.service.util.Constants;
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Date;
@@ -135,22 +134,17 @@ public class TaskWSController {
                             this.sendMessage(String.valueOf(result));
                         }
                    }
-
-                    //TODO delete
-                    if(num==50){
-                        break;
-                    }
                 }
-                System.out.println(data);
+
                 if(taskStatusMap.get(loginName) == false) {
                     process.destroy();
+
                 }
                 taskStatusMap.remove(loginName);
                 taskStatusSession.remove(loginName);
 
             } catch (IOException e) {
                 e.printStackTrace();
-                this.sendMessage("cuowu");
                 taskStatusMap.put(loginName,false);
             }
         }

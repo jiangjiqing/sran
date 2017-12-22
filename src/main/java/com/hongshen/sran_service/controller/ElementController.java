@@ -356,9 +356,12 @@ public class ElementController {
                 Integer num = 0;
                 for (int i = 0; i < importJson.size(); i++) {
 
-                    num += obj.getElementInfoService().updateNode(importJson.getJSONObject(i));
-                }
+                    if (importJson.getJSONObject(i).getString("nodeName")!=null
+                            &&!importJson.getJSONObject(i).getString("nodeName").equals("")) {
 
+                        num += obj.getElementInfoService().updateNode(importJson.getJSONObject(i));
+                    }
+                }
                 if (num == 0) {
                     msg += "UpdateNode is Failed.";
                 }
@@ -407,7 +410,12 @@ public class ElementController {
 
                 for (int i = 0; i < importJson.size(); i++) {
                     try {
-                        addNum += obj.getElementInfoService().addRnc(importJson.getJSONObject(i));
+                        if(importJson.getJSONObject(i).getString("groupName")!=null
+                                &&!importJson.getJSONObject(i).getString("groupName").equals("")){
+                            addNum += obj.getElementInfoService().addRnc(importJson.getJSONObject(i));
+                        }
+
+
                     } catch (Exception e) {
                         msg1 += "DB has error:" + e.getMessage();
                     }

@@ -167,64 +167,30 @@
   </select>
 
   <insert id="addFormula" parameterType="com.alibaba.fastjson.JSONObject">
-    insert into unicom_formula_lte
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="quotaName != null">
-        quota_name,
-      </if>
-      <if test="expression != null">
+    insert into unicom_formula_wcdma
+       (quota_name,
         expression,
-      </if>
-      <if test="remark != null">
         remark,
-      </if>
-      <if test="status != null">
         status,
-      </if>
-      <if test="type != null">
         type,
-      </if>
-      <if test="hastop10 != null">
-        hasTop10
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id},
-      </if>
-      <if test="quotaName != null">
-        #{quotaName},
-      </if>
-      <if test="expression != null">
+        hasTop10)VALUES
+        (#{quotaName},
         #{expression},
-      </if>
-      <if test="remark != null">
         #{remark},
-      </if>
-      <if test="status != null">
         #{status},
-      </if>
-      <if test="type != null">
         #{type},
-      </if>
-      <if test="hastop10 != null">
-        #{hastop10}
-      </if>
-    </trim>
+        #{hastop10})
+        ON DUPLICATE KEY UPDATE
+        expression=#{expression},
+        remark=#{remark},
+        status=#{status},
+        type=#{type},
+        hasTop10=#{hastop10};
   </insert>
 
   <update id="updateFormula" parameterType="com.alibaba.fastjson.JSONObject">
     UPDATE unicom_formula_lte
     <set>
-      <!--<if test="param.id != null">-->
-        <!--id = #{param.id,jdbcType=INT},-->
-      <!--</if>-->
-      <!--<if test="param.quotaName != null">-->
-        <!--quota_name = #{param.quotaName,jdbcType=VARCHAR},-->
-      <!--</if>-->
       <if test="param.expression != null">
         expression = #{param.expression,jdbcType=VARCHAR},
       </if>

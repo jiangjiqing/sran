@@ -243,16 +243,21 @@ public class QuotaFormulaController {
             msg +="Supplier or Generation is null.";
         }else {
             if (formulas != null) {
-                Integer delNum = obj.getQuotaService().deleteAllFormulas();
+                //     Integer delNum = obj.getQuotaService().deleteAllFormulas();
 
                 for (int i = 0; i < formulas.size(); i++) {
                     try {
+                        if(formulas.getJSONObject(i).getString("quotaName")!=null
+                                &&!formulas.getJSONObject(i).getString("quotaName").equals("")
+                                &&formulas.getJSONObject(i).getString("expression")!=null
+                                &&!formulas.getJSONObject(i).getString("expression").equals("")){
 
-                        addNum = obj.getQuotaService().addFormula(formulas.getJSONObject(i));
+                            addNum = obj.getQuotaService().addFormula(formulas.getJSONObject(i));
+                        }
 
                     } catch (Exception e) {
-//                        result.put("result", Constants.FAIL);
-//                        result.put("msg", "DB Exception");
+                        e.getMessage();
+
                         msg += "DB Exception";
                     }
 
@@ -263,8 +268,7 @@ public class QuotaFormulaController {
                 }
             } else {
                 msg +="Formulas is Null.";
-//                result.put("result", Constants.FAIL);
-//                result.put("msg", Constants.MSG_ADD_FAILED);
+
             }
         }
         if(msg.length() == 0){
@@ -274,7 +278,7 @@ public class QuotaFormulaController {
 
         }else {
             result.put("result", Constants.FAIL);
-                result.put("msg", Constants.MSG_ADD_FAILED + msg);
+            result.put("msg", Constants.MSG_ADD_FAILED + msg);
         }
         return result;
     }
