@@ -88,7 +88,7 @@ public class Constants {
 
 
     // scanner
-    public final static String SCANNER_SEND_HAND = "http://192.168.0.145:8080";
+    public final static String SCANNER_SEND_HAND = "http://192.168.0.145:8082";
 
     public final static String SCANNER_SEND_UTIL = "/sran/service/net/scanner/suppliers/unicom";
 

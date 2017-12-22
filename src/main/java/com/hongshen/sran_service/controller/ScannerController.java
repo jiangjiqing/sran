@@ -2,12 +2,16 @@ package com.hongshen.sran_service.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.common.BaseController;
+import com.hongshen.sran_service.service.impl.CacheService_Unicom_Lte;
 import com.hongshen.sran_service.service.impl.CacheService_Unicom_Wcdma;
+import com.hongshen.sran_service.service.impl.ScannerService_Unicom_Lte;
+import com.hongshen.sran_service.service.impl.ScannerService_Unicom_Wcdma;
 import com.hongshen.sran_service.service.util.Constants;
 import com.hongshen.sran_service.service.util.NetObjBase;
 import com.hongshen.sran_service.service.util.NetObjFactory;
 
 import com.hongshen.sran_service.service.util.ScannerHelper;
+import com.sun.org.apache.bcel.internal.generic.I2F;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Path("/sran/service/net/scanner")
 public class ScannerController extends BaseController {
@@ -23,7 +29,16 @@ public class ScannerController extends BaseController {
     private NetObjFactory objFactory;
 
     @Autowired
-    private CacheService_Unicom_Wcdma caCheService;
+    private ScannerService_Unicom_Wcdma scannerServiceWcdma;
+
+    @Autowired
+    private ScannerService_Unicom_Lte scannerServiceLte;
+
+    @Autowired
+    private CacheService_Unicom_Wcdma caCheServiceWcdma;
+
+    @Autowired
+    private CacheService_Unicom_Lte caCheServiceLte;
 
     @Autowired
     private  NoticeWSController noticeWS;
@@ -33,14 +48,14 @@ public class ScannerController extends BaseController {
     @GET
     @Path("/suppliers/{supplier}/generations/{generation}/quotas/calculation")
     @Produces(MediaType.APPLICATION_JSON)
-    public void calculation(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
+    public void calculationOld(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
                               @HeaderParam("time")String time) throws IOException {
 
         String ret = null;
 
         if (time != null) {
 
-            caCheService.setUpdateTimeForQuotaData(time);
+            caCheServiceWcdma.setUpdateTimeForQuotaData(time);
 
             NetObjBase netObj = objFactory.getNetObj(supplier, generation);
 
@@ -58,14 +73,93 @@ public class ScannerController extends BaseController {
             ScannerHelper.httpclient(path);
 
         }
-
-
     }
+
+    @GET
+    @Path("/suppliers/{supplier}/quotas/calculation")
+    @Produces(MediaType.APPLICATION_JSON)
+    public void calculation(@PathParam("supplier")String supplier,
+                            @HeaderParam("counterWcdmatime")String counterWcdmatime,
+                            @HeaderParam("counterLtetime")String counterLtetime) throws IOException {
+
+        System.out.println("************************** SRAN counterHistory 计算开始 **************************");
+
+        String ret = null;
+
+        if (counterWcdmatime != null) {
+
+            /*caCheServiceWcdma.setUpdateTimeForQuotaData(counterWcdmatime);
+
+            scannerServiceWcdma.cellCalculation(counterWcdmatime);
+
+            JSONObject params = scannerServiceWcdma.nodeCalculation(counterWcdmatime);
+
+            if (params != null){
+
+                ret = scannerServiceWcdma.groupCalculation(params, counterWcdmatime);
+            }*/
+
+            JSONObject param = new JSONObject();
+
+            param.put("supplier", supplier);
+            param.put("generation", "wcdma");
+            param.put("message", "The counterHistoryWcdma cell/node/group complete of the "
+                    + counterWcdmatime + "calculation");
+            param.put("time", counterWcdmatime);
+
+            String path = Constants.SCANNER_SEND_WCDMA;
+
+            ScannerHelper.httpclientCounterCalculation(path, param);
+        }
+
+        /*if (counterLtetime != null) {
+
+            caCheServiceLte.setUpdateTimeForQuotaData(counterLtetime);
+
+            scannerServiceLte.cellCalculation(counterLtetime);
+
+            JSONObject params = scannerServiceLte.nodeCalculation(counterLtetime);
+
+            if (params != null){
+
+                ret = scannerServiceLte.groupCalculation(params, counterLtetime);
+            }
+
+            JSONObject param = new JSONObject();
+
+            param.put("supplier", supplier);
+            param.put("generation", "wcdma");
+            param.put("message", "The counterHistoryLte cell/node/group complete of the "
+                    + counterLtetime + "calculation");
+            param.put("time", counterLtetime);
+
+            String path = Constants.SCANNER_SEND_LTE;
+
+            ScannerHelper.httpclientCounterCalculation(path, param);
+        }*/
+    }
+
     @GET
     @Path("/suppliers/{supplier}/generations/{generation}/send")
     @Produces(MediaType.APPLICATION_JSON)
-    public void srnd(@PathParam("supplier")String supplier, @PathParam("generation")String generation, JSONObject param) {
+    public void send(@PathParam("supplier")String supplier, @PathParam("generation")String generation,
+                     @HeaderParam("message")String message, @HeaderParam("time")String time) {
+
+        JSONObject param = new JSONObject();
+
+        param.put("supplier", supplier);
+        param.put("generation", generation);
+        param.put("message", message);
+        param.put("time", time);
+
         noticeWS.sendAll(param);
     }
 
+    /*@GET
+    @Path("/suppliers/{supplier}/generations/{generation}/send")
+    @Produces(MediaType.APPLICATION_JSON)
+    public void srnd(@PathParam("supplier")String supplier, @PathParam("generation")String generation, JSONObject param) {
+
+        noticeWS.sendAll(param);
+    }*/
 }

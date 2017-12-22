@@ -36,6 +36,33 @@ public class ScannerHelper {
         }
     }
 
+    public static void httpclientCounterCalculation(String paramPath, JSONObject param) throws IOException {
+
+        String url = paramPath;
+
+        CloseableHttpClient httpclient = null;
+
+        try {
+
+            httpclient = HttpClients.createDefault();
+
+            HttpGet httpget = new HttpGet(url);
+
+            httpget.addHeader("supplier", param.getString("supplier"));
+            httpget.addHeader("generation", param.getString("generation"));
+            httpget.addHeader("message", param.getString("message"));
+            httpget.addHeader("time", param.getString("time"));
+
+            httpclient.execute(httpget);
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        } finally {
+
+            httpclient.close();
+        }
+    }
+
     public static Map<String, List<String>> getVariableList (List<JSONObject> formulaList) {
 
         Map<String, List<String>> resultMap = new HashMap<>();
