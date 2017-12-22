@@ -6,10 +6,20 @@ import java.io.*;
  */
 public class FileHelper {
     // 此方法的主要作用是判断创建文件是否成功，如果成功则返回true否则返回false
-    public static boolean createFile(String dir , String destFileName) {
+    public static boolean createFile(String dir , String destFileName,String text) {
         File file = new File(dir,destFileName); // 根据指定的文件名创建File对象
-        if (file.exists()) {                    // 判断该文件是否存在
+        if (file.exists()) {
+            // 判断该文件是否存在
             System.out.println("创建单个文件" + destFileName + "失败，目标文件已存在！");
+            String info1 =text;
+            try {
+                java.io.OutputStream out = new FileOutputStream(file);
+                out.write(info1.getBytes("utf-8"));
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
             return false;               // 如果存在，则不需创建则返回fasle
         }
         if (destFileName.endsWith(File.separator)) {// 如果传入的文件名是以文件分隔符结尾的，则说明此File对象是个目录而不是文件
@@ -31,7 +41,7 @@ public class FileHelper {
                 System.out.println("创建单个文件" + destFileName + "成功！");
 
 
-                String info ="想要输出到文本ccFile.txt的文字为：xxxxx";
+                String info =text;
                 java.io.OutputStream out = new FileOutputStream(file);
                 out.write(info.getBytes("utf-8"));
                 out.close();

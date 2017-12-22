@@ -44,15 +44,15 @@ public class Constants {
     public static final String FAIL = "FAILED";
 
     public static final String MSG_NO_DATA = "Data is empty.";
-	public static final String MSG_NO_PERMISSION = "Permission denied.";
+    public static final String MSG_NO_PERMISSION = "Permission denied.";
     public static final String MSG_EXPRESSION_INVALID = "Invalid expression.";
 
-	public static final String MSG_DELETE_OK = "Delete ok.";
-	public static final String MSG_DELETE_FAILED = "Delete failed.";
-	public static final String MSG_ADD_OK = "Add ok.";
-	public static final String MSG_ADD_FAILED = "Add failed.";
-	public static final String MSG_UPDATE_OK = "Update ok.";
-	public static final String MSG_UPDATE_FAILED = "Update failed.";
+    public static final String MSG_DELETE_OK = "Delete ok.";
+    public static final String MSG_DELETE_FAILED = "Delete failed.";
+    public static final String MSG_ADD_OK = "Add ok.";
+    public static final String MSG_ADD_FAILED = "Add failed.";
+    public static final String MSG_UPDATE_OK = "Update ok.";
+    public static final String MSG_UPDATE_FAILED = "Update failed.";
     public static final String MSG_CACEL_OK = "Cacel ok.";
     public static final String MSG_CACEL_FAILED = "Cacel failed.";
     public static final String MSG_TASK_CANCLE_OK = "task cancle ok";
@@ -89,4 +89,6 @@ public class Constants {
     public final static String SCANNER_SEND_WCDMA = SCANNER_SEND_HAND + SCANNER_SEND_UTIL + SCANNER_SEND_TYPE_WCDMA;
 
     public final static String SCANNER_SEND_LTE = SCANNER_SEND_HAND + SCANNER_SEND_UTIL + SCANNER_SEND_TYPE_LTE;
+
+    public final static String MOSHELL_URL = "/root/SRAN/moshell/mobatch";
 }

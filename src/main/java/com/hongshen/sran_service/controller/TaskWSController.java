@@ -98,12 +98,13 @@ public class TaskWSController {
     }
 
     public void requstSoxket(String loginName) throws IOException {//TODO
-       /* File outfile = new File("/home/poplar/Task/"+loginName);
+
+        File outfile = new File("/root/apache-tomcat-8.5.16/webapps/Task/"+loginName+"_logs");
         if(!outfile.exists()){
             outfile.mkdir();
-        }*/
+        }
 
-       JSONObject result = new JSONObject();
+        JSONObject result = new JSONObject();
 
 
         if(!taskStatusSession.keySet().contains(loginName)||!taskStatusMap.keySet().contains(loginName)){
@@ -116,24 +117,31 @@ public class TaskWSController {
             int num=0;
 
             try {
-                /*Process process = Runtime.getRuntime().exec(Constants.MOSHELL_URL+Constants.MOSHELL_SITE_URL+" /home/poplar/Task/"+loginName);*/
-                Process process = Runtime.getRuntime().exec("ping 192.168.0.145");
+                Process process = Runtime.getRuntime().exec(Constants.MOSHELL_URL+" /root/apache-tomcat-8.5.16/webapps/Task/site/"+loginName+" /home/poplar/Task/cmd/"+loginName+" /root/apache-tomcat-8.5.16/webapps/Task/"+loginName+"_logs");
                 BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
                 Date date1 = new Date();
                 result.put("timeStart",date1);
-                while (taskStatusMap.get(loginName) == true && null != reader.readLine()) {
+
+                String data = null;
+                while (taskStatusMap.get(loginName) == true && (data = reader.readLine())!=null) {
                     Date date = new Date();
-                    num++;
-                    result.put("total",22);
-                    result.put("complete",num);
-                    result.put("time",date);
-//                    System.out.println(reader.readLine());
-                    this.sendMessage(String.valueOf(result));
+                    if(data.contains("**")) {
+                        num++;
+                        if(num!=1) {
+                            result.put("total", 20);
+                            result.put("complete", num-1);
+                            result.put("time", date);
+                            System.out.println(data);
+                            this.sendMessage(String.valueOf(result));
+                        }
+                   }
+
                     //TODO delete
-                    if(num==22){
+                    if(num==50){
                         break;
                     }
                 }
+                System.out.println(data);
                 if(taskStatusMap.get(loginName) == false) {
                     process.destroy();
                 }
@@ -142,6 +150,8 @@ public class TaskWSController {
 
             } catch (IOException e) {
                 e.printStackTrace();
+                this.sendMessage("cuowu");
+                taskStatusMap.put(loginName,false);
             }
         }
     }

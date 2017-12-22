@@ -77,8 +77,8 @@ public class TaskController extends BaseController {
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         int update = obj.getTaskService().addTask(loginName, param);
-//        FileHelper.createFile("/home/poplar/Task/site",loginName,param.getString("rncList"));
-//        FileHelper.createFile("/home/poplar/Task/cmd",loginName,param.getString("cmdList"));
+        FileHelper.createFile("/root/apache-tomcat-8.5.16/webapps/Task/site",loginName,param.getString("rncList"));
+        FileHelper.createFile("/root/apache-tomcat-8.5.16/webapps/Task/cmd",loginName,param.getString("cmdList"));
         //TODO update start time
         if (update <= 0) {
             result.put("result", Constants.FAIL);
@@ -100,7 +100,6 @@ public class TaskController extends BaseController {
                                 @PathParam("generation") String generation,
                                 @HeaderParam("loginName") String loginName) {
 
-//        String loginName = "tom";// TODO loginName
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         int cacelTask = obj.getTaskService().cacelTask(loginName);
