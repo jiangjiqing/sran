@@ -5,34 +5,25 @@ package com.hongshen.sran_service.service.util;
  */
 public class Constants {
 
+    // server config
+
+    public final static String SRAN_SERVICE_URI = "http://192.168.0.145:8082";
+    public static final String SRAN_SHIRO_URI = "http://localhost:8989";
+    public static final String SRAN_ROOT_PATH = "/root/apache-tomcat-8.5.16/webapps/sran/";
+    public static final String MOSHELL_ROOT_PATH = "/root/sran/moshell/";
+
     // request
+
     public static final String WCDMA = "wcdma";//3G  
     public static final String LTE = "lte";//4G   
-    public static final String UNICOM = "unicom";//中国联通   
-    public static final String SHIRO_URI = "http://localhost:8989/service/v1/check";
+    public static final String UNICOM = "unicom";//中国联通
 
     // level
     public static final String LEVEL_GROUP = "groups";
     public static final String LEVEL_NODE = "nodes";
     public static final String LEVEL_CELL = "cells";
 
-    public static final String GROUP_QUERY = "";
-    public static final String GROUP_ALARM = "";
-    public static final String GROUP_QUOTA = "";
-    public static final String GROUP_INFO = "";
-
-    public static final String NODE_QUERY = "";
-    public static final String NODE_ALARM = "";
-    public static final String NODE_QUOTA = "";
-    public static final String NODE_INFO = "";
-
-    public static final String CELL_QUERY = "";
-    public static final String CELL_ALARM = "";
-    public static final String CELL_QUOTA = "";
-    public static final String CELL_INFO = "";
-
-    // shiro
-    public static final String PATH_DUMMY = "/service/v1/node";
+    // method
 
     public static final String METHOD_PUT = "PUT";
     public static final String METHOD_DELETE = "DELETE";
@@ -40,6 +31,7 @@ public class Constants {
     public static final String METHOD_GET = "GET";
 
     // result
+
     public static final String SUCCESS = "SUCCESS";
     public static final String FAIL = "FAILED";
 
@@ -65,37 +57,31 @@ public class Constants {
     public static final Integer INVALID_VALUE_QUOTA = -1;
 
     // task
-    public static final String SRAN_ROOT_PATH = "/root/apache-tomcat-8.5.16/webapps/sran/";
-    public static final String MOSHELL_ROOT_PATH = "/root/sran/moshell/";
-    public static final String TASK_ROOT_PATH = SRAN_ROOT_PATH + "task/"; // /root/apache-tomcat-8.5.16/webapps/sran/task
 
-    // sran/task/loginName/createTime/site/sitelist
+    // /root/apache-tomcat-8.5.16/webapps/sran/task
+    public static final String TASK_ROOT_PATH = SRAN_ROOT_PATH + "task/";
+    // /sran/task/loginName/createTime/site/sitelist
     public static final String TASK_DIR_SITE = "site";
     public static final String TASK_FILE_SITE = "sitelist";
-
-    // sran/task/loginName/createTime/cmd/cmdlist
+    // /sran/task/loginName/createTime/cmd/cmdlist
     public static final String TASK_DIR_CMD = "cmd";
     public static final String TASK_FILE_CMD = "cmdlist";
-
-    // sran/task/loginName/createTime/log/log.zip
+    // /sran/task/loginName/createTime/log/log.zip
     public static final String TASK_DIR_LOG = "log";
     public static final String TASK_FILE_LOG = "log.zip";
-
-    // sran/task/loginName/createTime/analysislog/analysis.log
+    // /sran/task/loginName/createTime/analysislog/analysis.log
     public static final String TASK_DIR_ANALYSIS_LOG = "analysislog";
     public static final String TASK_FILE_ANALYSIS_LOG = "analysis.log";
 
     // scanner
-    public final static String SCANNER_SEND_HAND = "http://192.168.0.145:8082";
 
     public final static String SCANNER_SEND_UTIL = "/sran/service/net/scanner/suppliers/unicom";
-
     public final static String SCANNER_SEND_TYPE_WCDMA = "/generations/wcdma/send";
-
     public final static String SCANNER_SEND_TYPE_LTE = "/generations/lte/send";
+    public final static String SCANNER_SEND_WCDMA = SRAN_SERVICE_URI + SCANNER_SEND_UTIL + SCANNER_SEND_TYPE_WCDMA;
+    public final static String SCANNER_SEND_LTE = SRAN_SERVICE_URI + SCANNER_SEND_UTIL + SCANNER_SEND_TYPE_LTE;
 
-    public final static String SCANNER_SEND_WCDMA = SCANNER_SEND_HAND + SCANNER_SEND_UTIL + SCANNER_SEND_TYPE_WCDMA;
+    // shiro
 
-    public final static String SCANNER_SEND_LTE = SCANNER_SEND_HAND + SCANNER_SEND_UTIL + SCANNER_SEND_TYPE_LTE;
-
+    public static final String SHIRO_URI = SRAN_SHIRO_URI + "/service/v1/check";
 }
