@@ -11,7 +11,6 @@ import com.hongshen.sran_service.service.util.NetObjBase;
 import com.hongshen.sran_service.service.util.NetObjFactory;
 
 import com.hongshen.sran_service.service.util.ScannerHelper;
-import com.sun.org.apache.bcel.internal.generic.I2F;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 @Path("/sran/service/net/scanner")
 public class ScannerController extends BaseController {
@@ -88,7 +85,7 @@ public class ScannerController extends BaseController {
 
         if (counterWcdmatime != null) {
 
-            /*caCheServiceWcdma.setUpdateTimeForQuotaData(counterWcdmatime);
+            caCheServiceWcdma.setUpdateTimeForQuotaData(counterWcdmatime);
 
             scannerServiceWcdma.cellCalculation(counterWcdmatime);
 
@@ -97,7 +94,7 @@ public class ScannerController extends BaseController {
             if (params != null){
 
                 ret = scannerServiceWcdma.groupCalculation(params, counterWcdmatime);
-            }*/
+            }
 
             JSONObject param = new JSONObject();
 
@@ -112,7 +109,7 @@ public class ScannerController extends BaseController {
             ScannerHelper.httpclientCounterCalculation(path, param);
         }
 
-        /*if (counterLtetime != null) {
+        if (counterLtetime != null) {
 
             caCheServiceLte.setUpdateTimeForQuotaData(counterLtetime);
 
@@ -136,7 +133,7 @@ public class ScannerController extends BaseController {
             String path = Constants.SCANNER_SEND_LTE;
 
             ScannerHelper.httpclientCounterCalculation(path, param);
-        }*/
+        }
     }
 
     @GET

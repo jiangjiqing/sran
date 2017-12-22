@@ -85,8 +85,6 @@ public class Constants {
     public static final String TASK_DIR_ANALYSIS_LOG = "analysislog";
     public static final String TASK_FILE_ANALYSIS_LOG = "analysis.log";
 
-
-
     // scanner
     public final static String SCANNER_SEND_HAND = "http://192.168.0.145:8082";
 
