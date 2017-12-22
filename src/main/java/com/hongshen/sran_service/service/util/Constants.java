@@ -69,6 +69,15 @@ public class Constants {
     public static final String TASK_LOG_PATH_ORIGINAL = "/TASKLOG/XXX.zip";
     public static final String TASK_LOG_PATH_SCRIPT = "/SCRIPTLOG/XXX.log";
 
+    public static final String TASK_PATH_ROOT = "/root/apache-tomcat-8.5.16/webapps/sran/task";
+
+    // full path = /root/apache-tomcat-8.5.16/webapps/sran/task + /loginName + /createTime +
+    public static final String TASK_DIR_SITE = "site";
+    public static final String TASK_DIR_CMDE = "cmd";
+    public static final String TASK_DIR_LOG = "log";
+    public static final String TASK_DIR_ANALYSIS_LOG = "analysislog";
+
+    // scanner
     public final static String SCANNER_SEND_HAND = "http://192.168.0.145:8080";
 
     public final static String SCANNER_SEND_UTIL = "/sran/service/net/scanner/suppliers/unicom";
