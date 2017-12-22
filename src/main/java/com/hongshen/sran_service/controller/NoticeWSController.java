@@ -26,7 +26,7 @@ public class NoticeWSController {
     private HttpSession httpSession;
     private static final AtomicInteger connectionIds = new AtomicInteger(0);
     private static final String GUEST_PREFIX = "Guest";
-    private static final Map<String,Object> connections = new HashMap<String,Object>();
+    private static final Map<Session,Object> connections = new HashMap<Session,Object>();
     private final String nickname;
     public NoticeWSController(){
         nickname = GUEST_PREFIX + connectionIds.getAndIncrement();     }
@@ -34,9 +34,11 @@ public class NoticeWSController {
      * 连接成功*/
     @OnOpen
     public void onOpen(Session session,EndpointConfig config) throws IOException ,EncodeException {
-        HttpSession httpSession= (HttpSession) config.getUserProperties().get(HttpSession.class.getName());
-        connections.put(nickname,this);
-        System.out.println("onopen");
+        this.httpSession= (HttpSession) config.getUserProperties().get(HttpSession.class.getName());
+
+        this.session = session;
+        connections.put(session,this);
+        System.out.println("onopen+++");
     }
 
     /**
@@ -45,6 +47,7 @@ public class NoticeWSController {
     @OnClose
     public void onClose(Session session, CloseReason reason) {
         System.out.println("onClose"+reason.toString());
+        connections.remove(session);
     }
 
     /**
@@ -77,19 +80,16 @@ public class NoticeWSController {
         //this.session.getAsyncRemote().sendText(message);//异步
     }
     public void sendAll(JSONObject msg) {
-        for (String key : connections.keySet()) {
+        for (Session key : connections.keySet()) {
             NoticeWSController client = null;
 
             client = (NoticeWSController) connections.get(key);
             synchronized (client) {
-                client.session.getAsyncRemote().sendText(String.valueOf(msg));
+
+                 client.session.getAsyncRemote().sendText(String.valueOf(msg));
+//                 client.session.getAsyncRemote().
             }
-            try {
-                client.session.close();
-            } catch (IOException e1) {
-                e1.printStackTrace();
-// Ignore
-            }
+
         }
     }
 

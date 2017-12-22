@@ -31,32 +31,36 @@ public class QuotaThresholdController extends BaseController{
                                    @PathParam("level")String level,
                                    @HeaderParam("Auth-Token")String authToken) {
 
+        String msg = "";
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         List<JSONObject> dataList = new ArrayList<>();
 
-        switch (level)
-        {
-            case "groups":
-                dataList = obj.getCacheService().getThresholdGroupList();
-                break;
+        if (obj ==null){
+            msg +="Supplier or Generation is null.";
+        }else {
+            switch (level) {
+                case "groups":
+                    dataList = obj.getCacheService().getThresholdGroupList();
+                    break;
 
-            case "nodes":
-                dataList = obj.getCacheService().getThresholdNodeList();
-                break;
+                case "nodes":
+                    dataList = obj.getCacheService().getThresholdNodeList();
+                    break;
 
-            case "cells":
-                dataList = obj.getCacheService().getThresholdCellList();
-                break;
+                case "cells":
+                    dataList = obj.getCacheService().getThresholdCellList();
+                    break;
 
-            default :
-                dataList = null;
-                break;
+                default:
+                    dataList = null;
+                    break;
+            }
         }
 
-        if(dataList == null || dataList.isEmpty()){
+        if(dataList == null || dataList.isEmpty() || msg.length() != 0){
             result.put("result", Constants.FAIL);
-            result.put("msg", Constants.MSG_NO_DATA);
+            result.put("msg", Constants.MSG_NO_DATA + msg);
 
         }else{
             result.put("result", Constants.SUCCESS);
@@ -77,38 +81,41 @@ public class QuotaThresholdController extends BaseController{
                                    @PathParam("quotaName")String quotaName,
                                    @HeaderParam("Auth-Token")String authToken) {
 
+        String msg = "";
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
 
         quotaThres.put("quotaName",quotaName);
 
         Integer num = 0;
+        if (obj ==null){
+            msg +="Supplier or Generation is null.";
+        }else {
+            switch (level) {
+                case "groups":
+                    num = obj.getQuotaService().setGroupThreshold(quotaThres);
+                    obj.getCacheService().resetThresholdGroupList();
+                    break;
 
-        switch (level)
-        {
-            case "groups":
-                num = obj.getQuotaService().setGroupThreshold(quotaThres);
-                obj.getCacheService().resetThresholdGroupList();
-                break;
+                case "nodes":
+                    num = obj.getQuotaService().setNodeThreshold(quotaThres);
+                    obj.getCacheService().resetThresholdNodeList();
+                    break;
 
-            case "nodes":
-                num = obj.getQuotaService().setNodeThreshold(quotaThres);
-                obj.getCacheService().resetThresholdNodeList();
-                break;
+                case "cells":
+                    num = obj.getQuotaService().setCellThreshold(quotaThres);
+                    obj.getCacheService().resetThresholdCellList();
+                    break;
 
-            case "cells":
-                num = obj.getQuotaService().setCellThreshold(quotaThres);
-                obj.getCacheService().resetThresholdCellList();
-                break;
-
-            default :
-                num = 0;
-                break;
+                default:
+                    num = 0;
+                    break;
+            }
         }
 
-        if(num == 0){
+        if(num == 0 || msg.length() != 0){
             result.put("result",Constants.FAIL);
-            result.put("msg", Constants.MSG_UPDATE_FAILED);
+            result.put("msg", Constants.MSG_UPDATE_FAILED + msg);
 
         }else{
             result.put("result",Constants.SUCCESS);
