@@ -125,12 +125,9 @@ public class AlarmLibController extends BaseController{
                 }else {
                     try {
                         int i = obj.getAlarmLibService().updateAlarmByName(alarmName, param);
-                        if (i > 0) {
+                        if (i <= 0) {
                             msg +="Update failed.";
 
-                        } else {
-                            result.put("result", Constants.FAIL);
-                            result.put("msg", Constants.MSG_UPDATE_FAILED);
                         }
                     }catch (Exception e){
                         msg += "Parameters has error:" + e.getMessage();
