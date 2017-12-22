@@ -93,6 +93,8 @@ public class QuotaFormulaController {
                 int i = obj.getQuotaService().updateFormula(param);
                 if (i <= 0) {
                     msg += "Update to table faild.";
+                }else {
+                    obj.getCacheService().resetFormulaList();
                 }
             }catch (Exception e){
                 msg += "Expression or Param is Error.";
@@ -134,6 +136,8 @@ public class QuotaFormulaController {
                 int i = obj.getQuotaService().DeleteFormula(quotaName);
                 if (i <= 0){
                     msg += "Delete formula table faild.";
+                }else {
+                    obj.getCacheService().resetFormulaList();
                 }
             }catch (Exception e){
                 msg += "QuotaName is Error.";

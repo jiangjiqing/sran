@@ -30,6 +30,7 @@ public class QuotaHistoryController extends BaseController {
                                    @PathParam("level") String level,
                                    @HeaderParam("Auth-Token") String authToken) throws ParseException {
 
+            String msg = "";
             JSONObject result = new JSONObject();
 
             List dataList = new ArrayList();
@@ -39,66 +40,73 @@ public class QuotaHistoryController extends BaseController {
             Date end = null;
             List<String> formulaNameList = new ArrayList<>();
             String[] formula = null;
-
+            int min = 0;
+            List<JSONObject> quotaList = new ArrayList<>();
             NetObjBase obj = objFactory.getNetObj(supplier, generation);
-            String unit = quotaHistory.getJSONObject("time").getString("unit");
+            if (obj ==null){
+                msg +="Supplier or Generation is null.";
+            }else {
 
-            if (quotaHistory.getJSONObject("quota").getString("range").equals("1")) {
-                formula = quotaHistory.getJSONObject("quota").getString("list").replace("]", "")
-                        .replace("[", "").replaceAll("\"", "").split(",");
+                String unit = quotaHistory.getJSONObject("time").getString("unit");
 
-                for (String str : formula) {
+                if (quotaHistory.getJSONObject("quota").getString("range").equals("1")) {
+                    formula = quotaHistory.getJSONObject("quota").getString("list").replace("]", "")
+                            .replace("[", "").replaceAll("\"", "").split(",");
 
-                    formulaNameList.add(str);
+                    for (String str : formula) {
+
+                        formulaNameList.add(str);
+                    }
+
+                } else if (quotaHistory.getJSONObject("quota").getString("range").equals("0")) {
+
+                    formulaNameList = obj.getCacheService().getFormulaNameList(false);
+                }
+                if (quotaHistory.getJSONObject("time").getString("range").equals("1")) {
+                    SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                    String start1 = quotaHistory.getJSONObject("time").getString("start");
+                    String end1 = quotaHistory.getJSONObject("time").getString("end");
+                    start = date.parse(start1);
+                    end = date.parse(end1);
+
                 }
 
-            } else if (quotaHistory.getJSONObject("quota").getString("range").equals("0")) {
+                if (quotaHistory.getJSONObject("element").getString("range").equals("1")) {
 
-                formulaNameList = obj.getCacheService().getFormulaNameList(false);
+                    String[] st = quotaHistory.getJSONObject("element").getString("list").replace("]", "")
+                            .replace("[", "").replaceAll("\"", "").split(",");
+
+                    condition = Condition(st);
+
+                }
+                 quotaList = getQuotas(level, obj, start, end, condition);
+
+
+                if (unit.equals("0") && quotaList != null) {//min
+
+                    min = 4;
+                } else if (unit.equals("1") && quotaList != null) {//hh
+
+                    min = 1;
+                } else if (unit.equals("2") && quotaList != null) {//date
+
+                    min = 2;
+                } else if (unit.equals("3") && quotaList != null) {//month
+
+                    min = 3;
+                }
+
+
             }
-            if (quotaHistory.getJSONObject("time").getString("range").equals("1")) {
-                SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                String start1 = quotaHistory.getJSONObject("time").getString("start");
-                String end1 = quotaHistory.getJSONObject("time").getString("end");
-                start = date.parse(start1);
-                end = date.parse(end1);
+        if (min != 0 && quotaList.size() > 0 || msg.length() != 0) {
+            dataList = getValue(start, end, quotaList, formulaNameList, min, quotaList.get(quotaList.size() - 1).getDate("time"), quotaList.get(0).getDate("time"));
+            result.put("result", Constants.SUCCESS);
+            result.put("data", dataList);
 
-            }
-
-            if (quotaHistory.getJSONObject("element").getString("range").equals("1")) {
-
-                String[] st = quotaHistory.getJSONObject("element").getString("list").replace("]", "")
-                        .replace("[", "").replaceAll("\"", "").split(",");
-
-                condition = Condition(st);
-
-            }
-            List<JSONObject> quotaList = getQuotas(level, obj, start, end, condition);
-
-            int min = 0;
-            if (unit.equals("0") && quotaList != null) {//min
-
-                min = 4;
-            } else if (unit.equals("1") && quotaList != null) {//hh
-
-                min = 1;
-            } else if (unit.equals("2") && quotaList != null) {//date
-
-                min = 2;
-            } else if (unit.equals("3") && quotaList != null) {//month
-
-                min = 3;
-            }
-
-            if (min != 0 && quotaList.size() > 0) {
-                dataList = getValue(start, end, quotaList, formulaNameList, min, quotaList.get(quotaList.size() - 1).getDate("time"), quotaList.get(0).getDate("time"));
-                result.put("result", Constants.SUCCESS);
-                result.put("data", dataList);
-
-            } else {
-                result.put("result", Constants.FAIL);
-                result.put("msg", Constants.MSG_NO_DATA);
-            }
+        } else {
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_NO_DATA);
+        }
         return result;
     }
 
@@ -259,6 +267,7 @@ public class QuotaHistoryController extends BaseController {
                                          @PathParam("level") String level,
                                          @HeaderParam("Auth-Token") String authToken) throws ParseException {
 
+        String msg = "";
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         String condition = null;
         Date start = null;
@@ -310,7 +319,7 @@ public class QuotaHistoryController extends BaseController {
             result1.putAll(json);
             list.add(result1);
         }
-        
+
         result.put("data",list);
         return result;
     }

@@ -64,7 +64,7 @@ public class QuotaController {
                                 JSONObject temp = new JSONObject();
                                 temp.put("quotaName", f.getString("quotaName"));
                                 temp.put("remark", f.getString("remark"));
-                                temp.put("hasTop10", f.getString("hasTop10"));
+                                temp.put("hasTop10", f.getBooleanValue("hasTop10"));
 
                                 String value = quotas.getString(f.getString("quotaName"));
                                 //String value = quotas.getString("formula" + f.getString("id"));
@@ -144,7 +144,7 @@ public class QuotaController {
                                 JSONObject temp = new JSONObject();
                                 temp.put("quotaName", f.getString("quotaName"));
                                 temp.put("remark", f.getString("remark"));
-                                temp.put("hasTop10", f.getString("hasTop10"));
+                                temp.put("hasTop10", f.getBooleanValue("hasTop10"));
 
                                 String value = quotas.getString(f.getString("quotaName"));
                                 //String value = quotas.getString("formula" + f.getString("id"));
@@ -224,7 +224,7 @@ public class QuotaController {
                                 JSONObject temp = new JSONObject();
                                 temp.put("quotaName",f.getString("quotaName"));
                                 temp.put("remark",f.getString("remark"));
-                                temp.put("hasTop10",f.getString("hasTop10"));
+                                temp.put("hasTop10",f.getBooleanValue("hasTop10"));
 
                                 String value = quotas.getString(f.getString("quotaName"));
                                 //String value = quotas.getString("formula" + f.getString("id"));

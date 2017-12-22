@@ -153,7 +153,14 @@ public class TaskController extends BaseController {
             msg += "LoginName is null.";
 
         }else {
-            int cacelTask = obj.getTaskService().cacelTask(loginName);
+            try {
+                int cacelTask = obj.getTaskService().cacelTask(loginName);
+                if (cacelTask <= 0 ){
+                    msg +="CacelTask is Failed";
+                }
+            }catch (Exception e){
+                msg += "CacelTask has error.";
+            }
             //TODO update end time
         }
 
