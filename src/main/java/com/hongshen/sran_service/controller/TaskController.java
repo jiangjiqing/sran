@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.hongshen.sran_service.controller.TaskWSController.taskStatusMap;
@@ -34,32 +35,40 @@ public class TaskController extends BaseController {
                                   @PathParam("generation") String generation,
                                   @HeaderParam("loginName") String loginName) {
 
+        String msg = "";
         JSONObject result = new JSONObject();
-        JSONObject result1 = new JSONObject();
+        List<JSONObject> taskInfo = new ArrayList<>();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        List<JSONObject> taskInfo = obj.getTaskService().getTaskInfo(loginName);
 
-        if (taskInfo.size() == 0 || taskInfo.isEmpty()) {
-            result.put("result", Constants.FAIL);
-            result.put("msg", Constants.MSG_NO_DATA);
+        if (obj == null){
+            msg += "Supplier or Generation has error.";
 
-        } else {
-            Boolean hasOriginalLog = obj.getTaskService().hasOriginalLog(loginName);
-            Boolean hasScriptLog = obj.getTaskService().hasScriptLog(loginName);
+        }else if (loginName == null || loginName.length() == 0){
+            msg += "LoginName is null.";
 
-            result.put("result", Constants.SUCCESS);
-            for(int i=0;i<taskInfo.size();i++) {
-                result1.put("hasOriginalLog", hasOriginalLog);
-                result1.put("hasScriptLog", hasScriptLog);
-                result1.put("logScript", taskInfo.get(i).getString("logScript"));
-                result1.put("isUseScript", taskInfo.get(i).getBoolean("isUseScript"));
-                result1.put("cmdList", taskInfo.get(i).getString("cmdList"));
-                result1.put("loginName", taskInfo.get(i).getString("loginName"));
-                result1.put("rncList", taskInfo.get(i).getString("rncList"));
-                result1.put("startTime", taskInfo.get(i).getDate("startTime"));
-                result1.put("endTime", taskInfo.get(i).getDate("endTime"));
+        }else {
+            try {
+                taskInfo = obj.getTaskService().getTaskInfo(loginName);
+
+                if (taskInfo == null || taskInfo.isEmpty() || taskInfo.size() == 0) {
+                    msg += "TaskInfo is null.";
+
+                } else {
+                    taskInfo.get(0).put("hasOriginalLog", false);//TODO:delete
+                    taskInfo.get(0).put("hasScriptLog", false);//TODO:delete
+                }
+            }catch  (Exception e){
+                msg += "TaskInfo has error:" + e.getMessage();
             }
-            result.put("data",result1);
+        }
+
+        if (msg.length() == 0){
+            result.put("result", Constants.SUCCESS);
+            result.put("data", taskInfo.get(0)); //TODO: return list
+
+        }else{
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_NO_DATA + msg);
         }
 
         return result;
@@ -71,22 +80,48 @@ public class TaskController extends BaseController {
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject startTask(@PathParam("supplier") String supplier,
                                 @PathParam("generation") String generation,
-                                @HeaderParam("loginNmae") String loginName,
+                                @HeaderParam("loginName") String loginName,
                                 @RequestParam("param") JSONObject param) {
 
+        String msg = "";
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        int update = obj.getTaskService().addTask(loginName, param);
-        FileHelper.createFile("/root/apache-tomcat-8.5.16/webapps/Task/site",loginName,param.getString("rncList"));
-        FileHelper.createFile("/root/apache-tomcat-8.5.16/webapps/Task/cmd",loginName,param.getString("cmdList"));
-        //TODO update start time
-        if (update <= 0) {
-            result.put("result", Constants.FAIL);
-            result.put("msg", Constants.MSG_ADD_FAILED);
 
-        } else {
+        if (obj == null){
+            msg += "Supplier or Generation has error.";
+
+        }else if (loginName == null || loginName.length() == 0){
+            msg += "LoginName is null.";
+
+        }else if (param == null || param.isEmpty()) {
+            msg += "Parameters is null.";
+
+        }else{
+            try{
+                int update = obj.getTaskService().addTask(loginName, param);
+                // TODO:insert or update always ok
+
+            }catch (Exception e){
+                msg += "Add task has error:" + e.getMessage();
+            }
+
+            try {
+                FileHelper.createFile("/root/apache-tomcat-8.5.16/webapps/Task/site", loginName, param.getString("rncList"));
+                FileHelper.createFile("/root/apache-tomcat-8.5.16/webapps/Task/cmd", loginName, param.getString("cmdList"));
+
+            }catch  (Exception e){
+                msg += "Create file has error:" + e.getMessage();
+            }
+            //TODO task plan
+        }
+
+        if (msg.length() == 0){
             result.put("result", Constants.SUCCESS);
-            result.put("data", Constants.MSG_ADD_OK);
+            result.put("msg", Constants.MSG_ADD_OK);
+
+        }else{
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_ADD_FAILED + msg);
         }
 
         return result;
@@ -100,18 +135,28 @@ public class TaskController extends BaseController {
                                 @PathParam("generation") String generation,
                                 @HeaderParam("loginName") String loginName) {
 
+        String msg = "";
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        int cacelTask = obj.getTaskService().cacelTask(loginName);
-        //TODO update end time
 
-        if (cacelTask <= 0) {
-            result.put("result", Constants.FAIL);
-            result.put("msg", Constants.MSG_CACEL_FAILED);
+        if (obj == null){
+            msg += "Supplier or Generation has error.";
 
-        } else {
+        }else if (loginName == null || loginName.length() == 0){
+            msg += "LoginName is null.";
+
+        }else {
+            int cacelTask = obj.getTaskService().cacelTask(loginName);
+            //TODO update end time
+        }
+
+        if (msg.length() == 0){
             result.put("result", Constants.SUCCESS);
-            result.put("data", Constants.MSG_CACEL_OK);
+            result.put("msg", Constants.MSG_CACEL_OK);
+
+        }else{
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_CACEL_FAILED + msg);
         }
 
         return result;
@@ -126,33 +171,39 @@ public class TaskController extends BaseController {
                                       @PathParam("isUseScript") String isUseScript,
                                       @HeaderParam("loginName") String loginName) {
 
+        String msg = "";
         JSONObject result = new JSONObject();
         JSONObject file = new JSONObject();
         String filePath = "";
 
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
 
-        if (isUseScript.equalsIgnoreCase("true") &&
-                obj.getTaskService().hasScriptLog(loginName)) {
+        if (obj == null){
+            msg += "Supplier or Generation has error.";
 
-            filePath = loginName + Constants.TASK_LOG_PATH_SCRIPT;
+        }else if (loginName == null || loginName.length() == 0){
+            msg += "LoginName is null.";
 
-        } else if (isUseScript.equalsIgnoreCase("false") &&
+        }else {
+            if (isUseScript.equalsIgnoreCase("true")) {
+                filePath = obj.getTaskService().getAnalysisLogPath(loginName);
 
-                obj.getTaskService().hasOriginalLog(loginName)) {
+            } else if (isUseScript.equalsIgnoreCase("false")) {
+                filePath = obj.getTaskService().getLogPath(loginName);
+            }
 
-            filePath = loginName + Constants.TASK_LOG_PATH_ORIGINAL;
+            if (filePath == ""){
+                msg += "Log is not exist.";
+            }
         }
 
-        if (filePath == "") {
-            result.put("result", Constants.FAIL);
-            result.put("msg", Constants.MSG_NO_DATA);
-
-        } else {
+        if (msg.length() == 0){
+            result.put("result", Constants.SUCCESS);
             file.put("filePath", filePath);
 
-            result.put("result", Constants.SUCCESS);
-            result.put("data", file);
+        }else{
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_NO_DATA + msg);
         }
 
         return result;

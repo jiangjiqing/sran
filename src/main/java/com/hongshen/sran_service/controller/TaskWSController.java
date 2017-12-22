@@ -70,7 +70,7 @@ public class TaskWSController {
 
             taskStatusMap.put(loginName, true);
             taskStatusSession.put(loginName, session);
-            requstSoxket(loginName);
+            requestSocket(loginName);
         }
     }
 
@@ -97,15 +97,19 @@ public class TaskWSController {
 
     }
 
-    public void requstSoxket(String loginName) throws IOException {//TODO
+    public void requestSocket(String loginName) throws IOException {//TODO
 
-        File outfile = new File("/root/apache-tomcat-8.5.16/webapps/Task/"+loginName+"_logs");
+        String mobatchPath = Constants.MOSHELL_ROOT_PATH + "mobatch";
+        String siteFilePath = Constants.TASK_ROOT_PATH + loginName + "/" + Constants.TASK_DIR_SITE + "/" + Constants.TASK_FILE_SITE;
+        String cmdFilePath = Constants.TASK_ROOT_PATH + loginName + "/" + Constants.TASK_DIR_CMD + "/" + Constants.TASK_FILE_CMD;
+        String logFileDir = Constants.TASK_ROOT_PATH + loginName + "/" + Constants.TASK_DIR_LOG;
+
+        File outfile = new File(logFileDir);
         if(!outfile.exists()){
             outfile.mkdir();
         }
 
         JSONObject result = new JSONObject();
-
 
         if(!taskStatusSession.keySet().contains(loginName)||!taskStatusMap.keySet().contains(loginName)){
 
@@ -117,7 +121,8 @@ public class TaskWSController {
             int num=0;
 
             try {
-                Process process = Runtime.getRuntime().exec(Constants.MOSHELL_URL+" /root/apache-tomcat-8.5.16/webapps/Task/site/"+loginName+" /home/poplar/Task/cmd/"+loginName+" /root/apache-tomcat-8.5.16/webapps/Task/"+loginName+"_logs");
+                Process process = Runtime.getRuntime().exec(mobatchPath + " " + siteFilePath + " " + cmdFilePath + " " + logFileDir);
+
                 BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
                 Date date1 = new Date();
                 result.put("timeStart",date1);

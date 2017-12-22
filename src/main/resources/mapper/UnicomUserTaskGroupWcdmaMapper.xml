@@ -181,9 +181,9 @@
       isUseScript,
       logScript,
       startTime,
-      endTime,
-      createTime,
-      remark
+      endTime
+--       createTime,
+--       remark
     FROM unicom_user_task_group_wcdma
     WHERE login_name = #{loginName}
   </select>
@@ -197,9 +197,9 @@
       isUseScript,
       logScript,
       startTime,
-      endTime,
+      endTime)
 --       createTime,
-      remark)
+--       remark)
     VALUES (
       #{loginName},
       #{param.rncList, jdbcType=LONGVARCHAR},
@@ -207,8 +207,9 @@
       #{param.isUseScript, jdbcType=TINYINT},
       #{param.logScript, jdbcType=LONGVARCHAR},
       #{param.startTime, jdbcType=TIMESTAMP},
-      #{param.endTime, jdbcType=TIMESTAMP},
-      #{param.remark, jdbcType=VARCHAR}))
+      #{param.endTime, jdbcType=TIMESTAMP})
+--       #{param.createTime, jdbcType=TIMESTAMP},
+--       #{param.remark, jdbcType=VARCHAR})
     ON DUPLICATE KEY UPDATE
       rncList=#{param.rncList, jdbcType=LONGVARCHAR},
       cmdList=#{param.cmdList, jdbcType=LONGVARCHAR},
@@ -216,7 +217,8 @@
       logScript=#{param.logScript, jdbcType=LONGVARCHAR},
       startTime=#{param.startTime, jdbcType=TIMESTAMP},
       endTime=#{param.endTime, jdbcType=TIMESTAMP};
-      remark=#{param.remark, jdbcType=VARCHAR};
+--       createTime=#{param.createTime, jdbcType=TIMESTAMP},
+--       remark=#{param.remark, jdbcType=VARCHAR};
   </insert>
 
 </mapper>

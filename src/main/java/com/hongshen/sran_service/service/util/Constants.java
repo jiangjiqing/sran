@@ -62,20 +62,30 @@ public class Constants {
     public static final String UPLOAD_RNC_INFOS_FAILED = "upload rnc infos failed";
     public static final String INVALID_VALUE_LEVEL = "-1";
     public static final String INVALID_VALUE_LOCATION = "-1";
-    public static final String INVALID_VALUE_QUOTA = "-1";
-
+    public static final Integer INVALID_VALUE_QUOTA = -1;
 
     // task
-    public static final String TASK_LOG_PATH_ORIGINAL = "/TASKLOG/XXX.zip";
-    public static final String TASK_LOG_PATH_SCRIPT = "/SCRIPTLOG/XXX.log";
+    public static final String SRAN_ROOT_PATH = "/root/apache-tomcat-8.5.16/webapps/sran/";
+    public static final String MOSHELL_ROOT_PATH = "/root/sran/moshell/";
+    public static final String TASK_ROOT_PATH = SRAN_ROOT_PATH + "task/"; // /root/apache-tomcat-8.5.16/webapps/sran/task
 
-    public static final String TASK_PATH_ROOT = "/root/apache-tomcat-8.5.16/webapps/sran/task";
-
-    // full path = /root/apache-tomcat-8.5.16/webapps/sran/task + /loginName + /createTime +
+    // sran/task/loginName/createTime/site/sitelist
     public static final String TASK_DIR_SITE = "site";
-    public static final String TASK_DIR_CMDE = "cmd";
+    public static final String TASK_FILE_SITE = "sitelist";
+
+    // sran/task/loginName/createTime/cmd/cmdlist
+    public static final String TASK_DIR_CMD = "cmd";
+    public static final String TASK_FILE_CMD = "cmdlist";
+
+    // sran/task/loginName/createTime/log/log.zip
     public static final String TASK_DIR_LOG = "log";
+    public static final String TASK_FILE_LOG = "log.zip";
+
+    // sran/task/loginName/createTime/analysislog/analysis.log
     public static final String TASK_DIR_ANALYSIS_LOG = "analysislog";
+    public static final String TASK_FILE_ANALYSIS_LOG = "analysis.log";
+
+
 
     // scanner
     public final static String SCANNER_SEND_HAND = "http://192.168.0.145:8080";
@@ -90,5 +100,4 @@ public class Constants {
 
     public final static String SCANNER_SEND_LTE = SCANNER_SEND_HAND + SCANNER_SEND_UTIL + SCANNER_SEND_TYPE_LTE;
 
-    public final static String MOSHELL_URL = "/root/SRAN/moshell/mobatch";
 }

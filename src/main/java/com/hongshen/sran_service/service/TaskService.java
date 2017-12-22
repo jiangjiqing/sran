@@ -11,11 +11,11 @@ public interface TaskService {
 
     List<JSONObject> getTaskInfo(String loginName);
 
-    Boolean hasOriginalLog(String loginName);
-
-    Boolean hasScriptLog(String loginName);
-
     int addTask(String loginName, JSONObject param);
 
     int cacelTask(String loginName);
+
+    String getLogPath(String loginName);
+
+    String getAnalysisLogPath(String loginName);
 }

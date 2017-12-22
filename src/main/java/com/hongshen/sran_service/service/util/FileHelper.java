@@ -5,6 +5,16 @@ import java.io.*;
  * Created by poplar on 12/7/17.
  */
 public class FileHelper {
+
+    public static boolean isExist(String fileName) {
+        File file = new File(fileName);
+        if (file.exists()) {
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     // 此方法的主要作用是判断创建文件是否成功，如果成功则返回true否则返回false
     public static boolean createFile(String dir , String destFileName,String text) {
         File file = new File(dir,destFileName); // 根据指定的文件名创建File对象

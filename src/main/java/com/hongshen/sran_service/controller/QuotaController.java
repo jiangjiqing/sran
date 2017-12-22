@@ -72,7 +72,7 @@ public class QuotaController {
                                 if (value == null || value == "") {
                                     temp.put("value", Constants.INVALID_VALUE_QUOTA);
                                 } else {
-                                    temp.put("value", value);
+                                    temp.put("value", Double.parseDouble(value));
                                 }
                                 formulaResultList.add(temp);
                             }
@@ -152,7 +152,7 @@ public class QuotaController {
                                 if (value == null || value == "") {
                                     temp.put("value", Constants.INVALID_VALUE_QUOTA);
                                 } else {
-                                    temp.put("value", value);
+                                    temp.put("value", Double.parseDouble(value));
                                 }
                                 formulaResultList.add(temp);
                             }
@@ -232,7 +232,7 @@ public class QuotaController {
                                 if (value == null || value == "") {
                                     temp.put("value", Constants.INVALID_VALUE_QUOTA);
                                 } else {
-                                    temp.put("value", value);
+                                    temp.put("value", Double.parseDouble(value));
                                 }
                                 formulaResultList.add(temp);
                             }
