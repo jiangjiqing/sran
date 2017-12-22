@@ -32,20 +32,28 @@ public class QuotaFormulaController {
                                    @PathParam("generation")String generation,
                                    @HeaderParam("Auth-Token")String authToken){
 
+        String msg ="";
+        List<JSONObject> quotaList = new ArrayList<>();
         JSONObject result = new JSONObject();
-
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        List<JSONObject> quotaList = obj.getCacheService().getFormulaList(true);
+        if (obj == null){
+            msg +="Supplier or Generation is null.";
+        }else {
+            try {
+                quotaList = obj.getCacheService().getFormulaList(true);
 
-        if (quotaList == null || quotaList.isEmpty()) {
+            }catch (Exception e) {
+                msg +="GetFormulaList is Error.";
+            }
+        }
+        if (quotaList == null || quotaList.isEmpty() || msg.length() !=0) {
             result.put("result", Constants.FAIL);
-            result.put("msg", Constants.MSG_NO_DATA);
+            result.put("msg", Constants.MSG_NO_DATA + msg);
 
         } else {
             result.put("result", Constants.SUCCESS);
             result.put("data", quotaList);
         }
-
         return result;
     }
 
@@ -74,18 +82,24 @@ public class QuotaFormulaController {
         }else if (QuotaHelper.checkExpression(expression) == false){
             msg += "Invalid expression.";
 
-        }else{
-            expression = QuotaHelper.convertExpression(expression);
-            param.put("expression", expression);
-            param.put("quotaName", quotaName);
+        }else if (obj == null){
+            msg +="Supplier or Generation is null.";
+        }else {
+            try {
+                expression = QuotaHelper.convertExpression(expression);
+                param.put("expression", expression);
+                param.put("quotaName", quotaName);
 
-            int i = obj.getQuotaService().updateFormula(param);
-            if (i <= 0){
-                msg += "Update to table faild.";
+                int i = obj.getQuotaService().updateFormula(param);
+                if (i <= 0) {
+                    msg += "Update to table faild.";
+                }
+            }catch (Exception e){
+                msg += "Expression or Param is Error.";
             }
         }
 
-        if (msg.length() == 0){
+        if (msg.length() != 0){
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_UPDATE_FAILED + msg);
 
@@ -113,14 +127,21 @@ public class QuotaFormulaController {
         if (quotaName == null || quotaName.length() == 0){
             msg += "Formula name is null.";
 
-        }else{
-            int i = obj.getQuotaService().DeleteFormula(quotaName);
-            if (i <= 0){
-                msg += "Delete formula table faild.";
+        }else if (obj == null){
+            msg +="Supplier or Generation is null.";
+        }else {
+            try {
+                int i = obj.getQuotaService().DeleteFormula(quotaName);
+                if (i <= 0){
+                    msg += "Delete formula table faild.";
+                }
+            }catch (Exception e){
+                msg += "QuotaName is Error.";
             }
+
         }
 
-        if (msg.length() == 0){
+        if (msg.length() != 0){
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_DELETE_FAILED + msg);
 
@@ -140,13 +161,22 @@ public class QuotaFormulaController {
                                      @PathParam("generation")String generation,
                                      @HeaderParam("Auth-Token")String authToken){
 
+        String msg ="";
+        List<JSONObject> counterList = new ArrayList<>();
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        List<JSONObject> counterList = obj.getCacheService().getCounterList(true);
-
-        if (counterList == null || counterList.isEmpty()) {
+        if (obj ==null){
+            msg +="Supplier or Generation is null.";
+        }else {
+            try {
+                counterList = obj.getCacheService().getCounterList(true);
+            }catch (Exception e){
+                msg += "GetCounterList is Error.";
+            }
+        }
+        if (counterList == null || counterList.isEmpty() || msg.length() != 0) {
             result.put("result", Constants.FAIL);
-            result.put("msg", Constants.MSG_NO_DATA);
+            result.put("msg", Constants.MSG_NO_DATA + msg);
 
         } else {
             result.put("result", Constants.SUCCESS);
@@ -162,12 +192,22 @@ public class QuotaFormulaController {
     public JSONObject formulaExport(@PathParam("supplier")String supplier,
                                     @PathParam("generation")String generation,
                                     @HeaderParam("Auth-Token")String authToken) {
+
+        String msg = "";
         JSONObject result = new JSONObject();
+        List<JSONObject> formulaList = new ArrayList<>();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
 
-        List<JSONObject> formulaList = obj.getQuotaService().getFormula(false);
-
-        if(formulaList!=null&&formulaList.size()>0){
+        if (obj ==null){
+            msg +="Supplier or Generation is null.";
+        }else {
+            try {
+                formulaList = obj.getQuotaService().getFormula(false);
+            }catch (Exception e){
+                msg += "GetFormula is Error.";
+            }
+        }
+        if(formulaList!=null&&formulaList.size()>0 || msg.length() == 0){
 
             result.put("msg",Constants.MSG_DOWNLOAD_FORMULAS_OK);
             result.put("result",Constants.SUCCESS);
@@ -189,35 +229,48 @@ public class QuotaFormulaController {
                                     @PathParam("supplier")String supplier,
                                     @PathParam("generation")String generation,
                                     @HeaderParam("Auth-Token")String authToken) {
+
+        String msg = "";
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         Integer addNum=0;
 
-        if(formulas!=null) {
-            Integer delNum =  obj.getQuotaService().deleteAllFormulas();
+        if (obj ==null){
+            msg +="Supplier or Generation is null.";
+        }else {
+            if (formulas != null) {
+                Integer delNum = obj.getQuotaService().deleteAllFormulas();
 
-            for (int i = 0; i < formulas.size(); i++) {
-                try {
+                for (int i = 0; i < formulas.size(); i++) {
+                    try {
 
-                    addNum = obj.getQuotaService().addFormula(formulas.getJSONObject(i));
+                        addNum = obj.getQuotaService().addFormula(formulas.getJSONObject(i));
 
-                } catch (Exception e) {
-                    result.put("result",Constants.FAIL);
-                    result.put("msg","DB has error:" + e.getMessage());
+                    } catch (Exception e) {
+//                        result.put("result", Constants.FAIL);
+//                        result.put("msg", "DB Exception");
+                        msg += "DB Exception";
+                    }
 
                 }
+                if (addNum <= 0) {
 
+                    msg +="AddFormula is Failed.";
+                }
+            } else {
+                msg +="Formulas is Null.";
+//                result.put("result", Constants.FAIL);
+//                result.put("msg", Constants.MSG_ADD_FAILED);
             }
-            if(addNum>0){
+        }
+        if(msg.length() == 0){
+            obj.getCacheService().resetCounterList();
+            result.put("result", Constants.SUCCESS);
+            result.put("msg", Constants.MSG_ADD_OK);
 
-                obj.getCacheService().resetCounterList();
-                result.put("result",Constants.SUCCESS);
-                result.put("msg",Constants.MSG_ADD_OK);
-            }
         }else {
-
-            result.put("result",Constants.FAIL);
-            result.put("msg",Constants.MSG_ADD_FAILED);
+            result.put("result", Constants.FAIL);
+                result.put("msg", Constants.MSG_ADD_FAILED + msg);
         }
         return result;
     }
