@@ -43,7 +43,7 @@ public class TaskController extends BaseController {
         if (obj == null){
             msg += "Supplier or Generation has error.";
 
-        }else if (loginName == null || loginName.length() == 0){
+        }else if (loginName == null || loginName.length() == 0 || loginName.isEmpty()){
             msg += "LoginName is null.";
 
         }else {
@@ -90,7 +90,7 @@ public class TaskController extends BaseController {
         if (obj == null){
             msg += "Supplier or Generation has error.";
 
-        }else if (loginName == null || loginName.length() == 0){
+        }else if (loginName == null || loginName.length() == 0 || loginName.isEmpty()){
             msg += "LoginName is null.";
 
         }else if (param == null || param.isEmpty()) {
@@ -149,7 +149,7 @@ public class TaskController extends BaseController {
         if (obj == null){
             msg += "Supplier or Generation has error.";
 
-        }else if (loginName == null || loginName.length() == 0){
+        }else if (loginName == null || loginName.length() == 0 || loginName.isEmpty()){
             msg += "LoginName is null.";
 
         }else {
@@ -195,7 +195,7 @@ public class TaskController extends BaseController {
         if (obj == null){
             msg += "Supplier or Generation has error.";
 
-        }else if (loginName == null || loginName.length() == 0){
+        }else if (loginName == null || loginName.length() == 0 || loginName.isEmpty()){
             msg += "LoginName is null.";
 
         }else {

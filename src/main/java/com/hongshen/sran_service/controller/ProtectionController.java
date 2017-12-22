@@ -43,7 +43,7 @@ public class ProtectionController extends BaseController{
             msg += "Supplier or Generation has error.";
         }else {
             List<JSONObject> protectList = obj.getElementInfoService().getProtectList();
-            if (protectList == null){
+            if (protectList == null || protectList.isEmpty()){
                 msg +="getProtectList is Failed.";
             }else {
                 for (JSONObject protect : protectList) {
@@ -161,7 +161,7 @@ public class ProtectionController extends BaseController{
                 msg +="ClearNodes is Failed.";
             }else {
                 for (int i = 0; i < importJson.size(); i++) {
-                    if (importJson.getJSONObject(i).getString("nodeName") == null){
+                    if (importJson.getJSONObject(i).getString("nodeName") == null || importJson.getJSONObject(i).getString("nodeName").isEmpty()){
                         msg +="NodeName is null.";
                     }else {
                         try{
@@ -203,7 +203,7 @@ public class ProtectionController extends BaseController{
         }else {
             try {
                 List<JSONObject> protectList = obj.getElementInfoService().getProtectListnodeName();
-                if (protectList != null && protectList.size() != 0) {
+                if (protectList != null && protectList.size() != 0 || protectList.isEmpty()) {
 
                     for (JSONObject nodeName : protectList) {
 

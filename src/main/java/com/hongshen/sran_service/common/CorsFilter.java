@@ -34,7 +34,7 @@ public class CorsFilter extends BaseController implements Filter{
         HttpServletResponse response = (HttpServletResponse) res;
         HttpServletRequest request = (HttpServletRequest) req;
 
-        String authToken = request.getHeader("aaa");
+        String authToken = request.getHeader("Auth-Token");
         String method = request.getMethod();
         StringBuffer url = request.getRequestURL();
         String ip=request.getRemoteAddr();
@@ -69,7 +69,7 @@ public class CorsFilter extends BaseController implements Filter{
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE");
         response.setHeader("Access-Control-Max-Age", "3600");
-        response.setHeader("Access-Control-Allow-Headers", "x-requested-with,content-Type,loginName");
+        response.setHeader("Access-Control-Allow-Headers", "x-requested-with,content-Type,loginName,Auth-Token");
 
 //        request.getHeader("aaa");
 

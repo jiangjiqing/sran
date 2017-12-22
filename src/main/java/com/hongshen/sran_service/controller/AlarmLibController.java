@@ -39,7 +39,7 @@ public class AlarmLibController extends BaseController{
         }else{
             alarmList = obj.getAlarmLibService().getAlarmList();
 
-            if (alarmList == null || alarmList.isEmpty()) {
+            if (alarmList == null || alarmList.isEmpty() ||alarmList.size() == 0) {
 
                 msg += "Get alarmList failed.";
             }
@@ -75,12 +75,12 @@ public class AlarmLibController extends BaseController{
         if(obj == null) {
             msg += "Supplier or Generation has error.";
         }else {
-            if(alarmName == null) {
+            if(alarmName == null || alarmName.isEmpty() || alarmName.length() == 0) {
                 msg +="Alarm is null";
             }else {
                 alarm = obj.getAlarmLibService().getAlarmByName(alarmName);
 
-                if (alarm == null || alarm.isEmpty()) {
+                if (alarm == null || alarm.isEmpty() || alarm.size() == 0) {
 //                result.put("result", Constants.FAIL);
 //                result.put("msg", Constants.MSG_NO_DATA);
                     msg += "Alarm is null.";
@@ -117,10 +117,10 @@ public class AlarmLibController extends BaseController{
         if (obj == null){
             msg += "Supplier or Generation has error.";
         }else {
-            if (alarmName ==null){
+            if (alarmName ==null || alarmName.isEmpty() || alarmName.length() == 0){
                 msg +="AlarmName is null.";
             }else {
-                if(param == null){
+                if(param == null || param.size() == 0 || param.isEmpty()){
                     msg += "Param is null.";
                 }else {
                     try {
@@ -163,11 +163,11 @@ public class AlarmLibController extends BaseController{
         if(obj == null){
             msg += "Supplier or Generation has error.";
         }else {
-            if (param == null){
+            if (param == null || param.isEmpty() || param.size() == 0){
                 msg += "Param is null.";
             }else {
                 try {
-                    if (param.getString("alarmNameId") != "") {
+                    if (param.getString("alarmNameId") != "" || param.getString("alarmNameId").length() == 0 || param.getString("alarmNameId").isEmpty()) {
                         int i = obj.getAlarmLibService().addAlarmIndex(param);
                         if (i == 0) {
                             msg = "alarmNameId is exist.";

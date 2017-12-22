@@ -37,7 +37,7 @@ public class QuotaController {
         if (obj == null){
             msg += "Supplier or Generation has error.";
 
-        }else if (groupName == null || groupName.length() == 0) {
+        }else if (groupName == null || groupName.length() == 0 || groupName.isEmpty()) {
             msg +="GroupName is null.";
 
         }else{
@@ -69,7 +69,7 @@ public class QuotaController {
                                 String value = quotas.getString(f.getString("quotaName"));
                                 //String value = quotas.getString("formula" + f.getString("id"));
 
-                                if (value == null || value == "") {
+                                if (value == null || value == "" || value.isEmpty()) {
                                     temp.put("value", Constants.INVALID_VALUE_QUOTA);
                                 } else {
                                     temp.put("value", Double.parseDouble(value));
@@ -118,7 +118,7 @@ public class QuotaController {
         if (obj == null){
             msg += "Supplier or Generation has error.";
 
-        }else if (nodeName == null || nodeName.length() == 0) {
+        }else if (nodeName == null || nodeName.length() == 0 || nodeName.isEmpty()) {
             msg +="NodeName is null.";
 
         }else {
@@ -149,7 +149,7 @@ public class QuotaController {
                                 String value = quotas.getString(f.getString("quotaName"));
                                 //String value = quotas.getString("formula" + f.getString("id"));
 
-                                if (value == null || value == "") {
+                                if (value == null || value == "" || value.isEmpty()) {
                                     temp.put("value", Constants.INVALID_VALUE_QUOTA);
                                 } else {
                                     temp.put("value", Double.parseDouble(value));
@@ -197,7 +197,7 @@ public class QuotaController {
         if (obj == null){
             msg += "Supplier or Generation has error.";
 
-        }else if (cellName == null || cellName.length() == 0) {
+        }else if (cellName == null || cellName.length() == 0 || cellName.isEmpty()) {
             msg +="CellName is null.";
 
         }else {
@@ -229,7 +229,7 @@ public class QuotaController {
                                 String value = quotas.getString(f.getString("quotaName"));
                                 //String value = quotas.getString("formula" + f.getString("id"));
 
-                                if (value == null || value == "") {
+                                if (value == null || value == "" || value.isEmpty()) {
                                     temp.put("value", Constants.INVALID_VALUE_QUOTA);
                                 } else {
                                     temp.put("value", Double.parseDouble(value));
@@ -278,10 +278,10 @@ public class QuotaController {
         if (obj == null){
             msg += "Supplier or Generation has error.";
 
-        }else if (groupName == null || groupName.length() == 0) {
+        }else if (groupName == null || groupName.length() == 0 || groupName.isEmpty()) {
             msg +="GroupName is null.";
 
-        }else if (quotaName == null || quotaName.length() == 0) {
+        }else if (quotaName == null || quotaName.length() == 0 || quotaName.isEmpty()) {
             msg += "QuotaName is null.";
 
         }else {
