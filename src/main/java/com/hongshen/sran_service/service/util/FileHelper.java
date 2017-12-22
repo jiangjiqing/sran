@@ -90,8 +90,11 @@ public class FileHelper {
 //    }
 
     public static boolean compressFile(String srcFilePath, String desFilePath, String desFileName){
-        Process process =null;
-        String command = "mkdir "+desFilePath;
+
+        Process process = null;
+
+        // create folder
+        String command = "mkdir "+ desFilePath;
         try {
             process = Runtime.getRuntime().exec(command);
             try {
@@ -102,9 +105,19 @@ public class FileHelper {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String command1 ="tar -cf "+desFilePath+desFileName+" "+srcFilePath;
+
+        // change folder
+        command = "cd " + srcFilePath;
         try {
-            process = Runtime.getRuntime().exec(command1);
+            process = Runtime.getRuntime().exec(command);
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // compress files
+        command ="tar -cf "+desFilePath+desFileName+" "+srcFilePath;
+        try {
+            process = Runtime.getRuntime().exec(command);
 
                 InputStreamReader ir=new InputStreamReader(process.getErrorStream());
 
