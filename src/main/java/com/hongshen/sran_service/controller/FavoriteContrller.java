@@ -39,13 +39,15 @@ public class FavoriteContrller {
         String tableName = tableNameBase + loginName;
         List<JSONObject> favoriteList = new ArrayList<>();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
+
         if (obj == null){
-            msg +="Supplier or Generation is null.";
+            msg += "Supplier or Generation has error.";
+
         }else {
             JSONObject table = obj.getElementInfoService().getTable(tableNameLike);
 
-            if (table == null) {
-                msg +="Table is Null.";
+            if (table == null || table.isEmpty()) {
+                msg += "Table is Null.";
 
             } else {
 
@@ -103,67 +105,52 @@ public class FavoriteContrller {
         String tableNameBase = "unicom_favorite_"+generation+"_";
         String gettableName = "%"+tableNameBase+loginName+"%";
         String tableName = tableNameBase+loginName;
-
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
+
         if (obj == null){
-            msg +="Supplier or Generation is null.";
+            msg += "Supplier or Generation has error.";
+
         }else {
             JSONObject table = obj.getElementInfoService().getTable(gettableName);
-            if (table != null) {
+            if (table == null || table.isEmpty()){
+                msg += "Table is Null.";
 
-                if (level.equals("nodes")) {
+            }else {
+                int i = 0;
+                switch (level){
+                    case Constants.LEVEL_GROUP:
+                        i = obj.getElementInfoService().deleteNodes(tableName, name);
+                        if (i <= 0) {
+                            msg += "Delete Node is failed.";
+                        }
+                        break;
 
-                    String nodeName = name;
+                    case Constants.LEVEL_NODE:
+                        i = obj.getElementInfoService().deleteNode(tableName, name);
+                        if (i <= 0) {
+                            msg += "Delete Node is failed.";
+                        }
+                        break;
 
-                    int i = obj.getElementInfoService().deleteNode(tableName, nodeName);
-
-                    if (i <= 0) {
-
-                        msg += "Delete Node is failed.";
-
-                    }
-
-                } else if (level.equals("groups")) {
-
-                    int i = obj.getElementInfoService().deleteNodes(tableName, name);
-
-                    if (i <= 0) {
-
-                        msg += "Delete Node is failed.";
-
-                    }
-
-                } else {
-
-                    msg += "Delete Node is failed.";
-
+                    default:
+                        msg += "Level has error.";
+                        break;
                 }
-
-            } else {
-
-                msg += "Delete Node is failed.";
-
             }
         }
 
         if (msg.length() == 0){
-
             result.put("result", Constants.SUCCESS);
-
             result.put("msg", Constants.MSG_DELETE_OK);
 
-
         }else{
-
             result.put("result", Constants.FAIL);
-
             result.put("msg", Constants.MSG_DELETE_FAILED + msg);
-
         }
 
         return result;
-
     }
+
     //    Add the status of network element collection
     @POST
     @Path("/suppliers/{supplier}/generations/{generation}/nets/{level}/{name}/favorites")
@@ -173,72 +160,64 @@ public class FavoriteContrller {
                                     @PathParam("level")String level,
                                     @PathParam("name")String name,JSONObject param,
                                     @HeaderParam("loginName")String loginName) {
-        JSONObject result = new JSONObject();
 
+        JSONObject result = new JSONObject();
         String msg = "";
         String tableNameBase = "unicom_favorite_"+generation+"_";
         String gettableName = "%"+tableNameBase+loginName+"%";
         String tableName = tableNameBase+loginName;
-
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
+
         if (obj == null){
-            msg +="Supplier or Generation is null.";
+            msg += "Supplier or Generation has error.";
+
         }else {
             JSONObject table = obj.getElementInfoService().getTable(gettableName);
             Boolean tableExist = false;
 
             if (table == null) {
-
-                msg += "Table dose not exist.";
-
                 int j = obj.getElementInfoService().createTable(tableName);
                 if (j <= 0) {
-
                     msg += "Create table failed.";
-
                 }
-
             } else {
-
                 tableExist = true;
-
             }
 
             if (tableExist) {
+                try {
+                    switch (level) {
+                        case Constants.LEVEL_GROUP:
 
-                if (level.equals("nodes")) {
+                                List<JSONObject> nodeNames = obj.getElementInfoService().getNodeListByGroup(name);
 
-                    int i = obj.getElementInfoService().addNode(tableName, name);
+                                if (nodeNames.size() != 0) {
 
-                    if (i <= 0) {
+                                    int i = obj.getElementInfoService().addNodes(tableName, nodeNames);
 
-                        msg += "Add node is failed.";
+                                    if (i <= 0) {
+                                        msg += "Add nodes is failed.";
+                                    }
+
+                                } else {
+                                    msg += "Node is null";
+                                }
+                            break;
+
+                        case Constants.LEVEL_NODE:
+                            int i = obj.getElementInfoService().addNode(tableName, name);
+                            if (i <= 0) {
+                                msg += "Add node is failed.";
+                            }
+                            break;
+
+                        default:
+                            msg += "Level has error.";
+                            break;
 
                     }
-
-                } else if (level.equals("groups")) {
-
-                    List<JSONObject> nodeNames = obj.getElementInfoService().getNodeListByGroup(name);
-
-                    if (nodeNames.size() != 0) {
-
-                        int i = obj.getElementInfoService().addNodes(tableName, nodeNames);
-
-                        if (i <= 0) {
-
-                            msg += "Add nodes is failed.";
-
-                        }
-
-                    } else {
-
-                        msg += "Node is null";
-
-                    }
-
-                } else {
-
-                    msg += "Level dose not belong to nodes or groups";
+                }catch (Exception e){
+                    msg += "Updata has error:" + e.getMessage();
                 }
             }
         }

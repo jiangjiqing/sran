@@ -34,7 +34,7 @@ public class AlarmLibController extends BaseController{
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         if (obj == null) {
-            msg += "Supplier or Generation is null.";
+            msg += "Supplier or Generation has error.";
 
         }else{
             alarmList = obj.getAlarmLibService().getAlarmList();
@@ -73,7 +73,7 @@ public class AlarmLibController extends BaseController{
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier,generation);
         if(obj == null) {
-            msg +="Supplier or Generation is error.";
+            msg += "Supplier or Generation has error.";
         }else {
             if(alarmName == null) {
                 msg +="Alarm is null";
@@ -115,7 +115,7 @@ public class AlarmLibController extends BaseController{
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier,generation);
         if (obj == null){
-            msg +="Supplier or Generation is null.";
+            msg += "Supplier or Generation has error.";
         }else {
             if (alarmName ==null){
                 msg +="AlarmName is null.";
@@ -164,7 +164,7 @@ public class AlarmLibController extends BaseController{
         String msg = "";
         NetObjBase obj = objFactory.getNetObj(supplier,generation);
         if(obj == null){
-            msg +="Supplier or Generation is null.";
+            msg += "Supplier or Generation has error.";
         }else {
             if (param == null){
                 msg += "Param is null.";
@@ -214,7 +214,7 @@ public class AlarmLibController extends BaseController{
         String msg = "";
         NetObjBase obj = objFactory.getNetObj(supplier,generation);
         if (obj == null){
-            msg +="Supplier or Generation is null.";
+            msg += "Supplier or Generation has error.";
         }else {
             try {
                 int ret = obj.getAlarmLibService().deleteAlarmByName(alarmName);

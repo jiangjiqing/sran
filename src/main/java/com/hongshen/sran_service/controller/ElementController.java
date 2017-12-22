@@ -35,31 +35,34 @@ public class ElementController {
         JSONObject groupInfo = null;
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
+
         if (obj == null){
-            msg +="Supplier or Generation is null.";
-        }else {
-            if (groupName == null){
+            msg += "Supplier or Generation has error.";
+
+        }else if (groupName == null || groupName.length() == 0){
                 msg +="GroupName is null.";
-            }else {
-                try {
-                    groupInfo = obj.getElementInfoService().getGroupInfo(groupName);
 
-                    if (groupInfo == null || groupInfo.isEmpty()) {
-                        msg += "GetGroupInfo is Failed.";
-                    }
-                }catch (Exception e){
-                    msg += "GroupName has error:" + e.getMessage();
+        }else {
+            try {
+                groupInfo = obj.getElementInfoService().getGroupInfo(groupName);
+
+                if (groupInfo == null || groupInfo.isEmpty()) {
+                    msg += "GetGroupInfo is Failed.";
                 }
-
+            }catch (Exception e){
+                msg += "GroupName has error:" + e.getMessage();
             }
         }
+
         if (msg.length() == 0){
             result.put("result", Constants.SUCCESS);
             result.put("data", groupInfo);
+
         } else {
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA + msg);
         }
+
         return result;
     }
 
@@ -75,22 +78,24 @@ public class ElementController {
         JSONObject nodeInfo = null;
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
+
         if (obj == null){
-            msg +="Supplier or Generation is null.";
-        }else {
-            if (nodeName == null){
+            msg += "Supplier or Generation has error.";
+
+        }else if (nodeName == null || nodeName.length() == 0){
                 msg +="NodeName is null.";
-            }else {
-                try {
-                    nodeInfo = obj.getElementInfoService().getNodeInfo(nodeName);
-                    if (nodeInfo == null || nodeInfo.isEmpty()) {
-                        msg +="GetNodeInfo is Failed.";
-                    }
-                }catch (Exception e){
-                    msg += "NodeName has error:" + e.getMessage();
+
+        }else {
+            try {
+                nodeInfo = obj.getElementInfoService().getNodeInfo(nodeName);
+                if (nodeInfo == null || nodeInfo.isEmpty()) {
+                    msg +="GetNodeInfo is Failed.";
                 }
+            }catch (Exception e){
+                msg += "NodeName has error:" + e.getMessage();
             }
         }
+
         if (msg.length() == 0){
             result.put("result", Constants.SUCCESS);
             result.put("data", nodeInfo);
@@ -98,6 +103,7 @@ public class ElementController {
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA + msg);
         }
+
         return result;
     }
 
@@ -114,22 +120,24 @@ public class ElementController {
         JSONObject cellInfo = null;
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
+
         if (obj == null){
-            msg +="Supplier or Generation is null.";
-        }else {
-            if (cellName == null){
+            msg += "Supplier or Generation has error.";
+
+        }else if (cellName == null || cellName.length() == 0){
                 msg +="NodeName is null.";
-            }else {
-                try {
-                    cellInfo = obj.getElementInfoService().getCellInfo(cellName);
-                    if (cellInfo == null || cellInfo.isEmpty()) {
-                        msg += "GetCellInfo is Failed.";
-                    }
-                }catch (Exception e){
-                    msg += "CellName has error:" + e.getMessage();
+
+        }else {
+            try {
+                cellInfo = obj.getElementInfoService().getCellInfo(cellName);
+                if (cellInfo == null || cellInfo.isEmpty()) {
+                    msg += "GetCellInfo is Failed.";
                 }
+            }catch (Exception e){
+                msg += "CellName has error:" + e.getMessage();
             }
         }
+
         if (msg.length() == 0){
             result.put("result", Constants.SUCCESS);
             result.put("data", cellInfo);
@@ -153,28 +161,36 @@ public class ElementController {
         List<JSONObject> infoList = new ArrayList<>();
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
+
         if (obj == null){
-            msg +="Supplier or Generation is null.";
+            msg += "Supplier or Generation has error.";
+
         }else {
-            switch (level) {
-                case "groups":
-                    infoList = obj.getElementInfoService().getGroupInfoList();
-                    break;
+            try {
+                switch (level) {
+                    case "groups":
+                        infoList = obj.getElementInfoService().getGroupInfoList();
+                        break;
 
-                case "nodes":
-                    infoList = obj.getElementInfoService().getNodeInfoList();
-                    break;
+                    case "nodes":
+                        infoList = obj.getElementInfoService().getNodeInfoList();
+                        break;
 
-                case "cells":
-                    infoList = obj.getElementInfoService().getCellInfoList();
-                    break;
+                    case "cells":
+                        infoList = obj.getElementInfoService().getCellInfoList();
+                        break;
 
-                default:
-                    break;
+                    default:
+                        msg += "Level has error.";
+                        break;
+                }
+
+            }catch (Exception e){
+                msg += "InfoList has error:" + e.getMessage();
             }
         }
 
-        if (infoList == null || infoList.isEmpty() || msg.length() == 0) {
+        if (infoList == null || infoList.isEmpty() || msg.length() != 0) {
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA + msg);
 
@@ -197,28 +213,36 @@ public class ElementController {
 
         String msg = "";
         JSONObject result = new JSONObject();
-        NetObjBase obj = objFactory.getNetObj(supplier, generation);
         List<String> infoList = new ArrayList<>();
+        NetObjBase obj = objFactory.getNetObj(supplier, generation);
+
         if (obj == null){
-            msg +="Supplier or Generation is null.";
+            msg += "Supplier or Generation has error.";
+
         }else {
-            switch (level) {
-                case "groups":
-                    infoList = obj.getElementInfoService().getGroupNameList();
-                    break;
+            try{
+                switch (level) {
+                    case "groups":
+                        infoList = obj.getElementInfoService().getGroupNameList();
+                        break;
 
-                case "nodes":
-                    infoList = obj.getElementInfoService().getNodeNameList();
-                    break;
+                    case "nodes":
+                        infoList = obj.getElementInfoService().getNodeNameList();
+                        break;
 
-                case "cells":
-                    infoList = obj.getElementInfoService().getCellNameList();
-                    break;
+                    case "cells":
+                        infoList = obj.getElementInfoService().getCellNameList();
+                        break;
 
-                default:
-                    break;
+                    default:
+                        msg += "Level has error.";
+                        break;
+                }
+            }catch (Exception e){
+                msg += "InfoList has error:" + e.getMessage();
             }
         }
+
         if (infoList == null || infoList.isEmpty() || msg.length() != 0) {
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA);
@@ -243,25 +267,33 @@ public class ElementController {
         List<String> ossNameList = new ArrayList<>();
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        if (obj == null){
-            msg +="Supplier or Generation is null.";
-        }else {
-             ossNameList = obj.getElementInfoService().getOssNameList();
 
-            if (ossNameList == null || ossNameList.isEmpty()) {
-                msg += "GetOssNameList is Failed";
+        if (obj == null){
+            msg += "Supplier or Generation has error.";
+
+        }else {
+            try {
+                ossNameList = obj.getElementInfoService().getOssNameList();
+
+                if (ossNameList == null || ossNameList.isEmpty()) {
+                    msg += "GetOssNameList is null.";
+                }
+            }catch (Exception e){
+                msg += "List has error:" + e.getMessage();
             }
         }
+
         if (msg.length() == 0){
             result.put("result", Constants.SUCCESS);
             result.put("data", ossNameList);
+
         } else {
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA + msg);
         }
+
         return result;
     }
-
 
     @GET
     @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/download")
@@ -269,37 +301,34 @@ public class ElementController {
     public JSONObject groupExport(@PathParam("supplier") String supplier,
                                    @PathParam("generation") String generation,
                                    @HeaderParam("Auth-Token") String authToken) {
+
         String msg = "";
-        NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        List list = new ArrayList();
+        List<JSONObject> groupList = new ArrayList();
         JSONObject result = new JSONObject();
+        NetObjBase obj = objFactory.getNetObj(supplier, generation);
 
         if (obj == null){
-            msg +="Supplier or Generation is null.";
+            msg += "Supplier or Generation has error.";
+
         }else {
-
-            List<JSONObject> groupList = obj.getElementInfoService().getGroupInfoList();
-            if (groupList != null && groupList.size() > 0) {
-
-
-                for (JSONObject group : groupList) {
-
-                    list.add(group);
+            try {
+                groupList = obj.getElementInfoService().getGroupInfoList();
+                if (groupList == null || groupList.isEmpty() || groupList.size() == 0){
+                    msg += "GroupInfoList is null.";
                 }
-
-
-            } else {
-
-                msg +="GetGroupInfoList is Failed.";
+            }catch (Exception e){
+                msg += "GroupInfoList has error:" + e.getMessage();
             }
         }
+
         if (msg.length() == 0){
             result.put("result", Constants.SUCCESS);
-            result.put("data", list);
+            result.put("data", groupList);
         } else {
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_NO_DATA + msg);
         }
+
         return result;
     }
 
@@ -314,31 +343,39 @@ public class ElementController {
 
         String msg = "";
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
+
         JSONObject result = new JSONObject();
         if (obj == null){
-            msg +="Supplier or Generation is null.";
+            msg += "Supplier or Generation has error.";
+
+        }else if (importJson == null || importJson.isEmpty() || importJson.size() == 0) {
+            msg += "ImportJson is Null.";
+
         }else {
-            if (importJson == null) {
-                msg +="ImportJson is Null.";
-            } else {
-                Integer Num = 0;
+            try {
+                Integer num = 0;
                 for (int i = 0; i < importJson.size(); i++) {
 
-                    Num = obj.getElementInfoService().updateNode(importJson.getJSONObject(i));
+                    num += obj.getElementInfoService().updateNode(importJson.getJSONObject(i));
                 }
-                if (Num == 0) {
 
-                    msg +="UpdateNode is Failed.";
+                if (num == 0) {
+                    msg += "UpdateNode is Failed.";
                 }
+            }catch (Exception e){
+                msg += "updateNode has error:" + e.getMessage();
             }
         }
+
         if (msg.length() == 0){
             result.put("result", Constants.SUCCESS);
             result.put("msg", Constants.UPLOAD_RNC_INFOS_OK);
+
         } else {
             result.put("result", Constants.FAIL);
-                result.put("msg", Constants.UPLOAD_RNC_INFOS_FAILED + msg);
+            result.put("msg", Constants.UPLOAD_RNC_INFOS_FAILED + msg);
         }
+
         return result;
     }
 
@@ -351,53 +388,50 @@ public class ElementController {
                                 @HeaderParam("Auth-Token") String authToken) {
         String msg = "";
         String msg1 = "";
-        NetObjBase obj = objFactory.getNetObj(supplier, generation);
         JSONObject result = new JSONObject();
+        NetObjBase obj = objFactory.getNetObj(supplier, generation);
+
         if (obj == null){
-            msg +="Supplier or Generation is null.";
+            msg += "Supplier or Generation has error.";
+
         }else {
-            Integer addNum = 0;
-            Integer counter = obj.getElementInfoService().getGroupCounter();
-            Integer delNum = obj.getElementInfoService().deleteGroup();
+            try {
+                Integer addNum = 0;
+                Integer oldNum = obj.getElementInfoService().getGroupCounter();
+                Integer delNum = obj.getElementInfoService().deleteGroup();
 
-            for (int i = 0; i < importJson.size(); i++) {
+                if (oldNum > importJson.size()) {
+                    msg += "Import data less than current data.";
 
-                try {
-
-                    addNum = obj.getElementInfoService().addRnc(importJson.getJSONObject(i));
-
-                    if (addNum != null || addNum > 0) {
-
-                        if (counter > importJson.size()) {
-
-                            msg = " and the data of the file is less than the table data";
-
-                        } else {
-
-                        }
-                    }
-                } catch (Exception e) {
-
-                    msg1 = "DB has error:" + e.getMessage();
                 }
+
+                for (int i = 0; i < importJson.size(); i++) {
+                    try {
+                        addNum += obj.getElementInfoService().addRnc(importJson.getJSONObject(i));
+                    } catch (Exception e) {
+                        msg1 += "DB has error:" + e.getMessage();
+                    }
+                }
+                if (addNum == null || addNum <= 0) {
+                    msg += "Import data(" + importJson.size() + ") less than current data(" + oldNum + ").";
+
+                }else if (addNum < importJson.size()){
+                    msg += "Add data(" + addNum + ") less than import data(" + importJson.size() + ").";
+                }
+            }catch (Exception e){
+                msg += "Get old data num or Clear old data has error:" + e.getMessage();
             }
         }
-            if(msg.equals("")){
 
-                result.put("result",Constants.SUCCESS);
-                result.put("msg",Constants.MSG_ADD_OK);
+        if(msg.equals("")){
+            result.put("result",Constants.SUCCESS);
+            result.put("msg",Constants.MSG_ADD_OK);
 
-            }else if(!msg.equals("")){
+        }else{
+            result.put("result",Constants.FAIL);
+            result.put("msg",Constants.MSG_ADD_FAILED + msg);
+        }
 
-                result.put("result",Constants.SUCCESS);
-                result.put("msg",Constants.MSG_ADD_OK+msg);
-
-            }else if(!msg1.equals("")){
-
-                result.put("result",Constants.FAIL);
-                result.put("msg",Constants.MSG_ADD_FAILED+msg1);
-
-            }
         return result;
     }
 }

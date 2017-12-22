@@ -32,7 +32,7 @@ public class AuthorityController {
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         if (obj == null){
-            msg +="Supplier or Generation is null.";
+            msg += "Supplier or Generation has error.";
         }else {
             authorityList = obj.getAuthorityService().getAuthorityList();
 
@@ -65,7 +65,7 @@ public class AuthorityController {
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier,generation);
         if (obj == null){
-            msg +="Supplier or Generation is null.";
+            msg += "Supplier or Generation has error.";
         }else {
             if (authorityName == null){
                 msg += "AuthorityName is NULL.";
@@ -110,7 +110,7 @@ public class AuthorityController {
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         if (obj == null){
-            msg +="Supplier or Generation is null.";
+            msg += "Supplier or Generation has error.";
         }else {
             if (param == null){
                 msg += "Param is null.";
@@ -155,7 +155,7 @@ public class AuthorityController {
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         if (obj == null){
-            msg +="Supplier or Generation is null.";
+            msg += "Supplier or Generation has error.";
         }else {
             if (authorityName == null){
                 msg +="AuthorityName is null.";

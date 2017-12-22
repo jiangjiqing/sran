@@ -40,7 +40,7 @@ public class ProtectionController extends BaseController{
 
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         if (obj == null){
-            msg +="Supplier or Generation is null.";
+            msg += "Supplier or Generation has error.";
         }else {
             List<JSONObject> protectList = obj.getElementInfoService().getProtectList();
             if (protectList == null){
@@ -154,7 +154,7 @@ public class ProtectionController extends BaseController{
         Integer addNum = 0;
         String msg = "";
         if (obj == null){
-            msg +="Supplier or Generation is null.";
+            msg += "Supplier or Generation has error.";
         }else {
             Integer deleteNum = obj.getElementInfoService().clearNodes();
             if (deleteNum <= 0){
@@ -199,7 +199,7 @@ public class ProtectionController extends BaseController{
         List list = new ArrayList();
         JSONObject result = new JSONObject();
         if (obj == null){
-            msg +="Supplier or Generation is null.";
+            msg += "Supplier or Generation has error.";
         }else {
             try {
                 List<JSONObject> protectList = obj.getElementInfoService().getProtectListnodeName();

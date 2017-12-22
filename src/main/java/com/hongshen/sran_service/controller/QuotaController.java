@@ -35,7 +35,7 @@ public class QuotaController {
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
 
         if (obj == null){
-            msg +="Supplier or Generation is error.";
+            msg += "Supplier or Generation has error.";
 
         }else if (groupName == null || groupName.length() == 0) {
             msg +="GroupName is null.";
@@ -116,7 +116,7 @@ public class QuotaController {
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
 
         if (obj == null){
-            msg +="Supplier or Generation is error.";
+            msg += "Supplier or Generation has error.";
 
         }else if (nodeName == null || nodeName.length() == 0) {
             msg +="NodeName is null.";
@@ -195,7 +195,7 @@ public class QuotaController {
 
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         if (obj == null){
-            msg +="Supplier or Generation is error.";
+            msg += "Supplier or Generation has error.";
 
         }else if (cellName == null || cellName.length() == 0) {
             msg +="CellName is null.";
@@ -276,7 +276,7 @@ public class QuotaController {
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
 
         if (obj == null){
-            msg +="Supplier or Generation is error.";
+            msg += "Supplier or Generation has error.";
 
         }else if (groupName == null || groupName.length() == 0) {
             msg +="GroupName is null.";

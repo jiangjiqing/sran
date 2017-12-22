@@ -36,7 +36,7 @@ public class MapController extends BaseController{
 
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         if (obj == null){
-            msg +="Supplier or Generation is null.";
+            msg += "Supplier or Generation has error.";
         }else {
             List<JSONObject> groupList = obj.getElementInfoService().getGroupList();
 
@@ -250,7 +250,7 @@ public class MapController extends BaseController{
 
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         if (obj == null){
-            msg +="Supplier or Generation is null.";
+            msg += "Supplier or Generation has error.";
         }else {
             if (groupName == null){
                 msg +="Group or Generation is null.";
@@ -383,7 +383,7 @@ public class MapController extends BaseController{
         String msg = "";
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         if (obj == null){
-            msg +="Supplier or Generation is null.";
+            msg += "Supplier or Generation has error.";
         }else {
             if (nodeName == null){
                 msg +="NodeName is null.";
