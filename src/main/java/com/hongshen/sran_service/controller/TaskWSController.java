@@ -104,11 +104,6 @@ public class TaskWSController {
         String cmdFilePath = Constants.TASK_ROOT_PATH + loginName + "/" + Constants.TASK_DIR_CMD + "/" + Constants.TASK_FILE_CMD;
         String logFileDir = Constants.TASK_ROOT_PATH + loginName + "/" + Constants.TASK_DIR_LOG;
 
-        File outfile = new File(logFileDir);
-        if(!outfile.exists()){
-            outfile.mkdir();
-        }
-
         JSONObject result = new JSONObject();
 
         if(!taskStatusSession.keySet().contains(loginName)||!taskStatusMap.keySet().contains(loginName)){

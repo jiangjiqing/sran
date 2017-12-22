@@ -106,8 +106,15 @@ public class TaskController extends BaseController {
             }
 
             try {
-                FileHelper.createFile("/root/apache-tomcat-8.5.16/webapps/Task/site", loginName, param.getString("rncList"));
-                FileHelper.createFile("/root/apache-tomcat-8.5.16/webapps/Task/cmd", loginName, param.getString("cmdList"));
+                String siteDir = Constants.TASK_ROOT_PATH + Constants.TASK_DIR_SITE;
+                String cmdDir = Constants.TASK_ROOT_PATH + Constants.TASK_DIR_CMD;
+                String logDir = Constants.TASK_ROOT_PATH + Constants.TASK_DIR_LOG;
+                String analysisLogDir = Constants.TASK_ROOT_PATH + Constants.TASK_DIR_ANALYSIS_LOG;
+
+                FileHelper.createFile(siteDir, loginName, param.getString("rncList"));
+                FileHelper.createFile(cmdDir, loginName, param.getString("cmdList"));
+                FileHelper.createDir(logDir + "/" + loginName);
+                FileHelper.createDir(analysisLogDir+ "/" + loginName);
 
             }catch  (Exception e){
                 msg += "Create file has error:" + e.getMessage();

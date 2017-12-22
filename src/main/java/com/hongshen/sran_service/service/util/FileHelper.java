@@ -15,6 +15,15 @@ public class FileHelper {
         }
     }
 
+    public static boolean createDir(String dir) {
+        File file = new File(dir);
+        if(!file.exists()){
+            return file.mkdir();
+        }else{
+            return true;
+        }
+    }
+
     // 此方法的主要作用是判断创建文件是否成功，如果成功则返回true否则返回false
     public static boolean createFile(String dir , String destFileName,String text) {
         File file = new File(dir,destFileName); // 根据指定的文件名创建File对象
