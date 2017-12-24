@@ -26,88 +26,93 @@ public class AlarmController {
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject getAllAlarms (@PathParam("supplier")String supplier,
                                     @HeaderParam("Auth-Token")String authToken) {
-	
+
+        String msg = "";
 		JSONObject result = new JSONObject();
         List<JSONObject> dataList = new ArrayList<JSONObject>();
-
 
         NetObjBase objWcdma = objFactory.getNetObj(supplier, Constants.WCDMA);
         NetObjBase objLte = objFactory.getNetObj(supplier, Constants.LTE);
 
-        List<JSONObject> protectListWcdma = objWcdma.getAlarmService().getProtectAlarmInfoList();
-        List<JSONObject> normalListWcdma = objWcdma.getAlarmService().getNormalAlarmInfoList();
-        List<JSONObject> protectListLte = objLte.getAlarmService().getProtectAlarmInfoList();
-        List<JSONObject> normalListLte = objLte.getAlarmService().getNormalAlarmInfoList();
+        if (objWcdma == null || objLte == null){
+            msg += "Supplier has error.";
 
-        // add protect alarm
-        if ((protectListWcdma != null && protectListLte != null) &&
-                (!protectListWcdma.isEmpty() || !protectListLte.isEmpty())) {
+        }else {
+            List<JSONObject> protectListWcdma = objWcdma.getAlarmService().getProtectAlarmInfoList();
+            List<JSONObject> normalListWcdma = objWcdma.getAlarmService().getNormalAlarmInfoList();
+            List<JSONObject> protectListLte = objLte.getAlarmService().getProtectAlarmInfoList();
+            List<JSONObject> normalListLte = objLte.getAlarmService().getNormalAlarmInfoList();
 
-            JSONObject protect = new JSONObject();
-            protect.put("type", "protect");
+            // add protect alarm
+            if ((protectListWcdma != null && protectListLte != null) &&
+                    (!protectListWcdma.isEmpty() || !protectListLte.isEmpty())) {
 
-            List<JSONObject> protectList = new ArrayList<JSONObject>();
+                JSONObject protect = new JSONObject();
+                protect.put("type", "protect");
 
-            // add 3G
-            if (!protectListWcdma.isEmpty()) {
-                JSONObject dataWcdma = new JSONObject();
+                List<JSONObject> protectList = new ArrayList<JSONObject>();
 
-                dataWcdma.put("generation", Constants.WCDMA);
-                dataWcdma.put("alarms", protectListWcdma);
-                protectList.add(dataWcdma);
+                // add 3G
+                if (!protectListWcdma.isEmpty()) {
+                    JSONObject dataWcdma = new JSONObject();
+
+                    dataWcdma.put("generation", Constants.WCDMA);
+                    dataWcdma.put("alarms", protectListWcdma);
+                    protectList.add(dataWcdma);
+                }
+
+                // add 4G
+                if (!protectListLte.isEmpty()) {
+                    JSONObject dataLte = new JSONObject();
+
+                    dataLte.put("generation", Constants.LTE);
+                    dataLte.put("alarms", protectListLte);
+                    protectList.add(dataLte);
+                }
+
+                protect.put("list", protectList);
+                dataList.add(protect);
             }
 
-            // add 4G
-            if (!protectListLte.isEmpty()) {
-                JSONObject dataLte = new JSONObject();
+            // add normal alarm
+            if ((normalListWcdma != null && normalListLte != null) &&
+                 (!normalListWcdma.isEmpty() || !normalListLte.isEmpty())) {
 
-                dataLte.put("generation", Constants.LTE);
-                dataLte.put("alarms", protectListLte);
-                protectList.add(dataLte);
+                JSONObject normal = new JSONObject();
+                normal.put("type", "normal");
+
+                List<JSONObject> normalList = new ArrayList<JSONObject>();
+
+                // add 3G
+                if (!normalListWcdma.isEmpty()) {
+                    JSONObject dataWcdma = new JSONObject();
+
+                    dataWcdma.put("generation", Constants.WCDMA);
+                    dataWcdma.put("alarms", normalListWcdma);
+                    normalList.add(dataWcdma);
+                }
+
+                // add 4G
+                if (!normalListLte.isEmpty()) {
+                    JSONObject dataLte = new JSONObject();
+
+                    dataLte.put("generation", Constants.LTE);
+                    dataLte.put("alarms", normalListLte);
+                    normalList.add(dataLte);
+                }
+
+                normal.put("list", normalList);
+                dataList.add(normal);
             }
-
-            protect.put("list", protectList);
-            dataList.add(protect);
         }
 
-        // add normal alarm
-        if ((normalListWcdma != null && normalListLte != null) &&
-             (!normalListWcdma.isEmpty() || !normalListLte.isEmpty())) {
-
-            JSONObject normal = new JSONObject();
-            normal.put("type", "normal");
-
-            List<JSONObject> normalList = new ArrayList<JSONObject>();
-
-            // add 3G
-            if (!normalListWcdma.isEmpty()) {
-                JSONObject dataWcdma = new JSONObject();
-
-                dataWcdma.put("generation", Constants.WCDMA);
-                dataWcdma.put("alarms", normalListWcdma);
-                normalList.add(dataWcdma);
-            }
-
-            // add 4G
-            if (!normalListLte.isEmpty()) {
-                JSONObject dataLte = new JSONObject();
-
-                dataLte.put("generation", Constants.LTE);
-                dataLte.put("alarms", normalListLte);
-                normalList.add(dataLte);
-            }
-
-            normal.put("list", normalList);
-            dataList.add(normal);
-        }
-
-        if (dataList == null || dataList.isEmpty()){
-            result.put("result", Constants.FAIL);
-            result.put("msg", Constants.MSG_NO_DATA);
-
-        } else {
+        if (msg.length() == 0 && dataList != null && dataList.size() != 0){
             result.put("result", Constants.SUCCESS);
-            result.put("data",dataList);
+            result.put("data", dataList);
+
+        }else {
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_NO_DATA + msg);
         }
 
         return result;
@@ -122,17 +127,25 @@ public class AlarmController {
                                      @PathParam("groupname")String groupname,
                                      @HeaderParam("Auth-Token")String authToken){
 
+        String msg = "";
         JSONObject result = new JSONObject();
+        List<JSONObject> dataList = new ArrayList<>();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        List<JSONObject> dataList = obj.getAlarmService().getGroupAlarmByName(groupname);
 
-        if (dataList == null || dataList.isEmpty()){
-            result.put("result", Constants.FAIL);
-            result.put("msg", Constants.MSG_NO_DATA);
+        if (obj == null){
+            msg += "Supplier or Generation has error.";
 
-        } else {
+        }else {
+            dataList = obj.getAlarmService().getGroupAlarmByName(groupname);
+        }
+
+        if (msg.length() == 0 && dataList != null && dataList.size() != 0){
             result.put("result", Constants.SUCCESS);
             result.put("data", dataList);
+
+        } else {
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_NO_DATA + msg);
         }
 
         return result;
@@ -148,17 +161,25 @@ public class AlarmController {
                                     @PathParam("nodename")String nodeName,
                                     @HeaderParam("Auth-Token")String authToken){
 
+        String msg = "";
         JSONObject result = new JSONObject();
+        List<JSONObject> dataList = new ArrayList<>();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        List<JSONObject> dataList = obj.getAlarmService().getNodeAlarmByName(nodeName);
 
-        if (dataList == null || dataList.isEmpty()){
-            result.put("result", Constants.FAIL);
-            result.put("msg", Constants.MSG_NO_DATA);
+        if (obj == null){
+            msg += "Supplier or Generation has error.";
 
-        } else {
+        }else {
+            dataList = obj.getAlarmService().getNodeAlarmByName(nodeName);
+        }
+
+        if (msg.length() == 0 && dataList != null && dataList.size() != 0){
             result.put("result", Constants.SUCCESS);
             result.put("data", dataList);
+
+        } else {
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_NO_DATA + msg);
         }
 
         return result;
@@ -175,17 +196,25 @@ public class AlarmController {
                                     @PathParam("cellname")String cellName,
                                     @HeaderParam("Auth-Token")String authToken){
 
+        String msg = "";
         JSONObject result = new JSONObject();
+        List<JSONObject> dataList = new ArrayList<>();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        List<JSONObject> dataList = obj.getAlarmService().getCellAlarmByName(cellName);
 
-        if (dataList == null || dataList.isEmpty()){
-            result.put("result", Constants.FAIL);
-            result.put("msg", Constants.MSG_NO_DATA);
+        if (obj == null){
+            msg += "Supplier or Generation has error.";
 
-        } else {
+        }else {
+            dataList = obj.getAlarmService().getCellAlarmByName(cellName);
+        }
+
+        if (msg.length() == 0 && dataList != null && dataList.size() != 0){
             result.put("result", Constants.SUCCESS);
             result.put("data", dataList);
+
+        } else {
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_NO_DATA + msg);
         }
 
         return result;

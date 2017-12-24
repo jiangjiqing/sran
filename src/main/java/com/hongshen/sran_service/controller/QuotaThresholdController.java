@@ -40,15 +40,15 @@ public class QuotaThresholdController extends BaseController{
             msg +="Supplier or Generation is null.";
         }else {
             switch (level) {
-                case "groups":
+                case Constants.LEVEL_GROUP:
                     dataList = obj.getCacheService().getThresholdGroupList();
                     break;
 
-                case "nodes":
+                case Constants.LEVEL_NODE:
                     dataList = obj.getCacheService().getThresholdNodeList();
                     break;
 
-                case "cells":
+                case Constants.LEVEL_CELL:
                     dataList = obj.getCacheService().getThresholdCellList();
                     break;
 
@@ -92,17 +92,17 @@ public class QuotaThresholdController extends BaseController{
             msg +="Supplier or Generation is null.";
         }else {
             switch (level) {
-                case "groups":
+                case Constants.LEVEL_GROUP:
                     num = obj.getQuotaService().setGroupThreshold(quotaThres);
                     obj.getCacheService().resetThresholdGroupList();
                     break;
 
-                case "nodes":
+                case Constants.LEVEL_NODE:
                     num = obj.getQuotaService().setNodeThreshold(quotaThres);
                     obj.getCacheService().resetThresholdNodeList();
                     break;
 
-                case "cells":
+                case Constants.LEVEL_CELL:
                     num = obj.getQuotaService().setCellThreshold(quotaThres);
                     obj.getCacheService().resetThresholdCellList();
                     break;

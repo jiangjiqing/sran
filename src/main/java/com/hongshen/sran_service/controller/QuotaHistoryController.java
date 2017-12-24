@@ -1,4 +1,5 @@
 package com.hongshen.sran_service.controller;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.common.BaseController;
 import com.hongshen.sran_service.service.util.Constants;
@@ -30,83 +31,117 @@ public class QuotaHistoryController extends BaseController {
                                    @PathParam("level") String level,
                                    @HeaderParam("Auth-Token") String authToken) throws ParseException {
 
-            String msg = "";
-            JSONObject result = new JSONObject();
+        String msg = "";
+        JSONObject result = new JSONObject();
+        List dataList = new ArrayList();
+        String condition = null;
+        Date start = null;
+        Date end = null;
+        List<String> formulaNameList = new ArrayList<>();
+        int min = 0;
+        List<JSONObject> quotaList = new ArrayList<>();
+        NetObjBase obj = objFactory.getNetObj(supplier, generation);
 
-            List dataList = new ArrayList();
+        if (obj ==null){
+            msg += "Supplier or Generation is null.";
 
-            String condition = null;
-            Date start = null;
-            Date end = null;
-            List<String> formulaNameList = new ArrayList<>();
-            String[] formula = null;
-            int min = 0;
-            List<JSONObject> quotaList = new ArrayList<>();
-            NetObjBase obj = objFactory.getNetObj(supplier, generation);
-            if (obj ==null){
-                msg +="Supplier or Generation is null.";
+        }else if (quotaHistory == null || quotaHistory.isEmpty()) {
+            msg += "Parameters is null.";
+
+        }else {
+
+            JSONObject quota = quotaHistory.getJSONObject("quota");
+            JSONObject time = quotaHistory.getJSONObject("time");
+            JSONObject element = quotaHistory.getJSONObject("element");
+
+            if (quota == null || quota.isEmpty() || !quota.containsKey("range") ||
+                    time == null || time.isEmpty() ||
+                    !time.containsKey("range") || !time.containsKey("unit") ||
+                    element == null || element.isEmpty() || !element.containsKey("range")){
+
+                msg += "Parameters has error.";
+
             }else {
-
-                String unit = quotaHistory.getJSONObject("time").getString("unit");
-
-                if (quotaHistory.getJSONObject("quota").getString("range").equals("1")) {
-                    formula = quotaHistory.getJSONObject("quota").getString("list").replace("]", "")
-                            .replace("[", "").replaceAll("\"", "").split(",");
-
-                    for (String str : formula) {
-
-                        formulaNameList.add(str);
+                // quota
+                if (quota.getString("range").equals("1")) {
+                    JSONArray formula = quota.getJSONArray("list");
+                    for (Object f : formula) {
+                        formulaNameList.add(f.toString());
                     }
 
-                } else if (quotaHistory.getJSONObject("quota").getString("range").equals("0")) {
-
+                } else if (quota.getString("range").equals("0")) {
                     formulaNameList = obj.getCacheService().getFormulaNameList(false);
                 }
-                if (quotaHistory.getJSONObject("time").getString("range").equals("1")) {
-                    SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                    String start1 = quotaHistory.getJSONObject("time").getString("start");
-                    String end1 = quotaHistory.getJSONObject("time").getString("end");
-                    start = date.parse(start1);
-                    end = date.parse(end1);
 
+                // time
+                if (time.getString("range").equals("1")) {
+
+                    SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                    String start1 = time.getString("start");
+                    String end1 = time.getString("end");
+
+                    if (start1 == null || start1.length() == 0 ||
+                            end1 == null || end1.length() == 0) {
+                        msg += "Parameters('time') has error.";
+
+                    } else {
+                        start = date.parse(start1);
+                        end = date.parse(end1);
+                    }
                 }
 
-                if (quotaHistory.getJSONObject("element").getString("range").equals("1")) {
+                // net element
+                if (element.getString("range").equals("1")) {
 
-                    String[] st = quotaHistory.getJSONObject("element").getString("list").replace("]", "")
+                    String[] st = element.getString("list").replace("]", "")
                             .replace("[", "").replaceAll("\"", "").split(",");
 
                     condition = Condition(st);
 
                 }
-                 quotaList = getQuotas(level, obj, start, end, condition);
+                quotaList = getQuotas(level, obj, start, end, condition);
 
+                if (quotaList != null || quotaList.isEmpty() || quotaList.size() == 0) {
+                    msg += "quotaList is null.";
 
-                if (unit.equals("0") && quotaList != null) {//min
+                } else {
 
-                    min = 4;
-                } else if (unit.equals("1") && quotaList != null) {//hh
+                    String unit = time.getString("unit");
+                    if (unit == null || unit.length() == 0) {
+                        msg += "time unit is null.";
 
-                    min = 1;
-                } else if (unit.equals("2") && quotaList != null) {//date
+                    } else {
+                        if (unit.equals("0")) {//min
 
-                    min = 2;
-                } else if (unit.equals("3") && quotaList != null) {//month
+                            min = 4;
+                        } else if (unit.equals("1")) {//hh
 
-                    min = 3;
+                            min = 1;
+                        } else if (unit.equals("2")) {//date
+
+                            min = 2;
+                        } else if (unit.equals("3")) {//month
+
+                            min = 3;
+                        }
+                    }
+
+                    if (min != 0 && formulaNameList.size() != 0) {
+                        dataList = getValue(start, end, quotaList, formulaNameList, min, quotaList.get(quotaList.size() - 1).getDate("time"), quotaList.get(0).getDate("time"));
+                    }
                 }
-
-
             }
-        if (min != 0 && quotaList.size() > 0 || msg.length() != 0) {
-            dataList = getValue(start, end, quotaList, formulaNameList, min, quotaList.get(quotaList.size() - 1).getDate("time"), quotaList.get(0).getDate("time"));
+        }
+
+        if (msg.length() == 0 && dataList.size() != 0){
             result.put("result", Constants.SUCCESS);
             result.put("data", dataList);
 
         } else {
             result.put("result", Constants.FAIL);
-            result.put("msg", Constants.MSG_NO_DATA);
+            result.put("msg", Constants.MSG_NO_DATA + msg);
         }
+
         return result;
     }
 
@@ -245,14 +280,20 @@ public class QuotaHistoryController extends BaseController {
         List<JSONObject> quotaListexport = new ArrayList<JSONObject>();
 
         switch (level){
-            case "groups":
+            case Constants.LEVEL_GROUP:
                 quotaListexport= obj.getQuotaService().getQuotas(start, end,condition);
                 break;
-            case "nodes":
+
+            case Constants.LEVEL_NODE:
                 quotaListexport= obj.getQuotaService().getQuotasNode(start, end,condition);
                 break;
-            case "cells":
+
+            case Constants.LEVEL_CELL:
                 quotaListexport= obj.getQuotaService().getQuotasCell(start, end,condition);
+                break;
+
+            default:
+                quotaListexport = null;
                 break;
         }
         return quotaListexport;
@@ -268,59 +309,88 @@ public class QuotaHistoryController extends BaseController {
                                          @HeaderParam("Auth-Token") String authToken) throws ParseException {
 
         String msg = "";
-        NetObjBase obj = objFactory.getNetObj(supplier, generation);
+        JSONObject result = new JSONObject();
+        List list = new ArrayList();
         String condition = null;
         Date start = null;
         Date end = null;
+        List<JSONObject> quotaList = new ArrayList<>();
         List<String> formulaNameList = new ArrayList<>();
+        NetObjBase obj = objFactory.getNetObj(supplier, generation);
 
-        if(quotaHistoryExport.getJSONObject("time").getString("range").equals("1")){
+        if (obj == null){
+            msg += "Supplier or Generation has error.";
 
-            SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-            String startExport = quotaHistoryExport.getJSONObject("time").getString("start");
-            String endExport = quotaHistoryExport.getJSONObject("time").getString("end");
-            start = date.parse(startExport);
-            end = date.parse(endExport);
-        }
+        }else if (quotaHistoryExport == null || quotaHistoryExport.isEmpty()){
+            msg += "Parametars is null.";
 
-        if(quotaHistoryExport.getJSONObject("element").getString("range").equals("1")){
+        }else {
+            JSONObject quota = quotaHistoryExport.getJSONObject("quota");
+            JSONObject time = quotaHistoryExport.getJSONObject("time");
+            JSONObject element = quotaHistoryExport.getJSONObject("element");
 
-            String[] st = quotaHistoryExport.getJSONObject("element").getString("list").replace("]", "")
-                    .replace("[", "").replaceAll("\"", "").split(",");
+            if (quota == null || quota.isEmpty() || !quota.containsKey("range") ||
+                    time == null || time.isEmpty() ||
+                    !time.containsKey("range") || !time.containsKey("unit") ||
+                    element == null || element.isEmpty() || !element.containsKey("range")){
+                msg += "Parameters has error.";
 
-            condition =Condition(st);
+            }else {
+                // time
+                if (time.getString("range").equals("1")) {
 
-        }
+                    SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                    String startExport = time.getString("start");
+                    String endExport = time.getString("end");
 
-        if(quotaHistoryExport.getJSONObject("quota").getString("range").equals("1")){
+                    if (startExport == null || startExport.length() == 0 ||
+                            endExport == null || endExport.length() == 0) {
+                        msg += "Parameters('time') has error.";
 
-            formulaNameList = JSONObject.parseArray(quotaHistoryExport.getJSONObject("quota").getString("list"),String.class);
+                    } else {
+                        start = date.parse(startExport);
+                        end = date.parse(endExport);
+                    }
+                }
 
-        }else if(quotaHistoryExport.getJSONObject("quota").getString("range").equals("0")){
+                // net element
+                if (element.getString("range").equals("1")) {
 
-            formulaNameList = obj.getCacheService().getFormulaNameList(false);
-        }
+                    String[] st = element.getString("list").replace("]", "")
+                            .replace("[", "").replaceAll("\"", "").split(",");
 
-        List<JSONObject> quotaListexport = getQuotas(level,obj,start,end,condition);
+                    condition = Condition(st);
+                }
 
-        JSONObject result = new JSONObject();
+                // quota
+                if (quota.getString("range").equals("1")) {
+                    formulaNameList = JSONObject.parseArray(quota.getString("list"), String.class);
 
-        List list = new ArrayList();
-        for (JSONObject export:quotaListexport){
-            JSONObject result1 = new JSONObject();
-            JSONObject json = new JSONObject();
-            result1.put("name",export.getString("name"));
-            result1.put("time",new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(export.getDate("time")));
-            for (String formulaName : formulaNameList){
+                } else if (quota.getString("range").equals("0")) {
+                    formulaNameList = obj.getCacheService().getFormulaNameList(false);
+                }
 
-                json.put(formulaName,export.getString(formulaName));
+                quotaList = getQuotas(level, obj, start, end, condition);
+
+                if (quotaList != null && quotaList.size() != 0) {
+
+                    for (JSONObject export : quotaList) {
+                        export.put("time", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(export.getDate("time")));
+                    }
+                }
+
             }
-
-            result1.putAll(json);
-            list.add(result1);
         }
 
-        result.put("data",list);
+        if (msg.length() == 0 && quotaList != null && quotaList.size() != 0){
+            result.put("result", Constants.SUCCESS);
+            result.put("data", quotaList);
+
+        }else{
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_DOWNLOAD_FAILED + msg);
+        }
+
         return result;
     }
 
@@ -328,72 +398,102 @@ public class QuotaHistoryController extends BaseController {
     @Path("/suppliers/{supplier}/generations/{generation}/nets/{level}/history/counters/download")
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject quotaHistoryCounterExport(@RequestParam(value = "quotaHistory") JSONObject quotaHistoryExport,
-                                                @PathParam("supplier") String supplier, @PathParam("generation") String generation,
-                                                @HeaderParam("Auth-Token") String authToken, @PathParam("level") String level) throws ParseException {
-        NetObjBase obj = objFactory.getNetObj(supplier, generation);
+                                                @PathParam("supplier") String supplier,
+                                                @PathParam("generation") String generation,
+                                                @PathParam("level") String level,
+                                                @HeaderParam("Auth-Token") String authToken) throws ParseException {
+
+        String msg = "";
         String condition = null;
-        Date start =null;
+        Date start = null;
         Date end = null;
-        JSONObject result =new JSONObject();
-        List list = new ArrayList();
+        JSONObject result = new JSONObject();
+        List<JSONObject> counterList  = new ArrayList();
+        NetObjBase obj = objFactory.getNetObj(supplier, generation);
 
-        if(quotaHistoryExport.getJSONObject("time").getString("range").equals("1")){
+        if (obj == null) {
+            msg += "Supplier or Generation has error.";
 
-            SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-            String startExport = quotaHistoryExport.getJSONObject("time").getString("start");
-            String endExport = quotaHistoryExport.getJSONObject("time").getString("end");
-            start = date.parse(startExport);
-            end = date.parse(endExport);
-        }
-        if(quotaHistoryExport.getJSONObject("element").getString("range").equals("1")){
+        } else if (quotaHistoryExport == null || quotaHistoryExport.isEmpty()) {
+            msg += "Parametars is null.";
 
-            String[] st = quotaHistoryExport.getJSONObject("element").getString("list").replace("]", "")
-                    .replace("[", "").replaceAll("\"", "").split(",");
+        } else {
+//            JSONObject counter = quotaHistoryExport.getJSONObject("counters");
+            JSONObject time = quotaHistoryExport.getJSONObject("time");
+            JSONObject element = quotaHistoryExport.getJSONObject("element");
 
-            condition =Condition(st);
-        }
+            if (time == null || time.isEmpty() ||
+                    !time.containsKey("range") || !time.containsKey("unit") ||
+//                    counter == null || counter.isEmpty() || !counter.containsKey("range") ||
+                    element == null || element.isEmpty() || !element.containsKey("range")) {
+                msg += "Parameters has error.";
 
-        List<JSONObject> counterList = obj.getQuotaService().getCounterExportGroup(start,end,condition);
+            } else {
+                // time
+                if (time.getString("range").equals("1")) {
 
-        for (JSONObject json : counterList) {
-            JSONObject result1 =new JSONObject();
-            result1.put("name",json.getString("name"));
-            result1.put("time",json.getDate("time"));
-            for (int i=1;i<=25;i++){
-                result1.put("counter"+i,json.getString("counter"+i));
+                    SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                    String startExport = time.getString("start");
+                    String endExport = time.getString("end");
+
+                    start = date.parse(startExport);
+                    end = date.parse(endExport);
+                }
+
+                // net element
+                if (element.getString("range").equals("1")) {
+
+                    String[] st = element.getString("list").replace("]", "")
+                            .replace("[", "").replaceAll("\"", "").split(",");
+
+                    condition = Condition(st);
+                }
+
+                // TODO :counter list
+                counterList = obj.getQuotaService().getCounterExportGroup(start, end, condition);
             }
-
-            list.add(result1);
-
         }
-        result.put("data",list);
-        return result;
 
+        if (msg.length() == 0 && counterList != null && counterList.size() != 0){
+            result.put("result", Constants.SUCCESS);
+            result.put("data", counterList);
+
+        }else{
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_DOWNLOAD_FAILED + msg);
+        }
+
+        return result;
     }
+
     @GET
     @Path("/suppliers/{supplier}/generations/{generation}/nets/{level}/history/quotas/timelist")
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject quotaHistoryCounterTime(@PathParam("supplier") String supplier, @PathParam("generation") String generation,
-                                              @HeaderParam("Auth-Token") String authToken, @PathParam("level") String level){
+    public JSONObject quotaHistoryCounterTime(@PathParam("supplier") String supplier,
+                                              @PathParam("generation") String generation,
+                                              @PathParam("level") String level,
+                                              @HeaderParam("Auth-Token") String authToken){
 
         String msg = "";
         JSONObject result = new JSONObject();
-        NetObjBase obj = objFactory.getNetObj(supplier, generation);
         List<JSONObject> dataList = new ArrayList<>();
+        NetObjBase obj = objFactory.getNetObj(supplier, generation);
 
         if (obj == null){
             msg +="Supplier or Generation is null.";
+
         }else {
+
             switch (level) {
-                case "groups":
+                case Constants.LEVEL_GROUP:
                     dataList = obj.getQuotaService().getGroupTime();
                     break;
 
-                case "nodes":
+                case Constants.LEVEL_NODE:
                     dataList = obj.getQuotaService().getNodeTime();
                     break;
 
-                case "cells":
+                case Constants.LEVEL_CELL:
                     dataList = obj.getQuotaService().getCellTime();
                     break;
 
@@ -402,40 +502,47 @@ public class QuotaHistoryController extends BaseController {
                     break;
             }
         }
-        if (dataList == null || dataList.size() == 0 || dataList.isEmpty() || msg.length()!=0){
-            result.put("result", Constants.FAIL);
-            result.put("msg", Constants.MSG_NO_DATA + msg);
-        }else {
+
+        if (msg.length() == 0 && dataList != null && dataList.size() != 0){
             result.put("result", Constants.SUCCESS);
             result.put("data", dataList);
+
+        }else {
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_NO_DATA + msg);
         }
+
         return result;
     }
 
     @GET
     @Path("/suppliers/{supplier}/generations/{generation}/nets/history/counters/timelist")
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject quotaCounterCounterTime(@PathParam("supplier") String supplier, @PathParam("generation") String generation,
+    public JSONObject quotaCounterCounterTime(@PathParam("supplier") String supplier,
+                                              @PathParam("generation") String generation,
                                               @HeaderParam("Auth-Token") String authToken){
 
         String msg = "";
         JSONObject result = new JSONObject();
-        NetObjBase obj = objFactory.getNetObj(supplier, generation);
         List<JSONObject> dataList = new ArrayList<>();
+        NetObjBase obj = objFactory.getNetObj(supplier, generation);
 
         if (obj == null){
             msg +="Supplier or Generation is null.";
+
         }else {
             dataList = obj.getQuotaService().getCounterTime();
         }
 
-        if (dataList == null || dataList.size() == 0 || dataList.isEmpty() || msg.length()!=0){
-            result.put("result", Constants.FAIL);
-            result.put("msg", Constants.MSG_NO_DATA + msg);
-        }else {
+        if (msg.length() == 0 && dataList != null && dataList.size() != 0){
             result.put("result", Constants.SUCCESS);
             result.put("data", dataList);
+
+        }else {
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_NO_DATA + msg);
         }
+
         return result;
     }
 }

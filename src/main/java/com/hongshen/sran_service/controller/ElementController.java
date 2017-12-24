@@ -168,15 +168,15 @@ public class ElementController {
         }else {
             try {
                 switch (level) {
-                    case "groups":
+                    case Constants.LEVEL_GROUP:
                         infoList = obj.getElementInfoService().getGroupInfoList();
                         break;
 
-                    case "nodes":
+                    case Constants.LEVEL_NODE:
                         infoList = obj.getElementInfoService().getNodeInfoList();
                         break;
 
-                    case "cells":
+                    case Constants.LEVEL_CELL:
                         infoList = obj.getElementInfoService().getCellInfoList();
                         break;
 
@@ -222,15 +222,15 @@ public class ElementController {
         }else {
             try{
                 switch (level) {
-                    case "groups":
+                    case Constants.LEVEL_GROUP:
                         infoList = obj.getElementInfoService().getGroupNameList();
                         break;
 
-                    case "nodes":
+                    case Constants.LEVEL_NODE:
                         infoList = obj.getElementInfoService().getNodeNameList();
                         break;
 
-                    case "cells":
+                    case Constants.LEVEL_CELL:
                         infoList = obj.getElementInfoService().getCellNameList();
                         break;
 
@@ -372,11 +372,11 @@ public class ElementController {
 
         if (msg.length() == 0){
             result.put("result", Constants.SUCCESS);
-            result.put("msg", Constants.UPLOAD_RNC_INFOS_OK);
+            result.put("msg", Constants.MSG_UPLOAD_OK);
 
         } else {
             result.put("result", Constants.FAIL);
-            result.put("msg", Constants.UPLOAD_RNC_INFOS_FAILED + msg);
+            result.put("msg", Constants.MSG_UPLOAD_FAILED + msg);
         }
 
         return result;

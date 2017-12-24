@@ -211,16 +211,14 @@ public class QuotaFormulaController {
                 msg += "GetFormula is Error.";
             }
         }
-        if(formulaList!=null&&formulaList.size()>0 || msg.length() == 0){
 
-            result.put("msg",Constants.MSG_DOWNLOAD_FORMULAS_OK);
+        if(formulaList!=null && formulaList.size()>0 || msg.length() == 0){
             result.put("result",Constants.SUCCESS);
             result.put("data",formulaList);
 
         }else {
-
-            result.put("msg",Constants.MSG_DOWNLOAD_FORMULAS_FAILED);
             result.put("result",Constants.FAIL);
+            result.put("msg",Constants.MSG_DOWNLOAD_FAILED);
         }
 
         return result;

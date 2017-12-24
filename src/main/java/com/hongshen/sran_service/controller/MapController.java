@@ -88,33 +88,33 @@ public class MapController extends BaseController{
                     }
 
                     // favorite
-                    loginName = "pom";//TODO
-                    String tableNameBase = "unicom_favorite_" + generation + "_";
-                    String tableNameLike = "%" + tableNameBase + loginName + "%";
-                    String tableName = tableNameBase + loginName;
-                    JSONObject table = obj.getElementInfoService().getTable(tableNameLike);
-                    if (table != null) {
-                        Integer nodeNum = obj.getElementInfoService().getNodeNum(tableName, groupName);
-                        if (nodeList.size() == nodeNum) {
+                    if (loginName == null || loginName.length() == 0){
+                        msg += "LoginName is null.";
+                    }else {
+                        String tableNameBase = "unicom_favorite_" + generation + "_";
+                        String tableNameLike = "%" + tableNameBase + loginName + "%";
+                        String tableName = tableNameBase + loginName;
+                        JSONObject table = obj.getElementInfoService().getTable(tableNameLike);
+                        if (table != null && !table.isEmpty()) {
+                            Integer nodeNum = obj.getElementInfoService().getNodeNum(tableName, groupName);
+                            if (nodeList.size() == nodeNum) {
+                                dataOne.put("favorite", true);
 
-                            dataOne.put("favorite", true);
+                            } else {
+                                dataOne.put("favorite", false);
+                            }
 
                         } else {
-
                             dataOne.put("favorite", false);
                         }
 
-                    } else {
-
-                        dataOne.put("favorite", false);
+                        dataList.add(dataOne);
                     }
-
-                    dataList.add(dataOne);
                 }
             }
         }
 
-        if(dataList == null || dataList.isEmpty() || msg.length() != 0){
+        if(msg.length() != 0 || dataList == null || dataList.isEmpty() ){
             result.put("result",Constants.FAIL);
             result.put("msg",Constants.MSG_NO_DATA + msg);
 
@@ -293,7 +293,6 @@ public class MapController extends BaseController{
                                     }
 
                                     // favorite
-                                    loginName = "pom";//TODO
                                     if (loginName == null || loginName.isEmpty()){
                                         msg +="LoginName is null.";
                                     }else {
@@ -307,36 +306,18 @@ public class MapController extends BaseController{
                                                     Integer nodeStatus = obj.getElementInfoService().getNodeofNull(tableName, nodeName);
 
                                                     if (nodeStatus <= 0) {
-
                                                         dataOne.put("favorite", false);
 
                                                     } else {
-
                                                         dataOne.put("favorite", true);
                                                     }
                                                 }catch (Exception e) {
                                                     msg += "Parameters has error:" + e.getMessage();
                                                 }
                                             } else {
-
                                                 dataOne.put("favorite", false);
                                             }
 
-                                            // level
-                                            try {
-                                                JSONObject level = obj.getQuotaService().getNodeLevel(nodeName);
-
-                                                if (level != null && level.getIntValue("level") != -1) {
-
-                                                    dataOne.putAll(level);
-
-                                                } else {
-
-                                                    dataOne.put("level", Constants.INVALID_VALUE_LEVEL);
-                                                }
-                                            }catch (Exception e) {
-                                                msg += "Parameters has error:" + e.getMessage();
-                                            }
                                         }catch (Exception e) {
                                             msg += "Parameters has error:" + e.getMessage();
                                         }
@@ -344,6 +325,23 @@ public class MapController extends BaseController{
                                 }catch (Exception e){
                                     msg += "Parameters has error:" + e.getMessage();
                                 }
+
+                                // level
+                                try {
+                                    JSONObject level = obj.getQuotaService().getNodeLevel(nodeName);
+
+                                    if (level != null && level.getIntValue("level") != -1) {
+
+                                        dataOne.putAll(level);
+
+                                    } else {
+
+                                        dataOne.put("level", Constants.INVALID_VALUE_LEVEL);
+                                    }
+                                }catch (Exception e) {
+                                    msg += "Parameters has error:" + e.getMessage();
+                                }
+
                                 dataList.add(dataOne);
                             }
 

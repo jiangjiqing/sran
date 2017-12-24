@@ -38,7 +38,6 @@ public class Constants {
     public static final String MSG_NO_DATA = "Data is empty.";
     public static final String MSG_NO_PERMISSION = "Permission denied.";
     public static final String MSG_EXPRESSION_INVALID = "Invalid expression.";
-
     public static final String MSG_DELETE_OK = "Delete ok.";
     public static final String MSG_DELETE_FAILED = "Delete failed.";
     public static final String MSG_ADD_OK = "Add ok.";
@@ -47,11 +46,11 @@ public class Constants {
     public static final String MSG_UPDATE_FAILED = "Update failed.";
     public static final String MSG_CACEL_OK = "Cacel ok.";
     public static final String MSG_CACEL_FAILED = "Cacel failed.";
-    public static final String MSG_TASK_CANCLE_OK = "task cancle ok";
-    public static final String MSG_DOWNLOAD_FORMULAS_FAILED = "download formulas file failed";
-    public static final String MSG_DOWNLOAD_FORMULAS_OK = "download formulas file ok";
-    public static final String UPLOAD_RNC_INFOS_OK = "upload rnc infos ok";
-    public static final String UPLOAD_RNC_INFOS_FAILED = "upload rnc infos failed";
+    public static final String MSG_DOWNLOAD_FAILED = "Download file failed.";
+    public static final String MSG_DOWNLOAD_OK = "Download file ok.";
+    public static final String MSG_UPLOAD_OK = "Upload infos ok.";
+    public static final String MSG_UPLOAD_FAILED = "Upload infos failed.";
+
     public static final String INVALID_VALUE_LEVEL = "-1";
     public static final String INVALID_VALUE_LOCATION = "-1";
     public static final Integer INVALID_VALUE_QUOTA = -1;
