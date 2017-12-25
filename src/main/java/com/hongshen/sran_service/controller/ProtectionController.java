@@ -69,7 +69,7 @@ public class ProtectionController extends BaseController{
                         JSONObject level = obj.getQuotaService().getNodeLevel(nodeName);
 
                         if (level != null && level.getIntValue("level") != -1) {
-                            protect.put("level", level);
+                            protect.put("level", level.getIntValue("level"));
 
                         } else {
                             protect.put("level", Constants.INVALID_VALUE_LEVEL);

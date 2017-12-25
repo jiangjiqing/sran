@@ -63,7 +63,7 @@ public class FavoriteContrller {
 
                         if (level != null && level.getIntValue("level") != -1) {
 
-                            node.put("level", level);
+                            node.put("level", level.getIntValue("level"));
 
                         } else {
 
