@@ -27,7 +27,7 @@ public interface UnicomQuotaHistoryCellWcdmaMapper {
     int insertSelective(UnicomQuotaHistoryCellWcdma record);
 
 
-    JSONObject getQuotaLastUpdateTime();
+    Date getQuotaLastUpdateTime();
 
     JSONObject getQuota(@Param("cellName")String cellName,
                         @Param("time")String time);

@@ -241,7 +241,7 @@
     </trim>
   </insert>
 
-  <select id="getQuotaLastUpdateTime" resultType="com.alibaba.fastjson.JSONObject">
+  <select id="getQuotaLastUpdateTime" resultType="java.util.Date">
     SELECT time
     FROM unicom_quota_history_cell_lte
     ORDER BY time DESC LIMIT 1

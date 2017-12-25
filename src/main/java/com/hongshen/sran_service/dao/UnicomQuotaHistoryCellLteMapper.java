@@ -29,7 +29,7 @@ public interface UnicomQuotaHistoryCellLteMapper {
     int insertSelective(UnicomQuotaHistoryCellLte record);
 
 
-    JSONObject getQuotaLastUpdateTime();
+    Date getQuotaLastUpdateTime();
 
     JSONObject getQuota(@Param("cellName")String cellName,
                         @Param("time")String time);

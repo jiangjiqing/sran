@@ -2,6 +2,7 @@ package com.hongshen.sran_service.service;
 
 import com.alibaba.fastjson.JSONObject;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -56,7 +57,7 @@ public interface CacheService {
 
     void setUpdateTimeForQuotaData(String updateTimeForQuotaData);
 
-    String getUpdateTimeForQuotaData(String level);
+    Date getUpdateTimeForQuotaData(String level);
 
     String getUpdateTimeForQuotaData();
 

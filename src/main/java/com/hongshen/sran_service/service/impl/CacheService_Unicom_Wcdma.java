@@ -8,7 +8,10 @@ import com.hongshen.sran_service.service.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -275,40 +278,51 @@ public class CacheService_Unicom_Wcdma implements CacheService {
 
         String time = this.updateTimeForQuotaData;
 
-        if (time == null || time.length() == 0){
-            time = getUpdateTimeForQuotaData(Constants.LEVEL_GROUP);
-        }
+        if (time == null || time.length() == 0) {
 
-        if (time == null || time.length() == 0){
-            time = getUpdateTimeForQuotaData(Constants.LEVEL_NODE);
-        }
+            Date date = getUpdateTimeForQuotaData(Constants.LEVEL_CELL);
 
-        if (time == null || time.length() == 0){
-            time = getUpdateTimeForQuotaData(Constants.LEVEL_CELL);
-        }
+            if (date == null) {
+                date = getUpdateTimeForQuotaData(Constants.LEVEL_NODE);
+            }
 
+            if (date == null) {
+                date = getUpdateTimeForQuotaData(Constants.LEVEL_GROUP);
+            }
+
+            if (date != null) {
+                time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
+            }
+        }
         return time;
     }
 
-    public String getUpdateTimeForQuotaData(String level) {
+    public Date getUpdateTimeForQuotaData(String level) {
 
         if (this.updateTimeForQuotaData == null || this.updateTimeForQuotaData.length() == 0){
 
             switch (level){
                 case Constants.LEVEL_GROUP:
-                    return quotaGroupMapper.getQuotaLastUpdateTime().getString("time");
+                    return quotaGroupMapper.getQuotaLastUpdateTime();
 
                 case Constants.LEVEL_NODE:
-                    return quotaNodeMapper.getQuotaLastUpdateTime().getString("time");
+                    return quotaNodeMapper.getQuotaLastUpdateTime();
 
                 case Constants.LEVEL_CELL:
-                    return quotaCellMapper.getQuotaLastUpdateTime().getString("time");
+                    return quotaCellMapper.getQuotaLastUpdateTime();
 
                 default:
-                    return "";
+                    return null;
             }
         }else{
-            return this.updateTimeForQuotaData;
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//小写的mm表示的是分钟
+                return sdf.parse(this.updateTimeForQuotaData);
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+                return null;
+            }
         }
     }
 

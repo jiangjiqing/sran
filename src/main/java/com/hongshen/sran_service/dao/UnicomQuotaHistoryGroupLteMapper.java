@@ -27,7 +27,7 @@ public interface UnicomQuotaHistoryGroupLteMapper {
     int insertSelective(UnicomQuotaHistoryGroupLte record);
 
 
-    JSONObject getQuotaLastUpdateTime();
+    Date getQuotaLastUpdateTime();
 
     JSONObject getQuota(@Param("groupName")String groupName,
                         @Param("time")String time);

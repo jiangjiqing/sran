@@ -241,7 +241,7 @@
     </trim>
   </insert>
 
-  <select id="getQuotaLastUpdateTime" resultType="com.alibaba.fastjson.JSONObject">
+  <select id="getQuotaLastUpdateTime" resultType="java.util.Date">
     SELECT time
     FROM unicom_quota_history_node_lte
     ORDER BY time DESC LIMIT 1
@@ -250,13 +250,13 @@
     <select id="getQuota" resultType="com.alibaba.fastjson.JSONObject">
     SELECT *
     FROM unicom_quota_history_node_lte
-    WHERE name = #{nodeName} ORDER BY time DESC LIMIT 1
+    WHERE name = #{nodeName} AND time = #{time}
   </select>
 
     <select id="getLevel" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
         SELECT level
         FROM unicom_quota_history_node_lte
-        WHERE name = #{nodeName} ORDER BY time DESC LIMIT 1
+        WHERE name = #{nodeName} AND time = #{time}
     </select>
 
     <!--<select id="getLevel" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">-->
