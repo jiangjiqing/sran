@@ -101,7 +101,7 @@ public class QuotaHistoryController extends BaseController {
                 }
                 quotaList = getQuotas(level, obj, start, end, condition);
 
-                if (quotaList != null || quotaList.isEmpty() || quotaList.size() == 0) {
+                if (quotaList == null || quotaList.isEmpty() || quotaList.size() == 0) {
                     msg += "quotaList is null.";
 
                 } else {
