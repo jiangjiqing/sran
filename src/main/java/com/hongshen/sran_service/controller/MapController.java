@@ -28,12 +28,12 @@ public class MapController extends BaseController{
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject  getGroupList(@PathParam("supplier")String supplier,
                                     @PathParam("generation")String generation,
-                                    @HeaderParam("loginName")String loginName) {
+                                    @HeaderParam("loginName")String loginName1) {
 
         String msg = "";
         JSONObject result = new JSONObject();
         List<JSONObject> dataList = new ArrayList<>();
-
+        String loginName = "admin";//TODO
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         if (obj == null){
             msg += "Supplier or Generation has error.";
