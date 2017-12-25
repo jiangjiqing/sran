@@ -216,7 +216,7 @@ public class QuotaHistoryController extends BaseController {
                                 && time < getMath(start, j + 1, min).getTime() && time <= end.getTime()) {
 
                             if (quolist.getDouble(formulaName) != null
-                                    && quolist.getDouble(formulaName) > 0) {
+                                    && quolist.getDouble(formulaName) >= 0) {
 
                                 Time.put("time", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(getMath(start, j, min)));
                                 num++;
