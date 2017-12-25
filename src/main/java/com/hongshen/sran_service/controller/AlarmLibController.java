@@ -40,21 +40,24 @@ public class AlarmLibController extends BaseController{
             alarmList = obj.getAlarmLibService().getAlarmList();
 
             if (alarmList == null || alarmList.isEmpty() ||alarmList.size() == 0) {
-
                 msg += "Get alarmList failed.";
+            }else{
+                for (JSONObject al : alarmList){
+                    if (al.getString("alarmLevelId").length() == 0){
+                        al.put("alarmLevelId", Constants.INVALID_ALARM_LEVEL);
+                    }else {
+                        al.put("alarmLevelId", al.getIntValue("alarmLevelId"));
+                    }
+                }
             }
         }
         if (msg.length() == 0){
-
             result.put("result", Constants.SUCCESS);
             result.put("data", alarmList);
 
         }else{
-
             result.put("result", Constants.FAIL);
-
             result.put("msg", Constants.MSG_NO_DATA + msg);
-
         }
         return result;
     }
@@ -84,6 +87,12 @@ public class AlarmLibController extends BaseController{
 //                result.put("result", Constants.FAIL);
 //                result.put("msg", Constants.MSG_NO_DATA);
                     msg += "Alarm is null.";
+                }else{
+                    if (alarm.getString("alarmLevelId").length() == 0){
+                        alarm.put("alarmLevelId", Constants.INVALID_ALARM_LEVEL);
+                    }else {
+                        alarm.put("alarmLevelId", alarm.getIntValue("alarmLevelId"));
+                    }
                 }
             }
         }

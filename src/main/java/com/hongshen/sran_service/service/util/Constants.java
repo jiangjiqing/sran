@@ -52,6 +52,7 @@ public class Constants {
     public static final String MSG_UPLOAD_FAILED = "Upload infos failed.";
 
     public static final Integer INVALID_VALUE_LEVEL = -1;
+    public static final Integer INVALID_ALARM_LEVEL = 0;
     public static final String INVALID_VALUE_LOCATION = "-1";
     public static final Integer INVALID_VALUE_QUOTA = -1;
 
