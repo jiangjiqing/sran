@@ -13,7 +13,8 @@ import java.io.InputStreamReader;
 import java.util.*;
 
 //该注解用来指定一个URI，客户端可以通过这个URI来连接到WebSocket。类似Servlet的注解mapping。无需在web.xml中配置。
-@ServerEndpoint(value = "/sran/service/net/task/{param}", configurator = HttpSessionConfigurator.class)
+/*@ServerEndpoint(value = "/sran/service/net/task/{param}", configurator = HttpSessionConfigurator.class)*/
+@ServerEndpoint(value = "/sran/service/net/task", configurator = HttpSessionConfigurator.class)
 @Component
 public class TaskWSController {
 
@@ -21,8 +22,7 @@ public class TaskWSController {
 
     public static Map<String, Boolean> taskStatusMap = new HashMap<>();
     public static Map<String, Session> taskStatusSession = new HashMap<>();
-    private static Set<String> runingTask = new HashSet<>();
-
+    //private static Set<String> runingTask = new HashSet<>();
     /**
      * 连接建立成功调用的方法
      *
@@ -60,7 +60,7 @@ public class TaskWSController {
             result.put("msg", "loginName null");
             this.sendMessage(result.toJSONString());
 
-        }else if(taskStatusMap.get(loginName)!=null&&runingTask.contains(param)&& taskStatusMap.get(loginName)==true){
+        }else if(taskStatusMap.get(loginName)!=null/*&&runingTask.contains(param)*/&& taskStatusMap.get(loginName)==true){
 
             result.put("result","failed");
             result.put("msg","task is running");
@@ -118,8 +118,7 @@ public class TaskWSController {
 
             try {
                  Process process = Runtime.getRuntime().exec(mobatchPath + " " + siteFilePath + " " + cmdFilePath + " " + logFileDir);
-                runingTask.add(param);
-                //Process process = Runtime.getRuntime().exec(param);
+               // runingTask.add(param);
                 BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
                 Date date1 = new Date();
                 result.put("timeStart",date1);
@@ -147,13 +146,13 @@ public class TaskWSController {
                     process.destroy();
 
                 }
-                runingTask.remove(param);
-                if(runingTask.size()==0) {
+                //runingTask.remove(param);
+                //if(runingTask.size()==0) {
                     taskStatusMap.remove(loginName);
                     taskStatusSession.remove(loginName);
                     Boolean b =  new FileHelper().compressFile1(Constants.TASK_ROOT_PATH+loginName+"/"+Constants.TASK_DIR_ANALYSIS_LOG+"/"+Constants.TASK_FILE_LOG,
                             Constants.TASK_ROOT_PATH+loginName+"/"+Constants.TASK_DIR_LOG);
-                }
+               // }
 
             } catch (IOException e) {
                 e.printStackTrace();
