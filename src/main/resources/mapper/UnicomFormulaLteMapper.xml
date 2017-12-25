@@ -149,7 +149,6 @@
 
   <select id="getFormulaList" resultType="com.alibaba.fastjson.JSONObject">
     SELECT
-      id,
       quota_name quotaName,
       expression,
       remark,
@@ -157,7 +156,7 @@
       type,
       hasTop10
     FROM unicom_formula_lte
-    ORDER BY id ASC;
+    ORDER BY quota_name ASC;
   </select>
 
   <select id="getFormulaByName" resultType="com.alibaba.fastjson.JSONObject">
