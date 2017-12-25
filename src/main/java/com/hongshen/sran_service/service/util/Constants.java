@@ -67,7 +67,7 @@ public class Constants {
     public static final String TASK_FILE_CMD = "cmdlist";
     // /sran/task/loginName/createTime/log/log.zip
     public static final String TASK_DIR_LOG = "log";
-    public static final String TASK_FILE_LOG = "log.zip";
+    public static final String TASK_FILE_LOG = "log.tar";
     // /sran/task/loginName/createTime/analysislog/analysis.log
     public static final String TASK_DIR_ANALYSIS_LOG = "analysislog";
     public static final String TASK_FILE_ANALYSIS_LOG = "analysis.log";

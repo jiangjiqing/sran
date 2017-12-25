@@ -119,17 +119,17 @@ public class FileHelper {
         try {
             process = Runtime.getRuntime().exec(command);
 
-                InputStreamReader ir=new InputStreamReader(process.getErrorStream());
+            InputStreamReader ir=new InputStreamReader(process.getErrorStream());
 
-                BufferedReader input = new BufferedReader (ir);
+            BufferedReader input = new BufferedReader (ir);
 
-                String line;
+            String line;
 
-                while ((line = input.readLine ()) != null){
+            while ((line = input.readLine ()) != null){
 
-                    System.out.println(line);
+                System.out.println(line);
 
-                }
+            }
             try {
                 process.waitFor();
             } catch (InterruptedException e) {
@@ -146,5 +146,35 @@ public class FileHelper {
         return false;
     }
 
+    public static boolean compressFile1(String desFilePath,String srcFilePath){
+        String command ="tar -zcPf "+desFilePath+" "+srcFilePath;
+        try {
+            Process  process = Runtime.getRuntime().exec(command);
 
+            InputStreamReader ir=new InputStreamReader(process.getErrorStream());
+
+            BufferedReader input = new BufferedReader (ir);
+
+            String line;
+
+            while ((line = input.readLine ()) != null){
+
+                System.out.println(line);
+
+            }
+            try {
+                process.waitFor();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            int i = process.exitValue();
+            if (i == 0){
+                return true;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
 }

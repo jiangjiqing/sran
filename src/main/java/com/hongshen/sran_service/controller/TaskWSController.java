@@ -1,19 +1,19 @@
 package com.hongshen.sran_service.controller;
 import com.alibaba.fastjson.JSONObject;
+import com.hongshen.sran_service.service.util.FileHelper;
 import com.hongshen.sran_service.service.util.websocket.HttpSessionConfigurator;
 import org.springframework.stereotype.Component;
 import com.hongshen.sran_service.service.util.Constants;
 import javax.websocket.*;
+import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 //该注解用来指定一个URI，客户端可以通过这个URI来连接到WebSocket。类似Servlet的注解mapping。无需在web.xml中配置。
-@ServerEndpoint(value = "/sran/service/net/task", configurator = HttpSessionConfigurator.class)
+@ServerEndpoint(value = "/sran/service/net/task/{param}", configurator = HttpSessionConfigurator.class)
 @Component
 public class TaskWSController {
 
@@ -21,6 +21,7 @@ public class TaskWSController {
 
     public static Map<String, Boolean> taskStatusMap = new HashMap<>();
     public static Map<String, Session> taskStatusSession = new HashMap<>();
+    private static Set<String> runingTask = new HashSet<>();
 
     /**
      * 连接建立成功调用的方法
@@ -49,7 +50,7 @@ public class TaskWSController {
      * @param session 可选的参数
      */
     @OnMessage
-    public void onMessage(String loginName, final Session session) throws IOException {
+    public void onMessage(@PathParam(value="param")String param, String loginName, final Session session) throws IOException {
         //loginName="666";
         JSONObject result = new JSONObject();
 
@@ -59,7 +60,7 @@ public class TaskWSController {
             result.put("msg", "loginName null");
             this.sendMessage(result.toJSONString());
 
-        }else if(taskStatusMap.get(loginName)!=null&&taskStatusMap.get(loginName)==true){
+        }else if(taskStatusMap.get(loginName)!=null&&runingTask.contains(param)&& taskStatusMap.get(loginName)==true){
 
             result.put("result","failed");
             result.put("msg","task is running");
@@ -69,7 +70,7 @@ public class TaskWSController {
 
             taskStatusMap.put(loginName, true);
             taskStatusSession.put(loginName, session);
-            requestSocket(loginName);
+            requestSocket(param,loginName);
         }
     }
 
@@ -96,7 +97,8 @@ public class TaskWSController {
 
     }
 
-    public void requestSocket(String loginName) throws IOException {//TODO
+    public void requestSocket(@PathParam(value="param") String param,
+                              String loginName) throws IOException {//TODO
 
         String mobatchPath = Constants.MOSHELL_ROOT_PATH + "mobatch";
         String siteFilePath = Constants.TASK_ROOT_PATH + loginName + "/" + Constants.TASK_DIR_SITE + "/" + Constants.TASK_FILE_SITE;
@@ -115,33 +117,43 @@ public class TaskWSController {
             int num=0;
 
             try {
-                Process process = Runtime.getRuntime().exec(mobatchPath + " " + siteFilePath + " " + cmdFilePath + " " + logFileDir);
-
+                 Process process = Runtime.getRuntime().exec(mobatchPath + " " + siteFilePath + " " + cmdFilePath + " " + logFileDir);
+                runingTask.add(param);
+                //Process process = Runtime.getRuntime().exec(param);
                 BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
                 Date date1 = new Date();
                 result.put("timeStart",date1);
 
                 String data = null;
-                while (taskStatusMap.get(loginName) == true && (data = reader.readLine())!=null) {
+                while (taskStatusMap.get(loginName)!=null&&taskStatusMap.get(loginName) == true && (data = reader.readLine())!=null) {
                     Date date = new Date();
-                    if(data.contains("**")) {
-                        num++;
-                        if(num!=1) {
-                            result.put("total", 20);
-                            result.put("complete", num-1);
-                            result.put("time", date);
-                            System.out.println(data);
-                            this.sendMessage(String.valueOf(result));
+                   if(data.contains("**")) {
+                    num++;
+                    if(num!=1) {
+                        result.put("total", 20);
+                        result.put("complete", num-1);
+                        result.put("time", date);
+                        System.out.println(data);
+                        this.sendMessage(String.valueOf(result));
                         }
-                   }
+                       /* if(num==30){
+                            process.destroy();
+                            break;
+                        }*/
+                    }
                 }
 
-                if(taskStatusMap.get(loginName) == false) {
+                if(taskStatusMap.get(loginName) !=null && taskStatusMap.get(loginName) == false) {
                     process.destroy();
 
                 }
-                taskStatusMap.remove(loginName);
-                taskStatusSession.remove(loginName);
+                runingTask.remove(param);
+                if(runingTask.size()==0) {
+                    taskStatusMap.remove(loginName);
+                    taskStatusSession.remove(loginName);
+                    Boolean b =  new FileHelper().compressFile1(Constants.TASK_ROOT_PATH+loginName+"/"+Constants.TASK_DIR_ANALYSIS_LOG+"/"+Constants.TASK_FILE_LOG,
+                            Constants.TASK_ROOT_PATH+loginName+"/"+Constants.TASK_DIR_LOG);
+                }
 
             } catch (IOException e) {
                 e.printStackTrace();
