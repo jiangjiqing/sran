@@ -1,13 +1,17 @@
 package com.hongshen.sran_service.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.service.util.FileHelper;
+import com.hongshen.sran_service.service.util.NetObjBase;
+import com.hongshen.sran_service.service.util.NetObjFactory;
 import com.hongshen.sran_service.service.util.websocket.HttpSessionConfigurator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.hongshen.sran_service.service.util.Constants;
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
@@ -30,6 +34,7 @@ public class TaskWSController {
      */
     @OnOpen
     public void onOpen(Session session) {
+
         this.session = session;
 
         System.out.println("open");
@@ -51,7 +56,7 @@ public class TaskWSController {
      */
     @OnMessage
     public void onMessage(@PathParam(value="param")String param, String loginName, final Session session) throws IOException {
-        //loginName="666";
+
         JSONObject result = new JSONObject();
 
         if (loginName == null || loginName.equals("")) {
@@ -115,11 +120,22 @@ public class TaskWSController {
         }else {
 
             int num=0;
+            int index=0;
+            try{
+                FileReader  fileReader = new FileReader(Constants.TASK_ROOT_PATH+loginName+"/"+Constants.TASK_DIR_SITE+"/"+Constants.TASK_FILE_SITE);
+                BufferedReader indexLine = new BufferedReader(fileReader);
 
+                while (indexLine.readLine()!=null){
+                    index++;
+                }
+            }catch(Exception e){
+                    e.getMessage();
+            }
             try {
                  Process process = Runtime.getRuntime().exec(mobatchPath + " " + siteFilePath + " " + cmdFilePath + " " + logFileDir);
                // runingTask.add(param);
                 BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+
                 Date date1 = new Date();
                 result.put("timeStart",date1);
 
@@ -129,7 +145,7 @@ public class TaskWSController {
                    if(data.contains("**")) {
                     num++;
                     if(num!=1) {
-                        result.put("total", 20);
+                        result.put("total",index);
                         result.put("complete", num-1);
                         result.put("time", date);
                         System.out.println(data);
@@ -152,7 +168,7 @@ public class TaskWSController {
                     taskStatusSession.remove(loginName);
                     Boolean b =  new FileHelper().compressFile1(Constants.TASK_ROOT_PATH+loginName+"/"+Constants.TASK_DIR_ANALYSIS_LOG+"/"+Constants.TASK_FILE_LOG,
                             Constants.TASK_ROOT_PATH+loginName+"/"+Constants.TASK_DIR_LOG);
-                            process.destroy();
+                   process.destroy();
                // }
 
             } catch (IOException e) {
