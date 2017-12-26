@@ -96,7 +96,7 @@
 
   <select id="getNodeNum" parameterType="java.lang.String" resultType="java.lang.Integer">
     SELECT count(*) from
-    #{tableName} u
+    ${tableName} u
     LEFT JOIN
     unicom_node_wcdma l
     on
