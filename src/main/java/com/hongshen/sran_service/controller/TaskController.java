@@ -31,7 +31,7 @@ public class TaskController extends BaseController {
     @GET
     @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/task")
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject getTaskInfo(@PathParam("supplier") String supplier,
+    public JSONObject getTaskList(@PathParam("supplier") String supplier,
                                   @PathParam("generation") String generation,
                                   @HeaderParam("loginName") String loginName) {
 
@@ -48,7 +48,7 @@ public class TaskController extends BaseController {
 
         }else {
             try {
-                taskInfo = obj.getTaskService().getTaskInfo(loginName);
+                taskInfo = obj.getTaskService().getTaskList(loginName);
 
                 if (taskInfo == null || taskInfo.isEmpty() || taskInfo.size() == 0) {
                     msg += "TaskInfo is null.";
@@ -105,20 +105,7 @@ public class TaskController extends BaseController {
                 msg += "Add task has error:" + e.getMessage();
             }
 
-            try {
-                String siteDir = Constants.TASK_ROOT_PATH + loginName +"/"+Constants.TASK_DIR_SITE;
-                String cmdDir = Constants.TASK_ROOT_PATH + loginName +"/"+Constants.TASK_DIR_CMD;
-                String logDir = Constants.TASK_ROOT_PATH + loginName +"/"+Constants.TASK_DIR_LOG;
-                String analysisLogDir = Constants.TASK_ROOT_PATH + loginName +"/"+Constants.TASK_DIR_ANALYSIS_LOG;
 
-                FileHelper.createFile(siteDir, Constants.TASK_FILE_SITE, param.getString("rncList"));
-                FileHelper.createFile(cmdDir, Constants.TASK_FILE_CMD, param.getString("cmdList"));
-                FileHelper.createDir(logDir);
-                FileHelper.createDir(analysisLogDir);
-
-            }catch  (Exception e){
-                msg += "Create file has error:" + e.getMessage();
-            }
             //TODO task plan
         }
 

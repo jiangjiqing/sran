@@ -26,8 +26,8 @@ public class TaskService_Unicom_Wcdma implements TaskService {
     private UnicomUserTaskGroupWcdmaMapper TaskGroupMapper;
 
     @Override
-    public List<JSONObject> getTaskInfo(String loginName) {
-        return TaskGroupMapper.getTaskInfo(loginName);
+    public List<JSONObject> getTaskList(String loginName) {
+        return TaskGroupMapper.getTaskList(loginName);
     }
 
     @Override

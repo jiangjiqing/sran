@@ -173,7 +173,7 @@
     where login_name = #{loginName,jdbcType=VARCHAR}
   </update>
 
-  <select id="getTaskInfo" resultType="com.alibaba.fastjson.JSONObject">
+  <select id="getTaskList" resultType="com.alibaba.fastjson.JSONObject">
     SELECT
       login_name loginName,
       rncList,
@@ -220,5 +220,8 @@
 <!--       createTime=#{param.createTime, jdbcType=TIMESTAMP},-->
 <!--       remark=#{param.remark, jdbcType=VARCHAR};-->
       </insert>
+  <select id="getTaskInfo" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT  * from unicom_user_task_group_wcdma WHERE login_name=#{loginName};
+  </select>
 
     </mapper>

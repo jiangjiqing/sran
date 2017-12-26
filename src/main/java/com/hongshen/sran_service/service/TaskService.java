@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface TaskService {
 
-    List<JSONObject> getTaskInfo(String loginName);
+    List<JSONObject> getTaskList(String loginName);
 
     int addTask(String loginName, JSONObject param);
 
