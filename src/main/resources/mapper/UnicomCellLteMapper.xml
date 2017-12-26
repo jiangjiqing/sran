@@ -114,6 +114,7 @@
     SELECT cell_name name
     FROM unicom_cell_lte
     WHERE node_name = #{nodeName}
+    GROUP BY name
   </select>
 
   <select id="getCellNameListByNode" resultType="java.lang.String">

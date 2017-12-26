@@ -229,13 +229,14 @@
       longitude
     FROM unicom_node_lte
     WHERE group_name = #{groupName}
+    GROUP BY name
   </select>
 
   <select id="getNodeNameListByGroup" resultType="java.lang.String">
     SELECT node_name name
     FROM unicom_node_lte
     WHERE group_name = #{groupName}
-    ORDER BY name
+    GROUP BY name
   </select>
 
   <select id="getNodeLocation" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
@@ -261,7 +262,7 @@
     SELECT
       node_name name
     FROM unicom_node_lte
-    ORDER BY name
+    GROUP BY name
   </select>
 
   <select id="getNodeNameListByGroupName" resultType="java.lang.String">
@@ -286,7 +287,8 @@
     <set>
       <if test="stationName != null">
         station_name = #{stationName},
-      </if>    </set>
+      </if>
+    </set>
     where node_name = #{nodeName}
   </update>
 </mapper>

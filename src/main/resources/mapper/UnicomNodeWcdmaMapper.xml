@@ -213,7 +213,8 @@
       latitude,
       longitude
     FROM unicom_node_wcdma
-    WHERE group_name = #{groupName};
+    WHERE group_name = #{groupName}
+    GROUP BY name
   </select>
 
   <select id="getNodeNameListByGroup" resultType="java.lang.String">
