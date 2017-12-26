@@ -152,6 +152,7 @@ public class TaskWSController {
                     taskStatusSession.remove(loginName);
                     Boolean b =  new FileHelper().compressFile1(Constants.TASK_ROOT_PATH+loginName+"/"+Constants.TASK_DIR_ANALYSIS_LOG+"/"+Constants.TASK_FILE_LOG,
                             Constants.TASK_ROOT_PATH+loginName+"/"+Constants.TASK_DIR_LOG);
+                            process.destroy();
                // }
 
             } catch (IOException e) {
