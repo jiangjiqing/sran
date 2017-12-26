@@ -135,7 +135,7 @@ public class CacheService_Unicom_Wcdma implements CacheService {
     public void resetFormulaList(){
         formulaList.clear();
         formulaList = formulaMapper.getFormulaList();
-                System.out.println(formulaList);
+        resetFormulaListProcessed();
     }
 
     @Override

@@ -156,7 +156,7 @@
       type,
       hasTop10
     FROM unicom_formula_wcdma
-    ORDER BY quota_name ASC;
+    ORDER BY quota_name ASC
   </select>
 
   <select id="getFormulaByName" resultType="com.alibaba.fastjson.JSONObject">
