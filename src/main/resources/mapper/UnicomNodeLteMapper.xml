@@ -246,9 +246,9 @@
   </select>
 
   <select id="getGroupList" resultType="com.alibaba.fastjson.JSONObject">
-    SELECT group_name name
-    FROM unicom_node_lte
-    GROUP BY name
+    SELECT a.group_name name
+    FROM unicom_node_lte a LEFT JOIN unicom_quota_history_node_lte b ON a.node_name=b.name
+    ORDER BY b.`level`
   </select>
 
   <select id="getGroupNameList" resultType="java.lang.String">
