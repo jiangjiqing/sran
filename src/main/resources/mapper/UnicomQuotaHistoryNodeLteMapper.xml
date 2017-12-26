@@ -293,5 +293,6 @@
 
   <select id="getNodeTime" resultType="com.alibaba.fastjson.JSONObject">
     SELECT time FROM unicom_quota_history_node_lte
+    GROUP BY time
   </select>
 </mapper>

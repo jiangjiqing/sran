@@ -254,5 +254,6 @@
 
   <select id="getCellTime" resultType="com.alibaba.fastjson.JSONObject">
     SELECT time FROM unicom_quota_history_cell_wcdma
+    GROUP BY time
   </select>
 </mapper>
