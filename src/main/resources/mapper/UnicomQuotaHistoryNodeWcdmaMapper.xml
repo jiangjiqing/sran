@@ -202,7 +202,7 @@
     </trim>
   </insert>
 
-  <select id="getQuotaLastUpdateTime" resultType="java.util.Date">
+  <select id="getQuotaLastUpdateTime" resultType="com.alibaba.fastjson.JSONObject">
     SELECT time
     FROM unicom_quota_history_node_wcdma
     ORDER BY time DESC LIMIT 1
@@ -218,6 +218,7 @@
         SELECT level
         FROM unicom_quota_history_node_wcdma
         WHERE name = #{nodeName} AND time = #{time}
+        LIMIT 1
     </select>
 
     <!--<select id="getLevel" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">-->
@@ -254,6 +255,5 @@
 
   <select id="getNodeTime" resultType="com.alibaba.fastjson.JSONObject">
     SELECT time FROM unicom_quota_history_node_wcdma
-    GROUP BY time
   </select>
 </mapper>

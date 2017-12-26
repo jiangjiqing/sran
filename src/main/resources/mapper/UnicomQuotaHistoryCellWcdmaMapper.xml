@@ -218,6 +218,7 @@
         SELECT level
         FROM unicom_quota_history_cell_wcdma
         WHERE name = #{cellName} AND time = #{time}
+        LIMIT 1
     </select>
 
     <!--<select id="getLevel" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">-->

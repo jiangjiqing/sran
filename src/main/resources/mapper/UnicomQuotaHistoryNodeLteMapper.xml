@@ -257,6 +257,7 @@
         SELECT level
         FROM unicom_quota_history_node_lte
         WHERE name = #{nodeName} AND time = #{time}
+        LIMIT 1
     </select>
 
     <!--<select id="getLevel" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">-->

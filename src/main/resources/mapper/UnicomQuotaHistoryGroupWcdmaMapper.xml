@@ -242,7 +242,6 @@
   </insert>
 
   <select id="getQuota" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
---     TODO
     SELECT *
     FROM unicom_quota_history_group_wcdma
     WHERE name = #{groupName} AND time = #{time}
@@ -258,6 +257,7 @@
     SELECT level
     FROM unicom_quota_history_group_wcdma
     WHERE name = #{groupName} AND time = #{time}
+    LIMIT 1
   </select>
 
   <!--<select id="getGroupLevel" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">-->

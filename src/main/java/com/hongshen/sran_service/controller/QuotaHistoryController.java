@@ -277,26 +277,26 @@ public class QuotaHistoryController extends BaseController {
     }
 
     private static List<JSONObject> getQuotas(String level,NetObjBase obj,Date start,Date end,String condition){
-        List<JSONObject> quotaListexport = new ArrayList<JSONObject>();
+        List<JSONObject> quotaList = new ArrayList<JSONObject>();
 
         switch (level){
             case Constants.LEVEL_GROUP:
-                quotaListexport= obj.getQuotaService().getQuotas(start, end,condition);
+                quotaList = obj.getQuotaService().getQuotas(start, end,condition);
                 break;
 
             case Constants.LEVEL_NODE:
-                quotaListexport= obj.getQuotaService().getQuotasNode(start, end,condition);
+                quotaList = obj.getQuotaService().getQuotasNode(start, end,condition);
                 break;
 
             case Constants.LEVEL_CELL:
-                quotaListexport= obj.getQuotaService().getQuotasCell(start, end,condition);
+                quotaList = obj.getQuotaService().getQuotasCell(start, end,condition);
                 break;
 
             default:
-                quotaListexport = null;
+                quotaList = null;
                 break;
         }
-        return quotaListexport;
+        return quotaList;
     }
 
     @POST
