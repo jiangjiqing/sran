@@ -224,11 +224,11 @@ public class FavoriteContrller {
 
         if (msg.length() == 0){
             result.put("result", Constants.SUCCESS);
-            result.put("msg", Constants.MSG_DELETE_OK);
+            result.put("msg", Constants.MSG_ADD_OK);
 
         }else{
             result.put("result", Constants.FAIL);
-            result.put("msg", Constants.MSG_DELETE_FAILED + msg);
+            result.put("msg", Constants.MSG_ADD_FAILED + msg);
         }
         return result;
     }

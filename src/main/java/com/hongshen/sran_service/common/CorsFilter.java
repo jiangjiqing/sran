@@ -35,11 +35,13 @@ public class CorsFilter extends BaseController implements Filter{
         HttpServletRequest request = (HttpServletRequest) req;
 
         String authToken = request.getHeader("Auth-Token");
+        String loginName = request.getHeader("loginName");
         String method = request.getMethod();
         StringBuffer url = request.getRequestURL();
         String ip=request.getRemoteAddr();
         Object a =request.getCookies();
         System.out.println(a);
+        System.out.println("loginName:"+loginName);
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         if (ip != null) {
             System.out.println("Visit IP:"+ip);

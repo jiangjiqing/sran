@@ -158,17 +158,17 @@ public class UserController extends BaseController{
 
     // Update specified user
     @PUT
-    @Path("/users/{loginName}")
+    @Path("/users/{userName}")
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject updateUser (@PathParam("loginName") String loginName,
+    public JSONObject updateUser (@PathParam("userName") String userName,
                                   @HeaderParam("Auth-Token")String authToken,
                                   JSONObject param){
 
         JSONObject result = new JSONObject();
         String msg = "";
 
-        int i = userAgentService.updateUser(param);//TODO shiro
-        if (i <= 0){
+        int i = userAgentService.updateUser(param,userName);//TODO shiro
+        if (i < 0){
             msg += "Update user info failed.";
 
         }else{
@@ -189,11 +189,11 @@ public class UserController extends BaseController{
                         paramList.add(authList.get(r).toString());
                     }
                     // step1 delete, step2 add
-                    int j = userAgentService.delteWcdmaAuth(loginName);
+                    int j = userAgentService.delteWcdmaAuth(userName);
 
                     if (paramList.size() > 0) {
 
-                        int k = userAgentService.addWcdmaAuth(paramList, loginName);
+                        int k = userAgentService.addWcdmaAuth(paramList, userName);
                         if (k <= 0){
                             msg += "Update user authority info("+ generation +"-step2) failed.";
                         }
@@ -209,11 +209,11 @@ public class UserController extends BaseController{
                         paramList.add(authList.get(r).toString());
                     }
                     // step1 delete, step2 add
-                    int j = userAgentService.delteLteAuth(loginName);
+                    int j = userAgentService.delteLteAuth(userName);
 
                     if (paramList.size() > 0) {
 
-                        int k = userAgentService.addLteAuth(paramList, loginName);
+                        int k = userAgentService.addLteAuth(paramList, userName);
                         if (k <= 0){
                             msg += "Update user authority info("+ generation +"-step2) failed.";
                         }

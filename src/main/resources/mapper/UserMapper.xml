@@ -160,7 +160,7 @@
       a.email=#{param.email},
       a.phone=#{param.phone},
       b.role_id=#{param.role}
-    WHERE a.login_name = #{param.loginName}
+    WHERE a.login_name = #{userName}
   </update>
 
   <!--<update id="updateWcdmaAuth" parameterType="com.alibaba.fastjson.JSONObject">-->

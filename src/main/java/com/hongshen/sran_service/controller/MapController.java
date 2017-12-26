@@ -28,12 +28,11 @@ public class MapController extends BaseController{
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject  getGroupList(@PathParam("supplier")String supplier,
                                     @PathParam("generation")String generation,
-                                    @HeaderParam("loginName")String loginName1) {
+                                    @HeaderParam("loginName")String loginName) {
 
         String msg = "";
         JSONObject result = new JSONObject();
         List<JSONObject> dataList = new ArrayList<>();
-        String loginName = "admin";//TODO
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         if (obj == null){
             msg += "Supplier or Generation has error.";
@@ -97,8 +96,9 @@ public class MapController extends BaseController{
                         String tableName = tableNameBase + loginName;
                         JSONObject table = obj.getElementInfoService().getTable(tableNameLike);
                         if (table != null && !table.isEmpty()) {
+                            List<JSONObject> nodeList1 = obj.getElementInfoService().getNodeListByGroup(groupName);
                             Integer nodeNum = obj.getElementInfoService().getNodeNum(tableName, groupName);
-                            if (nodeList.size() == nodeNum) {
+                            if (nodeList1.size() == nodeNum) {
                                 dataOne.put("favorite", true);
 
                             } else {

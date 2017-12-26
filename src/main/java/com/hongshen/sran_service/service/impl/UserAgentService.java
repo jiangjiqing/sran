@@ -88,8 +88,8 @@ public class UserAgentService {
     }
 
 
-    public int updateUser(JSONObject param) {
-        return userMapper.updateUser(param);
+    public int updateUser(JSONObject param,String userName) {
+        return userMapper.updateUser(param,userName);
     }
 
     public int updateUserFromShiro(JSONObject param) {

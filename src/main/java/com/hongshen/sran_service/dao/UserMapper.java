@@ -60,7 +60,7 @@ public interface UserMapper {
 
     List<JSONObject> getUserList();
 
-    int updateUser(@Param("param") JSONObject param);
+    int updateUser(@Param("param") JSONObject param,@Param("userName") String userName);
 
 //    int updateWcdmaAuth(@Param("roleList")List<JSONObject> roleList,@Param("loginName") String loginName);
 //
