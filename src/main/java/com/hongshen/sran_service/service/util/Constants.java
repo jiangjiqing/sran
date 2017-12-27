@@ -9,7 +9,10 @@ public class Constants {
 
     public final static String SRAN_WEB_URI = "http://42.202.149.82:8080";
     public final static String SRAN_SERVICE_URI = "http://42.202.149.82:8082";
-    public static final String SRAN_SHIRO_URI = "http://localhost:8989";
+    public static final String SRAN_SHIRO_URI = "http://42.202.149.82:8299";
+//    public final static String SRAN_WEB_URI = "http://192.168.0.117:8080";//42.202.149.82
+//    public final static String SRAN_SERVICE_URI = "http://192.168.0.117:8082";
+//    public static final String SRAN_SHIRO_URI = "http://42.202.149.82:8989";
     public static final String SRAN_ROOT_PATH = "/root/apache-tomcat-8.5.16/webapps/sran/";
     public static final String MOSHELL_ROOT_PATH = "/root/sran/moshell/";
 
@@ -26,7 +29,7 @@ public class Constants {
     public static final String LEVEL_CELL = "cells";
 
     // file
-    public static final String TEMPLATE_ROOT_PATH = SRAN_WEB_URI + "sran/templates/";
+    public static final String TEMPLATE_ROOT_PATH = SRAN_WEB_URI + "/sran/templates/";
     public static final String TEMPLATE_FILE_NAME_END = "_template.xlsx";
     public static final String TEMPLATE_FORMULA = "formula_list";
     public static final String TEMPLATE_PROTECT = "protect_net_list";

@@ -25,32 +25,34 @@ public class FileController {
 
         String msg = "";
         JSONObject result =new JSONObject();
-        if (fileName != Constants.TEMPLATE_STATION_NAME ||
-                fileName != Constants.TEMPLATE_RNC_INFO ||
-                fileName != Constants.TEMPLATE_PROTECT ||
-                fileName != Constants.TEMPLATE_FORMULA ||
-                fileName != Constants.TEMPLATE_COUNTER ||
-                fileName != Constants.TEMPLATE_ALARM_LIB ){
+        JSONObject resultPath =new JSONObject();
+
+        if (!fileName.equals(Constants.TEMPLATE_STATION_NAME)&&
+                !fileName.equals(Constants.TEMPLATE_RNC_INFO)&&
+                !fileName.equals(Constants.TEMPLATE_PROTECT) &&
+                !fileName.equals(Constants.TEMPLATE_FORMULA) &&
+                !fileName.equals(Constants.TEMPLATE_COUNTER) &&
+                !fileName.equals(Constants.TEMPLATE_ALARM_LIB)){
             msg += "FileName has error.";
 
         }else {
 //        String filePath = System.getProperty("user.dir")+"/src/main/resources/templates/"+fileName+"_template.xlsx";
 //        String path = "/SRAN_SERVICE/src/main/resources/templates/"+fileName+"_template.xlsx";
             String filePath = Constants.TEMPLATE_ROOT_PATH + fileName + Constants.TEMPLATE_FILE_NAME_END;
-            File file = new File(filePath);
+            //File file = new File(filePath);
 
-            if (file.isFile() && file.exists()) {
-                result.put("filePath", filePath);
-            }
+            //if (file.isFile() && file.exists()) {
+            resultPath.put("filePath", filePath);
+            //}
         }
 
         if (msg.length() == 0){
             result.put("result", Constants.SUCCESS);
-            result.put("data", result);
+            result.put("data", resultPath);
 
         }else{
             result.put("result", Constants.FAIL);
-            result.put("msg", "File does not exist.");
+            result.put("msg", "File does not exist." + msg);
         }
 
         return result;
