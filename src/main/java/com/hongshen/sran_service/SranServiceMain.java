@@ -1,11 +1,14 @@
 package com.hongshen.sran_service;
 
 import com.hongshen.sran_service.common.JerseyConfig;
+import com.hongshen.sran_service.common.TestResource;
 import com.hongshen.sran_service.controller.TaskWSController;
 import javafx.application.Application;
 import org.glassfish.jersey.servlet.ServletContainer;
 import org.glassfish.jersey.servlet.ServletProperties;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;

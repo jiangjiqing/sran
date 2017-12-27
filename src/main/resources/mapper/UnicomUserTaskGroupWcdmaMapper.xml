@@ -227,4 +227,7 @@
     WHERE login_name=#{loginName}
   </select>
 
+  <select id="getTaskTime" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT * from unicom_user_task_group_wcdma;
+  </select>
 </mapper>

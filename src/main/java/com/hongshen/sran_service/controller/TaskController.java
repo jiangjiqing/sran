@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static com.hongshen.sran_service.controller.TaskWSController.taskStatusMap;
 import static com.hongshen.sran_service.controller.TaskWSController.taskStatusSession;
@@ -23,7 +22,8 @@ import static com.hongshen.sran_service.controller.TaskWSController.taskStatusSe
  */
 @Path("/sran/service/net/task")
 public class TaskController extends BaseController {
-
+    @Autowired
+    TaskWSController taskWSController;
     @Autowired
     private NetObjFactory objFactory;
 
@@ -82,9 +82,9 @@ public class TaskController extends BaseController {
                                 @PathParam("generation") String generation,
                                 @HeaderParam("loginName") String loginName,
                                 @RequestParam("param") JSONObject param) {
-
         String msg = "";
         JSONObject result = new JSONObject();
+
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
 
         if (obj == null){
@@ -107,7 +107,20 @@ public class TaskController extends BaseController {
 
 
             //TODO task plan
+
         }
+        Integer cacheTime = 10000;
+        Timer timer = new Timer();
+        // (TimerTask task, long delay, long period)任务，延迟时间，多久执行
+        timer.schedule(new TimerTask() {
+
+            @Override
+            public void run() {
+                
+                System.out.println(loginName);
+
+            }
+        }, 1000, cacheTime);
 
         if (msg.length() == 0){
             result.put("result", Constants.SUCCESS);
