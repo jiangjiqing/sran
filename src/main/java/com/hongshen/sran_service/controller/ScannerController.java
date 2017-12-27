@@ -75,15 +75,18 @@ public class ScannerController extends BaseController {
     @GET
     @Path("/suppliers/{supplier}/quotas/calculation")
     @Produces(MediaType.APPLICATION_JSON)
-    public void calculation(@PathParam("supplier")String supplier,
+    public void calculation(@PathParam("supplier")String supplier/*,
                             @HeaderParam("counterWcdmatime")String counterWcdmatime,
-                            @HeaderParam("counterLtetime")String counterLtetime) throws IOException {
+                            @HeaderParam("counterLtetime")String counterLtetime*/) throws IOException {
 
         System.out.println("************************** SRAN counterHistory 计算开始 **************************");
 
         String ret = null;
 
-        if (counterWcdmatime != null) {
+        String counterWcdmatime = "2017-12-06 10:00:00";
+        String counterLtetime = "2017-12-08 10:00:00";
+
+        /*if (counterWcdmatime != null) {
 
             caCheServiceWcdma.setUpdateTimeForQuotaData(counterWcdmatime);
 
@@ -107,13 +110,13 @@ public class ScannerController extends BaseController {
             String path = Constants.SCANNER_SEND_WCDMA;
 
             ScannerHelper.httpclientCounterCalculation(path, param);
-        }
+        }*/
 
         if (counterLtetime != null) {
 
             caCheServiceLte.setUpdateTimeForQuotaData(counterLtetime);
 
-            scannerServiceLte.cellCalculation(counterLtetime);
+            //scannerServiceLte.cellCalculation(counterLtetime);
 
             JSONObject params = scannerServiceLte.nodeCalculation(counterLtetime);
 

@@ -88,9 +88,55 @@ public class ScannerHelper {
 
         for (JSONObject node : nodeList) {
 
-            if (node.getString(variable) != null) {
+            if (!variable.contains("_")) {
 
-                double num = Double.valueOf(node.getString(variable));
+                String counterNameIndex = node.getString("nodeName").substring(0, 1);
+
+                if (counterNameIndex.equals("T")) {
+
+                    String variableTdd = "EUtranCell"+ "T" +"DD_" + variable;
+
+                    variableValue = node.getString(variableTdd);
+
+                    double num = 0;
+
+                    if (!"".equals(variableValue) && variableValue != null
+                            && !variableValue.equals("0.0") && !variableValue.equals("-1")) {
+
+                        num = Double.valueOf(variableValue);
+                    }
+
+                    sum = sum + num;
+                } else if (counterNameIndex.equals("F")) {
+
+                    String variableFdd = "EUtranCell"+ "F" +"DD_" + variable;
+
+                    variableValue = node.getString(variableFdd);
+
+                    double num = 0;
+
+                    if (!"".equals(variableValue) && variableValue != null
+                            && !variableValue.equals("0.0") && !variableValue.equals("-1")) {
+
+                        num = Double.valueOf(variableValue);
+                    }
+
+                    sum = sum + num;
+                } else {
+
+                    continue;
+                }
+            } else {
+
+                double num = 0;
+
+                variableValue = node.getString(variable);
+
+                if (!"".equals(variableValue) && variableValue != null
+                        && !variableValue.equals("0.0") && !variableValue.equals("-1")) {
+
+                    num = Double.valueOf(node.getString(variable));
+                }
 
                 sum = sum + num;
             }
@@ -109,9 +155,9 @@ public class ScannerHelper {
 
             List<String> paramList = new ArrayList<>();
 
-            paramList.add(param.getString("threshold1"));
-            paramList.add(param.getString("threshold2"));
             paramList.add(param.getString("threshold3"));
+            paramList.add(param.getString("threshold2"));
+            paramList.add(param.getString("threshold1"));
 
             quotaThresholdMap.put(param.getString("quotaName"), paramList);
 
@@ -145,6 +191,9 @@ public class ScannerHelper {
             if (fmValue > threshold2 && fmValue <= threshold3) {
 
                 level = 3;
+            } if (fmValue > threshold3) {
+
+                level = 4;
             }
         } else {
 

@@ -108,13 +108,51 @@ public class ScannerService_Unicom_Lte implements ScannerService{
 
                         String variable = variableList.get(i);
 
-                        String pmValue = counterHistory.getString(variable);
+                        String pmValue = null;
 
-                        if (pmValue != null && i != variableList.size() - 1) {
+                        if (!variable.contains("_")) {
+
+                            String counterNameIndex = counterHistory.getString("name").substring(0, 1);
+
+                            if (counterNameIndex.equals("T")) {
+
+                                String variableTdd = "EUtranCell"+ "T" +"DD_" + variable;
+
+                                pmValue = counterHistory.getString(variableTdd);
+
+                                if ("".equals(pmValue) || pmValue == null ) {
+
+                                    pmValue = "0";
+                                }
+                            } else if (counterNameIndex.equals("F")) {
+
+                                String variableFdd = "EUtranCell"+ "F" +"DD_" + variable;
+
+                                pmValue = counterHistory.getString(variableFdd);
+
+                                if ("".equals(pmValue) || pmValue == null ) {
+
+                                    pmValue = "0";
+                                }
+                            } else {
+
+                                break;
+                            }
+                        } else {
+
+                            pmValue = counterHistory.getString(variable);
+
+                            if ("".equals(pmValue) && pmValue != null ) {
+
+                                pmValue = "0";
+                            }
+                        }
+
+                        if (pmValue != null && !"".equals(pmValue) && i != variableList.size() - 1) {
 
                             expression = expression.replaceAll(variable, pmValue);
 
-                        } else if (pmValue != null && i == variableList.size() - 1) {
+                        } else if (pmValue != null && !"".equals(pmValue) && i == variableList.size() - 1) {
 
                             expression = expression.replaceAll(variable, pmValue);
 
@@ -140,7 +178,7 @@ public class ScannerService_Unicom_Lte implements ScannerService{
                         }catch (Exception e){
 
                             value = "-1";
-                            e.getStackTrace();
+                            //e.getStackTrace();
                         }
 
                         paramValue.append("'" + value + "',");
@@ -261,7 +299,40 @@ public class ScannerService_Unicom_Lte implements ScannerService{
 
                         String variable = variableList.get(i);
 
-                        String pmValue = nodeResult.getString(variable);
+                        String pmValue = null;//nodeResult.getString(variable);
+
+                        if (!variable.contains("_")) {
+
+                            String counterNameIndex = nodeResult.getString("nodeName").substring(0, 1);
+
+                            if (counterNameIndex.equals("T")) {
+
+                                String variableTdd = "EUtranCell"+ "T" +"DD_" + variable;
+
+                                pmValue = nodeResult.getString(variableTdd);
+
+                                if ("".equals(pmValue) || pmValue == null ) {
+
+                                    pmValue = "0";
+                                }
+                            } else if (counterNameIndex.equals("F")) {
+
+                                String variableFdd = "EUtranCell"+ "F" +"DD_" + variable;
+
+                                pmValue = nodeResult.getString(variableFdd);
+
+                                if ("".equals(pmValue) || pmValue == null ) {
+
+                                    pmValue = "0";
+                                }
+                            } else {
+
+                                break;
+                            }
+                        } else {
+
+                            pmValue = nodeResult.getString(variable);
+                        }
 
                         if (pmValue != null && i != variableList.size() - 1) {
 
@@ -294,7 +365,7 @@ public class ScannerService_Unicom_Lte implements ScannerService{
                         }catch (Exception e){
 
                             value = "-1";
-                            e.getStackTrace();
+                            //e.getStackTrace();
                         }
 
                         paramValue.append("'" + value + "',");
@@ -461,7 +532,7 @@ public class ScannerService_Unicom_Lte implements ScannerService{
                             value = String.valueOf((double)Math.round(doubleValue*100)/100);
                         }catch (Exception e){
 
-                            e.getStackTrace();
+                            //e.getStackTrace();
 
                             value = "-1";
                         }
