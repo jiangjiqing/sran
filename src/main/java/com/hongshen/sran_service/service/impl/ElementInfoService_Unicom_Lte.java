@@ -162,8 +162,8 @@ public class ElementInfoService_Unicom_Lte implements ElementInfoService {
     }
 
     @Override
-    public Integer updateNode(JSONObject jsonObject) {
-        return nodeMapper.updateNode(jsonObject);
+    public Integer updateStationName(JSONObject jsonObject) {
+        return nodeMapper.updateStationName(jsonObject);
     }
 
     @Override

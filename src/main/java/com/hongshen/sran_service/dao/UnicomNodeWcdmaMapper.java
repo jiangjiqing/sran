@@ -73,5 +73,5 @@ public interface UnicomNodeWcdmaMapper {
 
     List<JSONObject> getNodeLocationsByGroup(@Param("groupName") String groupName);
 
-    Integer updateNode(JSONObject jsonObject);
+    Integer updateStationName(JSONObject jsonObject);
 }

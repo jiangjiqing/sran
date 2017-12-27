@@ -336,47 +336,46 @@ public class ElementController {
     @PUT
     @Path("/suppliers/{supplier}/generations/{generation}/nets/nodes/upload")
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject nodesImport(@RequestParam(value = "importJson") JSONArray importJson,
+    public JSONObject nodesImport(@RequestParam(value = "param") JSONArray param,
                                   @PathParam("supplier") String supplier,
                                   @PathParam("generation") String generation,
                                   @HeaderParam("Auth-Token") String authToken) {
 
         String msg = "";
+        Integer listNum = 0;
+        Integer realAddNum = 0;
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
 
         JSONObject result = new JSONObject();
         if (obj == null){
-            msg += "Supplier or Generation has error.";
+            msg += "Supplier or Generation has error.\n";
 
-        }else if (importJson == null || importJson.isEmpty() || importJson.size() == 0) {
-            msg += "ImportJson is Null.";
+        }else if (param == null || param.isEmpty() || param.size() == 0) {
+            msg += "Parametas is Null.\n";
 
         }else {
             try {
-                Integer num = 0;
-                for (int i = 0; i < importJson.size(); i++) {
+                listNum = param.size();
+                for (int i = 0; i < listNum; i++) {
 
-                    if (importJson.getJSONObject(i).getString("nodeName")!=null
-                            &&!importJson.getJSONObject(i).getString("nodeName").equals("")) {
+                    if (param.getJSONObject(i).getString("nodeName")!=null
+                            &&!param.getJSONObject(i).getString("nodeName").equals("")) {
 
-                        num += obj.getElementInfoService().updateNode(importJson.getJSONObject(i));
+                        realAddNum += obj.getElementInfoService().updateStationName(param.getJSONObject(i));
                     }
                 }
-                if (num == 0) {
-                    msg += "UpdateNode is Failed.";
-                }
+
             }catch (Exception e){
-                msg += "updateNode has error:" + e.getMessage();
+                msg += "update has error:" + e.getMessage();
             }
         }
 
         if (msg.length() == 0){
             result.put("result", Constants.SUCCESS);
-            result.put("msg", Constants.MSG_UPLOAD_OK);
-
+            result.put("msg", Constants.MSG_UPLOAD_OK + "(Real/Total:" + realAddNum + "/" + listNum + ")");
         } else {
             result.put("result", Constants.FAIL);
-            result.put("msg", Constants.MSG_UPLOAD_FAILED + msg);
+            result.put("msg", Constants.MSG_UPLOAD_FAILED + "(Real/Total:" + realAddNum + "/" + listNum + ")\n" + msg);
         }
 
         return result;
@@ -385,46 +384,49 @@ public class ElementController {
     @PUT
     @Path("/suppliers/{supplier}/generations/{generation}/nets/groups/upload")
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject rncImport(@RequestParam(value = "importJson") JSONArray importJson,
+    public JSONObject rncImport(@RequestParam(value = "groupList") JSONArray groupList,
                                 @PathParam("supplier") String supplier,
                                 @PathParam("generation") String generation,
                                 @HeaderParam("Auth-Token") String authToken) {
         String msg = "";
-        String msg1 = "";
+        Integer listNum = 0;
+        Integer realAddNum = 0;
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
 
         if (obj == null){
             msg += "Supplier or Generation has error.";
 
-        }else {
+        }else if (groupList == null) {
+            msg += "GroupList is null.";
+
+        }else{
             try {
-                Integer addNum = 0;
-                Integer oldNum = obj.getElementInfoService().getGroupCounter();
+                listNum = groupList.size();
+                Integer oldListNum = obj.getElementInfoService().getGroupCounter();
                 Integer delNum = obj.getElementInfoService().deleteGroup();
 
-                if (oldNum > importJson.size()) {
-                    msg += "Import data less than current data.";
+                if (oldListNum != delNum) {
+                    msg += "Clear data has error. (Total/Clear:" + oldListNum + "/" + delNum + ")";
 
-                }
-
-                for (int i = 0; i < importJson.size(); i++) {
-                    try {
-                        if(importJson.getJSONObject(i).getString("groupName")!=null
-                                &&!importJson.getJSONObject(i).getString("groupName").equals("")){
-                            addNum += obj.getElementInfoService().addRnc(importJson.getJSONObject(i));
+                }else {
+                    for (int i = 0; i < listNum; i++) {
+                        try {
+                            if (groupList.getJSONObject(i).getString("groupName") != null
+                                    && !groupList.getJSONObject(i).getString("groupName").equals("")) {
+                                realAddNum += obj.getElementInfoService().addRnc(groupList.getJSONObject(i));
+                            }
+                        } catch (Exception e) {
+                            msg += "Insert data error:" + e.getMessage();
                         }
-
-
-                    } catch (Exception e) {
-                        msg1 += "DB has error:" + e.getMessage();
                     }
-                }
-                if (addNum == null || addNum <= 0) {
-                    msg += "Import data(" + importJson.size() + ") less than current data(" + oldNum + ").";
 
-                }else if (addNum < importJson.size()){
-                    msg += "Add data(" + addNum + ") less than import data(" + importJson.size() + ").";
+                    if (realAddNum == null || realAddNum <= 0) {
+                        msg += "Insert no data.";
+
+                    }else if (realAddNum < listNum){
+                        msg += "Insert data has error.";
+                    }
                 }
             }catch (Exception e){
                 msg += "Get old data num or Clear old data has error:" + e.getMessage();
@@ -433,11 +435,11 @@ public class ElementController {
 
         if(msg.equals("")){
             result.put("result",Constants.SUCCESS);
-            result.put("msg",Constants.MSG_ADD_OK);
+            result.put("msg",Constants.MSG_ADD_OK + "(Real/Total:" + realAddNum + "/" + listNum + ")");
 
         }else{
             result.put("result",Constants.FAIL);
-            result.put("msg",Constants.MSG_ADD_FAILED + msg);
+            result.put("msg",Constants.MSG_ADD_FAILED + "(Real/Total:" + realAddNum + "/" + listNum + ")\n" + msg);
         }
 
         return result;
