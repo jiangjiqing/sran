@@ -97,6 +97,7 @@ public class MapController extends BaseController{
                         JSONObject table = obj.getElementInfoService().getTable(tableNameLike);
                         if (table != null && !table.isEmpty()) {
                             List<JSONObject> nodeList1 = obj.getElementInfoService().getNodeListByGroup(groupName);
+
                             Integer nodeNum = obj.getElementInfoService().getNodeNum(tableName, groupName);
                             if (nodeList1.size() == nodeNum) {
                                 dataOne.put("favorite", true);
