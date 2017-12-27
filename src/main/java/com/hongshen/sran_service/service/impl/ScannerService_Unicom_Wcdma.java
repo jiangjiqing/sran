@@ -120,11 +120,11 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
 
                         String pmValue = counterHistory.getString(variable);
 
-                        if (pmValue != null && i != variableList.size() - 1) {
+                        if (pmValue != null && !"".equals(pmValue) && i != variableList.size() - 1) {
 
                             expression = expression.replaceAll(variable, pmValue);
 
-                        } else if (pmValue != null && i == variableList.size() - 1) {
+                        } else if (pmValue != null && !"".equals(pmValue) && i == variableList.size() - 1) {
 
                             expression = expression.replaceAll(variable, pmValue);
 
@@ -150,7 +150,7 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
                         }catch (Exception e){
 
                             value = "-1";
-                            e.printStackTrace();
+                            //e.printStackTrace();
                         }
 
                         paramValue.append("'" + value + "',");
@@ -181,6 +181,16 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
 
         try {
 
+            /*List<String> testList1 = paramValues.subList(0,20001);
+            quotaCellMapper.addQuotaHistoryCellList(paramcloumns, testList1);
+            List<String> testList2 = paramValues.subList(20001,40001);
+            quotaCellMapper.addQuotaHistoryCellList(paramcloumns, testList2);
+            List<String> testList3 = paramValues.subList(40001,60001);
+            quotaCellMapper.addQuotaHistoryCellList(paramcloumns, testList3);
+            List<String> testList4 = paramValues.subList(60001,80001);
+            quotaCellMapper.addQuotaHistoryCellList(paramcloumns, testList4);
+            List<String> testList5 = paramValues.subList(80001,94542);
+            quotaCellMapper.addQuotaHistoryCellList(paramcloumns, testList5);*/
             quotaCellMapper.addQuotaHistoryCellList(paramcloumns, paramValues);
 
             ret = "SUCCESS";
@@ -303,7 +313,7 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
                         }catch (Exception e){
 
                             value = "-1";
-                            e.printStackTrace();
+                            //e.printStackTrace();
                         }
 
                         paramValue.append("'" + value + "',");
@@ -469,7 +479,7 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
                             value = String.valueOf((double)Math.round(doubleValue*100)/100);
                         }catch (Exception e){
 
-                            e.printStackTrace();
+                            //e.printStackTrace();
 
                             value = "-1";
                         }
