@@ -193,8 +193,21 @@ public class TaskController extends BaseController {
                 filePath = obj.getTaskService().getLogPath(loginName);
             }
 
+            // file is not exist
             if (filePath == ""){
-                msg += "Log is not exist.";
+
+                JSONObject task = obj.getTaskService().getTaskInfo(loginName);
+
+                if (task == null || task.isEmpty()){
+                    msg += "No task created.";
+
+                }else if (task.getString("logScript") == null ||
+                        task.getString("logScript").length() == 0){
+                    msg += "No analysis script.";
+
+                }else{
+                    msg += "No analysis log.";
+                }
             }
         }
 

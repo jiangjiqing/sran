@@ -20,19 +20,21 @@ import static com.hongshen.sran_service.controller.TaskWSController.taskStatusMa
 public class TaskService_Unicom_Wcdma implements TaskService {
 
     @Autowired
-    private UnicomGroupTaskWcdmaMapper groupTaskMapper;
-
-    @Autowired
-    private UnicomUserTaskGroupWcdmaMapper TaskGroupMapper;
+    private UnicomUserTaskGroupWcdmaMapper taskGroupMapper;
 
     @Override
     public List<JSONObject> getTaskList(String loginName) {
-        return TaskGroupMapper.getTaskList(loginName);
+        return taskGroupMapper.getTaskList(loginName);
+    }
+
+    @Override
+    public JSONObject getTaskInfo(String loginName) {
+        return taskGroupMapper.getTaskInfo(loginName);
     }
 
     @Override
     public int addTask(String loginName, JSONObject param) {
-        return TaskGroupMapper.addTask(loginName, param);
+        return taskGroupMapper.addTask(loginName, param);
     }
 
     @Override
@@ -65,5 +67,10 @@ public class TaskService_Unicom_Wcdma implements TaskService {
         }else {
             return "";
         }
+    }
+
+    @Override
+    public Boolean hasAnalysisScript(String loginName) {
+        return null;
     }
 }

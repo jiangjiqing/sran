@@ -221,16 +221,18 @@ public class QuotaHistoryController extends BaseController {
                                 Time.put("time", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(getMath(start, j, min)));
                                 num++;
                                 d = d + quolist.getDouble(formulaName);
-
                             }
                         }
                     }
-                    if (d != 0.0) {
-                        result1.put("value", d / num);
+                        if(d!=0.0) {
+                            result1.put("value", d / num);
+                        }else{
+                            result1.put("value",0);
+                        }
                         result1.put("quotaName", formulaName);
                         list1.add(result1);
                         result.putAll(Time);
-                    }
+
                 }
 
                if(list1.size()>0) {

@@ -11,6 +11,8 @@ public interface TaskService {
 
     List<JSONObject> getTaskList(String loginName);
 
+    JSONObject getTaskInfo(String loginName);
+
     int addTask(String loginName, JSONObject param);
 
     int cacelTask(String loginName);
@@ -18,4 +20,6 @@ public interface TaskService {
     String getLogPath(String loginName);
 
     String getAnalysisLogPath(String loginName);
+
+    Boolean hasAnalysisScript(String loginName);
 }
