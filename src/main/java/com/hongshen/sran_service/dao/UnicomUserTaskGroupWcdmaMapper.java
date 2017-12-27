@@ -70,5 +70,5 @@ public interface UnicomUserTaskGroupWcdmaMapper {
 
     int addTask(@Param("loginName")String loginName ,@Param("param")JSONObject param );
 
-    JSONObject  getTaskInfo(@Param("loginName") String loginName);
+    JSONObject getTaskInfo(@Param("loginName") String loginName);
 }
