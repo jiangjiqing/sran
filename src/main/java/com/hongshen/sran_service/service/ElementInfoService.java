@@ -1,5 +1,6 @@
 package com.hongshen.sran_service.service;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.stereotype.Service;
 
@@ -85,4 +86,6 @@ public interface ElementInfoService {
     Integer getGroupCounter();
 
     int createTable(String tableName);
+
+    int addFavoriteFile(String tableName, List importJson);
 }

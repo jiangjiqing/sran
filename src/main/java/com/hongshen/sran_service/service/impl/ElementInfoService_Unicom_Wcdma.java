@@ -1,5 +1,6 @@
 package com.hongshen.sran_service.service.impl;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.dao.*;
 import com.hongshen.sran_service.service.ElementInfoService;
@@ -181,6 +182,11 @@ public class ElementInfoService_Unicom_Wcdma implements ElementInfoService {
     @Override
     public int createTable(String tableName) {
         return favoriteMapper.createTable(tableName);
+    }
+
+    @Override
+    public int addFavoriteFile(String tableName, List importJson) {
+        return favoriteMapper.addFavoriteFile(tableName, importJson);
     }
 
     @Override

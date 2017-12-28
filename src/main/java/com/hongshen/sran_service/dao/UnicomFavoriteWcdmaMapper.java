@@ -1,5 +1,6 @@
 package com.hongshen.sran_service.dao;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.entity.UnicomFavoriteWcdma;
 import com.hongshen.sran_service.entity.UnicomNodeWcdma;
@@ -79,4 +80,6 @@ public interface UnicomFavoriteWcdmaMapper {
     Integer getNodeofNull(@Param("tableName")String tableName,@Param("nodeName") String nodeName);
 
     int createTable(@Param("tableName") String tableName);
+
+    int addFavoriteFile(@Param("tableName")String tableName,@Param("importJson") List importJson);
 }

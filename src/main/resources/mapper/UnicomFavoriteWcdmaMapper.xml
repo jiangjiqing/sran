@@ -117,4 +117,12 @@
     node_name VARCHAR(255)
     )
   </update>
+
+  <insert id="addFavoriteFile" parameterType="java.util.List">
+    INSERT IGNORE into ${tableName} (node_name)
+    values
+    <foreach collection="paramList" index="index" item="node" separator=",">
+      (#{node})
+    </foreach>
+  </insert>
 </mapper>

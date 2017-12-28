@@ -1,11 +1,13 @@
 package com.hongshen.sran_service.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.service.util.Constants;
 import com.hongshen.sran_service.service.util.Httpclient;
 import com.hongshen.sran_service.service.util.NetObjBase;
 import com.hongshen.sran_service.service.util.NetObjFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -229,6 +231,60 @@ public class FavoriteContrller {
         }else{
             result.put("result", Constants.FAIL);
             result.put("msg", Constants.MSG_ADD_FAILED + msg);
+        }
+        return result;
+    }
+    @PUT
+    @Path("/suppliers/{supplier}/generations/{generation}/nets/favorites/upload")
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject protectImport(@RequestParam(value = "importJson") JSONArray importJson,
+                                    @PathParam("supplier") String supplier,
+                                    @PathParam("generation") String generation,
+                                    @HeaderParam("Auth-Token") String authToken,
+                                    @HeaderParam("loginName") String loginName) {
+
+        JSONObject result = new JSONObject();
+        String msg = "";
+        int addnum = 0;
+        String tableNameBase = "unicom_favorite_"+generation+"_";
+        String gettableName = "%"+tableNameBase+loginName+"%";
+        String tableName = tableNameBase+loginName;
+        NetObjBase obj = objFactory.getNetObj(supplier, generation);
+
+        if (obj == null){
+            msg += "Supplier or Generation has error.";
+        }else {
+            JSONObject table = obj.getElementInfoService().getTable(gettableName);
+            Boolean tableExist = false;
+
+            if (table == null || table.size() ==0 || table.isEmpty()) {
+                int j = obj.getElementInfoService().createTable(tableName);
+                if (j <= 0) {
+                    msg += "Create table failed.";
+                }
+            } else {
+                tableExist = true;
+            }
+            if (tableExist) {
+                List<String> paramList = new ArrayList<>();
+                for (int i = 0; i < importJson.size(); i++) {
+                    if (importJson.getJSONObject(i).getString("nodeName") == null || importJson.getJSONObject(i).getString("nodeName").isEmpty()){
+                        msg +="NodeName is null.";
+                    }else {
+                        paramList.add(importJson.getJSONObject(i).getString("nodeName"));
+                    }
+                }
+                addnum = obj.getElementInfoService().addFavoriteFile(tableName, paramList);
+            }
+
+        }
+        if (msg.length() != 0) {
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_NO_DATA + msg);
+
+        } else {
+            result.put("result", Constants.SUCCESS);
+            result.put("msg", Constants.MSG_ADD_OK+"(Real/Total:" + addnum + ")");
         }
         return result;
     }
