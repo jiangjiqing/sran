@@ -66,13 +66,12 @@ public class timingCheck implements ApplicationRunner {
         String cmdFilePath = Constants.TASK_ROOT_PATH + loginName + "/" + Constants.TASK_DIR_CMD + "/" + Constants.TASK_FILE_CMD;
         String logFileDir = Constants.TASK_ROOT_PATH + loginName + "/" + Constants.TASK_DIR_LOG;
         try {
-          //Process process = Runtime.getRuntime().exec("/home/poplar/moShell/moshell123/moshell/mobatch  /home/poplar/Task/site/pll /home/poplar/Task/cmd/pll /home/poplar/Task/"+loginName+"/logs");
-            Process process = Runtime.getRuntime().exec(mobatchPath + " " + siteFilePath + " " + cmdFilePath + " " + logFileDir);
+            Process process = Runtime.getRuntime().exec("/home/poplar/moShell/moshell123/moshell/mobatch  /home/poplar/Task/site/pll /home/poplar/Task/cmd/pll /home/poplar/Task/"+loginName+"/logs");
+            //Process process = Runtime.getRuntime().exec(mobatchPath + " " + siteFilePath + " " + cmdFilePath + " " + logFileDir);
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String data = null;
-            int num = 0;
             while ((data = reader.readLine()) != null) {
-                num++;
+
                 System.out.println(data + "*****" + loginName);
             }
             process.destroy();
