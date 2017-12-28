@@ -149,7 +149,7 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
                             value = String.valueOf((double)Math.round(doubleValue*100)/100);
                         }catch (Exception e){
 
-                            value = "-1";
+                            value = "0";
                             //e.printStackTrace();
                         }
 
@@ -163,7 +163,7 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
 
                     } else {
 
-                        paramValue.append("'-1',");
+                        paramValue.append("'0',");
 
                         fmLevelList.add(1);
                     }
@@ -312,7 +312,7 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
 
                         }catch (Exception e){
 
-                            value = "-1";
+                            value = "0";
                             //e.printStackTrace();
                         }
 
@@ -326,7 +326,7 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
 
                     } else {
 
-                        paramValue.append("-1,");
+                        paramValue.append("0,");
 
                         fmLevelList.add(1);
                     }
@@ -450,7 +450,7 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
 
                         String pmValue =
                                 ScannerHelper
-                                        .getGroupVariableValueByNodeList(variable, groupAllGroupList);
+                                        .getGroupVariableValueByNodeListWcdma(variable, groupAllGroupList);
 
                         if (pmValue != null && i != variableList.size() - 1) {
 
@@ -481,7 +481,7 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
 
                             //e.printStackTrace();
 
-                            value = "-1";
+                            value = "0";
                         }
 
                         paramValue.append("'" + value + "',");
@@ -494,7 +494,7 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
 
                     } else {
 
-                        paramValue.append("-1,");
+                        paramValue.append("0,");
 
                         fmLevelList.add(1);
                     }
@@ -911,7 +911,7 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
 
                         String pmValue =
                                 ScannerHelper
-                                        .getGroupVariableValueByNodeList(counterMap.get(variable), groupAllGroupList);
+                                        .getGroupVariableValueByNodeListWcdma(counterMap.get(variable), groupAllGroupList);
 
                         if (pmValue != null && i != variableList.size() - 1) {
 

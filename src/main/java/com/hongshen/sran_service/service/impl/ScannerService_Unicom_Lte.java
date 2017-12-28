@@ -142,7 +142,7 @@ public class ScannerService_Unicom_Lte implements ScannerService{
 
                             pmValue = counterHistory.getString(variable);
 
-                            if ("".equals(pmValue) && pmValue != null ) {
+                            if ("".equals(pmValue) || pmValue == null ) {
 
                                 pmValue = "0";
                             }
@@ -177,7 +177,7 @@ public class ScannerService_Unicom_Lte implements ScannerService{
                             value = String.valueOf((double)Math.round(doubleValue*100)/100);
                         }catch (Exception e){
 
-                            value = "-1";
+                            value = "0";
                             //e.getStackTrace();
                         }
 
@@ -191,7 +191,7 @@ public class ScannerService_Unicom_Lte implements ScannerService{
 
                     } else {
 
-                        paramValue.append("'-1',");
+                        paramValue.append("'0',");
 
                         fmLevelList.add(1);
                     }
@@ -332,6 +332,11 @@ public class ScannerService_Unicom_Lte implements ScannerService{
                         } else {
 
                             pmValue = nodeResult.getString(variable);
+
+                            if ("".equals(pmValue) || pmValue == null ) {
+
+                                pmValue = "0";
+                            }
                         }
 
                         if (pmValue != null && i != variableList.size() - 1) {
@@ -364,7 +369,7 @@ public class ScannerService_Unicom_Lte implements ScannerService{
 
                         }catch (Exception e){
 
-                            value = "-1";
+                            value = "0";
                             //e.getStackTrace();
                         }
 
@@ -378,7 +383,7 @@ public class ScannerService_Unicom_Lte implements ScannerService{
 
                     } else {
 
-                        paramValue.append("'-1',");
+                        paramValue.append("'0',");
 
                         fmLevelList.add(1);
                     }
@@ -503,7 +508,7 @@ public class ScannerService_Unicom_Lte implements ScannerService{
 
                         String pmValue =
                                 ScannerHelper
-                                        .getGroupVariableValueByNodeList(variable, groupAllGroupList);
+                                        .getGroupVariableValueByNodeListLte(variable, groupAllGroupList);
 
                         if (pmValue != null && i != variableList.size() - 1) {
 
@@ -534,7 +539,7 @@ public class ScannerService_Unicom_Lte implements ScannerService{
 
                             //e.getStackTrace();
 
-                            value = "-1";
+                            value = "0";
                         }
 
                         paramValue.append("'" + value + "',");
@@ -547,7 +552,7 @@ public class ScannerService_Unicom_Lte implements ScannerService{
 
                     } else {
 
-                        paramValue.append("-1,");
+                        paramValue.append("0,");
 
                         fmLevelList.add(1);
                     }
@@ -973,7 +978,7 @@ public class ScannerService_Unicom_Lte implements ScannerService{
 
                         String pmValue =
                                 ScannerHelper
-                                        .getGroupVariableValueByNodeList(counterMap.get(variable), groupAllGroupList);
+                                        .getGroupVariableValueByNodeListLte(counterMap.get(variable), groupAllGroupList);
 
                         if (pmValue != null && i != variableList.size() - 1) {
 

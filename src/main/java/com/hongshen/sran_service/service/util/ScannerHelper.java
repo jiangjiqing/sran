@@ -80,7 +80,7 @@ public class ScannerHelper {
         return resultMap;
     }
 
-    public static String getGroupVariableValueByNodeList (String variable, List<JSONObject> nodeList) {
+    public static String getGroupVariableValueByNodeListLte (String variable, List<JSONObject> nodeList) {
 
         String variableValue = null;
 
@@ -140,6 +140,31 @@ public class ScannerHelper {
 
                 sum = sum + num;
             }
+        }
+
+        variableValue = String.valueOf(sum);
+
+        return variableValue;
+    }
+
+    public static String getGroupVariableValueByNodeListWcdma (String variable, List<JSONObject> nodeList) {
+
+        String variableValue = null;
+
+        double sum = 0;
+
+        for (JSONObject node : nodeList) {
+
+            double num = 0;
+
+            variableValue = node.getString(variable);
+
+            if (!variableValue.equals("-1")) {
+
+                num = Double.valueOf(node.getString(variable));
+            }
+
+            sum = sum + num;
         }
 
         variableValue = String.valueOf(sum);
