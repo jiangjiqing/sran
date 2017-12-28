@@ -255,11 +255,9 @@
   </select>
 
 
-  <update id="updateNode" parameterType="com.alibaba.fastjson.JSONObject">
-
+  <update id="updateStationName" parameterType="com.alibaba.fastjson.JSONObject">
     update unicom_node_wcdma
     <set>
-
       <if test="stationName != null">
         station_name = #{stationName},
       </if>

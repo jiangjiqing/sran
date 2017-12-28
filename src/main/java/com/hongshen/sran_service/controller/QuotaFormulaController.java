@@ -233,50 +233,51 @@ public class QuotaFormulaController {
                                     @HeaderParam("Auth-Token")String authToken) {
 
         String msg = "";
+        Integer listNum = 0;
+        Integer realAddNum = 0;
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
-        Integer addNum=0;
 
         if (obj ==null){
-            msg +="Supplier or Generation is null.";
+            msg += "Supplier or Generation is null.\n";
         }else {
-            if (formulas != null) {
-                //     Integer delNum = obj.getQuotaService().deleteAllFormulas();
+            if (formulas == null) {
+                msg +="Formulas is Null.\n";
 
-                for (int i = 0; i < formulas.size(); i++) {
+            } else {
+                listNum = formulas.size();
+
+                for (int i = 0; i < listNum; i++) {
                     try {
-                        if(formulas.getJSONObject(i).getString("quotaName")!=null
-                                &&!formulas.getJSONObject(i).getString("quotaName").equals("")
-                                &&formulas.getJSONObject(i).getString("expression")!=null
-                                &&!formulas.getJSONObject(i).getString("expression").equals("")){
+                        if (formulas.getJSONObject(i).getString("quotaName") != null
+                                && !formulas.getJSONObject(i).getString("quotaName").equals("")
+                                && formulas.getJSONObject(i).getString("expression") != null
+                                && !formulas.getJSONObject(i).getString("expression").equals("")) {
 
-                            addNum = obj.getQuotaService().addFormula(formulas.getJSONObject(i));
+                            realAddNum += obj.getQuotaService().addFormula(formulas.getJSONObject(i));
                         }
 
                     } catch (Exception e) {
-                        e.getMessage();
+                        e.printStackTrace();
 
-                        msg += "DB Exception";
+                        msg += "[" + formulas.getJSONObject(i).getString("quotaName") + "] add failed.\n";
                     }
-
                 }
-                if (addNum <= 0) {
 
-                    msg +="AddFormula is Failed.";
+                if (realAddNum < listNum) {
+                    msg += "Upload has error.";
                 }
-            } else {
-                msg +="Formulas is Null.";
-
             }
         }
+
         if(msg.length() == 0){
             obj.getCacheService().resetCounterList();
             result.put("result", Constants.SUCCESS);
-            result.put("msg", Constants.MSG_ADD_OK);
+            result.put("msg", Constants.MSG_ADD_OK + "(Real/Total:" + realAddNum + "/" + listNum + ")");
 
         }else {
             result.put("result", Constants.FAIL);
-            result.put("msg", Constants.MSG_ADD_FAILED + msg);
+            result.put("msg", Constants.MSG_ADD_FAILED + "(Real/Total:" + realAddNum + "/" + listNum + ")\n" + msg);
         }
         return result;
     }

@@ -282,7 +282,7 @@
     WHERE b.group_name = #{name}
   </select>
 
-  <update id="updateNode" parameterType="com.alibaba.fastjson.JSONObject">
+  <update id="updateStationName" parameterType="com.alibaba.fastjson.JSONObject">
     update unicom_node_lte
     <set>
       <if test="stationName != null">

@@ -76,7 +76,7 @@ public interface ElementInfoService {
 
     List<JSONObject> getProtectListnodeName();
 
-    Integer updateNode(JSONObject jsonObject);
+    Integer updateStationName(JSONObject jsonObject);
 
     Integer addRnc(JSONObject jsonObject);
 

@@ -10,9 +10,9 @@ public class Constants {
     public final static String SRAN_WEB_URI = "http://42.202.149.82:8080";
     public final static String SRAN_SERVICE_URI = "http://42.202.149.82:8082";
     public static final String SRAN_SHIRO_URI = "http://42.202.149.82:8299";
-//    public final static String SRAN_WEB_URI = "http://192.168.0.117:8080";//42.202.149.82
+//    public final static String SRAN_WEB_URI = "http://42.202.149.82:8080";//42.202.149.82
 //    public final static String SRAN_SERVICE_URI = "http://192.168.0.117:8082";
-//    public static final String SRAN_SHIRO_URI = "http://42.202.149.82:8989";
+//    public static final String SRAN_SHIRO_URI = "http://42.202.149.82:8299";
     public static final String SRAN_ROOT_PATH = "/root/apache-tomcat-8.5.16/webapps/sran/";
     public static final String MOSHELL_ROOT_PATH = "/root/sran/moshell/";
 
