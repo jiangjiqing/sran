@@ -3,6 +3,7 @@ package com.hongshen.sran_service.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.dao.*;
 import com.hongshen.sran_service.service.ScannerService;
+import com.hongshen.sran_service.service.util.Constants;
 import com.hongshen.sran_service.service.util.ScannerHelper;
 import net.java.dev.eval.Expression;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -181,17 +182,42 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
 
         try {
 
-            /*List<String> testList1 = paramValues.subList(0,20001);
-            quotaCellMapper.addQuotaHistoryCellList(paramcloumns, testList1);
-            List<String> testList2 = paramValues.subList(20001,40001);
-            quotaCellMapper.addQuotaHistoryCellList(paramcloumns, testList2);
-            List<String> testList3 = paramValues.subList(40001,60001);
-            quotaCellMapper.addQuotaHistoryCellList(paramcloumns, testList3);
-            List<String> testList4 = paramValues.subList(60001,80001);
-            quotaCellMapper.addQuotaHistoryCellList(paramcloumns, testList4);
-            List<String> testList5 = paramValues.subList(80001,94542);
-            quotaCellMapper.addQuotaHistoryCellList(paramcloumns, testList5);*/
-            quotaCellMapper.addQuotaHistoryCellList(paramcloumns, paramValues);
+            int paramValuesSize = paramValues.size();
+            int division = Constants.SCANNER_CALCULATION_DIVISION;
+            int cyc = paramValuesSize / division;
+
+            if (cyc <= 1){
+
+                List<String> insertList = paramValues.subList(0, paramValuesSize);
+                quotaCellMapper.addQuotaHistoryCellList(paramcloumns, insertList);
+            }else {
+
+                for (int i = 0; i <= cyc; i ++) {
+
+                    if (i == 0) {
+
+                        int before = 0;
+                        int after = division + 1;
+
+                        List<String> insertList = paramValues.subList(before, after);
+                        quotaCellMapper.addQuotaHistoryCellList(paramcloumns, insertList);
+                    }else if (i == cyc){
+
+                        int before = i * division + 1;
+                        int after = paramValuesSize;
+
+                        List<String> insertList = paramValues.subList(before, after);
+                        quotaCellMapper.addQuotaHistoryCellList(paramcloumns, insertList);
+                    }else{
+
+                        int before = i * division + 1;
+                        int after = (i + 1) * division + 1;
+
+                        List<String> insertList = paramValues.subList(before, after);
+                        quotaCellMapper.addQuotaHistoryCellList(paramcloumns, insertList);
+                    }
+                }
+            }
 
             ret = "SUCCESS";
         } catch (Exception e) {

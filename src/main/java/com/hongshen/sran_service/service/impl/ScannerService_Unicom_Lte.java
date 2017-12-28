@@ -3,6 +3,7 @@ package com.hongshen.sran_service.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.dao.*;
 import com.hongshen.sran_service.service.ScannerService;
+import com.hongshen.sran_service.service.util.Constants;
 import com.hongshen.sran_service.service.util.ScannerHelper;
 import net.java.dev.eval.Expression;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -209,7 +210,42 @@ public class ScannerService_Unicom_Lte implements ScannerService{
 
         try {
 
-            quotaCellMapper.addQuotaHistoryCellList(paramcloumns, paramValues);
+            int paramValuesSize = paramValues.size();
+            int division = Constants.SCANNER_CALCULATION_DIVISION;
+            int cyc = paramValuesSize / division;
+
+            if (cyc <= 1){
+
+                List<String> insertList = paramValues.subList(0, paramValuesSize);
+                quotaCellMapper.addQuotaHistoryCellList(paramcloumns, insertList);
+            }else {
+
+                for (int i = 0; i <= cyc; i ++) {
+
+                    if (i == 0) {
+
+                        int before = 0;
+                        int after = division + 1;
+
+                        List<String> insertList = paramValues.subList(before, after);
+                        quotaCellMapper.addQuotaHistoryCellList(paramcloumns, insertList);
+                    }else if (i == cyc){
+
+                        int before = i * division + 1;
+                        int after = paramValuesSize;
+
+                        List<String> insertList = paramValues.subList(before, after);
+                        quotaCellMapper.addQuotaHistoryCellList(paramcloumns, insertList);
+                    }else{
+
+                        int before = i * division + 1;
+                        int after = (i + 1) * division + 1;
+
+                        List<String> insertList = paramValues.subList(before, after);
+                        quotaCellMapper.addQuotaHistoryCellList(paramcloumns, insertList);
+                    }
+                }
+            }
 
             ret = "SUCCESS";
         } catch (Exception e) {

@@ -95,7 +95,7 @@ public class Constants {
     public final static String SCANNER_SEND_TYPE_LTE = "/generations/lte/send";
     public final static String SCANNER_SEND_WCDMA = SRAN_SERVICE_URI + SCANNER_SEND_UTIL + SCANNER_SEND_TYPE_WCDMA;
     public final static String SCANNER_SEND_LTE = SRAN_SERVICE_URI + SCANNER_SEND_UTIL + SCANNER_SEND_TYPE_LTE;
-
+    public final static Integer SCANNER_CALCULATION_DIVISION = 20000;
     // shiro
 
     public static final String SHIRO_URI = SRAN_SHIRO_URI + "/service/v1/check";
