@@ -19,4 +19,6 @@ public interface AlarmService {
     List<JSONObject> getNodeAlarmByName(String nodeName);
 
     List<JSONObject> getCellAlarmByName(String cellName);
+
+    List<JSONObject> getAlarmByName(String alarmNameId, String alarmName);
 }

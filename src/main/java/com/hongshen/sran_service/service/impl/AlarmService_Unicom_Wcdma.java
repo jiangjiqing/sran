@@ -1,6 +1,7 @@
 package com.hongshen.sran_service.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.hongshen.sran_service.dao.UnicomAlarmIndexMapper;
 import com.hongshen.sran_service.dao.UnicomAlarmWcdmaMapper;
 import com.hongshen.sran_service.service.AlarmService;
 import org.apache.ibatis.annotations.Param;
@@ -10,6 +11,9 @@ import java.util.List;
 
 @Service
 public class AlarmService_Unicom_Wcdma implements AlarmService{
+
+    @Autowired
+    private UnicomAlarmIndexMapper alarmIndexMapper;
 
     @Autowired
     private UnicomAlarmWcdmaMapper alarmMapper;
@@ -42,5 +46,10 @@ public class AlarmService_Unicom_Wcdma implements AlarmService{
 	@Override
     public List<JSONObject> getCellAlarmByName(String cellName) {
         return alarmMapper.getCellAlarmByName(cellName);
+    }
+
+    @Override
+    public List<JSONObject> getAlarmByName(String alarmNameId, String alarmName) {
+        return alarmIndexMapper.getAlarmByName(alarmNameId,alarmName);
     }
 }

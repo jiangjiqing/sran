@@ -5,6 +5,8 @@ import com.hongshen.sran_service.entity.UnicomAlarmIndex;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface UnicomAlarmIndexMapper {
     /**
@@ -56,4 +58,6 @@ public interface UnicomAlarmIndexMapper {
     int updateByPrimaryKey(UnicomAlarmIndex record);
 
     int addAlarmIndex(@Param("param")JSONObject param);
+
+    List<JSONObject> getAlarmByName(String alarmNameId, String alarmName);
 }

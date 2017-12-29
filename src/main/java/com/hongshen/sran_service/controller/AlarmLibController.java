@@ -1,5 +1,6 @@
 package com.hongshen.sran_service.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.common.BaseController;
 import com.hongshen.sran_service.service.util.Constants;
@@ -7,6 +8,7 @@ import com.hongshen.sran_service.service.util.NetObjBase;
 import com.hongshen.sran_service.service.util.NetObjFactory;
 import com.hongshen.sran_service.service.util.QuotaHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -240,6 +242,48 @@ public class AlarmLibController extends BaseController{
             result.put("msg", Constants.MSG_DELETE_FAILED + msg);
         }
 
+        return result;
+    }
+
+    @PUT
+    @Path("/suppliers/{supplier}/generations/{generation}/alarms/upload")
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject protectImport(@RequestParam(value = "importJson") JSONObject importJson,
+                                    @PathParam("supplier") String supplier,
+                                    @PathParam("generation") String generation,
+                                    @HeaderParam("Auth-Token") String authToken,
+                                    @HeaderParam("loginName") String loginName) {
+        JSONObject result = new JSONObject();
+        String msg = "";
+        int addnum = 0;
+        NetObjBase obj = objFactory.getNetObj(supplier, generation);
+
+        if (obj == null){
+            msg +="Supplier or Generation has error.";
+        }else {
+            List<JSONObject> alarmList = obj.getAlarmService().getAlarmByName(importJson.getString("alarmNameId"),importJson.getString("alarmName"));
+            if (alarmList.size() ==0 || alarmList.isEmpty() || alarmList == null){
+                msg +="AlarmNameId or AlarmName is not Exist.";
+            }else {
+                try {
+                    addnum = obj.getAlarmLibService().addAlarm(importJson);
+                }catch (Exception e){
+                    msg += "Parameter is Error.";
+                }
+                if (addnum < 0 ){
+                    msg +="AddAlarm is Failed.";
+                }
+            }
+        }
+
+        if (msg.length() != 0) {
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_NO_DATA + msg);
+
+        } else {
+            result.put("result", Constants.SUCCESS);
+            result.put("msg", Constants.MSG_ADD_OK+"(Real/Total:" + addnum + ")");
+        }
         return result;
     }
 }
