@@ -274,7 +274,11 @@ public class FavoriteContrller {
                         paramList.add(importJson.getJSONObject(i).getString("nodeName"));
                     }
                 }
-                addnum = obj.getElementInfoService().addFavoriteFile(tableName, paramList);
+                try {
+                    addnum = obj.getElementInfoService().addFavoriteFile(tableName, paramList);
+                }catch (Exception e){
+                    msg +="AddFavoriteFile is Error." +e.getMessage();
+                }
             }
 
         }
