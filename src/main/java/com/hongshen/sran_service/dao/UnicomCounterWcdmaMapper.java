@@ -58,4 +58,6 @@ public interface UnicomCounterWcdmaMapper {
     int updateByPrimaryKey(UnicomCounterWcdma record);
 
     List<JSONObject> getCounterList();
+
+    Integer addCounter(JSONObject jsonObject);
 }

@@ -2,11 +2,13 @@ package com.hongshen.sran_service.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.dao.*;
+import com.hongshen.sran_service.entity.UnicomCounterHistoryLte;
 import com.hongshen.sran_service.service.QuotaService;
 import com.hongshen.sran_service.service.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.xml.soap.SAAJResult;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,6 +25,9 @@ public class QuotaService_Unicom_Wcdma implements QuotaService {
 
     @Autowired
     private UnicomFormulaWcdmaMapper formulaMapper;
+
+    @Autowired
+    private UnicomCounterWcdmaMapper counterMapper;
 
     @Autowired
     private UnicomCounterHistoryWcdmaMapper counterHistoryWcdmaMapper;
@@ -230,6 +235,34 @@ public class QuotaService_Unicom_Wcdma implements QuotaService {
     @Override
     public List<JSONObject> getCounterTime() {
         return counterHistoryWcdmaMapper.getCounterTime();
+    }
+
+    @Override
+    public void addColumnGroup(String formula) {
+
+         quotaHistoryGroupMapper.addColumnGroup(formula);
+    }
+
+    @Override
+    public void addColumnNode(String formula) {
+
+        quotaHistoryNodeMapper.addColumnNode(formula);
+    }
+
+    @Override
+    public void addColumnCell(String formula) {
+
+         quotaHistoryCellMapper.addColumnCell(formula);
+    }
+
+    @Override
+    public Integer addCounter(JSONObject jsonObject) {
+        return counterMapper.addCounter(jsonObject);
+    }
+
+    @Override
+    public void addColumnCounter(String name) {
+        counterHistoryWcdmaMapper.addColumnCounter(name);
     }
 
 }

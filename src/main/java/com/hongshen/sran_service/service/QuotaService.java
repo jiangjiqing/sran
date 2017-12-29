@@ -55,4 +55,13 @@ public interface QuotaService {
     List<JSONObject> getCellTime();
 
     List<JSONObject> getCounterTime();
+
+    void addColumnGroup(String formula);
+    void addColumnNode(String  formula);
+    void addColumnCell(String  formula);
+
+    Integer addCounter(JSONObject jsonObject);
+
+    void addColumnCounter(String name);
+
 }

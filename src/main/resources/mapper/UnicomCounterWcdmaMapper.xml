@@ -116,4 +116,20 @@
     SELECT *
     FROM unicom_counter_wcdma;
   </select>
+
+  <insert id="addCounter" parameterType="com.alibaba.fastjson.JSONObject">
+    INSERT
+    INTO unicom_counter_wcdma
+     (name,
+     type,
+     status)
+     VALUES
+     (#{name},
+      #{type},
+      #{status}
+     )
+     ON DUPLICATE KEY UPDATE
+     type = #{type},
+     status = #{status};
+  </insert>
 </mapper>

@@ -45,4 +45,6 @@ public interface UnicomQuotaHistoryCellLteMapper {
                                    @Param("condition") String condition);
 
     List<JSONObject> getCellTime();
+
+    void addColumnCell(@Param("formula")String formula);
 }

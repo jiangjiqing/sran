@@ -28,7 +28,6 @@ public class timingCheck implements ApplicationRunner {
 
     public void startTime() {
 
-        SimpleDateFormat date = new SimpleDateFormat("HH:mm:ss");
         Timer timer = new Timer();
 
         try {
@@ -39,35 +38,53 @@ public class timingCheck implements ApplicationRunner {
                     try {
 
                         List<JSONObject> times = unicomUserTaskGroupWcdmaMapper.getTaskTime();
+
+
                         for (JSONObject json : times) {
+                            int period =1;//TODO
+                            switch (period){
+                                case 0: {
+                                    SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                    if (date.parse(date.format(json.getDate("startTime"))).getTime()
+                                            == date.parse(date.format(new Date())).getTime()) {
 
-                            if (date.parse(date.format(json.getDate("startTime"))).getTime()
-                                    == date.parse(date.format(new Date())).getTime()) {
+                                        Start(json.getString("login_name"),new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss").format(new Date()));
+                                    }
+                                    break;
+                                }
+                                case 1: {
+                                    SimpleDateFormat date = new SimpleDateFormat("HH:mm:ss");
+                                    if (date.parse(date.format(json.getDate("startTime"))).getTime()
+                                            == date.parse(date.format(new Date())).getTime()) {
 
-                                Start(json.getString("login_name"));
+                                        Start(json.getString("login_name"),new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss").format(new Date()));
+                                    }
+                                    break;
+                                }
                             }
-                        }
 
+                        }
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
 
                 }
-            }, 1000, 1000);
+            }, 0, 1000);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
 
-    public void startChecking(String loginName) {
+    public void startChecking(String loginName,String date) {
+
         String mobatchPath = Constants.MOSHELL_ROOT_PATH + "mobatch";
         String siteFilePath = Constants.TASK_ROOT_PATH + loginName + "/" + Constants.TASK_DIR_SITE + "/" + Constants.TASK_FILE_SITE;
         String cmdFilePath = Constants.TASK_ROOT_PATH + loginName + "/" + Constants.TASK_DIR_CMD + "/" + Constants.TASK_FILE_CMD;
         String logFileDir = Constants.TASK_ROOT_PATH + loginName + "/" + Constants.TASK_DIR_LOG;
         try {
-            Process process = Runtime.getRuntime().exec("/home/poplar/moShell/moshell123/moshell/mobatch  /home/poplar/Task/site/pll /home/poplar/Task/cmd/pll /home/poplar/Task/"+loginName+"/logs");
-            //Process process = Runtime.getRuntime().exec(mobatchPath + " " + siteFilePath + " " + cmdFilePath + " " + logFileDir);
+            //Process process = Runtime.getRuntime().exec("/home/poplar/moShell/moshell123/moshell/mobatch  /home/poplar/Task/site/pll /home/poplar/Task/cmd/pll /home/poplar/Task/"+loginName+"/logs"+"/"+date);
+            Process process = Runtime.getRuntime().exec(mobatchPath + " " + siteFilePath + " " + cmdFilePath + " " + logFileDir+"/"+date);
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String data = null;
             while ((data = reader.readLine()) != null) {
@@ -80,12 +97,13 @@ public class timingCheck implements ApplicationRunner {
         }
     }
 
-    public void Start(String loginName) {
+    private void Start(String loginName,String date) {
         ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
 
         cachedThreadPool.execute(new Runnable() {
             public void run() {
-                startChecking(loginName);
+
+                startChecking(loginName,date);
             }
         });
     }

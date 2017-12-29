@@ -43,4 +43,6 @@ public interface UnicomQuotaHistoryNodeLteMapper {
                                    @Param("condition")String condition);
 
     List<JSONObject> getNodeTime();
+
+    void addColumnNode(@Param("formula")String formula);
 }

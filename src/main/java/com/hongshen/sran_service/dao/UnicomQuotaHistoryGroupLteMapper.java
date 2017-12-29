@@ -43,4 +43,6 @@ public interface UnicomQuotaHistoryGroupLteMapper {
                                   @Param("valueList")List<String> valueList);
 
     List<JSONObject> getGroupTime();
+
+    void addColumnGroup(@Param("formula") String formula);
 }

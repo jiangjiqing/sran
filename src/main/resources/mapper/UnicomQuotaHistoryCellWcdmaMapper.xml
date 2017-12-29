@@ -257,4 +257,10 @@
     SELECT time FROM unicom_quota_history_cell_wcdma
     GROUP BY time
   </select>
+
+  <select id="addColumnCell" parameterType="java.lang.String">
+
+    alter table unicom_quota_history_cell_wcdma add ${formula} varchar(5) Null;
+
+  </select>
 </mapper>

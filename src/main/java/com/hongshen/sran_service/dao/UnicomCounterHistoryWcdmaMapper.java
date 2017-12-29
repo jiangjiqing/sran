@@ -50,4 +50,6 @@ public interface UnicomCounterHistoryWcdmaMapper {
                                    @Param("time")String time);
 
     List<JSONObject> getCounterTime();
+
+    void addColumnCounter(@Param("name") String name);
 }

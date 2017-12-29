@@ -25,6 +25,9 @@ public class QuotaService_Unicom_Lte implements QuotaService {
     private UnicomFormulaLteMapper formulaMapper;
 
     @Autowired
+    private UnicomCounterLteMapper counterMapper;
+
+    @Autowired
     private UnicomCounterHistoryLteMapper counterHistoryLteMapper;
 
     @Autowired
@@ -192,4 +195,31 @@ public class QuotaService_Unicom_Lte implements QuotaService {
         return counterHistoryLteMapper.getCounterTime();
     }
 
+    @Override
+    public void addColumnGroup(String formula) {
+
+         quotaHistoryGroupMapper.addColumnGroup(formula);
+    }
+
+    @Override
+    public void addColumnNode(String formula) {
+
+        quotaHistoryNodeMapper.addColumnNode(formula);
+    }
+
+    @Override
+    public void addColumnCell(String formula) {
+
+        quotaHistoryCellMapper.addColumnCell(formula);
+    }
+
+    @Override
+    public Integer addCounter(JSONObject jsonObject) {
+        return counterMapper.addCounter(jsonObject);
+    }
+
+    @Override
+    public void addColumnCounter(String name) {
+        counterHistoryLteMapper.addColumnCounter(name);
+    }
 }

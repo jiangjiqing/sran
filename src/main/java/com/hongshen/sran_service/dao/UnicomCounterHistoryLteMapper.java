@@ -44,4 +44,6 @@ public interface UnicomCounterHistoryLteMapper {
     List<JSONObject> dowloadCounter(@Param("start")Date start, @Param("end")Date end, @Param("condition") String condition);
 
     List<JSONObject> getCounterTime();
+
+    void addColumnCounter(@Param("name") String name);
 }

@@ -43,4 +43,6 @@ public interface UnicomQuotaHistoryCellWcdmaMapper {
                                    @Param("condition") String condition);
 
     List<JSONObject> getCellTime();
+
+    void addColumnCell(@Param("formula") String formula);
 }

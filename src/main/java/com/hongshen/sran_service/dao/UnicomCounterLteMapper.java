@@ -57,4 +57,6 @@ public interface UnicomCounterLteMapper {
     int updateByPrimaryKey(UnicomCounterLte record);
 
     List<JSONObject> getCounterList();
+
+    Integer addCounter(JSONObject jsonObject);
 }

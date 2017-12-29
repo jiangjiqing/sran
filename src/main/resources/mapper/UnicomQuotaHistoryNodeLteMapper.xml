@@ -296,4 +296,10 @@
     SELECT time FROM unicom_quota_history_node_lte
     GROUP BY time
   </select>
+
+  <select id="addColumnGroup" parameterType="java.lang.String">
+
+    alter table unicom_quota_history_group_lte add ${formula} varchar(5) Null;
+
+  </select>
 </mapper>

@@ -604,4 +604,9 @@
   <select id="getCounterTime" resultType="com.alibaba.fastjson.JSONObject">
     SELECT time FROM unicom_counter_history_lte
   </select>
+  <select id="addColumnCounter" parameterType="java.lang.String">
+
+    alter table unicom_counter_history_lte add ${name} varchar(5) Null;
+
+  </select>
 </mapper>
