@@ -64,4 +64,5 @@ public interface QuotaService {
 
     void addColumnCounter(String name);
 
+    List<JSONObject> getCounterList();
 }

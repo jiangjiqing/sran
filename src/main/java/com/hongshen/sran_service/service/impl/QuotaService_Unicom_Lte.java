@@ -222,4 +222,9 @@ public class QuotaService_Unicom_Lte implements QuotaService {
     public void addColumnCounter(String name) {
         counterHistoryLteMapper.addColumnCounter(name);
     }
+
+    @Override
+    public List<JSONObject> getCounterList() {
+        return counterMapper.getCounterList();
+    }
 }

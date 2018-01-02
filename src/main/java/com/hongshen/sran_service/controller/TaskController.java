@@ -96,6 +96,8 @@ public class TaskController extends BaseController {
         }else if (param == null || param.isEmpty()) {
             msg += "Parameters is null.";
 
+        }else if(param.getString("rncList")!=null&&param.getString("cmdList")!=null){
+            msg += "files is null.";
         }else{
             try{
                 int update = obj.getTaskService().addTask(loginName, param);
@@ -104,23 +106,7 @@ public class TaskController extends BaseController {
             }catch (Exception e){
                 msg += "Add task has error:" + e.getMessage();
             }
-
-
-            //TODO task plan
-
         }
-        Integer cacheTime = 10000;
-        Timer timer = new Timer();
-        // (TimerTask task, long delay, long period)任务，延迟时间，多久执行
-        timer.schedule(new TimerTask() {
-
-            @Override
-            public void run() {
-                
-                System.out.println(loginName);
-
-            }
-        }, 1000, cacheTime);
 
         if (msg.length() == 0){
             result.put("result", Constants.SUCCESS);

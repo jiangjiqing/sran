@@ -265,4 +265,9 @@ public class QuotaService_Unicom_Wcdma implements QuotaService {
         counterHistoryWcdmaMapper.addColumnCounter(name);
     }
 
+    @Override
+    public List<JSONObject> getCounterList() {
+        return counterMapper.getCounterList();
+    }
+
 }
