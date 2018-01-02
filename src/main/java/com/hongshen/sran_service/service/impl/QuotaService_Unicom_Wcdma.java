@@ -194,7 +194,7 @@ public class QuotaService_Unicom_Wcdma implements QuotaService {
 
     @Override
     public List<JSONObject> getFormula(Boolean isVisible) {
-        return cacheService.getCounterList(isVisible);
+        return cacheService.getFormulaList(isVisible);
     }
 
     @Override
