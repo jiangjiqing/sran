@@ -53,4 +53,9 @@ public class AlarmLibService_Unicom_Lte implements AlarmLibService {
         return alarmLibMapper.deleteAlarmByName(alarmName);
     }
 
+    @Override
+    public List<JSONObject> getAlarmInfoList() {
+        return alarmLibMapper.getAlarmInfoList();
+    }
+
 }

@@ -68,4 +68,5 @@ public interface UnicomAlarmLibraryWcdmaMapper {
 
     int deleteAlarmByName(@Param("alarmName")String alarmName);
 
+    List<JSONObject> getAlarmInfoList();
 }

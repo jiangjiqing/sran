@@ -52,4 +52,9 @@ public class AlarmLibService_Unicom_Wcdma implements AlarmLibService {
     public int deleteAlarmByName(String alarmName){
         return alarmLibMapper.deleteAlarmByName(alarmName);
     }
+
+    @Override
+    public List<JSONObject> getAlarmInfoList() {
+        return alarmLibMapper.getAlarmInfoList();
+    }
 }

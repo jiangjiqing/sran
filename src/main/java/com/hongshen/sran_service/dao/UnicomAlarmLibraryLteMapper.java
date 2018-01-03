@@ -67,4 +67,6 @@ public interface UnicomAlarmLibraryLteMapper {
     int addAlarm(@Param("param")JSONObject param);
 
     int deleteAlarmByName(@Param("alarmName")String alarmName);
+
+    List<JSONObject> getAlarmInfoList();
 }

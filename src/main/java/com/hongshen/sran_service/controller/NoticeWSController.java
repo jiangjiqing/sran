@@ -86,7 +86,8 @@ public class NoticeWSController {
             client = (NoticeWSController) connections.get(key);
             synchronized (client) {
 
-                 client.session.getAsyncRemote().sendText(String.valueOf(msg));
+//                 client.session.getAsyncRemote().sendText(String.valueOf(msg));
+                 client.session.getAsyncRemote().sendObject(msg);
 //                 client.session.getAsyncRemote().
             }
 

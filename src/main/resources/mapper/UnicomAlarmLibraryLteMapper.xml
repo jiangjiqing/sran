@@ -234,4 +234,17 @@
     WHERE alarm_name = #{alarmName}
   </delete>
 
+  <select id="getAlarmInfoList" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT
+    a.alarm_name_id alarmNameId,
+    b.alarm_level_id alarmLevelId,
+    b.alarm_name alarmName,
+    b.alarm_meaning alarmMeaning,
+    b.alarm_type alarmType,
+    b.alarm_scope alarmScope,
+    b.recommend
+    FROM unicom_alarm_index a
+    RIGHT JOIN unicom_alarm_library_lte b
+    ON a.alarm_name=b.alarm_name
+  </select>
 </mapper>

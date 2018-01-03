@@ -21,4 +21,6 @@ public interface AlarmLibService {
     int addAlarm(JSONObject param);
 
     int deleteAlarmByName(String alarmName);
+
+    List<JSONObject> getAlarmInfoList();
 }

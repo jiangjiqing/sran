@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -283,6 +284,39 @@ public class AlarmLibController extends BaseController{
         } else {
             result.put("result", Constants.SUCCESS);
             result.put("msg", Constants.MSG_ADD_OK+"(Real/Total:" + addnum + ")");
+        }
+        return result;
+    }
+
+    @GET
+    @Path("/suppliers/{supplier}/generations/{generation}/alarms/download")
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject getProtectUpload(@RequestParam(value = "importJson") JSONArray importJson,
+                                       @PathParam("supplier") String supplier,
+                                       @PathParam("generation") String generation,
+                                       @HeaderParam("Auth-Token") String authToken,
+                                       @HeaderParam("loginName") String loginName) {
+
+
+        JSONObject result = new JSONObject();
+        String msg = "";
+        int addnum = 0;
+        List<JSONObject> alarmList = new ArrayList<>();
+        NetObjBase obj = objFactory.getNetObj(supplier, generation);
+
+        if (obj == null){
+            msg +="Supplier or Generation has error.";
+        }else {
+             alarmList = obj.getAlarmLibService().getAlarmInfoList();
+        }
+        if (msg.length() != 0) {
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_NO_DATA + msg);
+
+        } else {
+            result.put("result", Constants.SUCCESS);
+            result.put("msg", alarmList);
+
         }
         return result;
     }
