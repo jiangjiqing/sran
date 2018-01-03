@@ -235,7 +235,6 @@ public class QuotaHistoryController extends BaseController {
                         result1.put("quotaName", formulaName);
                         list1.add(result1);
                         result.putAll(Time);
-
                 }
 
                if(list1.size()>0) {
