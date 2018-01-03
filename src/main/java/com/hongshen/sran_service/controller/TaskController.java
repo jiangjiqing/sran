@@ -3,7 +3,6 @@ package com.hongshen.sran_service.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.common.BaseController;
 import com.hongshen.sran_service.service.util.Constants;
-import com.hongshen.sran_service.service.util.FileHelper;
 import com.hongshen.sran_service.service.util.NetObjBase;
 import com.hongshen.sran_service.service.util.NetObjFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.io.IOException;
-import java.util.*;
-
-import static com.hongshen.sran_service.controller.TaskWSController.taskStatusMap;
-import static com.hongshen.sran_service.controller.TaskWSController.taskStatusSession;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by poplar on 11/13/17.

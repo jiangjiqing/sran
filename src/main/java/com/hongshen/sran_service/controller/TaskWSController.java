@@ -1,12 +1,14 @@
 package com.hongshen.sran_service.controller;
+
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.dao.UnicomUserTaskGroupWcdmaMapper;
+import com.hongshen.sran_service.service.util.Constants;
 import com.hongshen.sran_service.service.util.FileHelper;
 import com.hongshen.sran_service.service.util.websocket.HttpSessionConfigurator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
-import com.hongshen.sran_service.service.util.Constants;
+
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
@@ -15,7 +17,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 //该注解用来指定一个URI，客户端可以通过这个URI来连接到WebSocket。类似Servlet的注解mapping。无需在web.xml中配置。
 /*@ServerEndpoint(value = "/sran/service/net/task/{param}", configurator = HttpSessionConfigurator.class)*/
@@ -141,10 +145,10 @@ public class TaskWSController {
                 taskStatusMap.put(loginName, false);
             }else {
                 try {
-                    String siteDir = Constants.TASK_ROOT_PATH + loginName +"/"+Constants.TASK_DIR_SITE;
-                    String cmdDir = Constants.TASK_ROOT_PATH + loginName +"/"+Constants.TASK_DIR_CMD;
-                    String logDir = Constants.TASK_ROOT_PATH + loginName +"/"+Constants.TASK_DIR_LOG;
-                    String analysisLogDir = Constants.TASK_ROOT_PATH + loginName +"/"+Constants.TASK_DIR_ANALYSIS_LOG;
+                    String siteDir = Constants.TASK_ROOT_PATH + loginName +"/"+ Constants.TASK_DIR_SITE;
+                    String cmdDir = Constants.TASK_ROOT_PATH + loginName +"/"+ Constants.TASK_DIR_CMD;
+                    String logDir = Constants.TASK_ROOT_PATH + loginName +"/"+ Constants.TASK_DIR_LOG;
+                    String analysisLogDir = Constants.TASK_ROOT_PATH + loginName +"/"+ Constants.TASK_DIR_ANALYSIS_LOG;
 
                     FileHelper.createFile(siteDir, Constants.TASK_FILE_SITE, task.getString("rncList"));
                     FileHelper.createFile(cmdDir, Constants.TASK_FILE_CMD, task.getString("cmdList"));
@@ -157,7 +161,7 @@ public class TaskWSController {
 
 
                 try{
-                    FileReader  fileReader = new FileReader(Constants.TASK_ROOT_PATH+loginName+"/"+Constants.TASK_DIR_SITE+"/"+Constants.TASK_FILE_SITE);
+                    FileReader  fileReader = new FileReader(Constants.TASK_ROOT_PATH+loginName+"/"+ Constants.TASK_DIR_SITE+"/"+ Constants.TASK_FILE_SITE);
                     BufferedReader indexLine = new BufferedReader(fileReader);
 
                     while (indexLine.readLine()!=null){

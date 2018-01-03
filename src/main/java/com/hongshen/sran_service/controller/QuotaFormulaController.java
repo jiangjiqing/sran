@@ -379,7 +379,7 @@ public class QuotaFormulaController {
         }
 
         if(msg.equals("")){
-            result.put("result",Constants.FAIL);
+            result.put("result", Constants.FAIL);
             result.put("msg",msg);
         }
 

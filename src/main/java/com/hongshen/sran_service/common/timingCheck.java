@@ -1,4 +1,5 @@
 package com.hongshen.sran_service.common;
+
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.dao.UnicomUserTaskGroupWcdmaMapper;
 import com.hongshen.sran_service.service.util.Constants;
@@ -6,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
