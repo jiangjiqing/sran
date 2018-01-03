@@ -201,7 +201,7 @@ public class QuotaHistoryController extends BaseController {
                 int num = 0;
                 double d = 0.0;
                 JSONObject Time = new JSONObject();
-
+                JSONObject Name = new JSONObject();
                 for (String formulaName : formulaNameList){
 
                     d = 0.0;
@@ -217,19 +217,25 @@ public class QuotaHistoryController extends BaseController {
 
                             if (quolist.getDouble(formulaName) != null
                                     && quolist.getDouble(formulaName) >= 0) {
-
-                                Time.put("time", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(getMath(start, j, min)));
+                                //Time.put("time",new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(quolist.getDate("time")));
+                                //Name.put("name",quolist.getDate("name"));
                                 num++;
                                 d = d + quolist.getDouble(formulaName);
                             }
                         }
+                        Time.put("time", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(getMath(start, j, min)));
                     }
-                        if(d!=0.0) {
+
+                        if (d != 0.0) {
                             result1.put("value", d / num);
-                            result1.put("quotaName", formulaName);
-                            list1.add(result1);
-                            result.putAll(Time);
+                        } else {
+                            result1.put("value", 0);
                         }
+
+                        result1.put("quotaName", formulaName);
+                        list1.add(result1);
+                        result.putAll(Time);
+
                 }
 
                if(list1.size()>0) {
