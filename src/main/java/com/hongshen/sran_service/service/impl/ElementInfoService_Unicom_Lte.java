@@ -188,8 +188,8 @@ public class ElementInfoService_Unicom_Lte implements ElementInfoService {
     }
 
     @Override
-    public int addFavoriteFile(String tableName, List importJson) {
-        return favoriteMapper.addFavoriteFile(tableName, importJson);
+    public int addFavoriteFile(String tableName, List paramList) {
+        return favoriteMapper.addFavoriteFile(tableName, paramList);
     }
 
     @Override

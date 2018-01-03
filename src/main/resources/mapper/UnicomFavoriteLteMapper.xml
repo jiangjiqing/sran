@@ -118,7 +118,7 @@
     INSERT IGNORE into ${tableName} (node_name)
     values
     <foreach collection="paramList" index="index" item="node" separator=",">
-      (#{node.nodeName})
+      (#{node})
     </foreach>
   </insert>
 </mapper>

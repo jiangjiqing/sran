@@ -87,5 +87,5 @@ public interface ElementInfoService {
 
     int createTable(String tableName);
 
-    int addFavoriteFile(String tableName, List importJson);
+    int addFavoriteFile(String tableName, List paramList);
 }

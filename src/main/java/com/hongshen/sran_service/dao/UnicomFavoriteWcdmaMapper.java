@@ -81,5 +81,5 @@ public interface UnicomFavoriteWcdmaMapper {
 
     int createTable(@Param("tableName") String tableName);
 
-    int addFavoriteFile(@Param("tableName")String tableName,@Param("importJson") List importJson);
+    int addFavoriteFile(@Param("tableName")String tableName,@Param("paramList") List paramList);
 }
