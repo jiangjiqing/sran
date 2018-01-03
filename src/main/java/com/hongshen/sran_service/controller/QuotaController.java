@@ -297,7 +297,7 @@ public class QuotaController {
 
         if (msg.length() == 0){
             result.put("result", Constants.SUCCESS);
-            result.put("data", result);
+            result.put("data", cellList);
 
         }else{
             result.put("result", Constants.FAIL);
