@@ -276,10 +276,18 @@
   </select>
 
   <select id="getGroupList" resultType="com.alibaba.fastjson.JSONObject">
-    SELECT
-      group_name name
-    FROM  unicom_group_wcdma
-    GROUP BY name
+--     SELECT
+--       group_name name
+--     FROM  unicom_group_wcdma
+--     GROUP BY name
+SELECT b.name,b.level
+   FROM (SELECT level,name
+   FROM unicom_quota_history_group_wcdma
+   WHERE time='2017-01-20 09:15:00')b
+   INNER JOIN (SELECT group_name
+   FROM unicom_node_wcdma GROUP BY group_name)a
+   ON a.group_name=b.name
+   ORDER BY b.level
   </select>
 
   <select id="getGroupNameList" resultType="java.lang.String">

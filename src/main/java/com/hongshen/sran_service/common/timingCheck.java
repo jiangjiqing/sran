@@ -1,4 +1,5 @@
 package com.hongshen.sran_service.common;
+
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.dao.UnicomUserTaskGroupWcdmaMapper;
 import com.hongshen.sran_service.service.util.Constants;
@@ -6,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -39,37 +41,38 @@ public class timingCheck implements ApplicationRunner {
 
                         List<JSONObject> times = unicomUserTaskGroupWcdmaMapper.getTaskTime();
 
+                        if(times!=null) {
+                            for (JSONObject json : times) {
+                                int period = 1;//TODO
+                                if(json.getDate("startTime")!=null) {
+                                    switch (period) {
+                                        case 0: {
+                                            SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                            if (date.parse(date.format(json.getDate("startTime"))).getTime()
+                                                    == date.parse(date.format(new Date())).getTime()) {
 
-                        for (JSONObject json : times) {
-                            int period =1;//TODO
-                            switch (period){
-                                case 0: {
-                                    SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                                    if (date.parse(date.format(json.getDate("startTime"))).getTime()
-                                            == date.parse(date.format(new Date())).getTime()) {
+                                                Start(json.getString("login_name"), new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss").format(new Date()));
+                                            }
+                                            break;
+                                        }
+                                        case 1: {
+                                            SimpleDateFormat date = new SimpleDateFormat("HH:mm:ss");
+                                            if (date.parse(date.format(json.getDate("startTime"))).getTime()
+                                                    == date.parse(date.format(new Date())).getTime()) {
 
-                                        Start(json.getString("login_name"),new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss").format(new Date()));
+                                                Start(json.getString("login_name"), new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss").format(new Date()));
+                                            }
+                                            break;
+                                        }
                                     }
-                                    break;
-                                }
-                                case 1: {
-                                    SimpleDateFormat date = new SimpleDateFormat("HH:mm:ss");
-                                    if (date.parse(date.format(json.getDate("startTime"))).getTime()
-                                            == date.parse(date.format(new Date())).getTime()) {
-
-                                        Start(json.getString("login_name"),new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss").format(new Date()));
-                                    }
-                                    break;
                                 }
                             }
-
                         }
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
 
-                }
-            }, 0, 1000);
+                }            }, 0, 1000);
         } catch (Exception e) {
             e.printStackTrace();
         }

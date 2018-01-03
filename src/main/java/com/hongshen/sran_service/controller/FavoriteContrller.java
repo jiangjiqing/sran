@@ -234,7 +234,7 @@ public class FavoriteContrller {
         }
         return result;
     }
-    @PUT
+    @POST
     @Path("/suppliers/{supplier}/generations/{generation}/nets/favorites/upload")
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject protectImport(@RequestParam(value = "importJson") JSONArray importJson,

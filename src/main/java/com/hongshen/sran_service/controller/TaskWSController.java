@@ -1,12 +1,14 @@
 package com.hongshen.sran_service.controller;
+
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.dao.UnicomUserTaskGroupWcdmaMapper;
+import com.hongshen.sran_service.service.util.Constants;
 import com.hongshen.sran_service.service.util.FileHelper;
 import com.hongshen.sran_service.service.util.websocket.HttpSessionConfigurator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
-import com.hongshen.sran_service.service.util.Constants;
+
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
@@ -14,7 +16,10 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 //该注解用来指定一个URI，客户端可以通过这个URI来连接到WebSocket。类似Servlet的注解mapping。无需在web.xml中配置。
 /*@ServerEndpoint(value = "/sran/service/net/task/{param}", configurator = HttpSessionConfigurator.class)*/
@@ -116,6 +121,8 @@ public class TaskWSController {
     public void requestSocket(@PathParam(value="param") String param,
                               String loginName) throws IOException {//TODO
         String msg ="";
+        int num=0;
+        int index=0;
         String mobatchPath = Constants.MOSHELL_ROOT_PATH + "mobatch";
         String siteFilePath = Constants.TASK_ROOT_PATH + loginName + "/" + Constants.TASK_DIR_SITE + "/" + Constants.TASK_FILE_SITE;
         String cmdFilePath = Constants.TASK_ROOT_PATH + loginName + "/" + Constants.TASK_DIR_CMD + "/" + Constants.TASK_FILE_CMD;
@@ -133,12 +140,15 @@ public class TaskWSController {
             JSONObject task = unicomUserTaskGroupWcdmaMapper.getTaskInfo(loginName);
             if(task==null){
                 msg+="task info is null.";
+                result.put("msg",msg);
+                this.sendMessage(String.valueOf(result));
+                taskStatusMap.put(loginName, false);
             }else {
                 try {
-                    String siteDir = Constants.TASK_ROOT_PATH + loginName +"/"+Constants.TASK_DIR_SITE;
-                    String cmdDir = Constants.TASK_ROOT_PATH + loginName +"/"+Constants.TASK_DIR_CMD;
-                    String logDir = Constants.TASK_ROOT_PATH + loginName +"/"+Constants.TASK_DIR_LOG;
-                    String analysisLogDir = Constants.TASK_ROOT_PATH + loginName +"/"+Constants.TASK_DIR_ANALYSIS_LOG;
+                    String siteDir = Constants.TASK_ROOT_PATH + loginName +"/"+ Constants.TASK_DIR_SITE;
+                    String cmdDir = Constants.TASK_ROOT_PATH + loginName +"/"+ Constants.TASK_DIR_CMD;
+                    String logDir = Constants.TASK_ROOT_PATH + loginName +"/"+ Constants.TASK_DIR_LOG;
+                    String analysisLogDir = Constants.TASK_ROOT_PATH + loginName +"/"+ Constants.TASK_DIR_ANALYSIS_LOG;
 
                     FileHelper.createFile(siteDir, Constants.TASK_FILE_SITE, task.getString("rncList"));
                     FileHelper.createFile(cmdDir, Constants.TASK_FILE_CMD, task.getString("cmdList"));
@@ -149,10 +159,9 @@ public class TaskWSController {
                     msg += "Create file has error:" + e.getMessage();
                 }
 
-                int num=0;
-                int index=0;
+
                 try{
-                    FileReader  fileReader = new FileReader(Constants.TASK_ROOT_PATH+loginName+"/"+Constants.TASK_DIR_SITE+"/"+Constants.TASK_FILE_SITE);
+                    FileReader  fileReader = new FileReader(Constants.TASK_ROOT_PATH+loginName+"/"+ Constants.TASK_DIR_SITE+"/"+ Constants.TASK_FILE_SITE);
                     BufferedReader indexLine = new BufferedReader(fileReader);
 
                     while (indexLine.readLine()!=null){
@@ -163,48 +172,54 @@ public class TaskWSController {
                 }
 
                 try {
-                    Process process = Runtime.getRuntime().exec(mobatchPath + " " + siteFilePath + " " + cmdFilePath + " " + logFileDir);
-                    // runingTask.add(param);
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+                    if (index == 0) {
+                        msg +="empty file";
+                        result.put("msg", msg);
+                        this.sendMessage(String.valueOf(result));
+                        taskStatusMap.put(loginName, false);
+                    } else {
+                        Process process = Runtime.getRuntime().exec(mobatchPath + " " + siteFilePath + " " + cmdFilePath + " " + logFileDir + "/" + new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss").format(new Date()));
+                        // runingTask.add(param);
+                        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 
-                    Date date1 = new Date();
-                    result.put("timeStart",date1);
+                        Date date1 = new Date();
+                        result.put("timeStart", date1);
 
-                    String data = null;
-                    while (taskStatusMap.get(loginName)!=null&&taskStatusMap.get(loginName) == true && (data = reader.readLine())!=null) {
-                        Date date = new Date();
-                        if(data.contains("**")) {
-                            num++;
-                            if(num!=1) {
-                                result.put("total",index);
-                                result.put("complete", num-1);
-                                result.put("time", date);
-                                result.put("msg",msg);
-                                System.out.println(data);
-                                this.sendMessage(String.valueOf(result));
+                        String data = null;
+                        while (taskStatusMap.get(loginName) != null && taskStatusMap.get(loginName) == true && (data = reader.readLine()) != null) {
+                            Date date = new Date();
+                            if (data.contains("**")) {
+                                num++;
+                                if (num != 1) {
+                                    result.put("total", index);
+                                    result.put("complete", num - 1);
+                                    result.put("time", date);
+                                    result.put("msg", msg);
+                                    System.out.println(data);
+                                    this.sendMessage(String.valueOf(result));
+                                }
                             }
                         }
-                    }
 
-                    if(taskStatusMap.get(loginName) !=null && taskStatusMap.get(loginName) == false) {
+                        if (taskStatusMap.get(loginName) != null && taskStatusMap.get(loginName) == false) {
+                            process.destroy();
+
+                        }
+                        //runingTask.remove(param);
+                        //if(runingTask.size()==0) {
+                        taskStatusMap.remove(loginName);
+                        taskStatusSession.remove(loginName);
+                        Boolean b = new FileHelper().compressFile1(Constants.TASK_ROOT_PATH + loginName + "/" + Constants.TASK_DIR_ANALYSIS_LOG + "/" + Constants.TASK_FILE_LOG,
+                                Constants.TASK_ROOT_PATH + loginName + "/" + Constants.TASK_DIR_LOG);
                         process.destroy();
-
+                        // }
+                         }
+                    } catch(IOException e){
+                        msg += "Read file error:" + e.getMessage();
+                        result.put("msg", msg);
+                        this.sendMessage(String.valueOf(result));
+                        taskStatusMap.put(loginName, false);
                     }
-                    //runingTask.remove(param);
-                    //if(runingTask.size()==0) {
-                    taskStatusMap.remove(loginName);
-                    taskStatusSession.remove(loginName);
-                    Boolean b =  new FileHelper().compressFile1(Constants.TASK_ROOT_PATH+loginName+"/"+Constants.TASK_DIR_ANALYSIS_LOG+"/"+Constants.TASK_FILE_LOG,
-                            Constants.TASK_ROOT_PATH+loginName+"/"+Constants.TASK_DIR_LOG);
-                    process.destroy();
-                    // }
-
-                } catch (IOException e) {
-                    msg +="Read file error:"+e.getMessage();
-                    result.put("msg",msg);
-                    this.sendMessage(String.valueOf(result));
-                    taskStatusMap.put(loginName,false);
-                }
             }
         }
     }

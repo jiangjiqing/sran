@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -257,9 +256,9 @@ public class QuotaFormulaController {
 
                             if (realAddNum > 0) {
                                 try{
-                                obj.getQuotaService().addColumnGroup(formulas.getJSONObject(i).getString("expression"));
-                                obj.getQuotaService().addColumnNode(formulas.getJSONObject(i).getString("expression"));
-                                obj.getQuotaService().addColumnCell(formulas.getJSONObject(i).getString("expression"));
+                                    obj.getQuotaService().addColumnGroup(formulas.getJSONObject(i).getString("expression"));
+                                    obj.getQuotaService().addColumnNode(formulas.getJSONObject(i).getString("expression"));
+                                    obj.getQuotaService().addColumnCell(formulas.getJSONObject(i).getString("expression"));
                                 }catch (Exception e){
                                     e.getMessage();
                                 }
@@ -302,6 +301,7 @@ public class QuotaFormulaController {
         String msg = "";
         Integer listNum = 0;
         Integer realAddNum = 0;
+        int AddNum =0;
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         if (obj == null) {
@@ -315,13 +315,19 @@ public class QuotaFormulaController {
 
                 for (int i = 0; i < listNum; i++) {
                     try {
-                            realAddNum += obj.getQuotaService().addCounter(counters.getJSONObject(i));
+                        if(counters.getJSONObject(i).getString("name")!=null&&counters.getJSONObject(i).getString("name")!=""
+                                &&counters.getJSONObject(i).getString("type")!=null&&counters.getJSONObject(i).getString("type")!=""){
+
+
+                            realAddNum = obj.getQuotaService().addCounter(counters.getJSONObject(i));
 
                             if (counters.getJSONObject(i).getString("name")!=null&&realAddNum > 0) {
-
+                                AddNum= AddNum+realAddNum;
                                 obj.getQuotaService().addColumnCounter(counters.getJSONObject(i).getString("name"));
                             }
-
+                        }else{
+                            msg+="data is null";
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
 
@@ -329,7 +335,7 @@ public class QuotaFormulaController {
                     }
                 }
 
-                if (realAddNum < listNum) {
+                if (AddNum < listNum) {
                     msg += "Upload has error.";
                 }
             }
@@ -338,12 +344,46 @@ public class QuotaFormulaController {
         if (msg.length() == 0) {
             obj.getCacheService().resetCounterList();
             result.put("result", Constants.SUCCESS);
-            result.put("msg", Constants.MSG_ADD_OK + "(Real/Total:" + realAddNum + "/" + listNum + ")");
+            result.put("msg", Constants.MSG_ADD_OK + "(Real/Total:" + AddNum + "/" + listNum + ")");
 
         } else {
             result.put("result", Constants.FAIL);
-            result.put("msg", Constants.MSG_ADD_FAILED + "(Real/Total:" + realAddNum + "/" + listNum + ")\n" + msg);
+            result.put("msg", Constants.MSG_ADD_FAILED + "(Real/Total:" + AddNum + "/" + listNum + ")\n" + msg);
         }
         return result;
     }
+    @GET
+    @Path("/suppliers/{supplier}/generations/{generation}/nets/counters/download")
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject counterImport(@PathParam("supplier") String supplier,
+                                    @PathParam("generation") String generation,
+                                    @HeaderParam("loginName") String loginName) {
+        String msg="";
+        JSONObject result = new JSONObject();
+        NetObjBase obj = objFactory.getNetObj(supplier, generation);
+        if(obj!=null) {
+            if(loginName!=null&&loginName!=""){
+                List<JSONObject> counterList = obj.getQuotaService().getCounterList();
+                if (counterList != null && counterList.size() > 0) {
+                    result.put("result", Constants.SUCCESS);
+                    result.put("data", counterList);
+                } else {
+                    result.put("result", Constants.FAIL);
+                    result.put("msg", Constants.MSG_NO_DATA);
+                }
+            }else{
+                msg+="loginName null";
+            }
+        }else{
+            msg+="Supplier or Generation has error.";
+        }
+
+        if(msg.equals("")){
+            result.put("result", Constants.FAIL);
+            result.put("msg",msg);
+        }
+
+        return result;
+    }
+
 }

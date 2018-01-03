@@ -226,13 +226,10 @@ public class QuotaHistoryController extends BaseController {
                     }
                         if(d!=0.0) {
                             result1.put("value", d / num);
-                        }else{
-                            result1.put("value",0);
+                            result1.put("quotaName", formulaName);
+                            list1.add(result1);
+                            result.putAll(Time);
                         }
-                        result1.put("quotaName", formulaName);
-                        list1.add(result1);
-                        result.putAll(Time);
-
                 }
 
                if(list1.size()>0) {
