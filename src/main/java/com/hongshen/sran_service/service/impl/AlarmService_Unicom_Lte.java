@@ -54,4 +54,9 @@ public class AlarmService_Unicom_Lte implements AlarmService {
     public List<JSONObject> getAlarmByName(String alarmNameId, String alarmName) {
         return alarmIndexMapper.getAlarmByName(alarmNameId,alarmName);
     }
+
+    @Override
+    public List<JSONObject> getAlarmInfoList1(String level) {
+        return alarmMapper.getAlarmInfoList1(level);
+    }
 }

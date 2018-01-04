@@ -38,4 +38,5 @@ public interface UnicomAlarmWcdmaMapper {
 
     List<JSONObject> getCellAlarmByName(@Param("cellName")String cellName);
 
+    List<JSONObject> getAlarmInfoList1(@Param("level")String level);
 }

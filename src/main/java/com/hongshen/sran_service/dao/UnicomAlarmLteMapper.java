@@ -5,6 +5,7 @@ import com.hongshen.sran_service.entity.UnicomAlarmLte;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import javax.ws.rs.POST;
 import java.util.List;
 import java.util.Map;
 
@@ -38,4 +39,5 @@ public interface UnicomAlarmLteMapper {
 
     List<JSONObject> getCellAlarmByName(@Param("cellName")String cellName);
 
+    List<JSONObject> getAlarmInfoList1(@Param("level")String level);
 }
