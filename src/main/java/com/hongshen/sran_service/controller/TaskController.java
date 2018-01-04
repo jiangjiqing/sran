@@ -92,7 +92,7 @@ public class TaskController extends BaseController {
         }else if (param == null || param.isEmpty()) {
             msg += "Parameters is null.";
 
-        }else if(param.getString("rncList")!=null&&param.getString("cmdList")!=null){
+        }else if(param.getString("rncList")==null&&param.getString("cmdList")==null){
             msg += "files is null.";
         }else{
             try{
