@@ -61,4 +61,5 @@ public interface CacheService {
 
     String getUpdateTimeForQuotaData();
 
+    List<JSONObject> getFormulaUnitList();
 }

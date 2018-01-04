@@ -137,13 +137,17 @@ public class QuotaController {
                         try {
                             List<JSONObject> formulaResultList = new ArrayList<>();
 
-                            List<JSONObject> formulaList = obj.getCacheService().getFormulaList(true);
+                            List<JSONObject> formulaList = obj.getCacheService().getFormulaUnitList();
 
                             for (JSONObject f : formulaList) {
 
                                 JSONObject temp = new JSONObject();
                                 temp.put("quotaName", f.getString("quotaName"));
-                                temp.put("remark", f.getString("remark"));
+                                if (f.getString("unit").equals("0")) {
+                                    temp.put("remark", f.getString("remark")+"(百分比)");
+                                }else if (f.getString("unit").equals("1")){
+                                    temp.put("remark", f.getString("remark")+"(整数)");
+                                }
                                 temp.put("hasTop10", f.getBooleanValue("hasTop10"));
 
                                 String value = quotas.getString(f.getString("quotaName"));

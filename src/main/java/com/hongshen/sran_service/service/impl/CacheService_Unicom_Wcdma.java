@@ -297,6 +297,30 @@ public class CacheService_Unicom_Wcdma implements CacheService {
         return time;
     }
 
+    @Override
+    public List<JSONObject> getFormulaUnitList() {
+        List<JSONObject> resultList = new ArrayList<JSONObject>();
+
+        if (formulaList == null || formulaList.isEmpty()){
+            resetFormulaUnitList();
+        }
+
+        for (JSONObject formula : formulaList) {
+
+            // unvisible quota
+
+                resultList.add(formula);
+        }
+        return resultList;
+    }
+
+    private void resetFormulaUnitList() {
+        formulaList.clear();
+        formulaList = formulaMapper.getFormuUnitlaList();
+
+        resetFormulaListProcessed();
+    }
+
     public Date getUpdateTimeForQuotaData(String level) {
 
         if (this.updateTimeForQuotaData == null || this.updateTimeForQuotaData.length() == 0){

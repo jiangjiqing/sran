@@ -71,4 +71,6 @@ public interface UnicomFormulaLteMapper {
     Integer deleteFormulaByName(@Param("quotaName")String quotaName);
 
     Integer deleteAllFormulas();
+
+    List<JSONObject> getFormuUnitlaList();
 }

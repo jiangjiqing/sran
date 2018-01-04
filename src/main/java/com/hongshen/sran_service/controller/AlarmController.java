@@ -46,6 +46,13 @@ public class AlarmController {
                 System.out.println(level.get(i));
                 List<JSONObject> AlarmWcdmaInfoList = objWcdma.getAlarmService().getAlarmInfoList1((String) level.get(i));
                 List<JSONObject> AlarmLteInfoList = objLte.getAlarmService().getAlarmInfoList1((String) level.get(i));
+                for (int j = 0 ; j<AlarmWcdmaInfoList.size();j++){
+                    System.out.println(AlarmWcdmaInfoList.get(j));
+                    AlarmWcdmaInfoList.get(j).put("generation",Constants.WCDMA);
+                }
+                for (int j = 0 ; j<AlarmLteInfoList.size();j++){
+                    AlarmLteInfoList.get(j).put("generation",Constants.LTE);
+                }
                 dataList.addAll(AlarmWcdmaInfoList);
                 dataList.addAll(AlarmLteInfoList);
             }

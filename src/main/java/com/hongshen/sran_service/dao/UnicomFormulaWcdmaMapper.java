@@ -70,4 +70,6 @@ public interface UnicomFormulaWcdmaMapper {
     Integer deleteFormulaByName(@Param("quotaName")String quotaName);
 
     Integer deleteAllFormulas();
+
+    List<JSONObject> getFormuUnitlaList();
 }

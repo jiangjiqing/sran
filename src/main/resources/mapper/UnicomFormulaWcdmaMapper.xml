@@ -159,6 +159,19 @@
     ORDER BY quota_name ASC
   </select>
 
+  <select id="getFormuUnitlaList" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT
+    a.quota_name quotaName,
+    a.expression,
+    a.remark,
+    a.status,
+    a.type,
+    a.hasTop10,
+    b.quota_unit unit
+    FROM unicom_formula_wcdma a LEFT JOIN unicom_quota_threshold_cell_wcdma b ON a.quota_name=b.quota_name
+    ORDER BY a.quota_name ASC
+  </select>
+
   <select id="getFormulaByName" resultType="com.alibaba.fastjson.JSONObject">
     SELECT *
     FROM unicom_formula_wcdma
