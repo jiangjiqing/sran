@@ -334,8 +334,7 @@ public class QuotaHistoryController extends BaseController {
             JSONObject element = quotaHistoryExport.getJSONObject("element");
 
             if (quota == null || quota.isEmpty() || !quota.containsKey("range") ||
-                    time == null || time.isEmpty() ||
-                    !time.containsKey("range") || !time.containsKey("unit") ||
+                    time == null || time.isEmpty() || !time.containsKey("range") ||
                     element == null || element.isEmpty() || !element.containsKey("range")){
                 msg += "Parameters has error.";
 
@@ -422,13 +421,12 @@ public class QuotaHistoryController extends BaseController {
             msg += "Parametars is null.";
 
         } else {
-//            JSONObject counter = quotaHistoryExport.getJSONObject("counters");
+            JSONObject counter = quotaHistoryExport.getJSONObject("counter");
             JSONObject time = quotaHistoryExport.getJSONObject("time");
             JSONObject element = quotaHistoryExport.getJSONObject("element");
 
-            if (time == null || time.isEmpty() ||
-                    !time.containsKey("range") || !time.containsKey("unit") ||
-//                    counter == null || counter.isEmpty() || !counter.containsKey("range") ||
+            if (time == null || time.isEmpty() || !time.containsKey("range") ||
+                    counter == null || counter.isEmpty() || !counter.containsKey("range") ||
                     element == null || element.isEmpty() || !element.containsKey("range")) {
                 msg += "Parameters has error.";
 
