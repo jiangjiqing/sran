@@ -263,6 +263,7 @@ public class QuotaFormulaController {
                                     e.getMessage();
                                 }
                             }
+                            obj.getCacheService().resetFormulaList();
                         }
 
                     } catch (Exception e) {
@@ -325,6 +326,7 @@ public class QuotaFormulaController {
                                 AddNum= AddNum+realAddNum;
                                 obj.getQuotaService().addColumnCounter(counters.getJSONObject(i).getString("name"));
                             }
+                            obj.getCacheService().resetCounterList();
                         }else{
                             msg+="data is null";
                         }
