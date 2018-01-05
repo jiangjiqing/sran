@@ -217,6 +217,7 @@ public class MapController extends BaseController{
                 Double[] d3={list.get(0)[0]+0.0001,list.get(1)[1]-0.0001};
                 Double[] d4={list.get(1)[0]-0.0001,list.get(0)[1]+0.0001};
                 Double latitude = (list.get(0)[0]+list.get(1)[0]);
+
                 Double longitude = (list.get(0)[1]+list.get(1)[1]);
 
                 listJson.add(d1);

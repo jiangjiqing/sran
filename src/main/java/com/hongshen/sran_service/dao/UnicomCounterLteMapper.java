@@ -59,4 +59,6 @@ public interface UnicomCounterLteMapper {
     List<JSONObject> getCounterList();
 
     Integer addCounter(JSONObject jsonObject);
+
+    int deleteCounters();
 }

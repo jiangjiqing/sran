@@ -60,4 +60,6 @@ public interface UnicomCounterWcdmaMapper {
     List<JSONObject> getCounterList();
 
     Integer addCounter(JSONObject jsonObject);
+
+    int deleteCounters();
 }

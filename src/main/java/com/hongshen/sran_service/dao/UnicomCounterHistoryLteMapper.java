@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 @Repository
@@ -41,9 +42,13 @@ public interface UnicomCounterHistoryLteMapper {
 
     List<JSONObject> getCounterHistoryListByTime(@Param("time")String time);
 
-    List<JSONObject> dowloadCounter(@Param("start")Date start, @Param("end")Date end, @Param("condition") String condition);
+    List<JSONObject> dowloadCounter(@Param("counters")String counters, @Param("start")Date start, @Param("end")Date end, @Param("condition") String condition);
 
     List<JSONObject> getCounterTime();
 
-    void addColumnCounter(@Param("name") String name);
+    void addColumnCounter(@Param("name") String name ,@Param("nullable")String nullable,@Param("type")String type);
+
+    List<JSONObject> getColumns();
+
+    void deleteColumnCounter(@Param("colum") String colum);
 }

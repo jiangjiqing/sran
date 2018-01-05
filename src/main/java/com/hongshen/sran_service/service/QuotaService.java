@@ -35,7 +35,7 @@ public interface QuotaService {
 
     List<JSONObject> getQuotasCell(Date start, Date end, String condition);
 
-    List<JSONObject> getCounterExportGroup(Date start, Date end, String condition);
+    List<JSONObject> getCounterExportGroup(String counters, Date start, Date end, String condition);
 
     List<JSONObject> getGroupQuotaBadTenCell(String groupName, String quotaName);
 
@@ -63,9 +63,15 @@ public interface QuotaService {
 
     Integer addCounter(JSONObject jsonObject);
 
-    void addColumnCounter(String name);
+    void addColumnCounter(String name,String nullable,String type);
 
     List<JSONObject> getCounterList();
+
+    List<JSONObject> getColumns();
+
+    void deleteColumnCounter(String colum);
+
+    int deleteCounters();
 
     Map<String, JSONObject> getThresholdCellList();
 

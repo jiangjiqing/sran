@@ -139,8 +139,8 @@ public class QuotaService_Unicom_Lte implements QuotaService {
     }
 
     @Override
-    public List<JSONObject> getCounterExportGroup(Date start, Date end, String condition) {
-        return counterHistoryLteMapper.dowloadCounter(start,end,condition);
+    public List<JSONObject> getCounterExportGroup(String counters, Date start, Date end, String condition) {
+        return counterHistoryLteMapper.dowloadCounter(counters,start,end,condition);
     }
 
     @Override
@@ -218,8 +218,8 @@ public class QuotaService_Unicom_Lte implements QuotaService {
     }
 
     @Override
-    public void addColumnCounter(String name) {
-        counterHistoryLteMapper.addColumnCounter(name);
+    public void addColumnCounter(String name,String nullable,String type) {
+        counterHistoryLteMapper.addColumnCounter(name,nullable,type);
     }
 
     @Override
@@ -252,5 +252,20 @@ public class QuotaService_Unicom_Lte implements QuotaService {
                 ScannerHelper.getQuotaThresholdMapJson(quotaThresholdGroupMapper.getThresholdGroupList());
 
         return quotaThresholdGroupMapJson;
+    }
+
+    @Override
+    public List<JSONObject> getColumns() {
+        return counterHistoryLteMapper.getColumns();
+    }
+
+    @Override
+    public void deleteColumnCounter(String colum) {
+        counterHistoryLteMapper.deleteColumnCounter(colum);
+    }
+
+    @Override
+    public int deleteCounters() {
+        return counterMapper.deleteCounters();
     }
 }

@@ -153,8 +153,8 @@ public class QuotaService_Unicom_Wcdma implements QuotaService {
     }
 
     @Override
-    public List<JSONObject> getCounterExportGroup(Date start, Date end, String condition) {
-        return counterHistoryWcdmaMapper.dowloadCounter(start,end,condition);
+    public List<JSONObject> getCounterExportGroup(String counters, Date start, Date end, String condition) {
+        return counterHistoryWcdmaMapper.dowloadCounter(counters,start,end,condition);
     }
 
     @Override
@@ -259,13 +259,27 @@ public class QuotaService_Unicom_Wcdma implements QuotaService {
     }
 
     @Override
-    public void addColumnCounter(String name) {
-        counterHistoryWcdmaMapper.addColumnCounter(name);
+    public void addColumnCounter(String name,String nullable,String type) {
+        counterHistoryWcdmaMapper.addColumnCounter(name,nullable,type);
     }
 
     @Override
     public List<JSONObject> getCounterList() {
         return counterMapper.getCounterList();
+    }
+    @Override
+    public List<JSONObject> getColumns() {
+        return counterHistoryWcdmaMapper.getColumns();
+    }
+
+    @Override
+    public void deleteColumnCounter(String colum) {
+        counterHistoryWcdmaMapper.deleteColumnCounter(colum);
+    }
+
+    @Override
+    public int deleteCounters() {
+        return counterMapper.deleteCounters();
     }
 
     @Override

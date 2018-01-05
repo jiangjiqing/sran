@@ -407,6 +407,7 @@ public class QuotaHistoryController extends BaseController {
                                                 @HeaderParam("Auth-Token") String authToken) throws ParseException {
 
         String msg = "";
+        String counters = null;
         String condition = null;
         Date start = null;
         Date end = null;
@@ -451,8 +452,14 @@ public class QuotaHistoryController extends BaseController {
                     condition = Condition(st);
                 }
 
-                // TODO :counter list
-                counterList = obj.getQuotaService().getCounterExportGroup(start, end, condition);
+                if(counter.getString("range").equals("1")){
+                     counters =  counter.getString("list").replace("]", "")
+                            .replace("[", "").replaceAll("\"", "");
+                }
+
+                counterList = obj.getQuotaService().getCounterExportGroup(counters,start, end, condition);
+
+
             }
         }
 

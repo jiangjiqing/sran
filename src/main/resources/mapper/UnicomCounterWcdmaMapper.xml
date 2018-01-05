@@ -132,4 +132,7 @@
      type = #{type},
      status = #{status};
   </insert>
+  <delete id="deleteCounters">
+    DELETE FROM unicom_counter_wcdma;
+  </delete>
 </mapper>

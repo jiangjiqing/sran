@@ -440,7 +440,13 @@
   </select>
 
   <select id="dowloadCounter" parameterType="java.util.Date" resultType="com.alibaba.fastjson.JSONObject">
-    SELECT *
+    SELECT
+    <if test="counters ==null">
+      *
+    </if>
+    <if test="counters !=null">
+     name,time, ${counters}
+    </if>
     FROM unicom_counter_history_wcdma
     <if test="start!=null and end !=null and condition==null">
       WHERE time  BETWEEN #{start} AND #{end}
@@ -476,7 +482,15 @@
 
   <select id="addColumnCounter" parameterType="java.lang.String">
 
-    alter table unicom_counter_history_wcdma add ${name} varchar(5) Null;
+    ALTER TABLE unicom_counter_history_wcdma ADD COLUMN `${name}`  ${type} ${nullable};
 
+  </select>
+
+  <select id="getColumns" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT COLUMN_NAME,IS_NULLABLE,COLUMN_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'Sran1' AND TABLE_NAME = 'unicom_counter_history_wcdma';
+  </select>
+
+  <select id="deleteColumnCounter" parameterType="java.lang.String">
+    alter table unicom_counter_history_wcdma drop column `${colum}`;
   </select>
 </mapper>

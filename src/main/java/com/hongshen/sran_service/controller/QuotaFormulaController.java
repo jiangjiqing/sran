@@ -256,9 +256,9 @@ public class QuotaFormulaController {
 
                             if (realAddNum > 0) {
                                 try{
-                                    obj.getQuotaService().addColumnGroup(formulas.getJSONObject(i).getString("expression"));
-                                    obj.getQuotaService().addColumnNode(formulas.getJSONObject(i).getString("expression"));
-                                    obj.getQuotaService().addColumnCell(formulas.getJSONObject(i).getString("expression"));
+                                    obj.getQuotaService().addColumnGroup(formulas.getJSONObject(i).getString("quotaName"));
+                                    obj.getQuotaService().addColumnNode(formulas.getJSONObject(i).getString("quotaName"));
+                                    obj.getQuotaService().addColumnCell(formulas.getJSONObject(i).getString("quotaName"));
                                 }catch (Exception e){
                                     e.getMessage();
                                 }
@@ -303,6 +303,9 @@ public class QuotaFormulaController {
         Integer listNum = 0;
         Integer realAddNum = 0;
         int AddNum =0;
+        String counterClumn = "";
+        List<String> list = new ArrayList();
+        List<String> listCounter = new ArrayList();
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         if (obj == null) {
@@ -314,6 +317,25 @@ public class QuotaFormulaController {
             } else {
                 listNum = counters.size();
 
+                List<JSONObject> Clums = obj.getQuotaService().getColumns();
+                    for(int i=0;i<Clums.size();i++){
+                        listCounter.add(Clums.get(i).getString("COLUMN_NAME"));
+                    }
+
+
+
+
+                obj.getQuotaService().deleteCounters();
+
+                for(int j=0;j<counters.size();j++){
+                    if(generation.equals("wcdma")) {
+                        list.add(counters.getJSONObject(j).getString("name"));
+                    }else if(generation.equals("lte")){
+                        list.add(counters.getJSONObject(j).getString("type")+
+                                "_"+ counters.getJSONObject(j).getString("name"));
+                    }
+                }
+
                 for (int i = 0; i < listNum; i++) {
                     try {
                         if(counters.getJSONObject(i).getString("name")!=null&&counters.getJSONObject(i).getString("name")!=""
@@ -324,7 +346,28 @@ public class QuotaFormulaController {
 
                             if (counters.getJSONObject(i).getString("name")!=null&&realAddNum > 0) {
                                 AddNum= AddNum+realAddNum;
-                                obj.getQuotaService().addColumnCounter(counters.getJSONObject(i).getString("name"));
+                                if(generation.equals("wcdma")) {
+
+                                    counterClumn = counters.getJSONObject(i).getString("name");
+                                }else if(generation.equals("lte")){
+                                    counterClumn = counters.getJSONObject(i).getString("type")+
+                                            "_"+ counters.getJSONObject(i).getString("name");
+                                }
+                                try{
+                                    String nullable="";
+                                    if(Clums.get(2).getString("IS_NULLABLE").equals("YES")){
+                                        nullable = "NULL";
+                                    }else if(Clums.get(2).getString("IS_NULLABLE").equals("NO")){
+                                        nullable = "NOT NULL";
+                                    }
+                                    if(!listCounter.contains(counterClumn)){
+                                        obj.getQuotaService().addColumnCounter(counterClumn,nullable,Clums.get(2).getString("COLUMN_TYPE"));
+
+                                    }
+
+                                }catch (Exception e){
+                                    System.out.println(e.getMessage());
+                                }
                             }
                             obj.getCacheService().resetCounterList();
                         }else{
@@ -334,6 +377,19 @@ public class QuotaFormulaController {
                         e.printStackTrace();
 
                         msg += "[" + counters.getJSONObject(i).getString("name") + "] add failed.\n";
+                    }
+                }
+
+
+
+
+
+
+                for (int k=0;k<Clums.size();k++){
+                    list.add("name");
+                    list.add("time");
+                    if (!list.contains(Clums.get(k).getString("COLUMN_NAME"))) {
+                        obj.getQuotaService().deleteColumnCounter(Clums.get(k).getString("COLUMN_NAME"));
                     }
                 }
 
