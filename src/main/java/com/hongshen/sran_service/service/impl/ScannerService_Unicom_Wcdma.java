@@ -64,6 +64,9 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
         Map<String, List<String>> quotaThresholdCellMap =
                 ScannerHelper.getQuotaThresholdMap(quotaThresholdCellMapper.getThresholdCellList());
 
+        Map<String, JSONObject> quotaThresholdCellMapJson =
+                ScannerHelper.getQuotaThresholdMapJson(quotaThresholdCellMapper.getThresholdCellList());
+
         Map<String, List<String>> expressionSetMap =
                 ScannerHelper.getVariableList(formulaMapper.getFormulaList());
 
@@ -159,6 +162,11 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
                         int fmLevel =
                                 ScannerHelper
                                         .levelCalculation(value, quotaThresholdCellMap.get(quotaName));
+
+                        int fmLevelByType =
+                                ScannerHelper
+                                        .levelCalculationByThresholdAndType
+                                                (value,quotaThresholdCellMapJson.get(quotaName));
 
                         fmLevelList.add(fmLevel);
 

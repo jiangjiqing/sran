@@ -4,12 +4,15 @@ import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.service.util.Constants;
 import com.hongshen.sran_service.service.util.NetObjBase;
 import com.hongshen.sran_service.service.util.NetObjFactory;
+import com.hongshen.sran_service.service.util.ScannerHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by poplar on 11/13/17.
@@ -32,6 +35,8 @@ public class QuotaController {
         String msg = "";
         JSONObject result = new JSONObject();
         JSONObject data = new JSONObject();
+        Map<String, JSONObject> quotaThresholdGroupMapJson = new HashMap<>();
+
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
 
         if (obj == null){
@@ -42,7 +47,10 @@ public class QuotaController {
 
         }else{
 
+            quotaThresholdGroupMapJson = obj.getQuotaService().getThresholdGroupList();
+
             String time = obj.getCacheService().getUpdateTimeForQuotaData();
+
             if (time == null || time == ""){
                 msg +="Time is null.";
 
@@ -70,9 +78,19 @@ public class QuotaController {
                                 //String value = quotas.getString("formula" + f.getString("id"));
 
                                 if (value == null || value == "" || value.isEmpty()) {
+
                                     temp.put("value", Constants.INVALID_VALUE_QUOTA);
+                                    temp.put("level", "1");
                                 } else {
+
+                                    int fmLevel =
+                                            ScannerHelper
+                                                    .levelCalculationByThresholdAndType
+                                                            (value,quotaThresholdGroupMapJson.get(f.getString("quotaName")));
+
                                     temp.put("value", Double.parseDouble(value));
+
+                                    temp.put("level", fmLevel);
                                 }
                                 formulaResultList.add(temp);
                             }
@@ -112,6 +130,7 @@ public class QuotaController {
         String msg = "";
         JSONObject result = new JSONObject();
         JSONObject data = new JSONObject();
+        Map<String, JSONObject> quotaThresholdNodeMapJson = new HashMap<>();
 
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
 
@@ -122,6 +141,8 @@ public class QuotaController {
             msg +="NodeName is null.";
 
         }else {
+
+            quotaThresholdNodeMapJson = obj.getQuotaService().getThresholdNodeList();
             String time = obj.getCacheService().getUpdateTimeForQuotaData();
             if (time == null || time == ""){
                 msg +="Time is null.";
@@ -154,15 +175,26 @@ public class QuotaController {
                                 //String value = quotas.getString("formula" + f.getString("id"));
 
                                 if (value == null || value == "" || value.isEmpty()) {
+
                                     temp.put("value", Constants.INVALID_VALUE_QUOTA);
+                                    temp.put("level", "1");
                                 } else {
+
+                                    int fmLevel =
+                                            ScannerHelper
+                                                    .levelCalculationByThresholdAndType
+                                                            (value,quotaThresholdNodeMapJson.get(f.getString("quotaName")));
                                     temp.put("value", Double.parseDouble(value));
+
+                                    temp.put("level", fmLevel);
                                 }
+
                                 formulaResultList.add(temp);
                             }
-                            data.put("quotas", formulaResultList);
 
+                            data.put("quotas", formulaResultList);
                         } catch (Exception e) {
+
                             msg += "FormulaList has error:" + e.getMessage();
                         }
                     }
@@ -196,6 +228,7 @@ public class QuotaController {
         String msg = "";
         JSONObject result = new JSONObject();
         JSONObject data = new JSONObject();
+        Map<String, JSONObject> quotaThresholdCellMapJson = new HashMap<>();
 
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         if (obj == null){
@@ -205,7 +238,10 @@ public class QuotaController {
             msg +="CellName is null.";
 
         }else {
+
+            quotaThresholdCellMapJson = obj.getQuotaService().getThresholdCellList();
             String time = obj.getCacheService().getUpdateTimeForQuotaData();
+
             if (time == null || time == ""){
                 msg +="Time is null.";
 
@@ -234,9 +270,17 @@ public class QuotaController {
                                 //String value = quotas.getString("formula" + f.getString("id"));
 
                                 if (value == null || value == "" || value.isEmpty()) {
+
                                     temp.put("value", Constants.INVALID_VALUE_QUOTA);
+                                    temp.put("level", "1");
                                 } else {
+
+                                    int fmLevel =
+                                            ScannerHelper
+                                                    .levelCalculationByThresholdAndType
+                                                            (value,quotaThresholdCellMapJson.get(f.getString("quotaName")));
                                     temp.put("value", Double.parseDouble(value));
+                                    temp.put("level", fmLevel);
                                 }
                                 formulaResultList.add(temp);
                             }

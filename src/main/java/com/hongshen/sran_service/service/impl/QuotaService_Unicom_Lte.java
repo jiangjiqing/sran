@@ -3,11 +3,13 @@ package com.hongshen.sran_service.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.dao.*;
 import com.hongshen.sran_service.service.QuotaService;
+import com.hongshen.sran_service.service.util.ScannerHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by poplar on 11/13/17.
@@ -223,5 +225,32 @@ public class QuotaService_Unicom_Lte implements QuotaService {
     @Override
     public List<JSONObject> getCounterList() {
         return counterMapper.getCounterList();
+    }
+
+    @Override
+    public Map<String, JSONObject> getThresholdCellList() {
+
+        Map<String, JSONObject> quotaThresholdCellMapJson =
+                ScannerHelper.getQuotaThresholdMapJson(quotaThresholdCellMapper.getThresholdCellList());
+
+        return quotaThresholdCellMapJson;
+    }
+
+    @Override
+    public Map<String, JSONObject> getThresholdNodeList() {
+
+        Map<String, JSONObject> quotaThresholdNodeMapJson =
+                ScannerHelper.getQuotaThresholdMapJson(quotaThresholdNodeMapper.getThresholdNodeList());
+
+        return quotaThresholdNodeMapJson;
+    }
+
+    @Override
+    public Map<String, JSONObject> getThresholdGroupList() {
+
+        Map<String, JSONObject> quotaThresholdGroupMapJson =
+                ScannerHelper.getQuotaThresholdMapJson(quotaThresholdGroupMapper.getThresholdGroupList());
+
+        return quotaThresholdGroupMapJson;
     }
 }

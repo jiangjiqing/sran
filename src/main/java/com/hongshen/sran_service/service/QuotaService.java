@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by poplar on 11/13/17.
@@ -65,4 +66,10 @@ public interface QuotaService {
     void addColumnCounter(String name);
 
     List<JSONObject> getCounterList();
+
+    Map<String, JSONObject> getThresholdCellList();
+
+    Map<String, JSONObject> getThresholdNodeList();
+
+    Map<String, JSONObject> getThresholdGroupList();
 }

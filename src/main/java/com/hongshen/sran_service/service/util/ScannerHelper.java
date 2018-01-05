@@ -191,6 +191,83 @@ public class ScannerHelper {
         return quotaThresholdMap;
     }
 
+    public static Map<String, JSONObject> getQuotaThresholdMapJson (List<JSONObject> params) {
+
+        Map<String, JSONObject> quotaThresholdMap = new HashMap<>();
+
+        for (JSONObject param : params) {
+
+            quotaThresholdMap.put(param.getString("quotaName"), param);
+        }
+
+        return quotaThresholdMap;
+    }
+
+    public static int levelCalculationByThresholdAndType (String value, JSONObject threshold) {
+
+        Integer level = 1;
+
+        if (value != "-1") {
+
+            double fmValue = Double.valueOf(value);
+
+            double threshold1 = Double.valueOf(threshold.getString("threshold1"));
+            double threshold2 = Double.valueOf(threshold.getString("threshold2"));
+            double threshold3 = Double.valueOf(threshold.getString("threshold3"));
+
+            int flag = threshold.getIntValue("quotaType");
+
+            if (flag == 1) {
+
+                if (fmValue <= threshold1) {
+
+                    level = 1;
+                }
+
+                if (fmValue > threshold1 && fmValue <= threshold2) {
+
+                    level = 2;
+                }
+
+                if (fmValue > threshold2 && fmValue <= threshold3) {
+
+                    level = 3;
+                }
+
+                if (fmValue > threshold3) {
+
+                    level = 4;
+                }
+            } else {
+
+                if (fmValue <= threshold1) {
+
+                    level = 1;
+                }
+
+                if (fmValue > threshold1 && fmValue <= threshold2) {
+
+                    level = 2;
+                }
+
+                if (fmValue > threshold2 && fmValue <= threshold3) {
+
+                    level = 3;
+                }
+
+                if (fmValue > threshold3) {
+
+                    level = 4;
+                }
+            }
+        } else {
+
+            level = 1;
+        }
+
+        return level;
+    }
+
     public static int levelCalculation (String value, List<String> thresholdList) {
 
         Integer level = 1;
