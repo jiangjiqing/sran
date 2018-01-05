@@ -159,11 +159,11 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
 
                         paramValue.append("'" + value + "',");
 
-                        int fmLevel =
+                        /*int fmLevel =
                                 ScannerHelper
-                                        .levelCalculation(value, quotaThresholdCellMap.get(quotaName));
+                                        .levelCalculation(value, quotaThresholdCellMap.get(quotaName));*/
 
-                        int fmLevelByType =
+                        int fmLevel =
                                 ScannerHelper
                                         .levelCalculationByThresholdAndType
                                                 (value,quotaThresholdCellMapJson.get(quotaName));
@@ -179,7 +179,8 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
                 }
             }
 
-            level = ScannerHelper.maxLevelArray(fmLevelList);
+            /*level = ScannerHelper.maxLevelArray(fmLevelList);*/
+            level = ScannerHelper.minLevelArray(fmLevelList);
 
             paramValue.append("'" + level + "')");
 
@@ -250,6 +251,9 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
 
         Map<String, List<String>> quotaThresholdNodeMap =
                 ScannerHelper.getQuotaThresholdMap(quotaThresholdNodeMapper.getThresholdNodeList());
+
+        Map<String, JSONObject> quotaThresholdNodeMapJson =
+                ScannerHelper.getQuotaThresholdMapJson(quotaThresholdNodeMapper.getThresholdNodeList());
 
         Map<String, List<String>> expressionSetMap =
                 ScannerHelper.getVariableList(cacheService.getFormulaList(false));
@@ -352,9 +356,14 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
 
                         paramValue.append("'" + value + "',");
 
+                        /*int fmLevel =
+                                ScannerHelper
+                                        .levelCalculation(value, quotaThresholdNodeMap.get(quotaName));*/
+
                         int fmLevel =
                                 ScannerHelper
-                                        .levelCalculation(value, quotaThresholdNodeMap.get(quotaName));
+                                        .levelCalculationByThresholdAndType
+                                                (value,quotaThresholdNodeMapJson.get(quotaName));
 
                         fmLevelList.add(fmLevel);
 
@@ -367,7 +376,9 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
                 }
             }
 
-            level = ScannerHelper.maxLevelArray(fmLevelList);
+            /*level = ScannerHelper.maxLevelArray(fmLevelList);*/
+
+            level = ScannerHelper.minLevelArray(fmLevelList);
 
             paramValue.append("'" + level + "')");
 
@@ -429,6 +440,9 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
 
         Map<String, List<String>> quotaThresholdGroupMap =
                 ScannerHelper.getQuotaThresholdMap(quotaThresholdGroupMapper.getThresholdGroupList());
+
+        Map<String, JSONObject> quotaThresholdGroupMapJson =
+                ScannerHelper.getQuotaThresholdMapJson(quotaThresholdGroupMapper.getThresholdGroupList());
 
         Map<String, List<String>> expressionSetMap =
                 ScannerHelper.getVariableList(cacheService.getFormulaList(false));
@@ -520,9 +534,14 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
 
                         paramValue.append("'" + value + "',");
 
+                        /*int fmLevel =
+                                ScannerHelper
+                                        .levelCalculation(value, quotaThresholdGroupMap.get(quotaName));*/
+
                         int fmLevel =
                                 ScannerHelper
-                                        .levelCalculation(value, quotaThresholdGroupMap.get(quotaName));
+                                        .levelCalculationByThresholdAndType
+                                                (value,quotaThresholdGroupMapJson.get(quotaName));
 
                         fmLevelList.add(fmLevel);
 
@@ -535,7 +554,9 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
                 }
             }
 
-            level = ScannerHelper.maxLevelArray(fmLevelList);
+            /*level = ScannerHelper.maxLevelArray(fmLevelList);*/
+
+            level = ScannerHelper.minLevelArray(fmLevelList);
 
             paramValue.append("'" + level + "')");
 

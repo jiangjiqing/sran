@@ -219,45 +219,39 @@ public class ScannerHelper {
 
             if (flag == 1) {
 
-                if (fmValue <= threshold1) {
+                //例如:失败率
 
-                    level = 1;
-                }
+                //大于最高失败率 故障等级为最高级别 1
+                if (fmValue >= threshold3) {
 
-                if (fmValue > threshold1 && fmValue <= threshold2) {
+                    level = Constants.FAULT_LEVEL_THRESHOLD_3;
+                }else if (fmValue < threshold3 && fmValue >= threshold2) {
 
-                    level = 2;
-                }
+                    level = Constants.FAULT_LEVEL_THRESHOLD_2;
+                }else if (fmValue < threshold2 && fmValue >= threshold1) {
 
-                if (fmValue > threshold2 && fmValue <= threshold3) {
+                    level = Constants.FAULT_LEVEL_THRESHOLD_1;
+                }else if (fmValue < threshold1) {
 
-                    level = 3;
-                }
-
-                if (fmValue > threshold3) {
-
-                    level = 4;
+                    level = Constants.FAULT_LEVEL_THRESHOLD_OTHER;
                 }
             } else {
 
-                if (fmValue <= threshold1) {
+                //例如: 成功率
 
-                    level = 1;
-                }
+                //小于最低成功率 故障等级为最高级别 1
+                if (fmValue <= threshold3) {
 
-                if (fmValue > threshold1 && fmValue <= threshold2) {
+                    level = Constants.FAULT_LEVEL_THRESHOLD_3;
+                } else if (fmValue > threshold3 && fmValue <= threshold2) {
 
-                    level = 2;
-                }
+                    level = Constants.FAULT_LEVEL_THRESHOLD_2;
+                } else if (fmValue > threshold2 && fmValue <= threshold1) {
 
-                if (fmValue > threshold2 && fmValue <= threshold3) {
+                    level = Constants.FAULT_LEVEL_THRESHOLD_1;
+                } else if (fmValue > threshold1) {
 
-                    level = 3;
-                }
-
-                if (fmValue > threshold3) {
-
-                    level = 4;
+                    level = Constants.FAULT_LEVEL_THRESHOLD_OTHER;
                 }
             }
         } else {
@@ -402,5 +396,14 @@ public class ScannerHelper {
         int max = Collections.max(params);
 
         return max;
+    }
+
+    public static int minLevelArray (List<Integer> params) {
+
+        if (params.size() == 0) return 1;
+
+        int min = Collections.min(params);
+
+        return min;
     }
 }
