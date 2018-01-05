@@ -10,9 +10,9 @@ public class Constants {
     public final static String SRAN_WEB_URI = "http://42.202.149.82:8080";
     public final static String SRAN_SERVICE_URI = "http://42.202.149.82:8082";
     public static final String SRAN_SHIRO_URI = "http://42.202.149.82:8299";
-//    public final static String SRAN_WEB_URI = "http://42.202.149.82:8080";//42.202.149.82
-//    public final static String SRAN_SERVICE_URI = "http://192.168.0.117:8082";
-//    public static final String SRAN_SHIRO_URI = "http://42.202.149.82:8299";
+//    public final static String SRAN_WEB_URI = "http://42.202.149.82:8080";//42.202.149.82 //template
+//    public final static String SRAN_SERVICE_URI = "http://192.168.0.107:8082";
+//    public static final String SRAN_SHIRO_URI = "http://192.168.0.107:8299";
     public static final String SRAN_ROOT_PATH = "/root/apache-tomcat-8.5.16/webapps/sran/";
     public static final String MOSHELL_ROOT_PATH = "/root/sran/moshell/";
 
@@ -27,6 +27,11 @@ public class Constants {
     public static final String LEVEL_GROUP = "groups";
     public static final String LEVEL_NODE = "nodes";
     public static final String LEVEL_CELL = "cells";
+
+    public static final Integer FAULT_LEVEL_THRESHOLD_3 = 1;
+    public static final Integer FAULT_LEVEL_THRESHOLD_2 = 2;
+    public static final Integer FAULT_LEVEL_THRESHOLD_1 = 3;
+    public static final Integer FAULT_LEVEL_THRESHOLD_OTHER = 4;
 
     // file
     public static final String TEMPLATE_ROOT_PATH = SRAN_WEB_URI + "/sran/templates/";
