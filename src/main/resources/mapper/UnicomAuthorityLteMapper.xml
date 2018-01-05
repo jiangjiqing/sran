@@ -114,4 +114,13 @@
   <select id="getAuthByName" resultType="com.alibaba.fastjson.JSONObject" parameterType="com.alibaba.fastjson.JSONObject">
     SELECT * FROM unicom_authority_lte WHERE authority_name = #{param.authorityName}
   </select>
+
+  <select id="getAuthorityByLoginNameList" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT
+    b.list
+    FROM unicom_user_authority_lte a
+    LEFT JOIN unicom_authority_lte b
+    ON a.authority_name = b.authority_name
+    WHERE a.login_name=#{loginName}
+  </select>
 </mapper>

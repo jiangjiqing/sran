@@ -19,6 +19,8 @@ public interface AuthorityService {
 
     JSONObject getAuthByName(JSONObject param);
 
+    List<JSONObject> getAuthorityByLoginNameList(String loginName);
+
 
 //    Map<String,Object> getUserAuthorty(String name);
 }

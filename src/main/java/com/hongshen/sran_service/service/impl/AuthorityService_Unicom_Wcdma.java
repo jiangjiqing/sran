@@ -43,6 +43,11 @@ public class AuthorityService_Unicom_Wcdma implements AuthorityService {
         return authorityMapper.getAuthByName(param);
     }
 
+    @Override
+    public List<JSONObject> getAuthorityByLoginNameList(String loginName) {
+        return authorityMapper.getAuthorityByLoginNameList(loginName);
+    }
+
 //    @Autowired
 //    private UnicomAuthorityWcdmaMapper authorityMapper;
 

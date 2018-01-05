@@ -65,4 +65,6 @@ public interface UnicomAuthorityLteMapper {
     int deleteAuthority(@Param("authorityName")String authorityName);
 
     JSONObject getAuthByName(@Param("param") JSONObject param);
+
+    List<JSONObject> getAuthorityByLoginNameList(@Param("loginName") String loginName);
 }

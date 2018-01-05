@@ -44,6 +44,11 @@ public class AuthorityService_Unicom_Lte implements AuthorityService {
         return authorityMapper.getAuthByName(param);
     }
 
+    @Override
+    public List<JSONObject> getAuthorityByLoginNameList(String loginName) {
+        return authorityMapper.getAuthorityByLoginNameList(loginName);
+    }
+
 //    @Autowired
 //    private UnicomAuthorityLteMapper authorityMapper;
 

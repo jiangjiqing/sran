@@ -32,11 +32,13 @@ public class ProtectionController extends BaseController{
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject getProtectionList(@PathParam("supplier")String supplier,
                                         @PathParam("generation")String generation,
-                                        @HeaderParam("Auth-Token")String authToken) {
+                                        @HeaderParam("Auth-Token")String authToken,
+                                        @HeaderParam("loginName")String loginName) {
 
         String msg = "";
         JSONObject result = new JSONObject();
         List<JSONObject> dataList = new ArrayList<JSONObject>();
+        List<JSONObject> authList = new ArrayList<>();
 
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         if (obj == null){
@@ -47,35 +49,41 @@ public class ProtectionController extends BaseController{
                 msg +="getProtectList is Failed.";
             }else {
                 for (JSONObject protect : protectList) {
+                    String groupName = protect.getString("groupName");
 
-                    String nodeName = protect.getString("nodeName");
+                    authList = obj.getAuthorityService().getAuthorityByLoginNameList(loginName);
+                    for (int i = 0;i<authList.size();i++) {
+                        if (authList.get(i).getString("list").contains(groupName)) {
+                            String nodeName = protect.getString("nodeName");
 
-                    if (nodeName == null || nodeName == "") {
-                        continue;
+                            if (nodeName == null || nodeName == "") {
+                                continue;
 
-                    } else {
-                        // alarm
-                        List<JSONObject> alarmList = obj.getAlarmService().getNodeAlarmByName(nodeName);
-                        protect.put("alarmList", alarmList);
+                            } else {
+                                // alarm
+                                List<JSONObject> alarmList = obj.getAlarmService().getNodeAlarmByName(nodeName);
+                                protect.put("alarmList", alarmList);
 
-                        if (alarmList.size() != 0) {
-                            protect.put("alarmStatus", true);
+                                if (alarmList.size() != 0) {
+                                    protect.put("alarmStatus", true);
 
-                        } else {
-                            protect.put("alarmStatus", false);
+                                } else {
+                                    protect.put("alarmStatus", false);
+                                }
+
+                                // level
+                                JSONObject level = obj.getQuotaService().getNodeLevel(nodeName);
+
+                                if (level != null && level.getIntValue("level") != -1) {
+                                    protect.put("level", level.getIntValue("level"));
+
+                                } else {
+                                    protect.put("level", Constants.INVALID_VALUE_LEVEL);
+
+                                }
+                                dataList.add(protect);
+                            }
                         }
-
-                        // level
-                        JSONObject level = obj.getQuotaService().getNodeLevel(nodeName);
-
-                        if (level != null && level.getIntValue("level") != -1) {
-                            protect.put("level", level.getIntValue("level"));
-
-                        } else {
-                            protect.put("level", Constants.INVALID_VALUE_LEVEL);
-
-                        }
-                        dataList.add(protect);
                     }
                 }
             }
