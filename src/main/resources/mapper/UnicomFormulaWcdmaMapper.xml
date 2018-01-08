@@ -203,26 +203,26 @@
 
     UPDATE unicom_formula_wcdma
     <set>
-      <if test="expression != null">
-        expression = #{expression},
+      <if test="param.expression != null">
+        expression = #{param.expression},
       </if>
-      <if test="remark != null">
-        remark = #{remark},
+      <if test="param.remark != null">
+        remark = #{param.remark},
       </if>
-      <if test="status != null">
-        status = #{status},
+      <if test="param.status != null">
+        status = #{param.status},
       </if>
-      <if test="type != null">
-        type = #{type},
+      <if test="param.type != null">
+        type = #{param.type},
       </if>
-      <if test="unit != null">
-        unit = #{unit},
+      <if test="param.unit != null">
+        unit = #{param.unit},
       </if>
-      <if test="hastop10 != null">
-        hastop10 = #{hastop10}
+      <if test="param.hastop10 != null">
+        hastop10 = #{param.hastop10}
       </if>
     </set>
-    WHERE quota_name = #{quotaName}
+    WHERE quota_name = #{param.quotaName}
   </update>
 
   <delete id="deleteFormulaByName" parameterType="com.alibaba.fastjson.JSONObject">

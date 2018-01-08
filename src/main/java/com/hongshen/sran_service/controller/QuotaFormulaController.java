@@ -84,11 +84,11 @@ public class QuotaFormulaController {
         } else if (obj == null) {
             msg += "Supplier or Generation is null.";
 
-        } else if(obj.getCacheService().getFormulaByName(quotaName) != null){
+        } else if(!param.getString("quotaName").equals(quotaName) && obj.getCacheService().getFormulaByName(quotaName) != null){
             msg += "Name has exist.";
             
         } else {
-            try {
+//            try {
                 expression = QuotaHelper.convertExpression(expression);
                 param.put("expression", expression);
                 param.put("quotaName", quotaName);
@@ -99,9 +99,9 @@ public class QuotaFormulaController {
                 } else {
                     obj.getCacheService().resetFormulaList();
                 }
-            } catch (Exception e) {
-                msg += "Expression or Param is Error.";
-            }
+//            } catch (Exception e) {
+//                msg += "Expression or Param is Error.";
+//            }
         }
 
         if (msg.length() != 0) {
