@@ -72,6 +72,22 @@ public class ScannerController extends BaseController {
         }
     }
 
+    @POST
+    @Path("/suppliers/{supplier}/quotas/calculation")
+    @Produces(MediaType.APPLICATION_JSON)
+    public void calculactionPost(JSONObject timeParams) throws IOException {
+
+        timeParams.size();
+
+        if (timeParams.getString("counterWcdmatime") != null &&
+                !"".equals(timeParams.getString("counterWcdmatime"))) {
+
+        } else if (timeParams.getString("counterLtetime") != null &&
+                !"".equals(timeParams.getString("counterLtetime"))) {
+
+        }
+    }
+
     @GET
     @Path("/suppliers/{supplier}/quotas/calculation")
     @Produces(MediaType.APPLICATION_JSON)
