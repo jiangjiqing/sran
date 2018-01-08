@@ -47,19 +47,23 @@ public interface CacheService {
 
     List<JSONObject> getThresholdGroupList();
 
+    Map<String, JSONObject> getThresholdGroupMap();
+
     void  resetThresholdNodeList();
 
     List<JSONObject> getThresholdNodeList();
 
+    Map<String, JSONObject> getThresholdNodeMap();
+
     void  resetThresholdCellList();
 
     List<JSONObject> getThresholdCellList();
+
+    Map<String, JSONObject> getThresholdCellMap();
 
     void setUpdateTimeForQuotaData(String updateTimeForQuotaData);
 
     Date getUpdateTimeForQuotaData(String level);
 
     String getUpdateTimeForQuotaData();
-
-    List<JSONObject> getFormulaUnitList();
 }

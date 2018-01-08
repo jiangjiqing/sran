@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import org.springframework.stereotype.Service;
 
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.List;
 /**
  * Created by poplar on 11/13/17.
@@ -45,23 +46,17 @@ public interface ElementInfoService {
 
     JSONObject getGroupInfo(String groupName);
 
+    ArrayList<String[]> getGroupInfoProcessed(String groupName);
+
     JSONObject getNodeInfo(String nodeName);
+
+    ArrayList<String[]> getNodeInfoProcessed(String nodeName);
 
     JSONObject getCellInfo(String cellName);
 
+//    ArrayList<String[]> getCellInfoProcessed(String cellName);
+
     JSONObject getNodeLocation(String nodeName);
-
-    JSONObject getTable(String gettableName);
-
-    int deleteNode(String tableName, String name);
-
-    List<JSONObject> getNodes(String tableName,String name);
-
-    int deleteNodes(String tableName, String name);
-
-    int addNode(String tableName,String name);
-
-    int addNodes(String tableName, List<JSONObject> nodeNames);
 
     List<JSONObject> getNodeLocationsByGroup(String groupName);
 
@@ -88,4 +83,17 @@ public interface ElementInfoService {
     int createTable(String tableName);
 
     int addFavoriteFile(String tableName, List paramList);
+
+    JSONObject getTable(String gettableName);
+
+    List<JSONObject> getFavoriteNodes(String tableName,String name);
+
+    int deleteFavoriteNode(String tableName, String name);
+
+    int deleteFavoriteNodes(String tableName, String name);
+
+    int addFavoriteNode(String tableName,String name);
+
+    int addFavoriteNodes(String tableName, List<JSONObject> nodeNames);
+
 }

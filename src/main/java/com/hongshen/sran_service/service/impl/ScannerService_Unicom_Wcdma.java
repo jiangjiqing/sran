@@ -5,6 +5,7 @@ import com.hongshen.sran_service.dao.*;
 import com.hongshen.sran_service.service.ScannerService;
 import com.hongshen.sran_service.service.util.Constants;
 import com.hongshen.sran_service.service.util.ScannerHelper;
+import com.hongshen.sran_service.service.util.DataHelper;
 import net.java.dev.eval.Expression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,9 +31,6 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
     private UnicomCounterHistoryWcdmaMapper counterHistoryMapper;
 
     @Autowired
-    private UnicomFormulaWcdmaMapper formulaMapper;
-
-    @Autowired
     private UnicomCellWcdmaMapper cellMapper;
 
     @Autowired
@@ -42,18 +40,6 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
     private UnicomGroupWcdmaMapper groupMapper;
 
     @Autowired
-    private UnicomCounterWcdmaMapper counterMapper;
-
-    @Autowired
-    private UnicomQuotaThresholdCellWcdmaMapper quotaThresholdCellMapper;
-
-    @Autowired
-    private UnicomQuotaThresholdNodeWcdmaMapper quotaThresholdNodeMapper;
-
-    @Autowired
-    private UnicomQuotaThresholdGroupWcdmaMapper quotaThresholdGroupMapper;
-
-    @Autowired
     private CacheService_Unicom_Wcdma cacheService;
 
     @Override
@@ -61,14 +47,14 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
 
         String ret = null;
 
-        Map<String, List<String>> quotaThresholdCellMap =
-                ScannerHelper.getQuotaThresholdMap(quotaThresholdCellMapper.getThresholdCellList());
+//        Map<String, List<String>> quotaThresholdCellMap =
+//                ScannerHelper.getQuotaThresholdMap(cacheService.getThresholdCellList());
 
         Map<String, JSONObject> quotaThresholdCellMapJson =
-                ScannerHelper.getQuotaThresholdMapJson(quotaThresholdCellMapper.getThresholdCellList());
+                DataHelper.JsonListToJsonMap(cacheService.getThresholdCellList(), "quotaName");
 
         Map<String, List<String>> expressionSetMap =
-                ScannerHelper.getVariableList(formulaMapper.getFormulaList());
+                ScannerHelper.getVariableList(cacheService.getFormulaList(false));
 
         List<String> paramValues = new ArrayList<>();
 
@@ -249,11 +235,11 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
 
         List<String> paramValues = new ArrayList<>();
 
-        Map<String, List<String>> quotaThresholdNodeMap =
-                ScannerHelper.getQuotaThresholdMap(quotaThresholdNodeMapper.getThresholdNodeList());
+//        Map<String, List<String>> quotaThresholdNodeMap =
+//                ScannerHelper.getQuotaThresholdMap(cacheService.getThresholdNodeList());
 
         Map<String, JSONObject> quotaThresholdNodeMapJson =
-                ScannerHelper.getQuotaThresholdMapJson(quotaThresholdNodeMapper.getThresholdNodeList());
+                DataHelper.JsonListToJsonMap(cacheService.getThresholdNodeList(), "quotaName");
 
         Map<String, List<String>> expressionSetMap =
                 ScannerHelper.getVariableList(cacheService.getFormulaList(false));
@@ -438,11 +424,11 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
 
         Map<String, JSONObject> nodeMap = (Map<String, JSONObject>) params.get("nodeMap");
 
-        Map<String, List<String>> quotaThresholdGroupMap =
-                ScannerHelper.getQuotaThresholdMap(quotaThresholdGroupMapper.getThresholdGroupList());
+//        Map<String, List<String>> quotaThresholdGroupMap =
+//                ScannerHelper.getQuotaThresholdMap(cacheService.getThresholdGroupList());
 
         Map<String, JSONObject> quotaThresholdGroupMapJson =
-                ScannerHelper.getQuotaThresholdMapJson(quotaThresholdGroupMapper.getThresholdGroupList());
+                DataHelper.JsonListToJsonMap(cacheService.getThresholdGroupList(), "quotaName");
 
         Map<String, List<String>> expressionSetMap =
                 ScannerHelper.getVariableList(cacheService.getFormulaList(false));
@@ -583,10 +569,10 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
         String ret = null;
 
         Map<String, List<String>> quotaThresholdCellMap =
-                ScannerHelper.getQuotaThresholdMap(quotaThresholdCellMapper.getThresholdCellList());
+                ScannerHelper.getQuotaThresholdMap(cacheService.getThresholdCellList());
 
         Map<String, List<String>> expressionSetMap =
-                ScannerHelper.getVariableList(formulaMapper.getFormulaList());
+                ScannerHelper.getVariableList(cacheService.getFormulaList(false));
 
         Map<String, String> counterMap = ScannerHelper.getCounterMap(cacheService.getCounterListProcessed(false));
 
@@ -728,14 +714,14 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
         List<String> paramValues = new ArrayList<>();
 
         Map<String, List<String>> quotaThresholdNodeMap =
-                ScannerHelper.getQuotaThresholdMap(quotaThresholdNodeMapper.getThresholdNodeList());
+                ScannerHelper.getQuotaThresholdMap(cacheService.getThresholdNodeList());
 
         Map<String, List<String>> expressionSetMap =
                 ScannerHelper.getVariableList(cacheService.getFormulaList(false));
 
         Map<String, String> counterMap = ScannerHelper.getCounterMap(cacheService.getCounterListProcessed(false));
 
-        List<JSONObject> counterList = counterMapper.getCounterList();
+        List<JSONObject> counterList = cacheService.getCounterList(false);
 
         for (JSONObject counter : counterList) {
 
@@ -908,7 +894,7 @@ public class ScannerService_Unicom_Wcdma implements ScannerService{
         Map<String, JSONObject> nodeMap = (Map<String, JSONObject>) params.get("nodeMap");
 
         Map<String, List<String>> quotaThresholdGroupMap =
-                ScannerHelper.getQuotaThresholdMap(quotaThresholdGroupMapper.getThresholdGroupList());
+                ScannerHelper.getQuotaThresholdMap(cacheService.getThresholdGroupList());
 
         Map<String, List<String>> expressionSetMap =
                 ScannerHelper.getVariableList(cacheService.getFormulaList(false));

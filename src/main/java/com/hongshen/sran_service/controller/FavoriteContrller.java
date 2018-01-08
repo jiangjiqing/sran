@@ -59,7 +59,7 @@ public class FavoriteContrller {
 
                     String nodeName = String.valueOf(node.getString("nodeName"));
 
-                    if (nodeName != null || nodeName != "") {
+                    if (nodeName != null || nodeName.trim().length() > 0) {
 
                         JSONObject level = obj.getQuotaService().getNodeLevel(nodeName);
 
@@ -121,14 +121,14 @@ public class FavoriteContrller {
                 int i = 0;
                 switch (level){
                     case Constants.LEVEL_GROUP:
-                        i = obj.getElementInfoService().deleteNodes(tableName, name);
+                        i = obj.getElementInfoService().deleteFavoriteNodes(tableName, name);
                         if (i <= 0) {
                             msg += "Delete Node is failed.";
                         }
                         break;
 
                     case Constants.LEVEL_NODE:
-                        i = obj.getElementInfoService().deleteNode(tableName, name);
+                        i = obj.getElementInfoService().deleteFavoriteNode(tableName, name);
                         if (i <= 0) {
                             msg += "Delete Node is failed.";
                         }
@@ -195,7 +195,7 @@ public class FavoriteContrller {
 
                                 if (nodeNames.size() != 0 || nodeNames.isEmpty()) {
 
-                                    int i = obj.getElementInfoService().addNodes(tableName, nodeNames);
+                                    int i = obj.getElementInfoService().addFavoriteNodes(tableName, nodeNames);
 
                                     if (i <= 0) {
                                         msg += "Add nodes is failed.";
@@ -207,7 +207,7 @@ public class FavoriteContrller {
                             break;
 
                         case Constants.LEVEL_NODE:
-                            int i = obj.getElementInfoService().addNode(tableName, name);
+                            int i = obj.getElementInfoService().addFavoriteNode(tableName, name);
                             if (i <= 0) {
                                 msg += "Add node is failed.";
                             }

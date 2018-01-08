@@ -67,6 +67,8 @@ public interface UnicomFavoriteLteMapper {
 
     JSONObject getTable(@Param("tableNameLike")String tableNameLike);
 
+    List<JSONObject> getNodes(@Param("tableName") String tableName,@Param("name")String name);
+
     int deleteNode(@Param("tableName")String tableName,@Param("name") String name);
 
     int deleteNodes(@Param("tableName") String tableName,@Param("name") String name);

@@ -83,6 +83,10 @@ public class QuotaFormulaController {
 
         } else if (obj == null) {
             msg += "Supplier or Generation is null.";
+
+        } else if(obj.getCacheService().getFormulaByName(quotaName) != null){
+            msg += "Name has exist.";
+            
         } else {
             try {
                 expression = QuotaHelper.convertExpression(expression);
@@ -322,9 +326,6 @@ public class QuotaFormulaController {
                         listCounter.add(Clums.get(i).getString("COLUMN_NAME"));
                     }
 
-
-
-
                 obj.getQuotaService().deleteCounters();
 
                 for(int j=0;j<counters.size();j++){
@@ -366,7 +367,7 @@ public class QuotaFormulaController {
                                     }
 
                                 }catch (Exception e){
-                                    System.out.println(e.getMessage());
+                                    e.printStackTrace();
                                 }
                             }
                             obj.getCacheService().resetCounterList();
@@ -379,10 +380,6 @@ public class QuotaFormulaController {
                         msg += "[" + counters.getJSONObject(i).getString("name") + "] add failed.\n";
                     }
                 }
-
-
-
-
 
 
                 for (int k=0;k<Clums.size();k++){
@@ -410,6 +407,7 @@ public class QuotaFormulaController {
         }
         return result;
     }
+
     @GET
     @Path("/suppliers/{supplier}/generations/{generation}/nets/counters/download")
     @Produces(MediaType.APPLICATION_JSON)

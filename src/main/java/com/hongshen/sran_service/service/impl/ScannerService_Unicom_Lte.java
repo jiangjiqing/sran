@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.dao.*;
 import com.hongshen.sran_service.service.ScannerService;
 import com.hongshen.sran_service.service.util.Constants;
+import com.hongshen.sran_service.service.util.DataHelper;
 import com.hongshen.sran_service.service.util.ScannerHelper;
 import net.java.dev.eval.Expression;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,26 +36,16 @@ public class ScannerService_Unicom_Lte implements ScannerService{
     @Autowired
     private CacheService_Unicom_Lte cacheService;
 
-    @Autowired
-    private UnicomQuotaThresholdCellLteMapper quotaThresholdCellMapper;
-
-    @Autowired
-    private UnicomQuotaThresholdNodeLteMapper quotaThresholdNodeMapper;
-
-    @Autowired
-    private UnicomQuotaThresholdGroupLteMapper quotaThresholdGroupMapper;
-
-
     @Override
     public String cellCalculation(String time) {
 
         String ret = null;
 
-        Map<String, List<String>> quotaThresholdCellMap =
-                ScannerHelper.getQuotaThresholdMap(quotaThresholdCellMapper.getThresholdCellList());
+//        Map<String, List<String>> quotaThresholdCellMap =
+//                ScannerHelper.getQuotaThresholdMap(cacheService.getThresholdCellList());
 
         Map<String, JSONObject> quotaThresholdCellMapJson =
-                ScannerHelper.getQuotaThresholdMapJson(quotaThresholdCellMapper.getThresholdCellList());
+                DataHelper.JsonListToJsonMap(cacheService.getThresholdCellList(), "quotaName");
 
         Map<String, List<String>> expressionSetMap =
                 ScannerHelper.getVariableList(cacheService.getFormulaListProcessed(false));
@@ -279,11 +270,11 @@ public class ScannerService_Unicom_Lte implements ScannerService{
 
         List<String> paramValues = new ArrayList<>();
 
-        Map<String, List<String>> quotaThresholdNodeMap =
-                ScannerHelper.getQuotaThresholdMap(quotaThresholdNodeMapper.getThresholdNodeList());
+//        Map<String, List<String>> quotaThresholdNodeMap =
+//                ScannerHelper.getQuotaThresholdMap(cacheService.getThresholdNodeList());
 
         Map<String, JSONObject> quotaThresholdNodeMapJson =
-                ScannerHelper.getQuotaThresholdMapJson(quotaThresholdNodeMapper.getThresholdNodeList());
+                DataHelper.JsonListToJsonMap(cacheService.getThresholdNodeList(), "quotaName");
 
         Map<String, List<String>> expressionSetMap =
                 ScannerHelper.getVariableList(cacheService.getFormulaListProcessed(false));
@@ -510,11 +501,11 @@ public class ScannerService_Unicom_Lte implements ScannerService{
 
         Map<String, JSONObject> nodeMap = (Map<String, JSONObject>) params.get("nodeMap");
 
-        Map<String, List<String>> quotaThresholdGroupMap =
-                ScannerHelper.getQuotaThresholdMap(quotaThresholdGroupMapper.getThresholdGroupList());
+//        Map<String, List<String>> quotaThresholdGroupMap =
+//                ScannerHelper.getQuotaThresholdMap(cacheService.getThresholdGroupList());
 
         Map<String, JSONObject> quotaThresholdGroupMapJson =
-                ScannerHelper.getQuotaThresholdMapJson(quotaThresholdGroupMapper.getThresholdGroupList());
+                DataHelper.JsonListToJsonMap(cacheService.getThresholdGroupList(), "quotaName");
 
         Map<String, List<String>> expressionSetMap =
                 ScannerHelper.getVariableList(cacheService.getFormulaListProcessed(false));
@@ -660,7 +651,7 @@ public class ScannerService_Unicom_Lte implements ScannerService{
         String ret = null;
 
         Map<String, List<String>> quotaThresholdCellMap =
-                ScannerHelper.getQuotaThresholdMap(quotaThresholdCellMapper.getThresholdCellList());
+                ScannerHelper.getQuotaThresholdMap(cacheService.getThresholdCellList());
 
         Map<String, List<String>> expressionSetMap =
                 ScannerHelper.getVariableList(cacheService.getFormulaList(false));
@@ -806,7 +797,7 @@ public class ScannerService_Unicom_Lte implements ScannerService{
         List<String> paramValues = new ArrayList<>();
 
         Map<String, List<String>> quotaThresholdNodeMap =
-                ScannerHelper.getQuotaThresholdMap(quotaThresholdNodeMapper.getThresholdNodeList());
+                ScannerHelper.getQuotaThresholdMap(cacheService.getThresholdNodeList());
 
         Map<String, List<String>> expressionSetMap =
                 ScannerHelper.getVariableList(cacheService.getFormulaList(false));
@@ -989,7 +980,7 @@ public class ScannerService_Unicom_Lte implements ScannerService{
         Map<String, JSONObject> nodeMap = (Map<String, JSONObject>) params.get("nodeMap");
 
         Map<String, List<String>> quotaThresholdGroupMap =
-                ScannerHelper.getQuotaThresholdMap(quotaThresholdGroupMapper.getThresholdGroupList());
+                ScannerHelper.getQuotaThresholdMap(cacheService.getThresholdGroupList());
 
         Map<String, List<String>> expressionSetMap =
                 ScannerHelper.getVariableList(cacheService.getFormulaList(false));

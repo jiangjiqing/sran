@@ -24,9 +24,7 @@ public interface UnicomQuotaThresholdGroupWcdmaMapper {
      */
     int insertSelective(UnicomQuotaThresholdGroupWcdma record);
 
-    List<JSONObject> getThresholdGroupList();
+    List<JSONObject> getThresholdList();
 
-    Integer setGroup(JSONObject quotaThres);
-
-    List<JSONObject> getAllQuotaThresholdGroup();
+    Integer setThreshold(JSONObject params);
 }

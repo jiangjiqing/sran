@@ -191,18 +191,6 @@ public class ScannerHelper {
         return quotaThresholdMap;
     }
 
-    public static Map<String, JSONObject> getQuotaThresholdMapJson (List<JSONObject> params) {
-
-        Map<String, JSONObject> quotaThresholdMap = new HashMap<>();
-
-        for (JSONObject param : params) {
-
-            quotaThresholdMap.put(param.getString("quotaName"), param);
-        }
-
-        return quotaThresholdMap;
-    }
-
     public static int levelCalculationByThresholdAndType (String value, JSONObject threshold) {
 
         Integer level = 1;

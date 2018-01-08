@@ -101,5 +101,13 @@
         <table tableName="unicom_group_task_wcdma" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" />
         <table tableName="unicom_room_wcdma" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" />
         <table tableName="unicom_user_task_group_wcdma" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" />
+        <table tableName="unicom_user_task_wcdma" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" />
+        <table tableName="unicom_task_wcdma" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" />
+        <table tableName="unicom_cache_wcdma" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" />
+        <table tableName="unicom_cache_lte" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" />
+        <table tableName="unicom_group_info_index_wcdma" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" />
+        <table tableName="unicom_group_info_index_lte" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" />
+        <table tableName="unicom_node_info_index_wcdma" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" />
+        <table tableName="unicom_node_info_index_lte" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" />
     </context>
 </generatorConfiguration>

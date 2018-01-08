@@ -65,7 +65,7 @@ public interface UnicomGroupWcdmaMapper {
      */
     int updateByPrimaryKey(UnicomGroupWcdma record);
 
-    List<JSONObject> getGroupList();
+    List<JSONObject> getGroupList(@Param("time")String time);
 
     List<JSONObject> getGroupInfoList();
 

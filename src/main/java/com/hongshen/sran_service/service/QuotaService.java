@@ -23,11 +23,11 @@ public interface QuotaService {
 
     JSONObject getCellLevel(String cellName);
 
-    Integer setGroupThreshold(JSONObject quotaThres);
+    Integer setGroupThreshold(JSONObject params);
 
-    Integer setNodeThreshold(JSONObject quotaThres);
+    Integer setNodeThreshold(JSONObject params);
 
-    Integer setCellThreshold(JSONObject quotaThres);
+    Integer setCellThreshold(JSONObject params);
 
     List<JSONObject> getQuotas(Date start, Date end, String condition);
 
@@ -72,10 +72,4 @@ public interface QuotaService {
     void deleteColumnCounter(String colum);
 
     int deleteCounters();
-
-    Map<String, JSONObject> getThresholdCellList();
-
-    Map<String, JSONObject> getThresholdNodeList();
-
-    Map<String, JSONObject> getThresholdGroupList();
 }

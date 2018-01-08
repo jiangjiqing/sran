@@ -121,20 +121,20 @@ public class QuotaService_Unicom_Wcdma implements QuotaService {
     }
 
     @Override
-    public Integer setGroupThreshold(JSONObject quotaThres) {
-        return quotaThresholdGroupMapper.setGroup(quotaThres);
+    public Integer setGroupThreshold(JSONObject params) {
+        return quotaThresholdGroupMapper.setThreshold(params);
     }
 
     @Override
-    public Integer setNodeThreshold(JSONObject quotaThres) {
+    public Integer setNodeThreshold(JSONObject params) {
 
-        return quotaThresholdNodeMapper.setNode(quotaThres);
+        return quotaThresholdNodeMapper.setThreshold(params);
     }
 
     @Override
-    public Integer setCellThreshold(JSONObject quotaThres) {
+    public Integer setCellThreshold(JSONObject params) {
 
-        return quotaThresholdCellMapper.setCell(quotaThres);
+        return quotaThresholdCellMapper.setThreshold(params);
     }
 
     @Override
@@ -280,33 +280,6 @@ public class QuotaService_Unicom_Wcdma implements QuotaService {
     @Override
     public int deleteCounters() {
         return counterMapper.deleteCounters();
-    }
-
-    @Override
-    public Map<String, JSONObject> getThresholdCellList() {
-
-        Map<String, JSONObject> quotaThresholdCellMapJson =
-                ScannerHelper.getQuotaThresholdMapJson(quotaThresholdCellMapper.getThresholdCellList());
-
-        return quotaThresholdCellMapJson;
-    }
-
-    @Override
-    public Map<String, JSONObject> getThresholdNodeList() {
-
-        Map<String, JSONObject> quotaThresholdNodeMapJson =
-                ScannerHelper.getQuotaThresholdMapJson(quotaThresholdNodeMapper.getThresholdNodeList());
-
-        return quotaThresholdNodeMapJson;
-    }
-
-    @Override
-    public Map<String, JSONObject> getThresholdGroupList() {
-
-        Map<String, JSONObject> quotaThresholdGroupMapJson =
-                ScannerHelper.getQuotaThresholdMapJson(quotaThresholdGroupMapper.getThresholdGroupList());
-
-        return quotaThresholdGroupMapJson;
     }
 
 }

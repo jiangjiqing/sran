@@ -59,6 +59,8 @@ public interface UnicomNodeLteMapper {
 
     List<JSONObject> getNodeListByGroup(@Param("groupName") String groupName);
 
+    List<String> getVipNodeNameListByGroup(@Param("groupName") String groupName);
+
     List<JSONObject> getNodeLocationsByGroup(@Param("groupName") String groupName);
     
     List<String> getNodeNameListByGroup(@Param("groupName")String groupName);
@@ -69,15 +71,13 @@ public interface UnicomNodeLteMapper {
 
     List<String> getNodeNameList();
 
-    List<JSONObject> getGroupList();
+    List<JSONObject> getGroupList(@Param("time")String time);
 
     //List<JSONObject> getGroupInfoList(); // 4g no group info
 
     List<String> getGroupNameList();
 
     JSONObject getNodeInfo(@Param("nodeName") String nodeName);
-
-    List<JSONObject> getNodes(@Param("tableName") String tableName,@Param("name")String name);
 
     Integer updateStationName(JSONObject jsonObject);
 }

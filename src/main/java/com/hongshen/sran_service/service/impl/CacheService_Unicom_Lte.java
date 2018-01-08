@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.dao.*;
 import com.hongshen.sran_service.service.CacheService;
 import com.hongshen.sran_service.service.util.Constants;
+import com.hongshen.sran_service.service.util.DataHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by poplar on 11/13/17.
@@ -149,6 +151,10 @@ public class CacheService_Unicom_Lte implements CacheService {
     @Override
     public JSONObject getCounterByName(String name) {
 
+        if (counterList == null || counterList.isEmpty()){
+            resetCounterList();
+        }
+
         for (JSONObject counter : counterList){
             if (counter.getString("name").equals(name)){
                 return counter;
@@ -159,6 +165,10 @@ public class CacheService_Unicom_Lte implements CacheService {
 
     @Override
     public JSONObject getCounterProcessedByName(String name) {
+
+        if (counterListProcessed == null || counterListProcessed.isEmpty()){
+            resetCounterList();
+        }
 
         for (JSONObject counter : counterListProcessed){
             if (counter.getString("name").equals(name)){
@@ -175,6 +185,9 @@ public class CacheService_Unicom_Lte implements CacheService {
         formulaList = formulaMapper.getFormulaList();
 
         resetFormulaListProcessed();
+        resetThresholdCellList();
+        resetThresholdNodeList();
+        resetThresholdGroupList();
     }
 
     @Override
@@ -195,12 +208,11 @@ public class CacheService_Unicom_Lte implements CacheService {
                     expression = expression.replace(".", "_");
                 }
 
-                temp.put("id" , f.getString("id"));
                 temp.put("quotaName" , quotaName);
                 temp.put("expression" , expression);
                 temp.put("remark" , f.getString("remark"));
                 temp.put("status" , f.getString("status"));
-                temp.put("type" , f.getString("type"));
+                temp.put("unit" , f.getString("unit"));
                 temp.put("hasTop10" , f.getString("hasTop10"));
 
                 formulaListProcessed.add(temp);
@@ -327,7 +339,7 @@ public class CacheService_Unicom_Lte implements CacheService {
     public void resetThresholdGroupList() {
 
         thresholdGroupList.clear();
-        thresholdGroupList = thresholdGroupMapper.getThresholdGroupList();
+        thresholdGroupList = thresholdGroupMapper.getThresholdList();
     }
 
     @Override
@@ -340,10 +352,19 @@ public class CacheService_Unicom_Lte implements CacheService {
     }
 
     @Override
+    public Map<String, JSONObject> getThresholdGroupMap() {
+
+        if (thresholdGroupList == null || thresholdGroupList.isEmpty()){
+            resetThresholdGroupList();
+        }
+        return DataHelper.JsonListToJsonMap(thresholdGroupList,"quotaName");
+    }
+
+    @Override
     public void resetThresholdNodeList() {
 
         thresholdNodeList.clear();
-        thresholdNodeList = thresholdNodeMapper.getThresholdNodeList();
+        thresholdNodeList = thresholdNodeMapper.getThresholdList();
     }
 
     @Override
@@ -356,10 +377,19 @@ public class CacheService_Unicom_Lte implements CacheService {
     }
 
     @Override
+    public Map<String, JSONObject> getThresholdNodeMap() {
+
+        if (thresholdNodeList == null || thresholdNodeList.isEmpty()){
+            resetThresholdNodeList();
+        }
+        return DataHelper.JsonListToJsonMap(thresholdNodeList,"quotaName");
+    }
+
+    @Override
     public void resetThresholdCellList() {
 
         thresholdCellList.clear();
-        thresholdCellList = thresholdCellMapper.getThresholdCellList();
+        thresholdCellList = thresholdCellMapper.getThresholdList();
     }
 
     @Override
@@ -369,6 +399,15 @@ public class CacheService_Unicom_Lte implements CacheService {
             resetThresholdCellList();
         }
         return thresholdCellList;
+    }
+
+    @Override
+    public Map<String, JSONObject> getThresholdCellMap() {
+
+        if (thresholdCellList == null || thresholdCellList.isEmpty()){
+            resetThresholdCellList();
+        }
+        return DataHelper.JsonListToJsonMap(thresholdCellList,"quotaName");
     }
 
     public String getUpdateTimeForQuotaData(){
@@ -392,30 +431,6 @@ public class CacheService_Unicom_Lte implements CacheService {
             }
         }
         return time;
-    }
-
-    @Override
-    public List<JSONObject> getFormulaUnitList() {
-        List<JSONObject> resultList = new ArrayList<JSONObject>();
-
-        if (formulaList == null || formulaList.isEmpty()){
-            resetFormulaUnitList();
-        }
-
-        for (JSONObject formula : formulaList) {
-
-            // unvisible quota
-
-            resultList.add(formula);
-        }
-        return resultList;
-    }
-
-    private void resetFormulaUnitList() {
-        formulaList.clear();
-        formulaList = formulaMapper.getFormuUnitlaList();
-
-        resetFormulaListProcessed();
     }
 
     public Date getUpdateTimeForQuotaData(String level) {

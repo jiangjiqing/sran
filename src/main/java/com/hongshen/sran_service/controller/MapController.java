@@ -48,7 +48,7 @@ public class MapController extends BaseController{
                 authList = obj.getAuthorityService().getAuthorityByLoginNameList(loginName);
                 for (int i = 0;i<authList.size();i++) {
                         if (authList.get(i).getString("list").contains(groupName)){
-                            if (groupName == null || groupName == "") {
+                            if (groupName == null || groupName.trim().length() <= 0) {
                                 continue;
 
                             } else {
@@ -72,7 +72,7 @@ public class MapController extends BaseController{
                                 }
                                 dataOne.putAll(LatitudeAndLongitude(list));
 
-                                // group info
+                                // group info //TODO delete infos
                                 JSONObject groupInfo = obj.getElementInfoService().getGroupInfo(groupName);
 
                                 if (groupInfo == null) {
@@ -81,7 +81,6 @@ public class MapController extends BaseController{
                                 } else {
                                     dataOne.put("infos", groupInfo);
                                 }
-//                    System.out.println(groupName);
 
                                 // level
                                 JSONObject level = obj.getQuotaService().getGroupLevel(groupName);
@@ -275,7 +274,7 @@ public class MapController extends BaseController{
 
                             String nodeName = node.getString("name");
 
-                            if (nodeName == null || nodeName == "") {
+                            if (nodeName == null || nodeName.trim().length() <= 0) {
                                 continue;
 
                             } else {
@@ -283,17 +282,17 @@ public class MapController extends BaseController{
                                 dataOne.putAll(node);
 
                                 String latitude = node.getString("latitude");
-                                if (latitude == null || latitude == "") {
+                                if (latitude == null || latitude.trim().length() <= 0) {
                                     dataOne.put("latitude", Constants.INVALID_VALUE_LOCATION);
                                 }
 
                                 String longitude = node.getString("longitude");
-                                if (longitude == null || longitude == "") {
+                                if (longitude == null || longitude.trim().length() <= 0) {
                                     dataOne.put("longitude", Constants.INVALID_VALUE_LOCATION);
                                 }
 
-                                // infos
                                 try {
+                                    // infos //TODO delete infos
                                     JSONObject nodeInfo = obj.getElementInfoService().getNodeInfo(nodeName);
 
                                     if (nodeInfo == null || nodeInfo.isEmpty()|| nodeInfo.size()==0) {
@@ -404,7 +403,7 @@ public class MapController extends BaseController{
 
                             String cellName = cell.getString("name");
 
-                            if (cellName == null || cellName == "" || cell.isEmpty()) {
+                            if (cellName == null || cellName.trim().length() <= 0 || cell.isEmpty()) {
                                 continue;
 
                             } else {
@@ -423,13 +422,13 @@ public class MapController extends BaseController{
                                         dataOne.putAll(nodeLocation);
 
                                         String latitude = nodeLocation.getString("latitude");
-                                        if (latitude == null || latitude == "") {
+                                        if (latitude == null || latitude.trim().length() <= 0) {
                                             dataOne.put("latitude", Constants.INVALID_VALUE_LOCATION);
                                         }
 
                                         String longitude = nodeLocation.getString("longitude");
 
-                                        if (longitude == null || longitude == "") {
+                                        if (longitude == null || longitude.trim().length() <= 0) {
 
                                             dataOne.put("longitude", Constants.INVALID_VALUE_LOCATION);
                                         }
@@ -445,7 +444,7 @@ public class MapController extends BaseController{
                                         dataOne.put("level", Constants.INVALID_VALUE_LEVEL);
                                     }
 
-                                    // infos
+                                    // infos  // TODO delete infos
                                     JSONObject cellInfo = obj.getElementInfoService().getCellInfo(cellName);
 
                                     if (cellInfo == null) {

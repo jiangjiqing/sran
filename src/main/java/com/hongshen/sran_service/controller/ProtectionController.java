@@ -56,7 +56,7 @@ public class ProtectionController extends BaseController{
                         if (authList.get(i).getString("list").contains(groupName)) {
                             String nodeName = protect.getString("nodeName");
 
-                            if (nodeName == null || nodeName == "") {
+                            if (nodeName == null || nodeName.trim().length() <= 0) {
                                 continue;
 
                             } else {

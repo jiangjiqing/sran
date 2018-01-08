@@ -35,7 +35,7 @@ public class QuotaController {
         String msg = "";
         JSONObject result = new JSONObject();
         JSONObject data = new JSONObject();
-        Map<String, JSONObject> quotaThresholdGroupMapJson = new HashMap<>();
+        Map<String, JSONObject> quotaThresholdGroupMap = new HashMap<>();
 
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
 
@@ -47,11 +47,11 @@ public class QuotaController {
 
         }else{
 
-            quotaThresholdGroupMapJson = obj.getQuotaService().getThresholdGroupList();
+            quotaThresholdGroupMap = obj.getCacheService().getThresholdGroupMap();
 
             String time = obj.getCacheService().getUpdateTimeForQuotaData();
 
-            if (time == null || time == ""){
+            if (time == null || time.trim().length() <= 0){
                 msg +="Time is null.";
 
             }else {
@@ -71,13 +71,30 @@ public class QuotaController {
 
                                 JSONObject temp = new JSONObject();
                                 temp.put("quotaName", f.getString("quotaName"));
-                                temp.put("remark", f.getString("remark"));
+
+                                switch (f.getIntValue("unit")){
+                                    case 1:
+                                        temp.put("remark", f.getString("remark")+ Constants.QUOTA_UNIT_1); // %
+                                        break;
+
+                                    case 2:
+                                        temp.put("remark", f.getString("remark")+ Constants.QUOTA_UNIT_2); // Mbps
+                                        break;
+
+                                    case 3:
+                                        temp.put("remark", f.getString("remark")+ Constants.QUOTA_UNIT_3); // ms
+                                        break;
+
+                                    default:
+                                        temp.put("remark", f.getString("remark")); // null
+                                        break;
+                                }
+
                                 temp.put("hasTop10", f.getBooleanValue("hasTop10"));
 
                                 String value = quotas.getString(f.getString("quotaName"));
-                                //String value = quotas.getString("formula" + f.getString("id"));
 
-                                if (value == null || value == "" || value.isEmpty()) {
+                                if (value == null || value.trim().length() <= 0 || value.isEmpty()) {
 
                                     temp.put("value", Constants.INVALID_VALUE_QUOTA);
                                     temp.put("level", "1");
@@ -86,7 +103,7 @@ public class QuotaController {
                                     int fmLevel =
                                             ScannerHelper
                                                     .levelCalculationByThresholdAndType
-                                                            (value,quotaThresholdGroupMapJson.get(f.getString("quotaName")));
+                                                            (value,quotaThresholdGroupMap.get(f.getString("quotaName")));
 
                                     temp.put("value", Double.parseDouble(value));
 
@@ -142,9 +159,9 @@ public class QuotaController {
 
         }else {
 
-            quotaThresholdNodeMapJson = obj.getQuotaService().getThresholdNodeList();
+            quotaThresholdNodeMapJson = obj.getCacheService().getThresholdNodeMap();
             String time = obj.getCacheService().getUpdateTimeForQuotaData();
-            if (time == null || time == ""){
+            if (time == null || time.trim().length() <= 0){
                 msg +="Time is null.";
 
             }else {
@@ -158,23 +175,37 @@ public class QuotaController {
                         try {
                             List<JSONObject> formulaResultList = new ArrayList<>();
 
-                            List<JSONObject> formulaList = obj.getCacheService().getFormulaUnitList();
+                            List<JSONObject> formulaList = obj.getCacheService().getFormulaList(true);
 
                             for (JSONObject f : formulaList) {
 
                                 JSONObject temp = new JSONObject();
                                 temp.put("quotaName", f.getString("quotaName"));
-                                if (f.getString("unit").equals("0")) {
-                                    temp.put("remark", f.getString("remark")+"(百分比)");
-                                }else if (f.getString("unit").equals("1")){
-                                    temp.put("remark", f.getString("remark")+"(整数)");
+
+                                switch (f.getIntValue("unit")){
+                                    case 1:
+                                        temp.put("remark", f.getString("remark")+ Constants.QUOTA_UNIT_1); // %
+                                        break;
+
+                                    case 2:
+                                        temp.put("remark", f.getString("remark")+ Constants.QUOTA_UNIT_2); // Mbps
+                                        break;
+
+                                    case 3:
+                                        temp.put("remark", f.getString("remark")+ Constants.QUOTA_UNIT_3); // ms
+                                        break;
+
+                                    default:
+                                        temp.put("remark", f.getString("remark")); // null
+                                        break;
                                 }
+
                                 temp.put("hasTop10", f.getBooleanValue("hasTop10"));
 
                                 String value = quotas.getString(f.getString("quotaName"));
                                 //String value = quotas.getString("formula" + f.getString("id"));
 
-                                if (value == null || value == "" || value.isEmpty()) {
+                                if (value == null || value.trim().length() <= 0 || value.isEmpty()) {
 
                                     temp.put("value", Constants.INVALID_VALUE_QUOTA);
                                     temp.put("level", "1");
@@ -239,10 +270,10 @@ public class QuotaController {
 
         }else {
 
-            quotaThresholdCellMapJson = obj.getQuotaService().getThresholdCellList();
+            quotaThresholdCellMapJson = obj.getCacheService().getThresholdCellMap();
             String time = obj.getCacheService().getUpdateTimeForQuotaData();
 
-            if (time == null || time == ""){
+            if (time == null || time.trim().length() <= 0){
                 msg +="Time is null.";
 
             }else {
@@ -263,13 +294,31 @@ public class QuotaController {
 
                                 JSONObject temp = new JSONObject();
                                 temp.put("quotaName",f.getString("quotaName"));
-                                temp.put("remark",f.getString("remark"));
+
+                                switch (f.getIntValue("unit")){
+                                    case 1:
+                                        temp.put("remark", f.getString("remark")+ Constants.QUOTA_UNIT_1); // %
+                                        break;
+
+                                    case 2:
+                                        temp.put("remark", f.getString("remark")+ Constants.QUOTA_UNIT_2); // Mbps
+                                        break;
+
+                                    case 3:
+                                        temp.put("remark", f.getString("remark")+ Constants.QUOTA_UNIT_3); // ms
+                                        break;
+
+                                    default:
+                                        temp.put("remark", f.getString("remark")); // null
+                                        break;
+                                }
+
                                 temp.put("hasTop10",f.getBooleanValue("hasTop10"));
 
                                 String value = quotas.getString(f.getString("quotaName"));
                                 //String value = quotas.getString("formula" + f.getString("id"));
 
-                                if (value == null || value == "" || value.isEmpty()) {
+                                if (value == null || value.trim().length() <= 0 || value.isEmpty()) {
 
                                     temp.put("value", Constants.INVALID_VALUE_QUOTA);
                                     temp.put("level", "1");

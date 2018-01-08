@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.dao.*;
 import com.hongshen.sran_service.service.CacheService;
 import com.hongshen.sran_service.service.util.Constants;
+import com.hongshen.sran_service.service.util.DataHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by poplar on 11/13/17.
@@ -230,7 +232,7 @@ public class CacheService_Unicom_Wcdma implements CacheService {
     public void resetThresholdGroupList() {
 
         thresholdGroupList.clear();
-        thresholdGroupList = thresholdGroupMapper.getThresholdGroupList();
+        thresholdGroupList = thresholdGroupMapper.getThresholdList();
     }
 
     @Override
@@ -243,10 +245,19 @@ public class CacheService_Unicom_Wcdma implements CacheService {
     }
 
     @Override
+    public Map<String, JSONObject> getThresholdGroupMap() {
+
+        if (thresholdGroupList == null || thresholdGroupList.isEmpty()){
+            resetThresholdGroupList();
+        }
+        return DataHelper.JsonListToJsonMap(thresholdGroupList,"quotaName");
+    }
+
+    @Override
     public void resetThresholdNodeList() {
 
         thresholdNodeList.clear();
-        thresholdNodeList = thresholdNodeMapper.getThresholdNodeList();
+        thresholdNodeList = thresholdNodeMapper.getThresholdList();
     }
 
     @Override
@@ -259,10 +270,19 @@ public class CacheService_Unicom_Wcdma implements CacheService {
     }
 
     @Override
+    public Map<String, JSONObject> getThresholdNodeMap() {
+
+        if (thresholdNodeList == null || thresholdNodeList.isEmpty()){
+            resetThresholdNodeList();
+        }
+        return DataHelper.JsonListToJsonMap(thresholdNodeList,"quotaName");
+    }
+
+    @Override
     public void resetThresholdCellList() {
 
         thresholdCellList.clear();
-        thresholdCellList = thresholdCellMapper.getThresholdCellList();
+        thresholdCellList = thresholdCellMapper.getThresholdList();
     }
 
     @Override
@@ -272,6 +292,15 @@ public class CacheService_Unicom_Wcdma implements CacheService {
             resetThresholdCellList();
         }
         return thresholdCellList;
+    }
+
+    @Override
+    public Map<String, JSONObject> getThresholdCellMap() {
+
+        if (thresholdCellList == null || thresholdCellList.isEmpty()){
+            resetThresholdCellList();
+        }
+        return DataHelper.JsonListToJsonMap(thresholdCellList,"quotaName");
     }
 
     public String getUpdateTimeForQuotaData(){
@@ -295,30 +324,6 @@ public class CacheService_Unicom_Wcdma implements CacheService {
             }
         }
         return time;
-    }
-
-    @Override
-    public List<JSONObject> getFormulaUnitList() {
-        List<JSONObject> resultList = new ArrayList<JSONObject>();
-
-        if (formulaList == null || formulaList.isEmpty()){
-            resetFormulaUnitList();
-        }
-
-        for (JSONObject formula : formulaList) {
-
-            // unvisible quota
-
-                resultList.add(formula);
-        }
-        return resultList;
-    }
-
-    private void resetFormulaUnitList() {
-        formulaList.clear();
-        formulaList = formulaMapper.getFormuUnitlaList();
-
-        resetFormulaListProcessed();
     }
 
     public Date getUpdateTimeForQuotaData(String level) {

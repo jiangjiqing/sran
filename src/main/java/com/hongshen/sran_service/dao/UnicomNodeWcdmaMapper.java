@@ -63,13 +63,13 @@ public interface UnicomNodeWcdmaMapper {
 
     List<JSONObject> getNodeListByGroup(@Param("groupName")String groupName);
 
+    List<String> getVipNodeNameListByGroup(@Param("groupName") String groupName);
+
     List<String> getNodeNameListByGroup(@Param("groupName")String groupName);
 
     JSONObject getNodeLocation(@Param("nodeName")String nodeName);
 
     JSONObject getNodeInfo(@Param("nodeName") String nodeName);
-
-    List<JSONObject> getNodes(@Param("tableName") String TableName,@Param("name")String name);
 
     List<JSONObject> getNodeLocationsByGroup(@Param("groupName") String groupName);
 

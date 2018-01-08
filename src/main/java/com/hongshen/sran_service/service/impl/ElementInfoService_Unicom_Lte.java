@@ -4,8 +4,11 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.dao.*;
 import com.hongshen.sran_service.service.ElementInfoService;
+import com.hongshen.sran_service.service.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,6 +16,9 @@ import java.util.List;
  */
 @Service
 public class ElementInfoService_Unicom_Lte implements ElementInfoService {
+
+    @Autowired
+    private CacheService_Unicom_Lte cacheService;
 
 	@Autowired
     private UnicomProtectLteMapper protectMapper;
@@ -53,7 +59,12 @@ public class ElementInfoService_Unicom_Lte implements ElementInfoService {
 
     @Override
     public List<JSONObject> getGroupList() {
-        return nodeMapper.getGroupList();
+        String time = cacheService.getUpdateTimeForQuotaData();
+        if (time == null || time.length() == 0){
+            return null;
+        }else {
+            return nodeMapper.getGroupList(time);
+        }
     }
 
     @Override
@@ -109,12 +120,36 @@ public class ElementInfoService_Unicom_Lte implements ElementInfoService {
 
     @Override
     public JSONObject getGroupInfo(String groupName) {
-        return null;
-    } // tac info is null
+        return null; // tac info is null
+    }
+
+    @Override
+    public ArrayList<String[]> getGroupInfoProcessed(String groupName) {
+        return null; // tac info is null
+    }
 
     @Override
     public JSONObject getNodeInfo(String nodeName) {
         return nodeMapper.getNodeInfo(nodeName);
+    }
+
+    @Override
+    public ArrayList<String[]> getNodeInfoProcessed(String nodeName) {
+
+        ArrayList<String[]> result = new ArrayList<>();
+        JSONObject infos = nodeMapper.getNodeInfo(nodeName);
+
+        for(String key : infos.keySet()) {
+
+            String value = infos.getString(key);
+
+            if (value == null || value.trim().length() <= 0) {
+                value = Constants.ELEMENT_INFO_INVALID;
+            }
+
+            result.add(new String[]{key, value});
+        }
+        return result;
     }
 
     @Override
@@ -198,27 +233,27 @@ public class ElementInfoService_Unicom_Lte implements ElementInfoService {
     }
 
     @Override
-    public int deleteNode(String tableName, String name) {
+    public List<JSONObject> getFavoriteNodes(String tableName,String name) {
+        return favoriteMapper.getNodes(tableName,name);
+    }
+
+    @Override
+    public int deleteFavoriteNode(String tableName, String name) {
         return favoriteMapper.deleteNode(tableName,name);
     }
 
     @Override
-    public List<JSONObject> getNodes(String tableName,String name) {
-        return nodeMapper.getNodes(tableName,name);
-    }
-
-    @Override
-    public int deleteNodes(String tableName, String name) {
+    public int deleteFavoriteNodes(String tableName, String name) {
         return favoriteMapper.deleteNodes(tableName,name);
     }
 
     @Override
-    public int addNode(String tableName, String name) {
+    public int addFavoriteNode(String tableName, String name) {
         return favoriteMapper.addNode(tableName,name);
     }
 
     @Override
-    public int addNodes(String tableName, List<JSONObject> nodeNames) {
+    public int addFavoriteNodes(String tableName, List<JSONObject> nodeNames) {
         return favoriteMapper.addNodes(tableName,nodeNames);
     }
 

@@ -33,6 +33,17 @@ public class Constants {
     public static final Integer FAULT_LEVEL_THRESHOLD_1 = 3;
     public static final Integer FAULT_LEVEL_THRESHOLD_OTHER = 4;
 
+    // unit
+
+    public static final String QUOTA_UNIT_0 = "";
+    public static final String QUOTA_UNIT_1 = "(%)";
+    public static final String QUOTA_UNIT_2 = "(Mbps)";
+    public static final String QUOTA_UNIT_3 = "(ms)";
+
+    // info
+
+    public static final String ELEMENT_INFO_INVALID = "无法获取";
+
     // file
     public static final String TEMPLATE_ROOT_PATH = SRAN_WEB_URI + "/sran/templates/";
     public static final String TEMPLATE_FILE_NAME_END = "_template.xlsx";
@@ -101,6 +112,7 @@ public class Constants {
     public final static String SCANNER_SEND_WCDMA = SRAN_SERVICE_URI + SCANNER_SEND_UTIL + SCANNER_SEND_TYPE_WCDMA;
     public final static String SCANNER_SEND_LTE = SRAN_SERVICE_URI + SCANNER_SEND_UTIL + SCANNER_SEND_TYPE_LTE;
     public final static Integer SCANNER_CALCULATION_DIVISION = 20000;
+
     // shiro
 
     public static final String SHIRO_URI = SRAN_SHIRO_URI + "/service/v1/check";

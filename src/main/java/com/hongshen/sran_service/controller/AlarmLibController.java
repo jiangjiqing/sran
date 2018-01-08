@@ -82,14 +82,14 @@ public class AlarmLibController extends BaseController{
             msg += "Supplier or Generation has error.";
         }else {
             if(alarmName == null || alarmName.isEmpty() || alarmName.length() == 0) {
-                msg +="Alarm is null";
+                msg +="AlarmName is null";
             }else {
                 alarm = obj.getAlarmLibService().getAlarmByName(alarmName);
 
                 if (alarm == null || alarm.isEmpty() || alarm.size() == 0) {
 //                result.put("result", Constants.FAIL);
 //                result.put("msg", Constants.MSG_NO_DATA);
-                    msg += "Alarm is null.";
+                    msg += "Alarm info is null.";
                 }else{
                     if (alarm.getString("alarmLevelId").length() == 0){
                         alarm.put("alarmLevelId", Constants.INVALID_ALARM_LEVEL);
@@ -179,16 +179,19 @@ public class AlarmLibController extends BaseController{
                 msg += "Param is null.";
             }else {
                 try {
-                    if (param.getString("alarmNameId") != "" || param.getString("alarmNameId").length() == 0 || param.getString("alarmNameId").isEmpty()) {
+                    if (param.getString("alarmNameId") != null &&
+                            (param.getString("alarmNameId").isEmpty() ||
+                             param.getString("alarmNameId").trim().length() == 0)){
+
                         int i = obj.getAlarmLibService().addAlarmIndex(param);
                         if (i == 0) {
-                            msg = "alarmNameId is exist.";
+                            msg += "alarmNameId is exist.";
                         }
                     }
-                    if (msg.length() == 0 && param.getString("alarmName") != "") {
+                    if (msg.length() == 0 && param.getString("alarmName") != null) {
                         int i = obj.getAlarmLibService().addAlarm(param);
                         if (i == 0) {
-                            msg = "alarmName is exist.";
+                            msg += "alarmName is exist.";
                         }
                     }
                 }catch (Exception e){
