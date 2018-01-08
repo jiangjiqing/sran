@@ -100,4 +100,9 @@
       remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="getInfoIndexList" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT *
+    FROM unicom_node_info_index_lte
+  </select>
 </mapper>

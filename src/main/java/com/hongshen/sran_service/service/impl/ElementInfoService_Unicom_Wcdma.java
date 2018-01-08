@@ -28,8 +28,11 @@ public class ElementInfoService_Unicom_Wcdma implements ElementInfoService {
     @Autowired
     private UnicomGroupWcdmaMapper groupMapper;
 
-//    @Autowired
-//    private UnicomGroupInfoIndexWcdmaMapper groupInfoIndexMapper;
+    @Autowired
+    private UnicomGroupInfoIndexWcdmaMapper groupInfoIndexMapper;
+
+    @Autowired
+    private UnicomNodeInfoIndexWcdmaMapper nodeInfoIndexMapper;
 
     @Autowired
     private UnicomNodeWcdmaMapper nodeMapper;

@@ -1,6 +1,5 @@
 package com.hongshen.sran_service.service.impl;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.dao.*;
 import com.hongshen.sran_service.service.ElementInfoService;
@@ -34,6 +33,9 @@ public class ElementInfoService_Unicom_Lte implements ElementInfoService {
 
     @Autowired
     private UnicomCellLteMapper cellMapper;
+
+    @Autowired
+    private UnicomNodeInfoIndexLteMapper nodeInfoIndexMapper;
 
     @Override
     public List<JSONObject> getProtectList() {
