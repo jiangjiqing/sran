@@ -1,5 +1,6 @@
 package com.hongshen.sran_service.service;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 import java.util.List;
@@ -23,4 +24,6 @@ public interface AlarmLibService {
     int deleteAlarmByName(String alarmName);
 
     List<JSONObject> getAlarmInfoList();
+
+    int addAlarms(JSONArray importJson);
 }

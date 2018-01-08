@@ -1,5 +1,6 @@
 package com.hongshen.sran_service.dao;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.entity.UnicomAlarmIndex;
 import org.apache.ibatis.annotations.Param;
@@ -59,5 +60,7 @@ public interface UnicomAlarmIndexMapper {
 
     int addAlarmIndex(@Param("param")JSONObject param);
 
-    List<JSONObject> getAlarmByName(String alarmNameId, String alarmName);
+    List<JSONObject> getAlarmByName(@Param("alarmNameId") String alarmNameId,@Param("alarmName") String alarmName);
+
+    JSONObject getAlarmById(@Param("alarmNameId") String alarmNameId);
 }

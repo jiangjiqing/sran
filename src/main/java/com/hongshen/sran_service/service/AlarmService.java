@@ -1,5 +1,6 @@
 package com.hongshen.sran_service.service;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.ibatis.annotations.Param;
 
@@ -20,7 +21,13 @@ public interface AlarmService {
 
     List<JSONObject> getCellAlarmByName(String cellName);
 
-    List<JSONObject> getAlarmByName(String alarmNameId, String alarmName);
+//    List<JSONObject> getAlarmByName(String alarmNameId, String alarmName);
 
     List<JSONObject> getAlarmInfoList1(String level);
+
+    List<JSONObject> getAlarmByName(String alarmNameId, String alarmName);
+
+    JSONObject getAlarmById(String alarmNameId);
+
+    int addAlarmIndex(JSONObject jsonObject);
 }

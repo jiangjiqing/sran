@@ -98,6 +98,18 @@
   </insert>
 
   <select id="getAlarmByName" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
-    SELECT * FROM unicom_alarm_index WHERE alarm_name_id = #{alarmNameId} AND alarm_name = #{alarmName}
+    SELECT * FROM
+    unicom_alarm_index
+    WHERE
+    alarm_name_id = #{alarmNameId}
+    AND
+    alarm_name = #{alarmName}
+  </select>
+
+  <select id="getAlarmById" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT * FROM
+    unicom_alarm_index
+    WHERE
+    alarm_name_id = #{alarmNameId}
   </select>
 </mapper>

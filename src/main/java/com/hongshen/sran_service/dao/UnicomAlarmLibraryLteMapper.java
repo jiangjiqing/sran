@@ -1,5 +1,6 @@
 package com.hongshen.sran_service.dao;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.entity.UnicomAlarmLibraryLte;
 import org.apache.ibatis.annotations.Param;
@@ -69,4 +70,6 @@ public interface UnicomAlarmLibraryLteMapper {
     int deleteAlarmByName(@Param("alarmName")String alarmName);
 
     List<JSONObject> getAlarmInfoList();
+
+    int addAlarms(@Param("importJson") JSONArray importJson);
 }

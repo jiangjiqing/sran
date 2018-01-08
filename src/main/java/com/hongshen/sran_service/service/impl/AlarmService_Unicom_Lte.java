@@ -1,5 +1,6 @@
 package com.hongshen.sran_service.service.impl;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.dao.UnicomAlarmIndexMapper;
 import com.hongshen.sran_service.dao.UnicomAlarmLteMapper;
@@ -51,12 +52,24 @@ public class AlarmService_Unicom_Lte implements AlarmService {
     }
 
     @Override
+    public List<JSONObject> getAlarmInfoList1(String level) {
+        return alarmMapper.getAlarmInfoList1(level);
+    }
+
+    @Override
     public List<JSONObject> getAlarmByName(String alarmNameId, String alarmName) {
         return alarmIndexMapper.getAlarmByName(alarmNameId,alarmName);
     }
 
     @Override
-    public List<JSONObject> getAlarmInfoList1(String level) {
-        return alarmMapper.getAlarmInfoList1(level);
+    public JSONObject getAlarmById(String alarmNameId) {
+        return alarmIndexMapper.getAlarmById(alarmNameId);
     }
+
+    @Override
+    public int addAlarmIndex(JSONObject jsonObject) {
+        return alarmIndexMapper.addAlarmIndex(jsonObject);
+    }
+
+
 }

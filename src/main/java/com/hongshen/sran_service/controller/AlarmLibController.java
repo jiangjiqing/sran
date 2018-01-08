@@ -252,7 +252,7 @@ public class AlarmLibController extends BaseController{
     @PUT
     @Path("/suppliers/{supplier}/generations/{generation}/alarms/upload")
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject protectImport(@RequestParam(value = "importJson") JSONObject importJson,
+    public JSONObject protectImport(@RequestParam(value = "importJson") JSONArray importJson,
                                     @PathParam("supplier") String supplier,
                                     @PathParam("generation") String generation,
                                     @HeaderParam("Auth-Token") String authToken,
@@ -260,33 +260,39 @@ public class AlarmLibController extends BaseController{
         JSONObject result = new JSONObject();
         String msg = "";
         int addnum = 0;
+        int indexnum = 0;
+        int listNum = 0;
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
 
         if (obj == null){
             msg +="Supplier or Generation has error.";
-        }else {
-            List<JSONObject> alarmList = obj.getAlarmService().getAlarmByName(importJson.getString("alarmNameId"),importJson.getString("alarmName"));
-            if (alarmList.size() ==0 || alarmList.isEmpty() || alarmList == null){
-                msg +="AlarmNameId or AlarmName is not Exist.";
-            }else {
-                try {
-                    addnum = obj.getAlarmLibService().addAlarm(importJson);
-                }catch (Exception e){
-                    msg += "Parameter is Error.";
-                }
-                if (addnum < 0 ){
-                    msg +="AddAlarm is Failed.";
+        }else if (importJson == null || importJson.isEmpty() || importJson.size()==0){
+            msg += "Parametas is Null.\n";
+        }else{
+//            List<JSONObject> alarmList = obj.getAlarmService().getAlarmByName(importJson.getString("alarmNameId"),importJson.getString("alarmName"));
+            listNum = importJson.size();
+            for (int i = 0; i < listNum; i++) {
+                JSONObject alarmLibList = obj.getAlarmLibService().getAlarmByName(importJson.getJSONObject(i).getString("alarmName"));
+                if (alarmLibList != null){
+                    continue;
+                }else {
+                    JSONObject alarmInfo = obj.getAlarmService().getAlarmById(importJson.getJSONObject(i).getString("alarmNameId"));
+                    if (alarmInfo == null){
+                        indexnum = obj.getAlarmService().addAlarmIndex(importJson.getJSONObject(i));
+                    }else if (!alarmInfo.getString("alarm_name").equals(importJson.getJSONObject(i).getString("alarmName"))){
+                        continue;
+                    }
+                    addnum = obj.getAlarmLibService().addAlarms(importJson);
                 }
             }
         }
-
         if (msg.length() != 0) {
             result.put("result", Constants.FAIL);
-            result.put("msg", Constants.MSG_NO_DATA + msg);
+            result.put("msg", Constants.MSG_NO_DATA + "(Real/Total:" + addnum + "/" + listNum + ")\n" + msg);
 
         } else {
             result.put("result", Constants.SUCCESS);
-            result.put("msg", Constants.MSG_ADD_OK+"(Real/Total:" + addnum + ")");
+            result.put("msg", Constants.MSG_ADD_OK+"(Real/Total:" + addnum + "/" + listNum + ")\n");
         }
         return result;
     }

@@ -1,6 +1,7 @@
 package com.hongshen.sran_service.service.impl;
 
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.dao.UnicomAlarmIndexMapper;
 import com.hongshen.sran_service.dao.UnicomAlarmLibraryWcdmaMapper;
@@ -56,5 +57,10 @@ public class AlarmLibService_Unicom_Wcdma implements AlarmLibService {
     @Override
     public List<JSONObject> getAlarmInfoList() {
         return alarmLibMapper.getAlarmInfoList();
+    }
+
+    @Override
+    public int addAlarms(JSONArray importJson) {
+        return alarmLibMapper.addAlarms(importJson);
     }
 }

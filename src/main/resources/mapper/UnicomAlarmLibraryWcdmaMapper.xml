@@ -247,4 +247,24 @@
     RIGHT JOIN unicom_alarm_library_wcdma b
     ON a.alarm_name=b.alarm_name
   </select>
+  <insert id="addAlarms" parameterType="com.alibaba.fastjson.JSONArray">
+    INSERT IGNORE INTO unicom_alarm_library_wcdma (
+    alarm_name,
+    alarm_meaning,
+    alarm_level_id,
+    alarm_type,
+    alarm_scope,
+    recommend)
+    VALUES
+    <foreach collection="importJson" index="index" item="item" separator=",">
+      (
+      #{item.alarmName},
+      #{item.alarmMeaning},
+      #{item.alarmLevelId},
+      #{item.alarmType},
+      #{item.alarmScope},
+      #{item.recommend}
+      )
+    </foreach>
+  </insert>
 </mapper>
