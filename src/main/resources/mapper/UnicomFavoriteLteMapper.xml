@@ -63,9 +63,18 @@
     VALUES (#{name})
   </insert>
 
-    <select id="getTable" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
-      SHOW TABLES LIKE #{tableNameLike}
-    </select>
+  <select id="getTable" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
+    SHOW TABLES LIKE #{tableNameLike}
+  </select>
+
+  <select id="getNodes" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
+    SELECT
+    a.node_name
+    FROM ${tableName} a
+    LEFT JOIN  unicom_node_lte b
+    ON a.node_name = b.node_name
+    WHERE b.group_name = #{name}
+  </select>
 
   <delete id="deleteNode" parameterType="java.lang.String">
     DELETE FROM ${tableName} WHERE node_name = #{name}
@@ -121,4 +130,5 @@
       (#{node})
     </foreach>
   </insert>
+
 </mapper>

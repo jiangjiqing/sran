@@ -58,13 +58,13 @@
       msc_pool, oss, pool, 
       signal_code, lac, rac, 
       a2ea_address, ip, swversion, 
-      hwversion, type, room, 
+      hwversion, type, room,
       scope)
     values (#{groupName,jdbcType=VARCHAR}, #{groupId,jdbcType=VARCHAR}, #{msc,jdbcType=VARCHAR}, 
       #{mscPool,jdbcType=VARCHAR}, #{oss,jdbcType=VARCHAR}, #{pool,jdbcType=VARCHAR}, 
       #{signalCode,jdbcType=VARCHAR}, #{lac,jdbcType=VARCHAR}, #{rac,jdbcType=VARCHAR}, 
       #{a2eaAddress,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, #{swversion,jdbcType=VARCHAR}, 
-      #{hwversion,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{room,jdbcType=VARCHAR}, 
+      #{hwversion,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{room,jdbcType=VARCHAR},
       #{scope,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.hongshen.sran_service.entity.UnicomGroupWcdma">
@@ -275,15 +275,11 @@
     WHERE group_name = #{groupName}
   </select>
 
-  <select id="getGroupList" resultType="com.alibaba.fastjson.JSONObject">
---     SELECT
---       group_name name
---     FROM  unicom_group_wcdma
---     GROUP BY name
-SELECT b.name,b.level
+  <select id="getGroupList" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
+  SELECT b.name,b.level
    FROM (SELECT level,name
-   FROM unicom_quota_history_group_wcdma
-   WHERE time='2017-01-20 09:15:00')b
+         FROM unicom_quota_history_group_wcdma
+         WHERE time=#{time})b
    INNER JOIN (SELECT group_name
    FROM unicom_node_wcdma GROUP BY group_name)a
    ON a.group_name=b.name

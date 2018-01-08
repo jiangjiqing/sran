@@ -205,7 +205,8 @@
       license_user licenseUser,
       mme,
       ip,
-      enb_id enbId
+      enb_id enbId,
+      isVip
     FROM unicom_node_lte
     WHERE node_name = #{nodeName}
   </select>
@@ -221,7 +222,8 @@
       license_user licenseUser,
       mme,
       ip,
-      enb_id enbId
+      enb_id enbId,
+      isVip
     FROM unicom_node_lte
   </select>
 
@@ -240,6 +242,13 @@
       longitude
     FROM unicom_node_lte
     WHERE group_name = #{groupName}
+    GROUP BY name
+  </select>
+
+  <select id="getVipNodeNameListByGroup" resultType="java.lang.String">
+    SELECT node_name name
+    FROM unicom_node_lte
+    WHERE group_name = #{groupName} AND isVip = 1
     GROUP BY name
   </select>
 
@@ -274,23 +283,6 @@
       node_name name
     FROM unicom_node_lte
     GROUP BY name
-  </select>
-
-  <select id="getNodeNameListByGroupName" resultType="java.lang.String">
-    SELECT
-      node_name name
-    FROM unicom_node_lte
-    WHERE group_name = #{groupName}
-    GROUP BY name
-  </select>
-
-  <select id="getNodes" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
-    SELECT
-      a.node_name
-    FROM ${tableName} a
-    LEFT JOIN  unicom_node_lte b
-    ON a.node_name = b.node_name
-    WHERE b.group_name = #{name}
   </select>
 
   <update id="updateStationName" parameterType="com.alibaba.fastjson.JSONObject">
