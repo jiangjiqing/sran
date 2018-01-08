@@ -144,7 +144,7 @@
     FROM unicom_cell_wcdma
     WHERE
     node_name in
-    <foreach collection="nodeNameList" item="nodeName" index="index" open="(" separator="," close=")" >
+    <foreach close=")" collection="nodeNameList" index="index" item="nodeName" open="(" separator=",">
       #{nodeName}
     </foreach>
     GROUP BY name

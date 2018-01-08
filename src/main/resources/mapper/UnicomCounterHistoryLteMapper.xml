@@ -8,107 +8,180 @@
     -->
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="time" jdbcType="TIMESTAMP" property="time" />
-    <result column="counter1" jdbcType="VARCHAR" property="counter1" />
-    <result column="counter2" jdbcType="VARCHAR" property="counter2" />
-    <result column="counter3" jdbcType="VARCHAR" property="counter3" />
-    <result column="counter4" jdbcType="VARCHAR" property="counter4" />
-    <result column="counter5" jdbcType="VARCHAR" property="counter5" />
-    <result column="counter6" jdbcType="VARCHAR" property="counter6" />
-    <result column="counter7" jdbcType="VARCHAR" property="counter7" />
-    <result column="counter8" jdbcType="VARCHAR" property="counter8" />
-    <result column="counter9" jdbcType="VARCHAR" property="counter9" />
-    <result column="counter10" jdbcType="VARCHAR" property="counter10" />
-    <result column="counter11" jdbcType="VARCHAR" property="counter11" />
-    <result column="counter12" jdbcType="VARCHAR" property="counter12" />
-    <result column="counter13" jdbcType="VARCHAR" property="counter13" />
-    <result column="counter14" jdbcType="VARCHAR" property="counter14" />
-    <result column="counter15" jdbcType="VARCHAR" property="counter15" />
-    <result column="counter16" jdbcType="VARCHAR" property="counter16" />
-    <result column="counter17" jdbcType="VARCHAR" property="counter17" />
-    <result column="counter18" jdbcType="VARCHAR" property="counter18" />
-    <result column="counter19" jdbcType="VARCHAR" property="counter19" />
-    <result column="counter20" jdbcType="VARCHAR" property="counter20" />
-    <result column="counter21" jdbcType="VARCHAR" property="counter21" />
-    <result column="counter22" jdbcType="VARCHAR" property="counter22" />
-    <result column="counter23" jdbcType="VARCHAR" property="counter23" />
-    <result column="counter24" jdbcType="VARCHAR" property="counter24" />
-    <result column="counter25" jdbcType="VARCHAR" property="counter25" />
-    <result column="counter26" jdbcType="VARCHAR" property="counter26" />
-    <result column="counter27" jdbcType="VARCHAR" property="counter27" />
-    <result column="counter28" jdbcType="VARCHAR" property="counter28" />
-    <result column="counter29" jdbcType="VARCHAR" property="counter29" />
-    <result column="counter30" jdbcType="VARCHAR" property="counter30" />
-    <result column="counter31" jdbcType="VARCHAR" property="counter31" />
-    <result column="counter32" jdbcType="VARCHAR" property="counter32" />
-    <result column="counter33" jdbcType="VARCHAR" property="counter33" />
-    <result column="counter34" jdbcType="VARCHAR" property="counter34" />
-    <result column="counter35" jdbcType="VARCHAR" property="counter35" />
-    <result column="counter36" jdbcType="VARCHAR" property="counter36" />
-    <result column="counter37" jdbcType="VARCHAR" property="counter37" />
-    <result column="counter38" jdbcType="VARCHAR" property="counter38" />
-    <result column="counter39" jdbcType="VARCHAR" property="counter39" />
-    <result column="counter40" jdbcType="VARCHAR" property="counter40" />
-    <result column="counter41" jdbcType="VARCHAR" property="counter41" />
-    <result column="counter42" jdbcType="VARCHAR" property="counter42" />
-    <result column="counter43" jdbcType="VARCHAR" property="counter43" />
-    <result column="counter44" jdbcType="VARCHAR" property="counter44" />
-    <result column="counter45" jdbcType="VARCHAR" property="counter45" />
-    <result column="counter46" jdbcType="VARCHAR" property="counter46" />
-    <result column="counter47" jdbcType="VARCHAR" property="counter47" />
-    <result column="counter48" jdbcType="VARCHAR" property="counter48" />
-    <result column="counter49" jdbcType="VARCHAR" property="counter49" />
-    <result column="counter50" jdbcType="VARCHAR" property="counter50" />
-    <result column="counter51" jdbcType="VARCHAR" property="counter51" />
-    <result column="counter52" jdbcType="VARCHAR" property="counter52" />
-    <result column="counter53" jdbcType="VARCHAR" property="counter53" />
-    <result column="counter54" jdbcType="VARCHAR" property="counter54" />
-    <result column="counter55" jdbcType="VARCHAR" property="counter55" />
+    <result column="EUtranCellFDD_pmRrcConnEstabAtt" jdbcType="VARCHAR" property="eutrancellfddPmrrcconnestabatt" />
+    <result column="EUtranCellTDD_pmRrcConnEstabAtt" jdbcType="VARCHAR" property="eutrancelltddPmrrcconnestabatt" />
+    <result column="EUtranCellFDD_pmRrcConnEstabAttReatt" jdbcType="VARCHAR" property="eutrancellfddPmrrcconnestabattreatt" />
+    <result column="EUtranCellTDD_pmRrcConnEstabAttReatt" jdbcType="VARCHAR" property="eutrancelltddPmrrcconnestabattreatt" />
+    <result column="EUtranCellFDD_pmRrcConnEstabSucc" jdbcType="VARCHAR" property="eutrancellfddPmrrcconnestabsucc" />
+    <result column="EUtranCellTDD_pmRrcConnEstabSucc" jdbcType="VARCHAR" property="eutrancelltddPmrrcconnestabsucc" />
+    <result column="EUtranCellFDD_pmS1SigConnEstabAtt" jdbcType="VARCHAR" property="eutrancellfddPms1sigconnestabatt" />
+    <result column="EUtranCellTDD_pmS1SigConnEstabAtt" jdbcType="VARCHAR" property="eutrancelltddPms1sigconnestabatt" />
+    <result column="EUtranCellFDD_pmS1SigConnEstabSucc" jdbcType="VARCHAR" property="eutrancellfddPms1sigconnestabsucc" />
+    <result column="EUtranCellTDD_pmS1SigConnEstabSucc" jdbcType="VARCHAR" property="eutrancelltddPms1sigconnestabsucc" />
+    <result column="EUtranCellFDD_pmErabEstabAttInit" jdbcType="VARCHAR" property="eutrancellfddPmerabestabattinit" />
+    <result column="EUtranCellTDD_pmErabEstabAttInit" jdbcType="VARCHAR" property="eutrancelltddPmerabestabattinit" />
+    <result column="EUtranCellFDD_pmErabEstabAttAdded" jdbcType="VARCHAR" property="eutrancellfddPmerabestabattadded" />
+    <result column="EUtranCellTDD_pmErabEstabAttAdded" jdbcType="VARCHAR" property="eutrancelltddPmerabestabattadded" />
+    <result column="EUtranCellFDD_pmErabEstabSuccInit" jdbcType="VARCHAR" property="eutrancellfddPmerabestabsuccinit" />
+    <result column="EUtranCellTDD_pmErabEstabSuccInit" jdbcType="VARCHAR" property="eutrancelltddPmerabestabsuccinit" />
+    <result column="EUtranCellFDD_pmErabEstabSuccAdded" jdbcType="VARCHAR" property="eutrancellfddPmerabestabsuccadded" />
+    <result column="EUtranCellTDD_pmErabEstabSuccAdded" jdbcType="VARCHAR" property="eutrancelltddPmerabestabsuccadded" />
+    <result column="EUtranCellFDD_pmPagReceived" jdbcType="VARCHAR" property="eutrancellfddPmpagreceived" />
+    <result column="EUtranCellTDD_pmPagReceived" jdbcType="VARCHAR" property="eutrancelltddPmpagreceived" />
+    <result column="EUtranCellFDD_pmPagDiscarded" jdbcType="VARCHAR" property="eutrancellfddPmpagdiscarded" />
+    <result column="EUtranCellTDD_pmPagDiscarded" jdbcType="VARCHAR" property="eutrancelltddPmpagdiscarded" />
+    <result column="EUtranCellFDD_pmErabRelAbnormalEnbAct" jdbcType="VARCHAR" property="eutrancellfddPmerabrelabnormalenbact" />
+    <result column="EUtranCellTDD_pmErabRelAbnormalEnbAct" jdbcType="VARCHAR" property="eutrancelltddPmerabrelabnormalenbact" />
+    <result column="EUtranCellFDD_pmErabRelMmeAct" jdbcType="VARCHAR" property="eutrancellfddPmerabrelmmeact" />
+    <result column="EUtranCellTDD_pmErabRelMmeAct" jdbcType="VARCHAR" property="eutrancelltddPmerabrelmmeact" />
+    <result column="EUtranCellRelation_pmHoPrepAttLteInterF" jdbcType="VARCHAR" property="eutrancellrelationPmhoprepattlteinterf" />
+    <result column="EUtranCellRelation_pmHoPrepAttLteIntraF" jdbcType="VARCHAR" property="eutrancellrelationPmhoprepattlteintraf" />
+    <result column="EUtranCellRelation_pmHoExeSuccLteInterF" jdbcType="VARCHAR" property="eutrancellrelationPmhoexesucclteinterf" />
+    <result column="EUtranCellRelation_pmHoExeSuccLteIntraF" jdbcType="VARCHAR" property="eutrancellrelationPmhoexesucclteintraf" />
+    <result column="EUtranCellFDD_pmPrbUsedDlFirstTrans" jdbcType="VARCHAR" property="eutrancellfddPmprbuseddlfirsttrans" />
+    <result column="EUtranCellTDD_pmPrbUsedDlFirstTrans" jdbcType="VARCHAR" property="eutrancelltddPmprbuseddlfirsttrans" />
+    <result column="EUtranCellFDD_pmPrbUsedDlBcch" jdbcType="VARCHAR" property="eutrancellfddPmprbuseddlbcch" />
+    <result column="EUtranCellTDD_pmPrbUsedDlBcch" jdbcType="VARCHAR" property="eutrancelltddPmprbuseddlbcch" />
+    <result column="EUtranCellFDD_pmPrbUsedDlSrbFirstTrans" jdbcType="VARCHAR" property="eutrancellfddPmprbuseddlsrbfirsttrans" />
+    <result column="EUtranCellTDD_pmPrbUsedDlSrbFirstTrans" jdbcType="VARCHAR" property="eutrancelltddPmprbuseddlsrbfirsttrans" />
+    <result column="EUtranCellFDD_pmPrbUsedDlReTrans" jdbcType="VARCHAR" property="eutrancellfddPmprbuseddlretrans" />
+    <result column="EUtranCellTDD_pmPrbUsedDlReTrans" jdbcType="VARCHAR" property="eutrancelltddPmprbuseddlretrans" />
+    <result column="EUtranCellFDD_pmPrbUsedUlDtch" jdbcType="VARCHAR" property="eutrancellfddPmprbuseduldtch" />
+    <result column="EUtranCellTDD_pmPrbUsedUlDtch" jdbcType="VARCHAR" property="eutrancelltddPmprbuseduldtch" />
+    <result column="EUtranCellFDD_pmPrbUsedUlSrb" jdbcType="VARCHAR" property="eutrancellfddPmprbusedulsrb" />
+    <result column="EUtranCellTDD_pmPrbUsedUlSrb" jdbcType="VARCHAR" property="eutrancelltddPmprbusedulsrb" />
+    <result column="EUtranCellFDD_pmPdcpVolDlDrb" jdbcType="VARCHAR" property="eutrancellfddPmpdcpvoldldrb" />
+    <result column="EUtranCellTDD_pmPdcpVolDlDrb" jdbcType="VARCHAR" property="eutrancelltddPmpdcpvoldldrb" />
+    <result column="EUtranCellFDD_pmPdcpVolUlDrb" jdbcType="VARCHAR" property="eutrancellfddPmpdcpvoluldrb" />
+    <result column="EUtranCellTDD_pmPdcpVolUlDrb" jdbcType="VARCHAR" property="eutrancelltddPmpdcpvoluldrb" />
+    <result column="EUtranCellFDD_pmUeThpTimeDl" jdbcType="VARCHAR" property="eutrancellfddPmuethptimedl" />
+    <result column="EUtranCellTDD_pmUeThpTimeDl" jdbcType="VARCHAR" property="eutrancelltddPmuethptimedl" />
+    <result column="EUtranCellFDD_pmPdcpVolDlDrbLastTTI" jdbcType="VARCHAR" property="eutrancellfddPmpdcpvoldldrblasttti" />
+    <result column="EUtranCellTDD_pmPdcpVolDlDrbLastTTI" jdbcType="VARCHAR" property="eutrancelltddPmpdcpvoldldrblasttti" />
+    <result column="EUtranCellFDD_pmUeThpTimeUl" jdbcType="VARCHAR" property="eutrancellfddPmuethptimeul" />
+    <result column="EUtranCellTDD_pmUeThpTimeUl" jdbcType="VARCHAR" property="eutrancelltddPmuethptimeul" />
+    <result column="EUtranCellFDD_pmUeThpVolUl" jdbcType="VARCHAR" property="eutrancellfddPmuethpvolul" />
+    <result column="EUtranCellTDD_pmUeThpVolUl" jdbcType="VARCHAR" property="eutrancelltddPmuethpvolul" />
+    <result column="EUtranCellFDD_pmSessionTimeUe" jdbcType="VARCHAR" property="eutrancellfddPmsessiontimeue" />
+    <result column="EUtranCellTDD_pmSessionTimeUe" jdbcType="VARCHAR" property="eutrancelltddPmsessiontimeue" />
+    <result column="EUtranCellFDD_pmSessionTimeDrb" jdbcType="VARCHAR" property="eutrancellfddPmsessiontimedrb" />
+    <result column="EUtranCellTDD_pmSessionTimeDrb" jdbcType="VARCHAR" property="eutrancelltddPmsessiontimedrb" />
+    <result column="EUtranCellFDD_pmActiveUeDlSum" jdbcType="VARCHAR" property="eutrancellfddPmactiveuedlsum" />
+    <result column="EUtranCellTDD_pmActiveUeDlSum" jdbcType="VARCHAR" property="eutrancelltddPmactiveuedlsum" />
+    <result column="EUtranCellFDD_pmActiveUeUlSum" jdbcType="VARCHAR" property="eutrancellfddPmactiveueulsum" />
+    <result column="EUtranCellTDD_pmActiveUeUlSum" jdbcType="VARCHAR" property="eutrancelltddPmactiveueulsum" />
+    <result column="EUtranCellFDD_pmErabLevSamp" jdbcType="VARCHAR" property="eutrancellfddPmerablevsamp" />
+    <result column="EUtranCellTDD_pmErabLevSamp" jdbcType="VARCHAR" property="eutrancelltddPmerablevsamp" />
+    <result column="EUtranCellFDD_pmCellDowntimeAuto" jdbcType="VARCHAR" property="eutrancellfddPmcelldowntimeauto" />
+    <result column="EUtranCellTDD_pmCellDowntimeAuto" jdbcType="VARCHAR" property="eutrancelltddPmcelldowntimeauto" />
+    <result column="pmPrbUsedDlFirstTrans" jdbcType="VARCHAR" property="pmprbuseddlfirsttrans" />
+    <result column="pmPrbUsedDlBcch" jdbcType="VARCHAR" property="pmprbuseddlbcch" />
+    <result column="pmPrbUsedDlDtch" jdbcType="VARCHAR" property="pmprbuseddldtch" />
+    <result column="pmPrbUsedDlPcch" jdbcType="VARCHAR" property="pmprbuseddlpcch" />
+    <result column="pmPrbUsedDlSrbFirstTrans" jdbcType="VARCHAR" property="pmprbuseddlsrbfirsttrans" />
+    <result column="pmPrbUsedDlReTrans" jdbcType="VARCHAR" property="pmprbuseddlretrans" />
+    <result column="pmPrbUsedUlDtch" jdbcType="VARCHAR" property="pmprbuseduldtch" />
+    <result column="pmPrbUsedUlSrb" jdbcType="VARCHAR" property="pmprbusedulsrb" />
+    <result column="pmPdcpVolDlDrb" jdbcType="VARCHAR" property="pmpdcpvoldldrb" />
+    <result column="pmPdcpVolUlDrb" jdbcType="VARCHAR" property="pmpdcpvoluldrb" />
+    <result column="pmUeThpTimeDl" jdbcType="VARCHAR" property="pmuethptimedl" />
+    <result column="pmPdcpVolDlDrbLastTTI" jdbcType="VARCHAR" property="pmpdcpvoldldrblasttti" />
+    <result column="pmUeThpTimeUl" jdbcType="VARCHAR" property="pmuethptimeul" />
+    <result column="pmUeThpVolUl" jdbcType="VARCHAR" property="pmuethpvolul" />
+    <result column="pmSessionTimeUe" jdbcType="VARCHAR" property="pmsessiontimeue" />
+    <result column="pmSessionTimeDrb" jdbcType="VARCHAR" property="pmsessiontimedrb" />
+    <result column="pmActiveUeDlSum" jdbcType="VARCHAR" property="pmactiveuedlsum" />
+    <result column="pmActiveUeUlSum" jdbcType="VARCHAR" property="pmactiveueulsum" />
+    <result column="pmErabLevSamp" jdbcType="VARCHAR" property="pmerablevsamp" />
+    <result column="pmCellDowntimeAuto" jdbcType="VARCHAR" property="pmcelldowntimeauto" />
   </resultMap>
   <insert id="insert" parameterType="com.hongshen.sran_service.entity.UnicomCounterHistoryLte">
     <!--
       WARNING - @mbggenerated
       This element is automatically generated by MyBatis Generator, do not modify.
     -->
-    insert into unicom_counter_history_lte (name, time, counter1, 
-      counter2, counter3, counter4, 
-      counter5, counter6, counter7, 
-      counter8, counter9, counter10, 
-      counter11, counter12, counter13, 
-      counter14, counter15, counter16, 
-      counter17, counter18, counter19, 
-      counter20, counter21, counter22, 
-      counter23, counter24, counter25, 
-      counter26, counter27, counter28, 
-      counter29, counter30, counter31, 
-      counter32, counter33, counter34, 
-      counter35, counter36, counter37, 
-      counter38, counter39, counter40, 
-      counter41, counter42, counter43, 
-      counter44, counter45, counter46, 
-      counter47, counter48, counter49, 
-      counter50, counter51, counter52, 
-      counter53, counter54, counter55
-      )
-    values (#{name,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP}, #{counter1,jdbcType=VARCHAR}, 
-      #{counter2,jdbcType=VARCHAR}, #{counter3,jdbcType=VARCHAR}, #{counter4,jdbcType=VARCHAR}, 
-      #{counter5,jdbcType=VARCHAR}, #{counter6,jdbcType=VARCHAR}, #{counter7,jdbcType=VARCHAR}, 
-      #{counter8,jdbcType=VARCHAR}, #{counter9,jdbcType=VARCHAR}, #{counter10,jdbcType=VARCHAR}, 
-      #{counter11,jdbcType=VARCHAR}, #{counter12,jdbcType=VARCHAR}, #{counter13,jdbcType=VARCHAR}, 
-      #{counter14,jdbcType=VARCHAR}, #{counter15,jdbcType=VARCHAR}, #{counter16,jdbcType=VARCHAR}, 
-      #{counter17,jdbcType=VARCHAR}, #{counter18,jdbcType=VARCHAR}, #{counter19,jdbcType=VARCHAR}, 
-      #{counter20,jdbcType=VARCHAR}, #{counter21,jdbcType=VARCHAR}, #{counter22,jdbcType=VARCHAR}, 
-      #{counter23,jdbcType=VARCHAR}, #{counter24,jdbcType=VARCHAR}, #{counter25,jdbcType=VARCHAR}, 
-      #{counter26,jdbcType=VARCHAR}, #{counter27,jdbcType=VARCHAR}, #{counter28,jdbcType=VARCHAR}, 
-      #{counter29,jdbcType=VARCHAR}, #{counter30,jdbcType=VARCHAR}, #{counter31,jdbcType=VARCHAR}, 
-      #{counter32,jdbcType=VARCHAR}, #{counter33,jdbcType=VARCHAR}, #{counter34,jdbcType=VARCHAR}, 
-      #{counter35,jdbcType=VARCHAR}, #{counter36,jdbcType=VARCHAR}, #{counter37,jdbcType=VARCHAR}, 
-      #{counter38,jdbcType=VARCHAR}, #{counter39,jdbcType=VARCHAR}, #{counter40,jdbcType=VARCHAR}, 
-      #{counter41,jdbcType=VARCHAR}, #{counter42,jdbcType=VARCHAR}, #{counter43,jdbcType=VARCHAR}, 
-      #{counter44,jdbcType=VARCHAR}, #{counter45,jdbcType=VARCHAR}, #{counter46,jdbcType=VARCHAR}, 
-      #{counter47,jdbcType=VARCHAR}, #{counter48,jdbcType=VARCHAR}, #{counter49,jdbcType=VARCHAR}, 
-      #{counter50,jdbcType=VARCHAR}, #{counter51,jdbcType=VARCHAR}, #{counter52,jdbcType=VARCHAR}, 
-      #{counter53,jdbcType=VARCHAR}, #{counter54,jdbcType=VARCHAR}, #{counter55,jdbcType=VARCHAR}
-      )
+    insert into unicom_counter_history_lte (name, time, EUtranCellFDD_pmRrcConnEstabAtt, 
+      EUtranCellTDD_pmRrcConnEstabAtt, EUtranCellFDD_pmRrcConnEstabAttReatt, 
+      EUtranCellTDD_pmRrcConnEstabAttReatt, EUtranCellFDD_pmRrcConnEstabSucc, 
+      EUtranCellTDD_pmRrcConnEstabSucc, EUtranCellFDD_pmS1SigConnEstabAtt, 
+      EUtranCellTDD_pmS1SigConnEstabAtt, EUtranCellFDD_pmS1SigConnEstabSucc, 
+      EUtranCellTDD_pmS1SigConnEstabSucc, EUtranCellFDD_pmErabEstabAttInit, 
+      EUtranCellTDD_pmErabEstabAttInit, EUtranCellFDD_pmErabEstabAttAdded, 
+      EUtranCellTDD_pmErabEstabAttAdded, EUtranCellFDD_pmErabEstabSuccInit, 
+      EUtranCellTDD_pmErabEstabSuccInit, EUtranCellFDD_pmErabEstabSuccAdded, 
+      EUtranCellTDD_pmErabEstabSuccAdded, EUtranCellFDD_pmPagReceived, 
+      EUtranCellTDD_pmPagReceived, EUtranCellFDD_pmPagDiscarded, 
+      EUtranCellTDD_pmPagDiscarded, EUtranCellFDD_pmErabRelAbnormalEnbAct, 
+      EUtranCellTDD_pmErabRelAbnormalEnbAct, EUtranCellFDD_pmErabRelMmeAct, 
+      EUtranCellTDD_pmErabRelMmeAct, EUtranCellRelation_pmHoPrepAttLteInterF, 
+      EUtranCellRelation_pmHoPrepAttLteIntraF, EUtranCellRelation_pmHoExeSuccLteInterF, 
+      EUtranCellRelation_pmHoExeSuccLteIntraF, EUtranCellFDD_pmPrbUsedDlFirstTrans, 
+      EUtranCellTDD_pmPrbUsedDlFirstTrans, EUtranCellFDD_pmPrbUsedDlBcch, 
+      EUtranCellTDD_pmPrbUsedDlBcch, EUtranCellFDD_pmPrbUsedDlSrbFirstTrans, 
+      EUtranCellTDD_pmPrbUsedDlSrbFirstTrans, EUtranCellFDD_pmPrbUsedDlReTrans, 
+      EUtranCellTDD_pmPrbUsedDlReTrans, EUtranCellFDD_pmPrbUsedUlDtch, 
+      EUtranCellTDD_pmPrbUsedUlDtch, EUtranCellFDD_pmPrbUsedUlSrb, 
+      EUtranCellTDD_pmPrbUsedUlSrb, EUtranCellFDD_pmPdcpVolDlDrb, 
+      EUtranCellTDD_pmPdcpVolDlDrb, EUtranCellFDD_pmPdcpVolUlDrb, 
+      EUtranCellTDD_pmPdcpVolUlDrb, EUtranCellFDD_pmUeThpTimeDl, 
+      EUtranCellTDD_pmUeThpTimeDl, EUtranCellFDD_pmPdcpVolDlDrbLastTTI, 
+      EUtranCellTDD_pmPdcpVolDlDrbLastTTI, EUtranCellFDD_pmUeThpTimeUl, 
+      EUtranCellTDD_pmUeThpTimeUl, EUtranCellFDD_pmUeThpVolUl, 
+      EUtranCellTDD_pmUeThpVolUl, EUtranCellFDD_pmSessionTimeUe, 
+      EUtranCellTDD_pmSessionTimeUe, EUtranCellFDD_pmSessionTimeDrb, 
+      EUtranCellTDD_pmSessionTimeDrb, EUtranCellFDD_pmActiveUeDlSum, 
+      EUtranCellTDD_pmActiveUeDlSum, EUtranCellFDD_pmActiveUeUlSum, 
+      EUtranCellTDD_pmActiveUeUlSum, EUtranCellFDD_pmErabLevSamp, 
+      EUtranCellTDD_pmErabLevSamp, EUtranCellFDD_pmCellDowntimeAuto, 
+      EUtranCellTDD_pmCellDowntimeAuto, pmPrbUsedDlFirstTrans, 
+      pmPrbUsedDlBcch, pmPrbUsedDlDtch, pmPrbUsedDlPcch, 
+      pmPrbUsedDlSrbFirstTrans, pmPrbUsedDlReTrans, 
+      pmPrbUsedUlDtch, pmPrbUsedUlSrb, pmPdcpVolDlDrb, 
+      pmPdcpVolUlDrb, pmUeThpTimeDl, pmPdcpVolDlDrbLastTTI, 
+      pmUeThpTimeUl, pmUeThpVolUl, pmSessionTimeUe, 
+      pmSessionTimeDrb, pmActiveUeDlSum, pmActiveUeUlSum, 
+      pmErabLevSamp, pmCellDowntimeAuto)
+    values (#{name,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP}, #{eutrancellfddPmrrcconnestabatt,jdbcType=VARCHAR}, 
+      #{eutrancelltddPmrrcconnestabatt,jdbcType=VARCHAR}, #{eutrancellfddPmrrcconnestabattreatt,jdbcType=VARCHAR}, 
+      #{eutrancelltddPmrrcconnestabattreatt,jdbcType=VARCHAR}, #{eutrancellfddPmrrcconnestabsucc,jdbcType=VARCHAR}, 
+      #{eutrancelltddPmrrcconnestabsucc,jdbcType=VARCHAR}, #{eutrancellfddPms1sigconnestabatt,jdbcType=VARCHAR}, 
+      #{eutrancelltddPms1sigconnestabatt,jdbcType=VARCHAR}, #{eutrancellfddPms1sigconnestabsucc,jdbcType=VARCHAR}, 
+      #{eutrancelltddPms1sigconnestabsucc,jdbcType=VARCHAR}, #{eutrancellfddPmerabestabattinit,jdbcType=VARCHAR}, 
+      #{eutrancelltddPmerabestabattinit,jdbcType=VARCHAR}, #{eutrancellfddPmerabestabattadded,jdbcType=VARCHAR}, 
+      #{eutrancelltddPmerabestabattadded,jdbcType=VARCHAR}, #{eutrancellfddPmerabestabsuccinit,jdbcType=VARCHAR}, 
+      #{eutrancelltddPmerabestabsuccinit,jdbcType=VARCHAR}, #{eutrancellfddPmerabestabsuccadded,jdbcType=VARCHAR}, 
+      #{eutrancelltddPmerabestabsuccadded,jdbcType=VARCHAR}, #{eutrancellfddPmpagreceived,jdbcType=VARCHAR}, 
+      #{eutrancelltddPmpagreceived,jdbcType=VARCHAR}, #{eutrancellfddPmpagdiscarded,jdbcType=VARCHAR}, 
+      #{eutrancelltddPmpagdiscarded,jdbcType=VARCHAR}, #{eutrancellfddPmerabrelabnormalenbact,jdbcType=VARCHAR}, 
+      #{eutrancelltddPmerabrelabnormalenbact,jdbcType=VARCHAR}, #{eutrancellfddPmerabrelmmeact,jdbcType=VARCHAR}, 
+      #{eutrancelltddPmerabrelmmeact,jdbcType=VARCHAR}, #{eutrancellrelationPmhoprepattlteinterf,jdbcType=VARCHAR}, 
+      #{eutrancellrelationPmhoprepattlteintraf,jdbcType=VARCHAR}, #{eutrancellrelationPmhoexesucclteinterf,jdbcType=VARCHAR}, 
+      #{eutrancellrelationPmhoexesucclteintraf,jdbcType=VARCHAR}, #{eutrancellfddPmprbuseddlfirsttrans,jdbcType=VARCHAR}, 
+      #{eutrancelltddPmprbuseddlfirsttrans,jdbcType=VARCHAR}, #{eutrancellfddPmprbuseddlbcch,jdbcType=VARCHAR}, 
+      #{eutrancelltddPmprbuseddlbcch,jdbcType=VARCHAR}, #{eutrancellfddPmprbuseddlsrbfirsttrans,jdbcType=VARCHAR}, 
+      #{eutrancelltddPmprbuseddlsrbfirsttrans,jdbcType=VARCHAR}, #{eutrancellfddPmprbuseddlretrans,jdbcType=VARCHAR}, 
+      #{eutrancelltddPmprbuseddlretrans,jdbcType=VARCHAR}, #{eutrancellfddPmprbuseduldtch,jdbcType=VARCHAR}, 
+      #{eutrancelltddPmprbuseduldtch,jdbcType=VARCHAR}, #{eutrancellfddPmprbusedulsrb,jdbcType=VARCHAR}, 
+      #{eutrancelltddPmprbusedulsrb,jdbcType=VARCHAR}, #{eutrancellfddPmpdcpvoldldrb,jdbcType=VARCHAR}, 
+      #{eutrancelltddPmpdcpvoldldrb,jdbcType=VARCHAR}, #{eutrancellfddPmpdcpvoluldrb,jdbcType=VARCHAR}, 
+      #{eutrancelltddPmpdcpvoluldrb,jdbcType=VARCHAR}, #{eutrancellfddPmuethptimedl,jdbcType=VARCHAR}, 
+      #{eutrancelltddPmuethptimedl,jdbcType=VARCHAR}, #{eutrancellfddPmpdcpvoldldrblasttti,jdbcType=VARCHAR}, 
+      #{eutrancelltddPmpdcpvoldldrblasttti,jdbcType=VARCHAR}, #{eutrancellfddPmuethptimeul,jdbcType=VARCHAR}, 
+      #{eutrancelltddPmuethptimeul,jdbcType=VARCHAR}, #{eutrancellfddPmuethpvolul,jdbcType=VARCHAR}, 
+      #{eutrancelltddPmuethpvolul,jdbcType=VARCHAR}, #{eutrancellfddPmsessiontimeue,jdbcType=VARCHAR}, 
+      #{eutrancelltddPmsessiontimeue,jdbcType=VARCHAR}, #{eutrancellfddPmsessiontimedrb,jdbcType=VARCHAR}, 
+      #{eutrancelltddPmsessiontimedrb,jdbcType=VARCHAR}, #{eutrancellfddPmactiveuedlsum,jdbcType=VARCHAR}, 
+      #{eutrancelltddPmactiveuedlsum,jdbcType=VARCHAR}, #{eutrancellfddPmactiveueulsum,jdbcType=VARCHAR}, 
+      #{eutrancelltddPmactiveueulsum,jdbcType=VARCHAR}, #{eutrancellfddPmerablevsamp,jdbcType=VARCHAR}, 
+      #{eutrancelltddPmerablevsamp,jdbcType=VARCHAR}, #{eutrancellfddPmcelldowntimeauto,jdbcType=VARCHAR}, 
+      #{eutrancelltddPmcelldowntimeauto,jdbcType=VARCHAR}, #{pmprbuseddlfirsttrans,jdbcType=VARCHAR}, 
+      #{pmprbuseddlbcch,jdbcType=VARCHAR}, #{pmprbuseddldtch,jdbcType=VARCHAR}, #{pmprbuseddlpcch,jdbcType=VARCHAR}, 
+      #{pmprbuseddlsrbfirsttrans,jdbcType=VARCHAR}, #{pmprbuseddlretrans,jdbcType=VARCHAR}, 
+      #{pmprbuseduldtch,jdbcType=VARCHAR}, #{pmprbusedulsrb,jdbcType=VARCHAR}, #{pmpdcpvoldldrb,jdbcType=VARCHAR}, 
+      #{pmpdcpvoluldrb,jdbcType=VARCHAR}, #{pmuethptimedl,jdbcType=VARCHAR}, #{pmpdcpvoldldrblasttti,jdbcType=VARCHAR}, 
+      #{pmuethptimeul,jdbcType=VARCHAR}, #{pmuethpvolul,jdbcType=VARCHAR}, #{pmsessiontimeue,jdbcType=VARCHAR}, 
+      #{pmsessiontimedrb,jdbcType=VARCHAR}, #{pmactiveuedlsum,jdbcType=VARCHAR}, #{pmactiveueulsum,jdbcType=VARCHAR}, 
+      #{pmerablevsamp,jdbcType=VARCHAR}, #{pmcelldowntimeauto,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.hongshen.sran_service.entity.UnicomCounterHistoryLte">
     <!--
@@ -123,170 +196,263 @@
       <if test="time != null">
         time,
       </if>
-      <if test="counter1 != null">
-        counter1,
+      <if test="eutrancellfddPmrrcconnestabatt != null">
+        EUtranCellFDD_pmRrcConnEstabAtt,
       </if>
-      <if test="counter2 != null">
-        counter2,
+      <if test="eutrancelltddPmrrcconnestabatt != null">
+        EUtranCellTDD_pmRrcConnEstabAtt,
       </if>
-      <if test="counter3 != null">
-        counter3,
+      <if test="eutrancellfddPmrrcconnestabattreatt != null">
+        EUtranCellFDD_pmRrcConnEstabAttReatt,
       </if>
-      <if test="counter4 != null">
-        counter4,
+      <if test="eutrancelltddPmrrcconnestabattreatt != null">
+        EUtranCellTDD_pmRrcConnEstabAttReatt,
       </if>
-      <if test="counter5 != null">
-        counter5,
+      <if test="eutrancellfddPmrrcconnestabsucc != null">
+        EUtranCellFDD_pmRrcConnEstabSucc,
       </if>
-      <if test="counter6 != null">
-        counter6,
+      <if test="eutrancelltddPmrrcconnestabsucc != null">
+        EUtranCellTDD_pmRrcConnEstabSucc,
       </if>
-      <if test="counter7 != null">
-        counter7,
+      <if test="eutrancellfddPms1sigconnestabatt != null">
+        EUtranCellFDD_pmS1SigConnEstabAtt,
       </if>
-      <if test="counter8 != null">
-        counter8,
+      <if test="eutrancelltddPms1sigconnestabatt != null">
+        EUtranCellTDD_pmS1SigConnEstabAtt,
       </if>
-      <if test="counter9 != null">
-        counter9,
+      <if test="eutrancellfddPms1sigconnestabsucc != null">
+        EUtranCellFDD_pmS1SigConnEstabSucc,
       </if>
-      <if test="counter10 != null">
-        counter10,
+      <if test="eutrancelltddPms1sigconnestabsucc != null">
+        EUtranCellTDD_pmS1SigConnEstabSucc,
       </if>
-      <if test="counter11 != null">
-        counter11,
+      <if test="eutrancellfddPmerabestabattinit != null">
+        EUtranCellFDD_pmErabEstabAttInit,
       </if>
-      <if test="counter12 != null">
-        counter12,
+      <if test="eutrancelltddPmerabestabattinit != null">
+        EUtranCellTDD_pmErabEstabAttInit,
       </if>
-      <if test="counter13 != null">
-        counter13,
+      <if test="eutrancellfddPmerabestabattadded != null">
+        EUtranCellFDD_pmErabEstabAttAdded,
       </if>
-      <if test="counter14 != null">
-        counter14,
+      <if test="eutrancelltddPmerabestabattadded != null">
+        EUtranCellTDD_pmErabEstabAttAdded,
       </if>
-      <if test="counter15 != null">
-        counter15,
+      <if test="eutrancellfddPmerabestabsuccinit != null">
+        EUtranCellFDD_pmErabEstabSuccInit,
       </if>
-      <if test="counter16 != null">
-        counter16,
+      <if test="eutrancelltddPmerabestabsuccinit != null">
+        EUtranCellTDD_pmErabEstabSuccInit,
       </if>
-      <if test="counter17 != null">
-        counter17,
+      <if test="eutrancellfddPmerabestabsuccadded != null">
+        EUtranCellFDD_pmErabEstabSuccAdded,
       </if>
-      <if test="counter18 != null">
-        counter18,
+      <if test="eutrancelltddPmerabestabsuccadded != null">
+        EUtranCellTDD_pmErabEstabSuccAdded,
       </if>
-      <if test="counter19 != null">
-        counter19,
+      <if test="eutrancellfddPmpagreceived != null">
+        EUtranCellFDD_pmPagReceived,
       </if>
-      <if test="counter20 != null">
-        counter20,
+      <if test="eutrancelltddPmpagreceived != null">
+        EUtranCellTDD_pmPagReceived,
       </if>
-      <if test="counter21 != null">
-        counter21,
+      <if test="eutrancellfddPmpagdiscarded != null">
+        EUtranCellFDD_pmPagDiscarded,
       </if>
-      <if test="counter22 != null">
-        counter22,
+      <if test="eutrancelltddPmpagdiscarded != null">
+        EUtranCellTDD_pmPagDiscarded,
       </if>
-      <if test="counter23 != null">
-        counter23,
+      <if test="eutrancellfddPmerabrelabnormalenbact != null">
+        EUtranCellFDD_pmErabRelAbnormalEnbAct,
       </if>
-      <if test="counter24 != null">
-        counter24,
+      <if test="eutrancelltddPmerabrelabnormalenbact != null">
+        EUtranCellTDD_pmErabRelAbnormalEnbAct,
       </if>
-      <if test="counter25 != null">
-        counter25,
+      <if test="eutrancellfddPmerabrelmmeact != null">
+        EUtranCellFDD_pmErabRelMmeAct,
       </if>
-      <if test="counter26 != null">
-        counter26,
+      <if test="eutrancelltddPmerabrelmmeact != null">
+        EUtranCellTDD_pmErabRelMmeAct,
       </if>
-      <if test="counter27 != null">
-        counter27,
+      <if test="eutrancellrelationPmhoprepattlteinterf != null">
+        EUtranCellRelation_pmHoPrepAttLteInterF,
       </if>
-      <if test="counter28 != null">
-        counter28,
+      <if test="eutrancellrelationPmhoprepattlteintraf != null">
+        EUtranCellRelation_pmHoPrepAttLteIntraF,
       </if>
-      <if test="counter29 != null">
-        counter29,
+      <if test="eutrancellrelationPmhoexesucclteinterf != null">
+        EUtranCellRelation_pmHoExeSuccLteInterF,
       </if>
-      <if test="counter30 != null">
-        counter30,
+      <if test="eutrancellrelationPmhoexesucclteintraf != null">
+        EUtranCellRelation_pmHoExeSuccLteIntraF,
       </if>
-      <if test="counter31 != null">
-        counter31,
+      <if test="eutrancellfddPmprbuseddlfirsttrans != null">
+        EUtranCellFDD_pmPrbUsedDlFirstTrans,
       </if>
-      <if test="counter32 != null">
-        counter32,
+      <if test="eutrancelltddPmprbuseddlfirsttrans != null">
+        EUtranCellTDD_pmPrbUsedDlFirstTrans,
       </if>
-      <if test="counter33 != null">
-        counter33,
+      <if test="eutrancellfddPmprbuseddlbcch != null">
+        EUtranCellFDD_pmPrbUsedDlBcch,
       </if>
-      <if test="counter34 != null">
-        counter34,
+      <if test="eutrancelltddPmprbuseddlbcch != null">
+        EUtranCellTDD_pmPrbUsedDlBcch,
       </if>
-      <if test="counter35 != null">
-        counter35,
+      <if test="eutrancellfddPmprbuseddlsrbfirsttrans != null">
+        EUtranCellFDD_pmPrbUsedDlSrbFirstTrans,
       </if>
-      <if test="counter36 != null">
-        counter36,
+      <if test="eutrancelltddPmprbuseddlsrbfirsttrans != null">
+        EUtranCellTDD_pmPrbUsedDlSrbFirstTrans,
       </if>
-      <if test="counter37 != null">
-        counter37,
+      <if test="eutrancellfddPmprbuseddlretrans != null">
+        EUtranCellFDD_pmPrbUsedDlReTrans,
       </if>
-      <if test="counter38 != null">
-        counter38,
+      <if test="eutrancelltddPmprbuseddlretrans != null">
+        EUtranCellTDD_pmPrbUsedDlReTrans,
       </if>
-      <if test="counter39 != null">
-        counter39,
+      <if test="eutrancellfddPmprbuseduldtch != null">
+        EUtranCellFDD_pmPrbUsedUlDtch,
       </if>
-      <if test="counter40 != null">
-        counter40,
+      <if test="eutrancelltddPmprbuseduldtch != null">
+        EUtranCellTDD_pmPrbUsedUlDtch,
       </if>
-      <if test="counter41 != null">
-        counter41,
+      <if test="eutrancellfddPmprbusedulsrb != null">
+        EUtranCellFDD_pmPrbUsedUlSrb,
       </if>
-      <if test="counter42 != null">
-        counter42,
+      <if test="eutrancelltddPmprbusedulsrb != null">
+        EUtranCellTDD_pmPrbUsedUlSrb,
       </if>
-      <if test="counter43 != null">
-        counter43,
+      <if test="eutrancellfddPmpdcpvoldldrb != null">
+        EUtranCellFDD_pmPdcpVolDlDrb,
       </if>
-      <if test="counter44 != null">
-        counter44,
+      <if test="eutrancelltddPmpdcpvoldldrb != null">
+        EUtranCellTDD_pmPdcpVolDlDrb,
       </if>
-      <if test="counter45 != null">
-        counter45,
+      <if test="eutrancellfddPmpdcpvoluldrb != null">
+        EUtranCellFDD_pmPdcpVolUlDrb,
       </if>
-      <if test="counter46 != null">
-        counter46,
+      <if test="eutrancelltddPmpdcpvoluldrb != null">
+        EUtranCellTDD_pmPdcpVolUlDrb,
       </if>
-      <if test="counter47 != null">
-        counter47,
+      <if test="eutrancellfddPmuethptimedl != null">
+        EUtranCellFDD_pmUeThpTimeDl,
       </if>
-      <if test="counter48 != null">
-        counter48,
+      <if test="eutrancelltddPmuethptimedl != null">
+        EUtranCellTDD_pmUeThpTimeDl,
       </if>
-      <if test="counter49 != null">
-        counter49,
+      <if test="eutrancellfddPmpdcpvoldldrblasttti != null">
+        EUtranCellFDD_pmPdcpVolDlDrbLastTTI,
       </if>
-      <if test="counter50 != null">
-        counter50,
+      <if test="eutrancelltddPmpdcpvoldldrblasttti != null">
+        EUtranCellTDD_pmPdcpVolDlDrbLastTTI,
       </if>
-      <if test="counter51 != null">
-        counter51,
+      <if test="eutrancellfddPmuethptimeul != null">
+        EUtranCellFDD_pmUeThpTimeUl,
       </if>
-      <if test="counter52 != null">
-        counter52,
+      <if test="eutrancelltddPmuethptimeul != null">
+        EUtranCellTDD_pmUeThpTimeUl,
       </if>
-      <if test="counter53 != null">
-        counter53,
+      <if test="eutrancellfddPmuethpvolul != null">
+        EUtranCellFDD_pmUeThpVolUl,
       </if>
-      <if test="counter54 != null">
-        counter54,
+      <if test="eutrancelltddPmuethpvolul != null">
+        EUtranCellTDD_pmUeThpVolUl,
       </if>
-      <if test="counter55 != null">
-        counter55,
+      <if test="eutrancellfddPmsessiontimeue != null">
+        EUtranCellFDD_pmSessionTimeUe,
+      </if>
+      <if test="eutrancelltddPmsessiontimeue != null">
+        EUtranCellTDD_pmSessionTimeUe,
+      </if>
+      <if test="eutrancellfddPmsessiontimedrb != null">
+        EUtranCellFDD_pmSessionTimeDrb,
+      </if>
+      <if test="eutrancelltddPmsessiontimedrb != null">
+        EUtranCellTDD_pmSessionTimeDrb,
+      </if>
+      <if test="eutrancellfddPmactiveuedlsum != null">
+        EUtranCellFDD_pmActiveUeDlSum,
+      </if>
+      <if test="eutrancelltddPmactiveuedlsum != null">
+        EUtranCellTDD_pmActiveUeDlSum,
+      </if>
+      <if test="eutrancellfddPmactiveueulsum != null">
+        EUtranCellFDD_pmActiveUeUlSum,
+      </if>
+      <if test="eutrancelltddPmactiveueulsum != null">
+        EUtranCellTDD_pmActiveUeUlSum,
+      </if>
+      <if test="eutrancellfddPmerablevsamp != null">
+        EUtranCellFDD_pmErabLevSamp,
+      </if>
+      <if test="eutrancelltddPmerablevsamp != null">
+        EUtranCellTDD_pmErabLevSamp,
+      </if>
+      <if test="eutrancellfddPmcelldowntimeauto != null">
+        EUtranCellFDD_pmCellDowntimeAuto,
+      </if>
+      <if test="eutrancelltddPmcelldowntimeauto != null">
+        EUtranCellTDD_pmCellDowntimeAuto,
+      </if>
+      <if test="pmprbuseddlfirsttrans != null">
+        pmPrbUsedDlFirstTrans,
+      </if>
+      <if test="pmprbuseddlbcch != null">
+        pmPrbUsedDlBcch,
+      </if>
+      <if test="pmprbuseddldtch != null">
+        pmPrbUsedDlDtch,
+      </if>
+      <if test="pmprbuseddlpcch != null">
+        pmPrbUsedDlPcch,
+      </if>
+      <if test="pmprbuseddlsrbfirsttrans != null">
+        pmPrbUsedDlSrbFirstTrans,
+      </if>
+      <if test="pmprbuseddlretrans != null">
+        pmPrbUsedDlReTrans,
+      </if>
+      <if test="pmprbuseduldtch != null">
+        pmPrbUsedUlDtch,
+      </if>
+      <if test="pmprbusedulsrb != null">
+        pmPrbUsedUlSrb,
+      </if>
+      <if test="pmpdcpvoldldrb != null">
+        pmPdcpVolDlDrb,
+      </if>
+      <if test="pmpdcpvoluldrb != null">
+        pmPdcpVolUlDrb,
+      </if>
+      <if test="pmuethptimedl != null">
+        pmUeThpTimeDl,
+      </if>
+      <if test="pmpdcpvoldldrblasttti != null">
+        pmPdcpVolDlDrbLastTTI,
+      </if>
+      <if test="pmuethptimeul != null">
+        pmUeThpTimeUl,
+      </if>
+      <if test="pmuethpvolul != null">
+        pmUeThpVolUl,
+      </if>
+      <if test="pmsessiontimeue != null">
+        pmSessionTimeUe,
+      </if>
+      <if test="pmsessiontimedrb != null">
+        pmSessionTimeDrb,
+      </if>
+      <if test="pmactiveuedlsum != null">
+        pmActiveUeDlSum,
+      </if>
+      <if test="pmactiveueulsum != null">
+        pmActiveUeUlSum,
+      </if>
+      <if test="pmerablevsamp != null">
+        pmErabLevSamp,
+      </if>
+      <if test="pmcelldowntimeauto != null">
+        pmCellDowntimeAuto,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -296,170 +462,263 @@
       <if test="time != null">
         #{time,jdbcType=TIMESTAMP},
       </if>
-      <if test="counter1 != null">
-        #{counter1,jdbcType=VARCHAR},
+      <if test="eutrancellfddPmrrcconnestabatt != null">
+        #{eutrancellfddPmrrcconnestabatt,jdbcType=VARCHAR},
       </if>
-      <if test="counter2 != null">
-        #{counter2,jdbcType=VARCHAR},
+      <if test="eutrancelltddPmrrcconnestabatt != null">
+        #{eutrancelltddPmrrcconnestabatt,jdbcType=VARCHAR},
       </if>
-      <if test="counter3 != null">
-        #{counter3,jdbcType=VARCHAR},
+      <if test="eutrancellfddPmrrcconnestabattreatt != null">
+        #{eutrancellfddPmrrcconnestabattreatt,jdbcType=VARCHAR},
       </if>
-      <if test="counter4 != null">
-        #{counter4,jdbcType=VARCHAR},
+      <if test="eutrancelltddPmrrcconnestabattreatt != null">
+        #{eutrancelltddPmrrcconnestabattreatt,jdbcType=VARCHAR},
       </if>
-      <if test="counter5 != null">
-        #{counter5,jdbcType=VARCHAR},
+      <if test="eutrancellfddPmrrcconnestabsucc != null">
+        #{eutrancellfddPmrrcconnestabsucc,jdbcType=VARCHAR},
       </if>
-      <if test="counter6 != null">
-        #{counter6,jdbcType=VARCHAR},
+      <if test="eutrancelltddPmrrcconnestabsucc != null">
+        #{eutrancelltddPmrrcconnestabsucc,jdbcType=VARCHAR},
       </if>
-      <if test="counter7 != null">
-        #{counter7,jdbcType=VARCHAR},
+      <if test="eutrancellfddPms1sigconnestabatt != null">
+        #{eutrancellfddPms1sigconnestabatt,jdbcType=VARCHAR},
       </if>
-      <if test="counter8 != null">
-        #{counter8,jdbcType=VARCHAR},
+      <if test="eutrancelltddPms1sigconnestabatt != null">
+        #{eutrancelltddPms1sigconnestabatt,jdbcType=VARCHAR},
       </if>
-      <if test="counter9 != null">
-        #{counter9,jdbcType=VARCHAR},
+      <if test="eutrancellfddPms1sigconnestabsucc != null">
+        #{eutrancellfddPms1sigconnestabsucc,jdbcType=VARCHAR},
       </if>
-      <if test="counter10 != null">
-        #{counter10,jdbcType=VARCHAR},
+      <if test="eutrancelltddPms1sigconnestabsucc != null">
+        #{eutrancelltddPms1sigconnestabsucc,jdbcType=VARCHAR},
       </if>
-      <if test="counter11 != null">
-        #{counter11,jdbcType=VARCHAR},
+      <if test="eutrancellfddPmerabestabattinit != null">
+        #{eutrancellfddPmerabestabattinit,jdbcType=VARCHAR},
       </if>
-      <if test="counter12 != null">
-        #{counter12,jdbcType=VARCHAR},
+      <if test="eutrancelltddPmerabestabattinit != null">
+        #{eutrancelltddPmerabestabattinit,jdbcType=VARCHAR},
       </if>
-      <if test="counter13 != null">
-        #{counter13,jdbcType=VARCHAR},
+      <if test="eutrancellfddPmerabestabattadded != null">
+        #{eutrancellfddPmerabestabattadded,jdbcType=VARCHAR},
       </if>
-      <if test="counter14 != null">
-        #{counter14,jdbcType=VARCHAR},
+      <if test="eutrancelltddPmerabestabattadded != null">
+        #{eutrancelltddPmerabestabattadded,jdbcType=VARCHAR},
       </if>
-      <if test="counter15 != null">
-        #{counter15,jdbcType=VARCHAR},
+      <if test="eutrancellfddPmerabestabsuccinit != null">
+        #{eutrancellfddPmerabestabsuccinit,jdbcType=VARCHAR},
       </if>
-      <if test="counter16 != null">
-        #{counter16,jdbcType=VARCHAR},
+      <if test="eutrancelltddPmerabestabsuccinit != null">
+        #{eutrancelltddPmerabestabsuccinit,jdbcType=VARCHAR},
       </if>
-      <if test="counter17 != null">
-        #{counter17,jdbcType=VARCHAR},
+      <if test="eutrancellfddPmerabestabsuccadded != null">
+        #{eutrancellfddPmerabestabsuccadded,jdbcType=VARCHAR},
       </if>
-      <if test="counter18 != null">
-        #{counter18,jdbcType=VARCHAR},
+      <if test="eutrancelltddPmerabestabsuccadded != null">
+        #{eutrancelltddPmerabestabsuccadded,jdbcType=VARCHAR},
       </if>
-      <if test="counter19 != null">
-        #{counter19,jdbcType=VARCHAR},
+      <if test="eutrancellfddPmpagreceived != null">
+        #{eutrancellfddPmpagreceived,jdbcType=VARCHAR},
       </if>
-      <if test="counter20 != null">
-        #{counter20,jdbcType=VARCHAR},
+      <if test="eutrancelltddPmpagreceived != null">
+        #{eutrancelltddPmpagreceived,jdbcType=VARCHAR},
       </if>
-      <if test="counter21 != null">
-        #{counter21,jdbcType=VARCHAR},
+      <if test="eutrancellfddPmpagdiscarded != null">
+        #{eutrancellfddPmpagdiscarded,jdbcType=VARCHAR},
       </if>
-      <if test="counter22 != null">
-        #{counter22,jdbcType=VARCHAR},
+      <if test="eutrancelltddPmpagdiscarded != null">
+        #{eutrancelltddPmpagdiscarded,jdbcType=VARCHAR},
       </if>
-      <if test="counter23 != null">
-        #{counter23,jdbcType=VARCHAR},
+      <if test="eutrancellfddPmerabrelabnormalenbact != null">
+        #{eutrancellfddPmerabrelabnormalenbact,jdbcType=VARCHAR},
       </if>
-      <if test="counter24 != null">
-        #{counter24,jdbcType=VARCHAR},
+      <if test="eutrancelltddPmerabrelabnormalenbact != null">
+        #{eutrancelltddPmerabrelabnormalenbact,jdbcType=VARCHAR},
       </if>
-      <if test="counter25 != null">
-        #{counter25,jdbcType=VARCHAR},
+      <if test="eutrancellfddPmerabrelmmeact != null">
+        #{eutrancellfddPmerabrelmmeact,jdbcType=VARCHAR},
       </if>
-      <if test="counter26 != null">
-        #{counter26,jdbcType=VARCHAR},
+      <if test="eutrancelltddPmerabrelmmeact != null">
+        #{eutrancelltddPmerabrelmmeact,jdbcType=VARCHAR},
       </if>
-      <if test="counter27 != null">
-        #{counter27,jdbcType=VARCHAR},
+      <if test="eutrancellrelationPmhoprepattlteinterf != null">
+        #{eutrancellrelationPmhoprepattlteinterf,jdbcType=VARCHAR},
       </if>
-      <if test="counter28 != null">
-        #{counter28,jdbcType=VARCHAR},
+      <if test="eutrancellrelationPmhoprepattlteintraf != null">
+        #{eutrancellrelationPmhoprepattlteintraf,jdbcType=VARCHAR},
       </if>
-      <if test="counter29 != null">
-        #{counter29,jdbcType=VARCHAR},
+      <if test="eutrancellrelationPmhoexesucclteinterf != null">
+        #{eutrancellrelationPmhoexesucclteinterf,jdbcType=VARCHAR},
       </if>
-      <if test="counter30 != null">
-        #{counter30,jdbcType=VARCHAR},
+      <if test="eutrancellrelationPmhoexesucclteintraf != null">
+        #{eutrancellrelationPmhoexesucclteintraf,jdbcType=VARCHAR},
       </if>
-      <if test="counter31 != null">
-        #{counter31,jdbcType=VARCHAR},
+      <if test="eutrancellfddPmprbuseddlfirsttrans != null">
+        #{eutrancellfddPmprbuseddlfirsttrans,jdbcType=VARCHAR},
       </if>
-      <if test="counter32 != null">
-        #{counter32,jdbcType=VARCHAR},
+      <if test="eutrancelltddPmprbuseddlfirsttrans != null">
+        #{eutrancelltddPmprbuseddlfirsttrans,jdbcType=VARCHAR},
       </if>
-      <if test="counter33 != null">
-        #{counter33,jdbcType=VARCHAR},
+      <if test="eutrancellfddPmprbuseddlbcch != null">
+        #{eutrancellfddPmprbuseddlbcch,jdbcType=VARCHAR},
       </if>
-      <if test="counter34 != null">
-        #{counter34,jdbcType=VARCHAR},
+      <if test="eutrancelltddPmprbuseddlbcch != null">
+        #{eutrancelltddPmprbuseddlbcch,jdbcType=VARCHAR},
       </if>
-      <if test="counter35 != null">
-        #{counter35,jdbcType=VARCHAR},
+      <if test="eutrancellfddPmprbuseddlsrbfirsttrans != null">
+        #{eutrancellfddPmprbuseddlsrbfirsttrans,jdbcType=VARCHAR},
       </if>
-      <if test="counter36 != null">
-        #{counter36,jdbcType=VARCHAR},
+      <if test="eutrancelltddPmprbuseddlsrbfirsttrans != null">
+        #{eutrancelltddPmprbuseddlsrbfirsttrans,jdbcType=VARCHAR},
       </if>
-      <if test="counter37 != null">
-        #{counter37,jdbcType=VARCHAR},
+      <if test="eutrancellfddPmprbuseddlretrans != null">
+        #{eutrancellfddPmprbuseddlretrans,jdbcType=VARCHAR},
       </if>
-      <if test="counter38 != null">
-        #{counter38,jdbcType=VARCHAR},
+      <if test="eutrancelltddPmprbuseddlretrans != null">
+        #{eutrancelltddPmprbuseddlretrans,jdbcType=VARCHAR},
       </if>
-      <if test="counter39 != null">
-        #{counter39,jdbcType=VARCHAR},
+      <if test="eutrancellfddPmprbuseduldtch != null">
+        #{eutrancellfddPmprbuseduldtch,jdbcType=VARCHAR},
       </if>
-      <if test="counter40 != null">
-        #{counter40,jdbcType=VARCHAR},
+      <if test="eutrancelltddPmprbuseduldtch != null">
+        #{eutrancelltddPmprbuseduldtch,jdbcType=VARCHAR},
       </if>
-      <if test="counter41 != null">
-        #{counter41,jdbcType=VARCHAR},
+      <if test="eutrancellfddPmprbusedulsrb != null">
+        #{eutrancellfddPmprbusedulsrb,jdbcType=VARCHAR},
       </if>
-      <if test="counter42 != null">
-        #{counter42,jdbcType=VARCHAR},
+      <if test="eutrancelltddPmprbusedulsrb != null">
+        #{eutrancelltddPmprbusedulsrb,jdbcType=VARCHAR},
       </if>
-      <if test="counter43 != null">
-        #{counter43,jdbcType=VARCHAR},
+      <if test="eutrancellfddPmpdcpvoldldrb != null">
+        #{eutrancellfddPmpdcpvoldldrb,jdbcType=VARCHAR},
       </if>
-      <if test="counter44 != null">
-        #{counter44,jdbcType=VARCHAR},
+      <if test="eutrancelltddPmpdcpvoldldrb != null">
+        #{eutrancelltddPmpdcpvoldldrb,jdbcType=VARCHAR},
       </if>
-      <if test="counter45 != null">
-        #{counter45,jdbcType=VARCHAR},
+      <if test="eutrancellfddPmpdcpvoluldrb != null">
+        #{eutrancellfddPmpdcpvoluldrb,jdbcType=VARCHAR},
       </if>
-      <if test="counter46 != null">
-        #{counter46,jdbcType=VARCHAR},
+      <if test="eutrancelltddPmpdcpvoluldrb != null">
+        #{eutrancelltddPmpdcpvoluldrb,jdbcType=VARCHAR},
       </if>
-      <if test="counter47 != null">
-        #{counter47,jdbcType=VARCHAR},
+      <if test="eutrancellfddPmuethptimedl != null">
+        #{eutrancellfddPmuethptimedl,jdbcType=VARCHAR},
       </if>
-      <if test="counter48 != null">
-        #{counter48,jdbcType=VARCHAR},
+      <if test="eutrancelltddPmuethptimedl != null">
+        #{eutrancelltddPmuethptimedl,jdbcType=VARCHAR},
       </if>
-      <if test="counter49 != null">
-        #{counter49,jdbcType=VARCHAR},
+      <if test="eutrancellfddPmpdcpvoldldrblasttti != null">
+        #{eutrancellfddPmpdcpvoldldrblasttti,jdbcType=VARCHAR},
       </if>
-      <if test="counter50 != null">
-        #{counter50,jdbcType=VARCHAR},
+      <if test="eutrancelltddPmpdcpvoldldrblasttti != null">
+        #{eutrancelltddPmpdcpvoldldrblasttti,jdbcType=VARCHAR},
       </if>
-      <if test="counter51 != null">
-        #{counter51,jdbcType=VARCHAR},
+      <if test="eutrancellfddPmuethptimeul != null">
+        #{eutrancellfddPmuethptimeul,jdbcType=VARCHAR},
       </if>
-      <if test="counter52 != null">
-        #{counter52,jdbcType=VARCHAR},
+      <if test="eutrancelltddPmuethptimeul != null">
+        #{eutrancelltddPmuethptimeul,jdbcType=VARCHAR},
       </if>
-      <if test="counter53 != null">
-        #{counter53,jdbcType=VARCHAR},
+      <if test="eutrancellfddPmuethpvolul != null">
+        #{eutrancellfddPmuethpvolul,jdbcType=VARCHAR},
       </if>
-      <if test="counter54 != null">
-        #{counter54,jdbcType=VARCHAR},
+      <if test="eutrancelltddPmuethpvolul != null">
+        #{eutrancelltddPmuethpvolul,jdbcType=VARCHAR},
       </if>
-      <if test="counter55 != null">
-        #{counter55,jdbcType=VARCHAR},
+      <if test="eutrancellfddPmsessiontimeue != null">
+        #{eutrancellfddPmsessiontimeue,jdbcType=VARCHAR},
+      </if>
+      <if test="eutrancelltddPmsessiontimeue != null">
+        #{eutrancelltddPmsessiontimeue,jdbcType=VARCHAR},
+      </if>
+      <if test="eutrancellfddPmsessiontimedrb != null">
+        #{eutrancellfddPmsessiontimedrb,jdbcType=VARCHAR},
+      </if>
+      <if test="eutrancelltddPmsessiontimedrb != null">
+        #{eutrancelltddPmsessiontimedrb,jdbcType=VARCHAR},
+      </if>
+      <if test="eutrancellfddPmactiveuedlsum != null">
+        #{eutrancellfddPmactiveuedlsum,jdbcType=VARCHAR},
+      </if>
+      <if test="eutrancelltddPmactiveuedlsum != null">
+        #{eutrancelltddPmactiveuedlsum,jdbcType=VARCHAR},
+      </if>
+      <if test="eutrancellfddPmactiveueulsum != null">
+        #{eutrancellfddPmactiveueulsum,jdbcType=VARCHAR},
+      </if>
+      <if test="eutrancelltddPmactiveueulsum != null">
+        #{eutrancelltddPmactiveueulsum,jdbcType=VARCHAR},
+      </if>
+      <if test="eutrancellfddPmerablevsamp != null">
+        #{eutrancellfddPmerablevsamp,jdbcType=VARCHAR},
+      </if>
+      <if test="eutrancelltddPmerablevsamp != null">
+        #{eutrancelltddPmerablevsamp,jdbcType=VARCHAR},
+      </if>
+      <if test="eutrancellfddPmcelldowntimeauto != null">
+        #{eutrancellfddPmcelldowntimeauto,jdbcType=VARCHAR},
+      </if>
+      <if test="eutrancelltddPmcelldowntimeauto != null">
+        #{eutrancelltddPmcelldowntimeauto,jdbcType=VARCHAR},
+      </if>
+      <if test="pmprbuseddlfirsttrans != null">
+        #{pmprbuseddlfirsttrans,jdbcType=VARCHAR},
+      </if>
+      <if test="pmprbuseddlbcch != null">
+        #{pmprbuseddlbcch,jdbcType=VARCHAR},
+      </if>
+      <if test="pmprbuseddldtch != null">
+        #{pmprbuseddldtch,jdbcType=VARCHAR},
+      </if>
+      <if test="pmprbuseddlpcch != null">
+        #{pmprbuseddlpcch,jdbcType=VARCHAR},
+      </if>
+      <if test="pmprbuseddlsrbfirsttrans != null">
+        #{pmprbuseddlsrbfirsttrans,jdbcType=VARCHAR},
+      </if>
+      <if test="pmprbuseddlretrans != null">
+        #{pmprbuseddlretrans,jdbcType=VARCHAR},
+      </if>
+      <if test="pmprbuseduldtch != null">
+        #{pmprbuseduldtch,jdbcType=VARCHAR},
+      </if>
+      <if test="pmprbusedulsrb != null">
+        #{pmprbusedulsrb,jdbcType=VARCHAR},
+      </if>
+      <if test="pmpdcpvoldldrb != null">
+        #{pmpdcpvoldldrb,jdbcType=VARCHAR},
+      </if>
+      <if test="pmpdcpvoluldrb != null">
+        #{pmpdcpvoluldrb,jdbcType=VARCHAR},
+      </if>
+      <if test="pmuethptimedl != null">
+        #{pmuethptimedl,jdbcType=VARCHAR},
+      </if>
+      <if test="pmpdcpvoldldrblasttti != null">
+        #{pmpdcpvoldldrblasttti,jdbcType=VARCHAR},
+      </if>
+      <if test="pmuethptimeul != null">
+        #{pmuethptimeul,jdbcType=VARCHAR},
+      </if>
+      <if test="pmuethpvolul != null">
+        #{pmuethpvolul,jdbcType=VARCHAR},
+      </if>
+      <if test="pmsessiontimeue != null">
+        #{pmsessiontimeue,jdbcType=VARCHAR},
+      </if>
+      <if test="pmsessiontimedrb != null">
+        #{pmsessiontimedrb,jdbcType=VARCHAR},
+      </if>
+      <if test="pmactiveuedlsum != null">
+        #{pmactiveuedlsum,jdbcType=VARCHAR},
+      </if>
+      <if test="pmactiveueulsum != null">
+        #{pmactiveueulsum,jdbcType=VARCHAR},
+      </if>
+      <if test="pmerablevsamp != null">
+        #{pmerablevsamp,jdbcType=VARCHAR},
+      </if>
+      <if test="pmcelldowntimeauto != null">
+        #{pmcelldowntimeauto,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>

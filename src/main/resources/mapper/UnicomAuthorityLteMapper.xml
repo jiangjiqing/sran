@@ -111,7 +111,7 @@
     WHERE authority_name = #{authorityName}
   </delete>
 
-  <select id="getAuthByName" resultType="com.alibaba.fastjson.JSONObject" parameterType="com.alibaba.fastjson.JSONObject">
+  <select id="getAuthByName" parameterType="com.alibaba.fastjson.JSONObject" resultType="com.alibaba.fastjson.JSONObject">
     SELECT * FROM unicom_authority_lte WHERE authority_name = #{param.authorityName}
   </select>
 

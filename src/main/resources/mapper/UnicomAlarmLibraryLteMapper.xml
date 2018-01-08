@@ -8,7 +8,7 @@
     -->
     <id column="alarm_name" jdbcType="VARCHAR" property="alarmName" />
     <result column="alarm_meaning" jdbcType="VARCHAR" property="alarmMeaning" />
-    <result column="alarm_level_id" jdbcType="TINYINT" property="alarmLevelId" />
+    <result column="alarm_level_id" jdbcType="VARCHAR" property="alarmLevelId" />
     <result column="alarm_type" jdbcType="VARCHAR" property="alarmType" />
     <result column="alarm_scope" jdbcType="VARCHAR" property="alarmScope" />
   </resultMap>
@@ -61,7 +61,7 @@
     insert into unicom_alarm_library_lte (alarm_name, alarm_meaning, alarm_level_id, 
       alarm_type, alarm_scope, recommend
       )
-    values (#{alarmName,jdbcType=VARCHAR}, #{alarmMeaning,jdbcType=VARCHAR}, #{alarmLevelId,jdbcType=TINYINT}, 
+    values (#{alarmName,jdbcType=VARCHAR}, #{alarmMeaning,jdbcType=VARCHAR}, #{alarmLevelId,jdbcType=VARCHAR}, 
       #{alarmType,jdbcType=VARCHAR}, #{alarmScope,jdbcType=VARCHAR}, #{recommend,jdbcType=LONGVARCHAR}
       )
   </insert>
@@ -99,7 +99,7 @@
         #{alarmMeaning,jdbcType=VARCHAR},
       </if>
       <if test="alarmLevelId != null">
-        #{alarmLevelId,jdbcType=TINYINT},
+        #{alarmLevelId,jdbcType=VARCHAR},
       </if>
       <if test="alarmType != null">
         #{alarmType,jdbcType=VARCHAR},
@@ -123,7 +123,7 @@
         alarm_meaning = #{alarmMeaning,jdbcType=VARCHAR},
       </if>
       <if test="alarmLevelId != null">
-        alarm_level_id = #{alarmLevelId,jdbcType=TINYINT},
+        alarm_level_id = #{alarmLevelId,jdbcType=VARCHAR},
       </if>
       <if test="alarmType != null">
         alarm_type = #{alarmType,jdbcType=VARCHAR},
@@ -144,7 +144,7 @@
     -->
     update unicom_alarm_library_lte
     set alarm_meaning = #{alarmMeaning,jdbcType=VARCHAR},
-      alarm_level_id = #{alarmLevelId,jdbcType=TINYINT},
+      alarm_level_id = #{alarmLevelId,jdbcType=VARCHAR},
       alarm_type = #{alarmType,jdbcType=VARCHAR},
       alarm_scope = #{alarmScope,jdbcType=VARCHAR},
       recommend = #{recommend,jdbcType=LONGVARCHAR}
@@ -157,7 +157,7 @@
     -->
     update unicom_alarm_library_lte
     set alarm_meaning = #{alarmMeaning,jdbcType=VARCHAR},
-      alarm_level_id = #{alarmLevelId,jdbcType=TINYINT},
+      alarm_level_id = #{alarmLevelId,jdbcType=VARCHAR},
       alarm_type = #{alarmType,jdbcType=VARCHAR},
       alarm_scope = #{alarmScope,jdbcType=VARCHAR}
     where alarm_name = #{alarmName,jdbcType=VARCHAR}

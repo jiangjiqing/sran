@@ -10,7 +10,7 @@
     <result column="mo" jdbcType="VARCHAR" property="mo" />
     <result column="alarm_time" jdbcType="VARCHAR" property="alarmTime" />
     <result column="alarm_name_id" jdbcType="VARCHAR" property="alarmNameId" />
-    <result column="alarm_level_id" jdbcType="TINYINT" property="alarmLevelId" />
+    <result column="alarm_level_id" jdbcType="VARCHAR" property="alarmLevelId" />
     <result column="cell_name" jdbcType="VARCHAR" property="cellName" />
   </resultMap>
   <insert id="insert" parameterType="com.hongshen.sran_service.entity.UnicomAlarmLte">
@@ -22,7 +22,7 @@
       alarm_name_id, alarm_level_id, cell_name
       )
     values (#{nodeName,jdbcType=VARCHAR}, #{mo,jdbcType=VARCHAR}, #{alarmTime,jdbcType=VARCHAR}, 
-      #{alarmNameId,jdbcType=VARCHAR}, #{alarmLevelId,jdbcType=TINYINT}, #{cellName,jdbcType=VARCHAR}
+      #{alarmNameId,jdbcType=VARCHAR}, #{alarmLevelId,jdbcType=VARCHAR}, #{cellName,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.hongshen.sran_service.entity.UnicomAlarmLte">
@@ -65,7 +65,7 @@
         #{alarmNameId,jdbcType=VARCHAR},
       </if>
       <if test="alarmLevelId != null">
-        #{alarmLevelId,jdbcType=TINYINT},
+        #{alarmLevelId,jdbcType=VARCHAR},
       </if>
       <if test="cellName != null">
         #{cellName,jdbcType=VARCHAR},
@@ -153,7 +153,7 @@
     WHERE cell_name = #{cellName}
   </select>
 
-  <select id="getAlarmInfoList1" resultType="com.alibaba.fastjson.JSONObject" parameterType="java.lang.String">
+  <select id="getAlarmInfoList1" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
 SELECT b.node_name nodeName,
 b.cell_name cellName,
 b.alarm_time alarmTime,
