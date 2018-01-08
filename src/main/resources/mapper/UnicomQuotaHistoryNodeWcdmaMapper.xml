@@ -183,8 +183,10 @@
   </select>
 
   <select id="addColumnNode" parameterType="java.lang.String">
-
     alter table unicom_quota_history_node_wcdma add ${formula} varchar(5) Null;
+  </select>
 
+  <select id="deleteClumNode" parameterType="java.lang.String">
+    alter table unicom_quota_history_node_wcdma drop column `${quotaName}`;
   </select>
 </mapper>

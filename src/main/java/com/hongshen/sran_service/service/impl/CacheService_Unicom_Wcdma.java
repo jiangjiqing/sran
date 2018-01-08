@@ -112,6 +112,34 @@ public class CacheService_Unicom_Wcdma implements CacheService {
     }
 
     @Override
+    public List<String> getCounterNameList(Boolean isValid) {
+
+        if (counterList == null || counterList.isEmpty()){
+            resetCounterList();
+        }
+
+        List<String> resultList = new ArrayList<>();
+
+        for (JSONObject counter : counterList) {
+
+            // Valid counter
+            if (isValid && !counter.getBoolean("status")) {
+                continue;
+
+            } else {
+                resultList.add(counter.getString("name"));
+            }
+        }
+        return resultList;
+    }
+
+    @Override
+    public List<String> getCounterNameListProcessed(Boolean isValid) {
+        // no need to process
+        return getCounterNameList(isValid);
+    }
+
+    @Override
     public JSONObject getCounterByName(String name) {
 
         for (JSONObject counter : counterList){

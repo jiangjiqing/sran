@@ -428,9 +428,7 @@
   </select>
 
   <select id="addColumnCounter" parameterType="java.lang.String">
-
     ALTER TABLE unicom_counter_history_wcdma ADD COLUMN `${name}`  ${type} ${nullable};
-
   </select>
 
   <select id="getColumns" resultType="com.alibaba.fastjson.JSONObject">
@@ -439,5 +437,9 @@
 
   <select id="deleteColumnCounter" parameterType="java.lang.String">
     alter table unicom_counter_history_wcdma drop column `${colum}`;
+  </select>
+
+  <select id="getCounterColumnAttribute" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
+    show columns from unicom_counter_history_lte where Field='${name}'
   </select>
 </mapper>

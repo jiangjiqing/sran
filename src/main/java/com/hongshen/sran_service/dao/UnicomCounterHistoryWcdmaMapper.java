@@ -58,4 +58,6 @@ public interface UnicomCounterHistoryWcdmaMapper {
     List<JSONObject> getColumns();
 
     void deleteColumnCounter(@Param("colum") String colum);
+
+    JSONObject getCounterColumnAttribute(@Param("name") String name);
 }

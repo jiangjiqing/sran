@@ -28,7 +28,7 @@ public class QuotaService_Unicom_Wcdma implements QuotaService {
     private UnicomCounterWcdmaMapper counterMapper;
 
     @Autowired
-    private UnicomCounterHistoryWcdmaMapper counterHistoryWcdmaMapper;
+    private UnicomCounterHistoryWcdmaMapper counterHistoryaMapper;
 
     @Autowired
     private UnicomQuotaHistoryGroupWcdmaMapper quotaHistoryGroupMapper;
@@ -154,7 +154,7 @@ public class QuotaService_Unicom_Wcdma implements QuotaService {
 
     @Override
     public List<JSONObject> getCounterExportGroup(String counters, Date start, Date end, String condition) {
-        return counterHistoryWcdmaMapper.dowloadCounter(counters,start,end,condition);
+        return counterHistoryaMapper.dowloadCounter(counters,start,end,condition);
     }
 
     @Override
@@ -232,25 +232,7 @@ public class QuotaService_Unicom_Wcdma implements QuotaService {
 
     @Override
     public List<JSONObject> getCounterTime() {
-        return counterHistoryWcdmaMapper.getCounterTime();
-    }
-
-    @Override
-    public void addColumnGroup(String formula) {
-
-         quotaHistoryGroupMapper.addColumnGroup(formula);
-    }
-
-    @Override
-    public void addColumnNode(String formula) {
-
-        quotaHistoryNodeMapper.addColumnNode(formula);
-    }
-
-    @Override
-    public void addColumnCell(String formula) {
-
-         quotaHistoryCellMapper.addColumnCell(formula);
+        return counterHistoryaMapper.getCounterTime();
     }
 
     @Override
@@ -260,26 +242,87 @@ public class QuotaService_Unicom_Wcdma implements QuotaService {
 
     @Override
     public void addColumnCounter(String name,String nullable,String type) {
-        counterHistoryWcdmaMapper.addColumnCounter(name,nullable,type);
+        counterHistoryaMapper.addColumnCounter(name,nullable,type);
     }
 
     @Override
     public List<JSONObject> getCounterList() {
         return counterMapper.getCounterList();
     }
-    @Override
-    public List<JSONObject> getColumns() {
-        return counterHistoryWcdmaMapper.getColumns();
-    }
 
     @Override
     public void deleteColumnCounter(String colum) {
-        counterHistoryWcdmaMapper.deleteColumnCounter(colum);
+        counterHistoryaMapper.deleteColumnCounter(colum);
     }
 
     @Override
     public int deleteCounters() {
         return counterMapper.deleteCounters();
+    }
+
+    @Override
+    public JSONObject getCounterColumnAttribute(String name) {
+        return counterHistoryaMapper.getCounterColumnAttribute(name);
+    }
+
+    @Override
+    public void addGroupQuotaColumn(String formula) {
+        quotaHistoryGroupMapper.addColumn(formula);
+    }
+
+    @Override
+    public void addNodeQuotaColumn(String formula) {
+        quotaHistoryNodeMapper.addColumn(formula);
+    }
+
+    @Override
+    public void addCellQuotaColumn(String formula) {
+        quotaHistoryCellMapper.addColumn(formula);
+    }
+
+    @Override
+    public void deleteGroupQuotaColumn(String quotaName) {
+        quotaHistoryGroupMapper.deleteColumn(quotaName);
+    }
+
+    @Override
+    public void deleteNodeQuotaColumn(String quotaName) {
+        quotaHistoryNodeMapper.deleteColumn(quotaName);
+    }
+
+    @Override
+    public void deleteCellQuotaColumn(String quotaName) {
+        quotaHistoryCellMapper.deleteColumn(quotaName);
+    }
+
+    @Override
+    public int deleteGroupThresholdByName(String quotaName) {
+        return quotaThresholdGroupMapper.deleteThresholdByName(quotaName);
+    }
+
+    @Override
+    public int deleteNodeThresholdByName(String quotaName) {
+        return quotaThresholdNodeMapper.deleteThresholdByName(quotaName);
+    }
+
+    @Override
+    public int deleteCellThresholdByName(String quotaName) {
+        return quotaThresholdCellMapper.deleteThresholdByName(quotaName);
+    }
+
+    @Override
+    public int addGroupThreshold(JSONObject threshold) {
+        return quotaThresholdGroupMapper.addThreshold(threshold);
+    }
+
+    @Override
+    public int addNodeThreshold(JSONObject threshold) {
+        return quotaThresholdNodeMapper.addThreshold(threshold);
+    }
+
+    @Override
+    public int addCellThreshold(JSONObject threshold) {
+        return quotaThresholdCellMapper.addThreshold(threshold);
     }
 
 }

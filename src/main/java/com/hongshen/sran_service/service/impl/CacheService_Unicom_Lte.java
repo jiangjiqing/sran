@@ -149,6 +149,50 @@ public class CacheService_Unicom_Lte implements CacheService {
     }
 
     @Override
+    public List<String> getCounterNameList(Boolean isValid) {
+
+        if (counterList == null || counterList.isEmpty()){
+            resetCounterList();
+        }
+
+        List<String> resultList = new ArrayList<>();
+
+        for (JSONObject counter : counterList) {
+
+            // Valid counter
+            if (isValid && !counter.getBoolean("status")) {
+                continue;
+
+            } else {
+                resultList.add(counter.getString("name"));
+            }
+        }
+        return resultList;
+    }
+
+    @Override
+    public List<String> getCounterNameListProcessed(Boolean isValid) {
+
+        if (counterListProcessed == null || counterListProcessed.isEmpty()){
+            resetCounterList();
+        }
+
+        List<String> resultList = new ArrayList<>();
+
+        for (JSONObject counter : counterListProcessed) {
+
+            // Valid counter
+            if (isValid && !counter.getBoolean("status")) {
+                continue;
+
+            } else {
+                resultList.add(counter.getString("type") + "_" + counter.getString("name"));
+            }
+        }
+        return resultList;
+    }
+
+    @Override
     public JSONObject getCounterByName(String name) {
 
         if (counterList == null || counterList.isEmpty()){

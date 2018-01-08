@@ -2,6 +2,7 @@ package com.hongshen.sran_service.dao;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.entity.UnicomQuotaThresholdNodeWcdma;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -27,4 +28,8 @@ public interface UnicomQuotaThresholdNodeWcdmaMapper {
     List<JSONObject> getThresholdList();
 
     Integer setThreshold(JSONObject params);
+
+    int deleteThresholdByName(@Param("quotaName") String quotaName);
+
+    int addThreshold(JSONObject threshold);
 }

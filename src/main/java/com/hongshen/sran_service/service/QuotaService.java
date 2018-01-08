@@ -57,19 +57,39 @@ public interface QuotaService {
 
     List<JSONObject> getCounterTime();
 
-    void addColumnGroup(String formula);
-    void addColumnNode(String formula);
-    void addColumnCell(String formula);
-
     Integer addCounter(JSONObject jsonObject);
 
     void addColumnCounter(String name,String nullable,String type);
 
     List<JSONObject> getCounterList();
 
-    List<JSONObject> getColumns();
-
     void deleteColumnCounter(String colum);
 
     int deleteCounters();
+
+    JSONObject getCounterColumnAttribute(String name);
+
+    void addGroupQuotaColumn(String formula);
+
+    void addNodeQuotaColumn(String formula);
+
+    void addCellQuotaColumn(String formula);
+
+    void deleteGroupQuotaColumn(String quotaName);
+
+    void deleteNodeQuotaColumn(String quotaName);
+
+    void deleteCellQuotaColumn(String quotaName);
+
+    int deleteGroupThresholdByName(String quotaName);
+
+    int deleteNodeThresholdByName(String quotaName);
+
+    int deleteCellThresholdByName(String quotaName);
+
+    int addGroupThreshold(JSONObject threshold);
+
+    int addNodeThreshold(JSONObject threshold);
+
+    int addCellThreshold(JSONObject threshold);
 }

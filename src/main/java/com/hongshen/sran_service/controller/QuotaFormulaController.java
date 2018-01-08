@@ -86,9 +86,9 @@ public class QuotaFormulaController {
 
         } else if(!param.getString("quotaName").equals(quotaName) && obj.getCacheService().getFormulaByName(quotaName) != null){
             msg += "Name has exist.";
-            
+
         } else {
-//            try {
+            try {
                 expression = QuotaHelper.convertExpression(expression);
                 param.put("expression", expression);
                 param.put("quotaName", quotaName);
@@ -99,9 +99,9 @@ public class QuotaFormulaController {
                 } else {
                     obj.getCacheService().resetFormulaList();
                 }
-//            } catch (Exception e) {
-//                msg += "Expression or Param is Error.";
-//            }
+            } catch (Exception e) {
+                msg += "Expression or Param is Error.";
+            }
         }
 
         if (msg.length() != 0) {
@@ -238,6 +238,7 @@ public class QuotaFormulaController {
         String msg = "";
         Integer listNum = 0;
         Integer realAddNum = 0;
+        List<String> addFormulaNameList =  new ArrayList();
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         if (obj == null) {
@@ -247,38 +248,82 @@ public class QuotaFormulaController {
                 msg += "Formulas is Null.\n";
 
             } else {
+
+                List<JSONObject> thresholdList = obj.getCacheService().getThresholdGroupList();
+                List<String> oldFormulaList = obj.getCacheService().getFormulaNameListProcessed(false);
+
+                obj.getQuotaService().deleteAllFormulas();
+
                 listNum = formulas.size();
 
                 for (int i = 0; i < listNum; i++) {
+
+                    String quotaName = formulas.getJSONObject(i).getString("quotaName");
+                    String expression = formulas.getJSONObject(i).getString("expression");
+
                     try {
-                        if (formulas.getJSONObject(i).getString("quotaName") != null
-                                && !formulas.getJSONObject(i).getString("quotaName").equals("")
-                                && formulas.getJSONObject(i).getString("expression") != null
-                                && !formulas.getJSONObject(i).getString("expression").equals("")) {
+                        if ( quotaName != null && !quotaName.trim().equals("") &&
+                                expression != null && !expression.trim().equals("")) {
 
-                            realAddNum += obj.getQuotaService().addFormula(formulas.getJSONObject(i));
+                            addFormulaNameList.add(quotaName);
+                            Integer num = obj.getQuotaService().addFormula(formulas.getJSONObject(i));
+                            realAddNum += num;
 
-                            if (realAddNum > 0) {
+                            if (num > 0) {
                                 try{
-                                    obj.getQuotaService().addColumnGroup(formulas.getJSONObject(i).getString("quotaName"));
-                                    obj.getQuotaService().addColumnNode(formulas.getJSONObject(i).getString("quotaName"));
-                                    obj.getQuotaService().addColumnCell(formulas.getJSONObject(i).getString("quotaName"));
+                                    try{
+                                        if(!oldFormulaList.contains(quotaName)) {
+
+                                            obj.getQuotaService().addGroupQuotaColumn(quotaName);
+                                            obj.getQuotaService().addNodeQuotaColumn(quotaName);
+                                            obj.getQuotaService().addCellQuotaColumn(quotaName);
+                                        }
+                                    }catch (Exception e){
+                                        e.getStackTrace();
+                                        msg += "QuotaHistoryTable add columns error:" + e.getMessage();
+                                    }
+
+                                    JSONObject threshold = new JSONObject();
+                                    threshold.put("quotaName",quotaName);
+                                    threshold.put("quotaType","0");
+                                    threshold.put("threshold1","0");
+                                    threshold.put("threshold2","0");
+                                    threshold.put("threshold3","0");
+                                    obj.getQuotaService().addCellThreshold(threshold);
+                                    obj.getQuotaService().addNodeThreshold(threshold);
+                                    obj.getQuotaService().addGroupThreshold(threshold);
+
                                 }catch (Exception e){
-                                    e.getMessage();
+                                    e.printStackTrace();
+                                    msg += "ThresholdTable add threshold error:" + e.getMessage();
                                 }
                             }
-                            obj.getCacheService().resetFormulaList();
                         }
-
                     } catch (Exception e) {
                         e.printStackTrace();
-
-                        msg += "[" + formulas.getJSONObject(i).getString("quotaName") + "] add failed.\n";
+                        msg += "[" + quotaName + "] add failed.\n";
                     }
                 }
 
+                for(String f : oldFormulaList){
+
+                    if(!addFormulaNameList.contains(f)){
+                        // delete quota_history column
+                        obj.getQuotaService().deleteGroupQuotaColumn(f);
+                        obj.getQuotaService().deleteNodeQuotaColumn(f);
+                        obj.getQuotaService().deleteCellQuotaColumn(f);
+
+                        // delete threshold
+                        obj.getQuotaService().deleteGroupThresholdByName(f);
+                        obj.getQuotaService().deleteNodeThresholdByName(f);
+                        obj.getQuotaService().deleteCellThresholdByName(f);
+                    }
+                }
+
+                obj.getCacheService().resetFormulaList();
+
                 if (realAddNum < listNum) {
-                    msg += "Upload has error.";
+                    msg += "Upload not complete.";
                 }
             }
         }
@@ -298,7 +343,7 @@ public class QuotaFormulaController {
     @PUT
     @Path("/suppliers/{supplier}/generations/{generation}/nets/counters/upload")
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject counterImport(@RequestParam("formulas") JSONArray counters,
+    public JSONObject counterImport(@RequestParam("counters") JSONArray counters,
                                     @PathParam("supplier") String supplier,
                                     @PathParam("generation") String generation,
                                     @HeaderParam("Auth-Token") String authToken) {
@@ -306,10 +351,9 @@ public class QuotaFormulaController {
         String msg = "";
         Integer listNum = 0;
         Integer realAddNum = 0;
-        int AddNum =0;
-        String counterClumn = "";
-        List<String> list = new ArrayList();
-        List<String> listCounter = new ArrayList();
+        String counterName = "";
+        List<String> addNameList = new ArrayList();
+        List<String> oldCounterList = new ArrayList();
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         if (obj == null) {
@@ -319,79 +363,85 @@ public class QuotaFormulaController {
                 msg += "counter is Null.\n";
 
             } else {
-                listNum = counters.size();
 
-                List<JSONObject> Clums = obj.getQuotaService().getColumns();
-                    for(int i=0;i<Clums.size();i++){
-                        listCounter.add(Clums.get(i).getString("COLUMN_NAME"));
-                    }
+                List<String> oldCounterNameList = obj.getCacheService().getCounterNameListProcessed(false);
 
+                // get counter column's attribute
+                JSONObject attribute = obj.getQuotaService().getCounterColumnAttribute(oldCounterNameList.get(0));
+
+                // clear old data
                 obj.getQuotaService().deleteCounters();
 
-                for(int j=0;j<counters.size();j++){
+                listNum = counters.size();
+
+                for(int j = 0; j < listNum; j++){
                     if(generation.equals("wcdma")) {
-                        list.add(counters.getJSONObject(j).getString("name"));
+                        addNameList.add(counters.getJSONObject(j).getString("name"));
+
                     }else if(generation.equals("lte")){
-                        list.add(counters.getJSONObject(j).getString("type")+
+                        addNameList.add(counters.getJSONObject(j).getString("type")+
                                 "_"+ counters.getJSONObject(j).getString("name"));
                     }
                 }
 
+                // import data
                 for (int i = 0; i < listNum; i++) {
+
+                    String name = counters.getJSONObject(i).getString("name");
+                    String type = counters.getJSONObject(i).getString("type");
+
                     try {
-                        if(counters.getJSONObject(i).getString("name")!=null&&counters.getJSONObject(i).getString("name")!=""
-                                &&counters.getJSONObject(i).getString("type")!=null&&counters.getJSONObject(i).getString("type")!=""){
+                        if(name !=null && !name.trim().equals("") &&
+                                type !=null && !type.trim().equals("")){
 
+                            Integer num = obj.getQuotaService().addCounter(counters.getJSONObject(i));
 
-                            realAddNum = obj.getQuotaService().addCounter(counters.getJSONObject(i));
-
-                            if (counters.getJSONObject(i).getString("name")!=null&&realAddNum > 0) {
-                                AddNum= AddNum+realAddNum;
+                            if (num > 0) {
+                                realAddNum += num;
                                 if(generation.equals("wcdma")) {
+                                    counterName = counters.getJSONObject(i).getString("name");
 
-                                    counterClumn = counters.getJSONObject(i).getString("name");
                                 }else if(generation.equals("lte")){
-                                    counterClumn = counters.getJSONObject(i).getString("type")+
+                                    counterName = counters.getJSONObject(i).getString("type")+
                                             "_"+ counters.getJSONObject(i).getString("name");
                                 }
                                 try{
-                                    String nullable="";
-                                    if(Clums.get(2).getString("IS_NULLABLE").equals("YES")){
+                                    String nullable = "";
+                                    if(attribute.getString("Null").equals("YES")){
                                         nullable = "NULL";
-                                    }else if(Clums.get(2).getString("IS_NULLABLE").equals("NO")){
+                                    }else if(attribute.getString("Null").equals("NO")){
                                         nullable = "NOT NULL";
                                     }
-                                    if(!listCounter.contains(counterClumn)){
-                                        obj.getQuotaService().addColumnCounter(counterClumn,nullable,Clums.get(2).getString("COLUMN_TYPE"));
 
+                                    if(!oldCounterList.contains(counterName)){
+                                        obj.getQuotaService().addColumnCounter(counterName, nullable, attribute.getString("Type"));
                                     }
-
                                 }catch (Exception e){
                                     e.printStackTrace();
+                                    msg += "Upload counter error:" + e.getMessage();
                                 }
                             }
-                            obj.getCacheService().resetCounterList();
+
                         }else{
                             msg+="data is null";
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
-
-                        msg += "[" + counters.getJSONObject(i).getString("name") + "] add failed.\n";
+                        msg += "[" + counterName + "] add failed.\n";
                     }
                 }
 
+                obj.getCacheService().resetCounterList();
 
-                for (int k=0;k<Clums.size();k++){
-                    list.add("name");
-                    list.add("time");
-                    if (!list.contains(Clums.get(k).getString("COLUMN_NAME"))) {
-                        obj.getQuotaService().deleteColumnCounter(Clums.get(k).getString("COLUMN_NAME"));
+                for (String c : oldCounterNameList){
+
+                    if (!addNameList.contains(c)) {
+                        obj.getQuotaService().deleteColumnCounter(c);
                     }
                 }
 
-                if (AddNum < listNum) {
-                    msg += "Upload has error.";
+                if (realAddNum < listNum) {
+                    msg += "Upload not complete.";
                 }
             }
         }
@@ -399,11 +449,11 @@ public class QuotaFormulaController {
         if (msg.length() == 0) {
             obj.getCacheService().resetCounterList();
             result.put("result", Constants.SUCCESS);
-            result.put("msg", Constants.MSG_ADD_OK + "(Real/Total:" + AddNum + "/" + listNum + ")");
+            result.put("msg", Constants.MSG_ADD_OK + "(Real/Total:" + realAddNum + "/" + listNum + ")");
 
         } else {
             result.put("result", Constants.FAIL);
-            result.put("msg", Constants.MSG_ADD_FAILED + "(Real/Total:" + AddNum + "/" + listNum + ")\n" + msg);
+            result.put("msg", Constants.MSG_ADD_FAILED + "(Real/Total:" + realAddNum + "/" + listNum + ")\n" + msg);
         }
         return result;
     }

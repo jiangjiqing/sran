@@ -19,9 +19,9 @@ public interface CacheService {
 
     List<JSONObject> getCounterListProcessed(Boolean isValid);
 
-//    List<String> getCounterNameList(Boolean isValid);
-//
-//    List<String> getCounterNameListProcessed(Boolean isValid);
+    List<String> getCounterNameList(Boolean isValid);
+
+    List<String> getCounterNameListProcessed(Boolean isValid);
 
     JSONObject getCounterByName(String name);
 

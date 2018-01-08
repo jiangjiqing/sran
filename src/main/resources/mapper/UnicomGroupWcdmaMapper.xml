@@ -249,6 +249,7 @@
       hwversion = #{hwversion,jdbcType=VARCHAR},
       type = #{type,jdbcType=VARCHAR},
       room = #{room,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
       scope = #{scope,jdbcType=VARCHAR}
     where group_name = #{groupName,jdbcType=VARCHAR}
   </update>

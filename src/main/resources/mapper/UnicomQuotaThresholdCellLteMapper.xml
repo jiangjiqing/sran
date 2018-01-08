@@ -93,4 +93,15 @@
     where quota_name = #{quotaName}
   </update>
 
+  <delete id="deleteThresholdByName" parameterType="java.lang.String">
+    DELETE FROM unicom_quota_threshold_cell_lte
+    WHERE quota_name =#{quotaName}
+  </delete>
+
+  <insert id="addThreshold" parameterType="com.alibaba.fastjson.JSONObject">
+    INSERT IGNORE INTO unicom_quota_threshold_cell_lte
+    (quota_name,quota_type,threshold_1,threshold_2,threshold_3)
+    VALUES (#{quotaName},#{quotaType},#{threshold1},#{threshold2},#{threshold3})
+  </insert>
+
 </mapper>

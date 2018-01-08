@@ -44,5 +44,7 @@ public interface UnicomQuotaHistoryNodeWcdmaMapper {
 
     List<JSONObject> getNodeTime();
 
-    void addColumnNode(@Param("formula") String formula);
+    void addColumn(@Param("formula") String formula);
+
+    void deleteColumn(@Param("quotaName") String quotaName);
 }

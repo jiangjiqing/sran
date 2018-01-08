@@ -244,9 +244,11 @@
     GROUP BY time
   </select>
 
-  <select id="addColumnGroup" parameterType="java.lang.String">
+  <select id="addColumnNode" parameterType="java.lang.String">
+    alter table unicom_quota_history_node_lte add ${formula} varchar(5) Null;
+  </select>
 
-    alter table unicom_quota_history_group_lte add ${formula} varchar(5) Null;
-
+  <select id="deleteClumNode" parameterType="java.lang.String">
+    alter table unicom_quota_history_node_lte drop column `${quotaName}`;
   </select>
 </mapper>

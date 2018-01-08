@@ -46,5 +46,7 @@ public interface UnicomQuotaHistoryCellLteMapper {
 
     List<JSONObject> getCellTime();
 
-    void addColumnCell(@Param("formula")String formula);
+    void addColumn(@Param("formula")String formula);
+
+    void deleteColumn(@Param("quotaName") String quotaName);
 }

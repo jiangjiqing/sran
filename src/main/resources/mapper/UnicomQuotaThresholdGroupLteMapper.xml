@@ -93,4 +93,54 @@
     where quota_name = #{quotaName}
   </update>
 
+  <delete id="deleteThresholdByName" parameterType="java.lang.String">
+    DELETE FROM unicom_quota_threshold_group_lte
+    WHERE quota_name =#{quotaName}
+  </delete>
+
+  <insert id="addThreshold" parameterType="com.alibaba.fastjson.JSONObject">
+    INSERT IGNORE INTO unicom_quota_threshold_group_lte
+    (quota_name,quota_type,threshold_1,threshold_2,threshold_3)
+    VALUES (#{quotaName},#{quotaType},#{threshold1},#{threshold2},#{threshold3})
+  </insert>
+
+  <!--
+    <insert id="addThreshold" parameterType="com.alibaba.fastjson.JSONObject">
+
+      insert ignore into unicom_quota_threshold_group_wcdma
+      <trim prefix="(" suffix=")" suffixOverrides=",">
+        <if test="quotaName != null">
+          quota_name,
+        </if>
+        <if test="quotaType != null">
+          quota_type,
+        </if>
+        <if test="threshold1 != null">
+          threshold_1,
+        </if>
+        <if test="threshold2 != null">
+          threshold_2,
+        </if>
+        <if test="threshold3 != null">
+          threshold_3,
+        </if>
+      </trim>
+      <trim prefix="values (" suffix=")" suffixOverrides=",">
+        <if test="quotaName != null">
+          #{quotaName},
+        </if>
+        <if test="quotaType != null">
+          #{quotaType},
+        </if>
+        <if test="threshold1 != null">
+          #{threshold1},
+        </if>
+        <if test="threshold2 != null">
+          #{threshold2},
+        </if>
+        <if test="threshold3 != null">
+          #{threshold3},
+        </if>
+      </trim>
+    </insert>-->
 </mapper>
