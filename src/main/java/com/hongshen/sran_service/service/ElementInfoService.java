@@ -96,4 +96,11 @@ public interface ElementInfoService {
 
     int addFavoriteNodes(String tableName, List<JSONObject> nodeNames);
 
+    List<JSONObject> getProtectInfo();
+
+    List<JSONObject> getNodeCountByname(String name);
+
+    List<JSONObject> getNodeCountByNodeName(String name);
+
+    JSONObject getGroupIdByName(String name);
 }

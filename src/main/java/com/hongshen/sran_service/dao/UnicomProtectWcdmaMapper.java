@@ -40,4 +40,6 @@ public interface UnicomProtectWcdmaMapper {
     Integer clearNodes();
 
     List<JSONObject> getProtectListnodeName();
+
+    List<JSONObject> getProtectInfo();
 }

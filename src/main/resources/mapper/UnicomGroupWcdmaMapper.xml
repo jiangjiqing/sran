@@ -464,4 +464,8 @@
   <select id="getGroupCounter" resultType="java.lang.Integer">
     SELECT COUNT(*) FROM  unicom_group_wcdma;
   </select>
+
+  <select id="getGroupIdByName" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT group_id FROM unicom_group_wcdma WHERE group_name = #{name}
+  </select>
 </mapper>

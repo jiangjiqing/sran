@@ -294,4 +294,12 @@
     </set>
     where node_name = #{nodeName}
   </update>
+
+  <select id="getNodeCountByname" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT * FROM unicom_node_lte WHERE group_name = #{name}
+  </select>
+
+  <select id="getNodeCountByNodeName" parameterType="java.lang.String" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT * FROM unicom_node_lte WHERE node_name = #{name}
+  </select>
 </mapper>

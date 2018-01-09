@@ -39,4 +39,6 @@ public interface UnicomProtectLteMapper {
     Integer clearNodes();
 
     List<JSONObject> getProtectListnodeName();
+
+    List<JSONObject> getProtectInfo();
 }

@@ -6,6 +6,7 @@ import com.hongshen.sran_service.common.BaseController;
 import com.hongshen.sran_service.service.util.Constants;
 import com.hongshen.sran_service.service.util.NetObjBase;
 import com.hongshen.sran_service.service.util.NetObjFactory;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.support.SQLErrorCodes;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,6 +27,184 @@ public class ProtectionController extends BaseController{
 
     @Autowired
     private NetObjFactory objFactory;
+
+    @GET
+    @Path("/suppliers/{supplier}/nets/protections")
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject getProtectionListInfo(@PathParam("supplier")String supplier,
+                                            @HeaderParam("Auth-Token")String authToken,
+                                            @HeaderParam("loginName")String loginName) {
+        String msg = "";
+        JSONObject result = new JSONObject();
+        List<JSONObject> dataList = new ArrayList<JSONObject>();
+        List<JSONObject> ProtectLte = null;
+        NetObjBase objWcdma = objFactory.getNetObj(supplier, Constants.WCDMA);
+        NetObjBase objLte = objFactory.getNetObj(supplier, Constants.LTE);
+
+        if (objWcdma == null && objLte == null) {
+            msg += "Supplier has err.";
+        }else {
+            ProtectLte = objLte.getElementInfoService().getProtectInfo();
+            List<JSONObject> ProtectWcdma = objWcdma.getElementInfoService().getProtectInfo();
+
+                for (int i = 0;i < ProtectLte.size();i++){
+                    JSONObject jsonObject = new JSONObject();
+                    System.out.println(ProtectLte.get(i));
+                    jsonObject.put("name",ProtectLte.get(i).getString("name"));
+                    jsonObject.put("generation",Constants.LTE);
+                    List<JSONObject> nodeCount = objLte.getElementInfoService().getNodeCountByname(ProtectLte.get(i).getString("name"));
+                    if (nodeCount.size()==0){
+                        // node
+                        jsonObject.put("nodeCount",nodeCount.size());
+                        List<JSONObject> nodeList = objLte.getElementInfoService().getNodeCountByNodeName(ProtectLte.get(i).getString("name"));
+                        for (int j=0;j<nodeList.size();j++){
+                            jsonObject.put("id",nodeList.get(j).getString("enb_id"));
+                            jsonObject.put("StationName",nodeList.get(j).getString("station_name"));
+                            jsonObject.put("longitude",nodeList.get(j).getString("longitude"));
+                            jsonObject.put("latitude",nodeList.get(j).getString("latitude"));
+                            jsonObject.put("scope","[]");
+                        }
+                        List<JSONObject> alarmList = objLte.getAlarmService().getNodeAlarmByName(ProtectLte.get(i).getString("name"));
+                        if (alarmList.size() != 0){
+                            jsonObject.put("alarmStatus",true);
+                        }else {
+                            jsonObject.put("alarmStatus",false);
+                        }
+                        jsonObject.put("alarmList",alarmList);
+                        JSONObject level = objLte.getQuotaService().getNodeLevel(ProtectLte.get(i).getString("name"));
+
+                        if (level != null && level.getIntValue("level") != -1) {
+                            jsonObject.put("level", level.getIntValue("level"));
+
+                        } else {
+                            jsonObject.put("level", Constants.INVALID_VALUE_LEVEL);
+
+                        }
+
+                    }else {
+                        // group
+                        jsonObject.put("nodeCount",nodeCount.size());
+                        JSONObject groupId = objLte.getElementInfoService().getGroupIdByName(ProtectLte.get(i).getString("name"));
+                        jsonObject.put("id",groupId.getString("group_id"));
+                        jsonObject.put("stationName","");
+                        List<Double[]> list = new ArrayList<>();
+
+                        for (JSONObject node : nodeCount) {
+
+                            Double latitude = node.getDouble("latitude");
+                            Double longitude = node.getDouble("longitude");
+
+                            if (latitude != null && longitude != null &&
+                                    latitude != 0.0 && longitude != 0.0) {
+                                Double[] doubles = {latitude, longitude};
+                                list.add(doubles);
+                            }
+                        }
+                        jsonObject.putAll(MapController.LatitudeAndLongitude(list));
+                        List<JSONObject> alarmList = objLte.getAlarmService().getGroupAlarmByName(ProtectLte.get(i).getString("name"));
+                        if (alarmList.size() != 0){
+                            jsonObject.put("alarmStatus",true);
+                        }else {
+                            jsonObject.put("alarmStatus",false);
+                        }
+                        jsonObject.put("alarmList",alarmList);
+                        JSONObject level = objLte.getQuotaService().getGroupLevel(ProtectLte.get(i).getString("name"));
+                        if (level != null && level.getIntValue("level") != -1) {
+                            jsonObject.put("level", level.getIntValue("level"));
+
+                        } else {
+                            jsonObject.put("level", Constants.INVALID_VALUE_LEVEL);
+
+                        }
+                    }
+                    dataList.add(jsonObject);
+                }
+                for (int i = 0;i < ProtectWcdma.size();i++){
+                    JSONObject jsonObject = new JSONObject();
+                    System.out.println(ProtectWcdma.get(i));
+                    jsonObject.put("name",ProtectWcdma.get(i).getString("name"));
+                    String name= ProtectWcdma.get(i).getString("name");
+                    jsonObject.put("generation",Constants.WCDMA);
+                    List<JSONObject> nodeCount = objWcdma.getElementInfoService().getNodeCountByname(ProtectWcdma.get(i).getString("name"));
+                    if (nodeCount.size()==0){
+                        jsonObject.put("nodeCount",nodeCount.size());
+                        List<JSONObject> nodeList = objWcdma.getElementInfoService().getNodeCountByNodeName(ProtectWcdma.get(i).getString("name"));
+                        for (int j=0;j<nodeList.size();j++){
+                            jsonObject.put("id",nodeList.get(j).getString("rbsid"));
+                            jsonObject.put("StationName",nodeList.get(j).getString("station_name"));
+                            jsonObject.put("longitude",nodeList.get(j).getString("longitude"));
+                            jsonObject.put("latitude",nodeList.get(j).getString("latitude"));
+                        }
+                        List<JSONObject> alarmList = objWcdma.getAlarmService().getNodeAlarmByName(ProtectWcdma.get(i).getString("name"));
+                        if (alarmList.size() != 0){
+                            jsonObject.put("alarmStatus",true);
+                        }else {
+                            jsonObject.put("alarmStatus",false);
+                        }
+                        jsonObject.put("alarmList",alarmList);
+
+                        JSONObject level = objWcdma.getQuotaService().getNodeLevel(ProtectWcdma.get(i).getString("name"));
+
+                        if (level != null && level.getIntValue("level") != -1) {
+                            jsonObject.put("level", level.getIntValue("level"));
+
+                        } else {
+                            jsonObject.put("level", Constants.INVALID_VALUE_LEVEL);
+
+                        }
+
+                    }else {
+                        //group
+                        jsonObject.put("nodeCount",nodeCount.size());
+                        JSONObject groupId = objWcdma.getElementInfoService().getGroupIdByName(ProtectWcdma.get(i).getString("name"));
+                        jsonObject.put("id",groupId.getString("group_id"));
+                        jsonObject.put("stationName","");
+                        List<Double[]> list = new ArrayList<>();
+
+                        for (JSONObject node : nodeCount) {
+
+                            Double latitude = node.getDouble("latitude");
+                            Double longitude = node.getDouble("longitude");
+
+                            if (latitude != null && longitude != null &&
+                                    latitude != 0.0 && longitude != 0.0) {
+                                Double[] doubles = {latitude, longitude};
+                                list.add(doubles);
+                            }
+                        }
+                        jsonObject.putAll(MapController.LatitudeAndLongitude(list));
+                        List<JSONObject> alarmList = objWcdma.getAlarmService().getGroupAlarmByName(ProtectWcdma.get(i).getString("name"));
+                        if (alarmList.size() != 0){
+                            jsonObject.put("alarmStatus",true);
+                        }else {
+                            jsonObject.put("alarmStatus",false);
+                        }
+                        jsonObject.put("alarmList",alarmList);
+                        JSONObject level = objWcdma.getQuotaService().getGroupLevel(ProtectWcdma.get(i).getString("name"));
+                        if (level != null && level.getIntValue("level") != -1) {
+                            jsonObject.put("level", level.getIntValue("level"));
+
+                        } else {
+                            jsonObject.put("level", Constants.INVALID_VALUE_LEVEL);
+
+                        }
+                    }
+                    dataList.add(jsonObject);
+                }
+        }
+
+        if (dataList == null || dataList.isEmpty() || msg.length() != 0) {
+            result.put("result", Constants.FAIL);
+            result.put("msg", Constants.MSG_NO_DATA + msg);
+
+        } else {
+            result.put("result", Constants.SUCCESS);
+            result.put("data", dataList);
+        }
+
+        return result;
+
+    }
 
     @GET
     @Path("/suppliers/{supplier}/generations/{generation}/nets/protections")

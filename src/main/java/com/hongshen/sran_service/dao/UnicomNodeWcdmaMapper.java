@@ -74,4 +74,8 @@ public interface UnicomNodeWcdmaMapper {
     List<JSONObject> getNodeLocationsByGroup(@Param("groupName") String groupName);
 
     Integer updateStationName(JSONObject jsonObject);
+
+    List<JSONObject> getNodeCountByname(@Param("name") String name);
+
+    List<JSONObject> getNodeCountByNodeName(@Param("name")String name);
 }

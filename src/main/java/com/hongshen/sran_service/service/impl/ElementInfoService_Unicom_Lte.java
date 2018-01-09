@@ -259,4 +259,24 @@ public class ElementInfoService_Unicom_Lte implements ElementInfoService {
         return favoriteMapper.addNodes(tableName,nodeNames);
     }
 
+    @Override
+    public List<JSONObject> getProtectInfo() {
+        return protectMapper.getProtectInfo();
+    }
+
+    @Override
+    public List<JSONObject> getNodeCountByname(String name) {
+        return nodeMapper.getNodeCountByname(name);
+    }
+
+    @Override
+    public List<JSONObject> getNodeCountByNodeName(String name) {
+        return nodeMapper.getNodeCountByNodeName(name);
+    }
+
+    @Override
+    public JSONObject getGroupIdByName(String name) {
+        return groupMapper.getGroupIdByName(name);
+    }
+
 }

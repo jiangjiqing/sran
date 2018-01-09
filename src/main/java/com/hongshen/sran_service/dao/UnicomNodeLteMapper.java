@@ -80,4 +80,8 @@ public interface UnicomNodeLteMapper {
     JSONObject getNodeInfo(@Param("nodeName") String nodeName);
 
     Integer updateStationName(JSONObject jsonObject);
+
+    List<JSONObject> getNodeCountByname(@Param("name") String name);
+
+    List<JSONObject> getNodeCountByNodeName(@Param("name")String name);
 }

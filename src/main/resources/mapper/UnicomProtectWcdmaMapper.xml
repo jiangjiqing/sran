@@ -66,4 +66,7 @@
     SELECT node_name nodeName FROM  unicom_protect_wcdma;
   </select>
 
+  <select id="getProtectInfo" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT node_name name FROM unicom_protect_wcdma
+  </select>
 </mapper>

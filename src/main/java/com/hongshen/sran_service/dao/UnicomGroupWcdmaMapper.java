@@ -88,4 +88,6 @@ public interface UnicomGroupWcdmaMapper {
     Integer deleteGroup();
 
     Integer getGroupCounter();
+
+    JSONObject getGroupIdByName(@Param("name") String name);
 }
