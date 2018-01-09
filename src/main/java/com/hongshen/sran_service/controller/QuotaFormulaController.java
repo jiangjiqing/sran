@@ -249,7 +249,6 @@ public class QuotaFormulaController {
 
             } else {
 
-                List<JSONObject> thresholdList = obj.getCacheService().getThresholdGroupList();
                 List<String> oldFormulaList = obj.getCacheService().getFormulaNameListProcessed(false);
 
                 obj.getQuotaService().deleteAllFormulas();
@@ -258,15 +257,17 @@ public class QuotaFormulaController {
 
                 for (int i = 0; i < listNum; i++) {
 
-                    String quotaName = formulas.getJSONObject(i).getString("quotaName");
-                    String expression = formulas.getJSONObject(i).getString("expression");
+                    String quotaName = formulas.getJSONObject(i).getString("quotaName").replaceAll(" ","");
+                    String expression = formulas.getJSONObject(i).getString("expression").replaceAll(" ","");
 
                     try {
                         if ( quotaName != null && !quotaName.trim().equals("") &&
                                 expression != null && !expression.trim().equals("")) {
-
+                            JSONObject formula = formulas.getJSONObject(i);
+                            formula.put("quotaName",quotaName);
+                            formula.put("expression",expression);
                             addFormulaNameList.add(quotaName);
-                            Integer num = obj.getQuotaService().addFormula(formulas.getJSONObject(i));
+                            Integer num = obj.getQuotaService().addFormula(formula);
                             realAddNum += num;
 
                             if (num > 0) {
@@ -319,6 +320,8 @@ public class QuotaFormulaController {
                         obj.getQuotaService().deleteCellThresholdByName(f);
                     }
                 }
+
+
 
                 obj.getCacheService().resetFormulaList();
 

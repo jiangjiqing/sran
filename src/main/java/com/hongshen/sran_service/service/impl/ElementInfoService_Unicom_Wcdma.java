@@ -17,7 +17,7 @@ import java.util.List;
 public class ElementInfoService_Unicom_Wcdma implements ElementInfoService {
 
     @Autowired
-    private CacheService_Unicom_Lte cacheService;
+    private CacheService_Unicom_Wcdma cacheService;
 
     @Autowired
     private UnicomProtectWcdmaMapper protectMapper;

@@ -174,7 +174,7 @@
   </select>
 
   <insert id="addFormula" parameterType="com.alibaba.fastjson.JSONObject">
-    insert into unicom_formula_wcdma
+    insert into unicom_formula_lte
        (quota_name,
         expression,
         remark,
