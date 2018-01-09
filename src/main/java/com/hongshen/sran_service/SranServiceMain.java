@@ -3,6 +3,7 @@ package com.hongshen.sran_service;
 import com.hongshen.sran_service.common.JerseyConfig;
 import com.hongshen.sran_service.common.TestResource;
 import com.hongshen.sran_service.controller.TaskWSController;
+import com.hongshen.sran_service.service.impl.CalculationThread;
 import javafx.application.Application;
 import org.glassfish.jersey.servlet.ServletContainer;
 import org.glassfish.jersey.servlet.ServletProperties;
@@ -29,6 +30,7 @@ public class SranServiceMain {
 		SpringApplication springApplication = new SpringApplication(SranServiceMain.class);
 		ConfigurableApplicationContext configurableApplicationContext = springApplication.run(args);
 		TaskWSController.setApplicationContext(configurableApplicationContext);
+		CalculationThread.setApplicationContext(configurableApplicationContext);
 	}
 
 	@Bean

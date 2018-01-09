@@ -113,6 +113,11 @@ public class Constants {
     public final static String SCANNER_SEND_LTE = SRAN_SERVICE_URI + SCANNER_SEND_UTIL + SCANNER_SEND_TYPE_LTE;
     public final static Integer SCANNER_CALCULATION_DIVISION = 20000;
 
+    public final static int SERVICE_GET_NOTICE_MESSAGE_COUNTER = 1;
+    public final static int SERVICE_GET_NOTICE_MESSAGE_ALARM = 2;
+    public final static int SERVICE_GET_NOTICE_MESSAGE_CELL = 3;
+    public final static int SERVICE_GET_NOTICE_MESSAGE_NODE = 4;
+
     // shiro
 
     public static final String SHIRO_URI = SRAN_SHIRO_URI + "/service/v1/check";

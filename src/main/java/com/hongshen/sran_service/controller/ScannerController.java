@@ -2,10 +2,7 @@ package com.hongshen.sran_service.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.common.BaseController;
-import com.hongshen.sran_service.service.impl.CacheService_Unicom_Lte;
-import com.hongshen.sran_service.service.impl.CacheService_Unicom_Wcdma;
-import com.hongshen.sran_service.service.impl.ScannerService_Unicom_Lte;
-import com.hongshen.sran_service.service.impl.ScannerService_Unicom_Wcdma;
+import com.hongshen.sran_service.service.impl.*;
 import com.hongshen.sran_service.service.util.Constants;
 import com.hongshen.sran_service.service.util.NetObjBase;
 import com.hongshen.sran_service.service.util.NetObjFactory;
@@ -18,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
+import java.util.List;
 
 @Path("/sran/service/net/scanner")
 public class ScannerController extends BaseController {
@@ -39,6 +37,8 @@ public class ScannerController extends BaseController {
 
     @Autowired
     private  NoticeWSController noticeWS;
+
+    public static boolean threadFlag = true;
 
     private static final Logger logger = LoggerFactory.getLogger(ScannerController.class);
 
@@ -77,14 +77,42 @@ public class ScannerController extends BaseController {
     @Produces(MediaType.APPLICATION_JSON)
     public void calculactionPost(JSONObject timeParams) throws IOException {
 
-        timeParams.size();
-
         if (timeParams.getString("counterWcdmatime") != null &&
                 !"".equals(timeParams.getString("counterWcdmatime"))) {
 
-        } else if (timeParams.getString("counterLtetime") != null &&
+            String counterWcdmatime = timeParams.getString("counterWcdmatime");
+
+            List<String> counterWcdmaTimeList = ScannerHelper.counterWcdmaTimeList;
+
+            if (counterWcdmaTimeList.size() == 0) {
+
+                ScannerHelper.counterWcdmaTimeList.add(counterWcdmatime);
+            } else {
+
+                if (!counterWcdmaTimeList.contains(counterWcdmatime)) {
+
+                    ScannerHelper.counterWcdmaTimeList.add(counterWcdmatime);
+                }
+            }
+        }
+
+        if (timeParams.getString("counterLtetime") != null &&
                 !"".equals(timeParams.getString("counterLtetime"))) {
 
+            String counterLtetime = timeParams.getString("counterLtetime");
+
+            List<String> counterLteTimeList = ScannerHelper.counterLteTimeList;
+
+            if (counterLteTimeList.size() == 0) {
+
+                ScannerHelper.counterLteTimeList.add(counterLtetime);
+            } else {
+
+                if (!counterLteTimeList.contains(counterLtetime)) {
+
+                    ScannerHelper.counterLteTimeList.add(counterLtetime);
+                }
+            }
         }
     }
 
@@ -171,11 +199,72 @@ public class ScannerController extends BaseController {
         noticeWS.sendAll(param);
     }
 
-    /*@GET
-    @Path("/suppliers/{supplier}/generations/{generation}/send")
+    @POST
+    @Path("/notice")
     @Produces(MediaType.APPLICATION_JSON)
-    public void srnd(@PathParam("supplier")String supplier, @PathParam("generation")String generation, JSONObject param) {
+    public void getNotice (JSONObject params) {
 
-        noticeWS.sendAll(param);
-    }*/
+        Integer message = params.getInteger("message");
+
+        switch (message) {
+
+            case Constants.SERVICE_GET_NOTICE_MESSAGE_COUNTER:
+
+                timeQueue(params);
+                break;
+            default:
+
+                noticeWS.sendAll(params);
+                break;
+        }
+    }
+
+    public void timeQueue (JSONObject params) {
+
+        String time = params.getString("time");
+        String type = params.getString("generation");
+
+        if (params.getString("time") != null &&
+                !"".equals(params.getString("time"))) {
+
+            if (type.equals(Constants.WCDMA)) {
+
+                List<String> counterWcdmaTimeList = ScannerHelper.counterWcdmaTimeList;
+
+                if (counterWcdmaTimeList.size() == 0) {
+
+                    ScannerHelper.counterWcdmaTimeList.add(time);
+                } else {
+
+                    if (!counterWcdmaTimeList.contains(time)) {
+
+                        ScannerHelper.counterWcdmaTimeList.add(time);
+                    }
+                }
+            } else if (type.equals(Constants.LTE)) {
+
+                List<String> counterLteTimeList = ScannerHelper.counterLteTimeList;
+
+                if (counterLteTimeList.size() == 0) {
+
+                    ScannerHelper.counterLteTimeList.add(time);
+                } else {
+
+                    if (!counterLteTimeList.contains(time)) {
+
+                        ScannerHelper.counterLteTimeList.add(time);
+                    }
+                }
+            }
+        }
+
+        if (threadFlag) {
+
+            System.out.println("******************* 调用线程类 只执行一次! ************************");
+            threadFlag = false;
+
+            CalculationThread thread = new CalculationThread();
+            thread.start();
+        }
+    }
 }
