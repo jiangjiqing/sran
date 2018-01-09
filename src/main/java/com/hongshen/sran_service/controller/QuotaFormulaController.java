@@ -263,9 +263,11 @@ public class QuotaFormulaController {
                     try {
                         if ( quotaName != null && !quotaName.trim().equals("") &&
                                 expression != null && !expression.trim().equals("")) {
-
+                            JSONObject formula = formulas.getJSONObject(i);
+                            formula.put("quotaName",quotaName);
+                            formula.put("expression",expression);
                             addFormulaNameList.add(quotaName);
-                            Integer num = obj.getQuotaService().addFormula(formulas.getJSONObject(i));
+                            Integer num = obj.getQuotaService().addFormula(formula);
                             realAddNum += num;
 
                             if (num > 0) {

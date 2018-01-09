@@ -185,7 +185,7 @@
   </select>
 
   <select id="addColumn" parameterType="java.lang.String">
-    alter table unicom_quota_history_group_wcdma add ${formula} varchar(5) Null;
+    alter table unicom_quota_history_group_wcdma add `${formula}` varchar(5) Null;
   </select>
 
   <select id="deleteColumn" parameterType="java.lang.String">
