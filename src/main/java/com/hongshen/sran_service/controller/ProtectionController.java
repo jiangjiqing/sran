@@ -27,7 +27,7 @@ public class ProtectionController extends BaseController{
 
     @Autowired
     private NetObjFactory objFactory;
-
+//new api
     @GET
     @Path("/suppliers/{supplier}/nets/protections")
     @Produces(MediaType.APPLICATION_JSON)
@@ -205,7 +205,7 @@ public class ProtectionController extends BaseController{
         return result;
 
     }
-
+// old api
     @GET
     @Path("/suppliers/{supplier}/generations/{generation}/nets/protections")
     @Produces(MediaType.APPLICATION_JSON)
