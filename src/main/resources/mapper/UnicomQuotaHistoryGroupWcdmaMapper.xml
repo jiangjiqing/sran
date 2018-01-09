@@ -189,6 +189,6 @@
   </select>
 
   <select id="deleteColumn" parameterType="java.lang.String">
-    alter table unicom_quota_history_group_lte drop column `${quotaName}`;
+    alter table unicom_quota_history_group_wcdma drop column `${quotaName}`;
   </select>
 </mapper>
