@@ -56,6 +56,7 @@ public class ProtectionController extends BaseController{
                             jsonObject.put("longitude",nodeList.get(j).getString("longitude"));
                             jsonObject.put("latitude",nodeList.get(j).getString("latitude"));
                             jsonObject.put("scope","[]");
+                            jsonObject.put("range","");
                         }
                         List<JSONObject> alarmList = objLte.getAlarmService().getNodeAlarmByName(ProtectLte.get(i).getString("name"));
                         if (alarmList.size() != 0){
@@ -79,6 +80,7 @@ public class ProtectionController extends BaseController{
                         jsonObject.put("nodeCount",nodeCount.size());
                         JSONObject groupId = objLte.getElementInfoService().getGroupIdByName(ProtectLte.get(i).getString("name"));
                         jsonObject.put("id",groupId.getString("group_id"));
+                        jsonObject.put("range",groupId.getString("scope"));
                         jsonObject.put("stationName","");
                         List<Double[]> list = new ArrayList<>();
 
@@ -127,6 +129,7 @@ public class ProtectionController extends BaseController{
                             jsonObject.put("longitude",nodeList.get(j).getString("longitude"));
                             jsonObject.put("latitude",nodeList.get(j).getString("latitude"));
                             jsonObject.put("scope","[]");
+                            jsonObject.put("range","");
                         }
                         List<JSONObject> alarmList = objWcdma.getAlarmService().getNodeAlarmByName(ProtectWcdma.get(i).getString("name"));
                         if (alarmList.size() != 0){
@@ -151,6 +154,7 @@ public class ProtectionController extends BaseController{
                         jsonObject.put("nodeCount",nodeCount.size());
                         JSONObject groupId = objWcdma.getElementInfoService().getGroupIdByName(ProtectWcdma.get(i).getString("name"));
                         jsonObject.put("id",groupId.getString("group_id"));
+                        jsonObject.put("range",groupId.getString("scope"));
                         jsonObject.put("stationName","");
                         List<Double[]> list = new ArrayList<>();
 
