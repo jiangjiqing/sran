@@ -467,6 +467,7 @@ public class QuotaFormulaController {
                     }
                 }
 
+
                 if (realAddNum < listNum) {
                     msg += "Upload not complete.";
                 }

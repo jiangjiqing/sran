@@ -306,4 +306,9 @@ public class QuotaService_Unicom_Lte implements QuotaService {
         return formulaMapper.getquotaName(expression);
     }
 
+    @Override
+    public List<JSONObject> getCellFormula(Date start, Date end, String cell) {
+        return quotaHistoryCellMapper.getCellFormula(start,end,cell);
+    }
+
 }

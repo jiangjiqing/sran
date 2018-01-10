@@ -100,4 +100,6 @@ public interface QuotaService {
     void setCellQuotaColumn(String oldquotaName,String quotaName);
 
     String getquotaName(String expression);
+
+    List<JSONObject> getCellFormula(Date start, Date end,String cell);
 }

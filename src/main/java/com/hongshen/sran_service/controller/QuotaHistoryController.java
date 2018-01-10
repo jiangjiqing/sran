@@ -30,8 +30,9 @@ public class QuotaHistoryController extends BaseController {
                                    @PathParam("generation") String generation,
                                    @PathParam("level") String level,
                                    @HeaderParam("Auth-Token") String authToken) throws ParseException {
-
+        JSONObject data =null;
         String msg = "";
+        String[] st =null;
         JSONObject result = new JSONObject();
         List dataList = new ArrayList();
         String condition = null;
@@ -57,18 +58,17 @@ public class QuotaHistoryController extends BaseController {
             if (quota == null || quota.isEmpty() || !quota.containsKey("range") ||
                     time == null || time.isEmpty() ||
                     !time.containsKey("range") || !time.containsKey("unit") ||
-                    element == null || element.isEmpty() || !element.containsKey("range")){
+                    element == null || element.isEmpty() || !element.containsKey("range")) {
 
                 msg += "Parameters has error.";
 
-            }else {
+            } else {
                 // quota
                 if (quota.getString("range").equals("1")) {
                     JSONArray formula = quota.getJSONArray("list");
                     for (Object f : formula) {
                         formulaNameList.add(f.toString());
                     }
-
                 } else if (quota.getString("range").equals("0")) {
                     formulaNameList = obj.getCacheService().getFormulaNameList(false);
                 }
@@ -93,46 +93,50 @@ public class QuotaHistoryController extends BaseController {
                 // net element
                 if (element.getString("range").equals("1")) {
 
-                    String[] st = element.getString("list").replace("]", "")
+                    st = element.getString("list").replace("]", "")
                             .replace("[", "").replaceAll("\"", "").split(",");
 
                     condition = Condition(st);
 
                 }
-                quotaList = getQuotas(level, obj, start, end, condition);
-
-                if (quotaList == null || quotaList.isEmpty() || quotaList.size() == 0) {
-                    msg += "quotaList is null.";
-
+                if (time.getString("unit").equals("4")) {
+                    dataList = getFormulaCell(start, end, formulaNameList, st, obj);
                 } else {
 
-                    String unit = time.getString("unit");
-                    if (unit == null || unit.length() == 0) {
-                        msg += "time unit is null.";
+                    quotaList = getQuotas(level, obj, start, end, condition);
+
+                    if (quotaList == null || quotaList.isEmpty() || quotaList.size() == 0) {
+                        msg += "quotaList is null.";
 
                     } else {
-                        if (unit.equals("0")) {//min
 
-                            min = 4;
-                        } else if (unit.equals("1")) {//hh
+                        String unit = time.getString("unit");
+                        if (unit == null || unit.length() == 0) {
+                            msg += "time unit is null.";
 
-                            min = 1;
-                        } else if (unit.equals("2")) {//date
+                        } else {
+                            if (unit.equals("0")) {//min
 
-                            min = 2;
-                        } else if (unit.equals("3")) {//month
+                                min = 4;
+                            } else if (unit.equals("1")) {//hh
 
-                            min = 3;
+                                min = 1;
+                            } else if (unit.equals("2")) {//date
+
+                                min = 2;
+                            } else if (unit.equals("3")) {//month
+
+                                min = 3;
+                            }
                         }
-                    }
 
-                    if (min != 0 && formulaNameList.size() != 0) {
-                        dataList = getValue(start, end, quotaList, formulaNameList, min, quotaList.get(quotaList.size() - 1).getDate("time"), quotaList.get(0).getDate("time"));
+                        if (min != 0 && formulaNameList.size() != 0) {
+                            dataList = getValue(start, end, quotaList, formulaNameList, min, quotaList.get(quotaList.size() - 1).getDate("time"), quotaList.get(0).getDate("time"));
+                        }
                     }
                 }
             }
         }
-
         if (msg.length() == 0 && dataList.size() != 0){
             result.put("result", Constants.SUCCESS);
             result.put("data", dataList);
@@ -143,6 +147,39 @@ public class QuotaHistoryController extends BaseController {
         }
 
         return result;
+    }
+
+
+    private static List getFormulaCell(Date start,Date end,List<String> formulaNameList ,String[] cells,NetObjBase obj) throws ParseException {
+        List list1 = new ArrayList();
+        List list = new ArrayList();
+        String formula ="";
+        String cell ="";
+        JSONObject json = new JSONObject();
+        JSONObject json1 = new JSONObject();
+        for(String f:formulaNameList){
+             formula = f;
+        }
+        for(String c:cells){
+            cell = c;
+        }
+        List<JSONObject> cellformula = obj.getQuotaService().getCellFormula(start, end,cell);
+        SimpleDateFormat sd =   new SimpleDateFormat("HH:mm:ss");
+        for (int i=0;i<cellformula.size();i++){
+            if(sd.parse(sd.format(cellformula.get(i).getDate("time"))).getTime()
+                    ==sd.parse(sd.format(cellformula.get(0).getDate("time"))).getTime()){
+                json.put("quotaName",formula);
+                json.put( "value",cellformula.get(i).getString(formula));
+                list.add(json);
+                json1.put("time",cellformula.get(i).getString("time"));
+                json1.put("name",cell);
+                json1.put("quotas",list1);
+                list.add(json1);
+            }
+        }
+
+        list.add(list1);
+        return list;
     }
 
     private static long getDatePoor(Date endDate, Date nowDate,String msg) {
@@ -157,14 +194,14 @@ public class QuotaHistoryController extends BaseController {
         // 计算差多少小时
         long hour = diff % nd / nh;
         // 计算差多少分钟
-       long mins = diff % nd % nh / nm;
+        long mins = diff % nd % nh / nm;
 
         if(msg.equals("day")){
             pramary = day;
         }else if(msg.equals("HH")){
             pramary = day*24+hour;
         }else if(msg.equals("MIN")){
-           pramary=day*24*60+hour*60+mins;
+            pramary=day*24*60+hour*60+mins;
         }
         return pramary;
     }
@@ -183,65 +220,65 @@ public class QuotaHistoryController extends BaseController {
         int endMonth = Integer.parseInt(MM.format(end));
         int startMonth =Integer.parseInt(MM.format(start));
 
-            long index =0;
-                if(min ==3){
-                    index =(endYaer-startYaer)*12+ endMonth - startMonth;
-                }else if(min ==2){
-                    index = getDatePoor(end,start,"day");
-                }else if(min ==1){
-                    index = getDatePoor(end,start,"HH");
-                }else if(min ==4){
-                    index = getDatePoor(end,start,"MIN")/15;
-                }
+        long index =0;
+        if(min ==3){
+            index =(endYaer-startYaer)*12+ endMonth - startMonth;
+        }else if(min ==2){
+            index = getDatePoor(end,start,"day");
+        }else if(min ==1){
+            index = getDatePoor(end,start,"HH");
+        }else if(min ==4){
+            index = getDatePoor(end,start,"MIN")/15;
+        }
 
-            for (int j = 0; j <= index; j++) {
+        for (int j = 0; j <= index; j++) {
 
-                JSONObject result = new JSONObject();
-                List list1 = new ArrayList();
-                int num = 0;
-                double d = 0.0;
-                JSONObject Time = new JSONObject();
-                JSONObject Name = new JSONObject();
-                for (String formulaName : formulaNameList){
+            JSONObject result = new JSONObject();
+            List list1 = new ArrayList();
+            int num = 0;
+            double d = 0.0;
+            JSONObject Time = new JSONObject();
+            JSONObject Name = new JSONObject();
+            for (String formulaName : formulaNameList){
 
-                    d = 0.0;
-                    num = 0;
-                    JSONObject result1 = new JSONObject();
+                d = 0.0;
+                num = 0;
+                JSONObject result1 = new JSONObject();
 
-                    for (JSONObject quolist : quotaList) {
+                for (JSONObject quolist : quotaList) {
 
-                        Long time = quolist.getDate("time").getTime();
+                    Long time = quolist.getDate("time").getTime();
 
-                        if (time >= getMath(start, j, min).getTime()
-                                && time < getMath(start, j + 1, min).getTime() && time <= end.getTime()) {
+                    if (time >= getMath(start, j, min).getTime()
+                            && time < getMath(start, j + 1, min).getTime() && time <= end.getTime()) {
 
-                            if (quolist.getDouble(formulaName) != null
-                                    && quolist.getDouble(formulaName) >= 0) {
-                                //Time.put("time",new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(quolist.getDate("time")));
-                                //Name.put("name",quolist.getDate("name"));
-                                num++;
-                                d = d + quolist.getDouble(formulaName);
-                            }
+                        if (quolist.getDouble(formulaName) != null
+                                && quolist.getDouble(formulaName) >= 0) {
+                            //Time.put("time",new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(quolist.getDate("time")));
+                            //Name.put("name",quolist.getDate("name"));
+                            num++;
+                            d = d + quolist.getDouble(formulaName);
                         }
-                        Time.put("time", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(getMath(start, j, min)));
                     }
-
-                        if (d != 0.0) {
-                            result1.put("value", d / num);
-                        } else {
-                            result1.put("value", 0);
-                        }
-
-                        result1.put("quotaName", formulaName);
-                        list1.add(result1);
-                        result.putAll(Time);
+                    Time.put("time", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(getMath(start, j, min)));
                 }
 
-               if(list1.size()>0) {
-                   result.put("quotas", list1);
-                   list.add(result);
-               }
+                if (d != 0.0) {
+                    result1.put("value", d / num);
+                } else {
+                    result1.put("value", 0);
+                }
+
+                result1.put("quotaName", formulaName);
+                list1.add(result1);
+                result.putAll(Time);
             }
+
+            if(list1.size()>0) {
+                result.put("quotas", list1);
+                list.add(result);
+            }
+        }
 
         return list;
     }
@@ -257,6 +294,8 @@ public class QuotaHistoryController extends BaseController {
             cal.add(Calendar.MONTH, num);//增加一个月
         }else if(min == 4 ){
             cal.add(Calendar.MINUTE,15*num);
+        }else if (min==0){
+            cal.add(Calendar.DATE,-num);//-day
         }
         return cal.getTime();
     }
@@ -453,7 +492,7 @@ public class QuotaHistoryController extends BaseController {
                 }
 
                 if(counter.getString("range").equals("1")){
-                     counters =  counter.getString("list").replace("]", "")
+                    counters =  counter.getString("list").replace("]", "")
                             .replace("[", "").replaceAll("\"", "");
                 }
 

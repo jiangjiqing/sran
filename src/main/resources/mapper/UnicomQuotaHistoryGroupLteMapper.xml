@@ -249,4 +249,8 @@
   <update id="setColumn" parameterType="java.lang.String">
     alter table  unicom_quota_history_group_lte change  column `${oldquotaName}` `${quotaName}` varchar(5)
   </update>
+
+  <select id="getCellFormula"  resultType="com.alibaba.fastjson.JSONObject">
+    SELECT * FROM  unicom_quota_history_cell_lte WHERE time  BETWEEN #{start} AND #{end} AND  name = #{cell} ORDER BY time ASC
+  </select>
 </mapper>

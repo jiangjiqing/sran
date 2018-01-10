@@ -49,4 +49,8 @@ public interface UnicomQuotaHistoryCellWcdmaMapper {
     void deleteColumn(@Param("quotaName") String quotaName);
 
     void setColumn(@Param("oldquotaName")String oldquotaName,@Param("quotaName") String quotaName);
+
+    List<JSONObject> getCellFormula(@Param("start") Date start,
+                                    @Param("end") Date end,
+                                    @Param("cell") String cell);
 }

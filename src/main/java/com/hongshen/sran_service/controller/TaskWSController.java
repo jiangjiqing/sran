@@ -213,13 +213,13 @@ public class TaskWSController {
                                 Constants.TASK_ROOT_PATH + loginName + "/" + Constants.TASK_DIR_LOG);
                         process.destroy();
                         // }
-                         }
-                    } catch(IOException e){
-                        msg += "Read file error:" + e.getMessage();
-                        result.put("msg", msg);
-                        this.sendMessage(String.valueOf(result));
-                        taskStatusMap.put(loginName, false);
                     }
+                } catch(IOException e){
+                    msg += "Read file error:" + e.getMessage();
+                    result.put("msg", msg);
+                    this.sendMessage(String.valueOf(result));
+                    taskStatusMap.put(loginName, false);
+                }
             }
         }
     }
