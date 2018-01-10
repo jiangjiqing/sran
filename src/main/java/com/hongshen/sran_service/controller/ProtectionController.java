@@ -6,17 +6,12 @@ import com.hongshen.sran_service.common.BaseController;
 import com.hongshen.sran_service.service.util.Constants;
 import com.hongshen.sran_service.service.util.NetObjBase;
 import com.hongshen.sran_service.service.util.NetObjFactory;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.support.SQLErrorCodes;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.lang.reflect.Array;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -37,19 +32,17 @@ public class ProtectionController extends BaseController{
         String msg = "";
         JSONObject result = new JSONObject();
         List<JSONObject> dataList = new ArrayList<JSONObject>();
-        List<JSONObject> ProtectLte = null;
         NetObjBase objWcdma = objFactory.getNetObj(supplier, Constants.WCDMA);
         NetObjBase objLte = objFactory.getNetObj(supplier, Constants.LTE);
 
         if (objWcdma == null && objLte == null) {
             msg += "Supplier has err.";
         }else {
-            ProtectLte = objLte.getElementInfoService().getProtectInfo();
+            List<JSONObject> ProtectLte = objLte.getElementInfoService().getProtectInfo();
             List<JSONObject> ProtectWcdma = objWcdma.getElementInfoService().getProtectInfo();
 
                 for (int i = 0;i < ProtectLte.size();i++){
                     JSONObject jsonObject = new JSONObject();
-                    System.out.println(ProtectLte.get(i));
                     jsonObject.put("name",ProtectLte.get(i).getString("name"));
                     jsonObject.put("generation",Constants.LTE);
                     List<JSONObject> nodeCount = objLte.getElementInfoService().getNodeCountByname(ProtectLte.get(i).getString("name"));
@@ -59,7 +52,7 @@ public class ProtectionController extends BaseController{
                         List<JSONObject> nodeList = objLte.getElementInfoService().getNodeCountByNodeName(ProtectLte.get(i).getString("name"));
                         for (int j=0;j<nodeList.size();j++){
                             jsonObject.put("id",nodeList.get(j).getString("enb_id"));
-                            jsonObject.put("StationName",nodeList.get(j).getString("station_name"));
+                            jsonObject.put("stationName",nodeList.get(j).getString("station_name"));
                             jsonObject.put("longitude",nodeList.get(j).getString("longitude"));
                             jsonObject.put("latitude",nodeList.get(j).getString("latitude"));
                             jsonObject.put("scope","[]");
@@ -121,7 +114,6 @@ public class ProtectionController extends BaseController{
                 }
                 for (int i = 0;i < ProtectWcdma.size();i++){
                     JSONObject jsonObject = new JSONObject();
-                    System.out.println(ProtectWcdma.get(i));
                     jsonObject.put("name",ProtectWcdma.get(i).getString("name"));
                     String name= ProtectWcdma.get(i).getString("name");
                     jsonObject.put("generation",Constants.WCDMA);
@@ -131,9 +123,10 @@ public class ProtectionController extends BaseController{
                         List<JSONObject> nodeList = objWcdma.getElementInfoService().getNodeCountByNodeName(ProtectWcdma.get(i).getString("name"));
                         for (int j=0;j<nodeList.size();j++){
                             jsonObject.put("id",nodeList.get(j).getString("rbsid"));
-                            jsonObject.put("StationName",nodeList.get(j).getString("station_name"));
+                            jsonObject.put("stationName",nodeList.get(j).getString("station_name"));
                             jsonObject.put("longitude",nodeList.get(j).getString("longitude"));
                             jsonObject.put("latitude",nodeList.get(j).getString("latitude"));
+                            jsonObject.put("scope","[]");
                         }
                         List<JSONObject> alarmList = objWcdma.getAlarmService().getNodeAlarmByName(ProtectWcdma.get(i).getString("name"));
                         if (alarmList.size() != 0){

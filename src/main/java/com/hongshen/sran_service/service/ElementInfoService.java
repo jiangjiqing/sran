@@ -103,4 +103,6 @@ public interface ElementInfoService {
     List<JSONObject> getNodeCountByNodeName(String name);
 
     JSONObject getGroupIdByName(String name);
+
+    List<String> getVipNodeNameListByGroup(String groupName);
 }

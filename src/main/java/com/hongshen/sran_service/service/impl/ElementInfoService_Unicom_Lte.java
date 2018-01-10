@@ -279,4 +279,10 @@ public class ElementInfoService_Unicom_Lte implements ElementInfoService {
         return groupMapper.getGroupIdByName(name);
     }
 
+    @Override
+    public List<String> getVipNodeNameListByGroup(String groupName) {
+        return nodeMapper.getVipNodeNameListByGroup(groupName);
+    }
+
+
 }
