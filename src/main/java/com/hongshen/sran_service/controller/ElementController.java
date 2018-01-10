@@ -34,6 +34,8 @@ public class ElementController {
         String msg ="";
 //        JSONObject infos = null;
         ArrayList<String[]> infosProcessed = null;
+        List<String> nodeList = null;
+        List<String> nodeVipList = null;
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
 
@@ -54,6 +56,37 @@ public class ElementController {
                 if (infosProcessed == null || infosProcessed.isEmpty()) {
                     msg += "Info is null.";
                 }
+
+                nodeVipList = obj.getElementInfoService().getVipNodeNameListByGroup(groupName);
+
+                String[] nodeVipListInfo = new String[2];
+
+                String nodeVipListStr = nodeVipList.get(0);
+
+                for( int i = 1; i < nodeVipList.size(); i++){
+                    nodeVipListStr += "," + nodeVipList.get(i);
+                }
+
+                nodeVipListInfo[1] = nodeVipListStr;
+                nodeVipListInfo[0] = "Vip基站列表";
+
+                infosProcessed.add(nodeVipListInfo);
+
+                nodeList = obj.getElementInfoService().getNodeNameListByGroup(groupName);
+
+                String[] nodeListInfo = new String[2];
+
+                String nodeListStr = nodeList.get(0);
+
+                for( int i = 1; i < nodeList.size(); i++){
+                    nodeListStr += "," + nodeList.get(i);
+                }
+
+                nodeListInfo[1] = nodeListStr;
+                nodeListInfo[0] = "基站列表";
+
+                infosProcessed.add(nodeListInfo);
+
             }catch (Exception e){
                 msg += "Get info has error:" + e.getMessage();
             }

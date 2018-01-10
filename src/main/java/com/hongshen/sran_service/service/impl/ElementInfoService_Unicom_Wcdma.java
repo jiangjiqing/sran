@@ -125,49 +125,49 @@ public class ElementInfoService_Unicom_Wcdma implements ElementInfoService {
         return groupMapper.getGroupInfo(groupName);
     }
 
-//    @Override
-//    public ArrayList<String[]> getGroupInfoProcessed(String groupName) {
-//
-//        JSONObject infos = groupMapper.getGroupInfo(groupName);
-//        List<JSONObject> infoIndexs = groupInfoIndexMapper.getGroupInfoIndex();
-//
-//        if (infos != null && infoIndexs != null){
-//            ArrayList<String[]> result = new ArrayList<>();
-//
-//            for(JSONObject index : infoIndexs){
-//
-//                String key = index.getString("remark");
-//                String value = infos.getString(index.getString("name"));
-//
-//                if (key != null && key.trim().length() > 0) {
-//
-//                    if (value != null && value.trim().length() > 0) {
-//                        result.add(new String[]{key,value});
-//
-//                    } else {
-//                        result.add(new String[]{key,Constants.ELEMENT_INFO_INVALID});
-//                    }
-//                }
-//            }
-//            return result;
-//        }else{
-//            return null;
-//        }
-//    }
-
     @Override
     public ArrayList<String[]> getGroupInfoProcessed(String groupName) {
-        ArrayList<String[]> result = new ArrayList<>();
+
         JSONObject infos = groupMapper.getGroupInfo(groupName);
+        List<JSONObject> infoIndexs = groupInfoIndexMapper.getInfoIndexList();
 
-        for(String key : infos.keySet()){
+        if (infos != null && infoIndexs != null){
+            ArrayList<String[]> result = new ArrayList<>();
 
-            String value = infos.getString(key);
-            if (value == null || value.trim().length() <= 0){
-                value = Constants.ELEMENT_INFO_INVALID;
+            for(JSONObject index : infoIndexs){
+
+                String key = index.getString("remark");
+                String value = infos.getString(index.getString("name"));
+
+                if (key != null && key.trim().length() > 0) {
+
+                    if (value != null && value.trim().length() > 0) {
+                        result.add(new String[]{key,value});
+
+                    } else {
+                        result.add(new String[]{key,Constants.ELEMENT_INFO_INVALID});
+                    }
+                }
             }
+            return result;
+        }else{
+            return null;
+        }
+    }
 
-            result.add(new String[]{key, value});
+//    @Override
+//    public ArrayList<String[]> getGroupInfoProcessed(String groupName) {
+//        ArrayList<String[]> result = new ArrayList<>();
+//        JSONObject infos = groupMapper.getGroupInfo(groupName);
+//
+//        for(String key : infos.keySet()){
+//
+//            String value = infos.getString(key);
+//            if (value == null || value.trim().length() <= 0){
+//                value = Constants.ELEMENT_INFO_INVALID;
+//            }
+//
+//            result.add(new String[]{key, value});
 
 //            switch (key){
 //                case "groupName" :
@@ -209,9 +209,9 @@ public class ElementInfoService_Unicom_Wcdma implements ElementInfoService {
 //                        scope	varchar	255	可为空			覆盖范围：大兴、通州
 
 //            }
-        }
-        return result;
-    }
+//        }
+//        return result;
+//    }
 
     @Override
     public JSONObject getNodeInfo(String nodeName) {
