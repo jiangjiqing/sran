@@ -866,6 +866,22 @@
     ORDER BY time DESC;
   </select>
 
+  <select id="getBadTenCell" parameterType="java.util.List" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT
+    name,
+    IFNULL(${expression},0) expvalue
+    FROM
+    unicom_counter_history_lte
+    WHERE
+    name in
+    <foreach close=")" collection="cellList" index="index" item="cell" open="(" separator=",">
+      #{cell}
+    </foreach>
+    and time = #{time}
+    ORDER BY expvalue DESC
+    LIMIT 10
+  </select>
+
   <select id="getCounterTime" resultType="com.alibaba.fastjson.JSONObject">
     SELECT time FROM unicom_counter_history_lte
   </select>

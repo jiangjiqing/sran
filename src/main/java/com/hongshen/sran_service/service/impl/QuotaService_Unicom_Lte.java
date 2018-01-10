@@ -7,6 +7,7 @@ import com.hongshen.sran_service.service.util.ScannerHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +26,15 @@ public class QuotaService_Unicom_Lte implements QuotaService {
 
     @Autowired
     private UnicomCounterLteMapper counterMapper;
+
+    @Autowired
+    private UnicomGroupWcdmaMapper groupMapper;
+
+    @Autowired
+    private UnicomNodeWcdmaMapper nodeMapper;
+
+    @Autowired
+    private UnicomCellWcdmaMapper cellMapper;
 
     @Autowired
     private UnicomCounterHistoryLteMapper counterHistoryMapper;
@@ -146,8 +156,36 @@ public class QuotaService_Unicom_Lte implements QuotaService {
     @Override
     public List<JSONObject> getGroupQuotaBadTenCell(String groupName, String quotaName) {
 
-        return null;
+        List<JSONObject> resultList = new ArrayList<>();
+
+        JSONObject formula = cacheService.getFormulaProcessedByName(quotaName);
+
+        if (formula == null) {
+
+            return resultList;
+        }
+
+        String expression = formula.getString("expression");
+
+        List<String> nodeNameList = nodeMapper.getNodeNameListByGroup(groupName);
+
+        if (nodeNameList.size() == 0) {
+
+            return resultList;
+        }
+
+        List<String> cellList = cellMapper.getCellNameListByNodeNameList(nodeNameList);
+
+        if (cellList.size() == 0) {
+
+            return resultList;
+        }
+
+        resultList = counterHistoryMapper.getBadTenCell(expression, cellList, cacheService.getUpdateTimeForQuotaData());
+
+        return resultList;
     }
+
 
     @Override
     public List<JSONObject> getFormula(Boolean isVisible) {

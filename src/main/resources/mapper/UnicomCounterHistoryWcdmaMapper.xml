@@ -410,7 +410,7 @@
   <select id="getBadTenCell" parameterType="java.util.List" resultType="com.alibaba.fastjson.JSONObject">
     SELECT
     name,
-    IFNULL(#{expression},0) expvalue
+    IFNULL(${expression},0) expvalue
     FROM
     unicom_counter_history_wcdma
     WHERE

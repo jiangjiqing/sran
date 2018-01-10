@@ -42,7 +42,14 @@ public interface UnicomCounterHistoryLteMapper {
 
     List<JSONObject> getCounterHistoryListByTime(@Param("time")String time);
 
-    List<JSONObject> dowloadCounter(@Param("counters")String counters, @Param("start")Date start, @Param("end")Date end, @Param("condition") String condition);
+    List<JSONObject> dowloadCounter(@Param("counters")String counters,
+                                    @Param("start")Date start,
+                                    @Param("end")Date end,
+                                    @Param("condition") String condition);
+
+    List<JSONObject> getBadTenCell(@Param("expression")String expression,
+                                   @Param("cellList")List<String> cellList,
+                                   @Param("time")String time);
 
     List<JSONObject> getCounterTime();
 
