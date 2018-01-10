@@ -251,4 +251,8 @@
   <select id="deleteColumn" parameterType="java.lang.String">
     alter table unicom_quota_history_node_lte drop column `${quotaName}`;
   </select>
+
+  <update id="setColumn" parameterType="java.lang.String">
+    alter table  unicom_quota_history_node_lte change  column `${oldquotaName}` `${quotaName}` varchar(5)
+  </update>
 </mapper>

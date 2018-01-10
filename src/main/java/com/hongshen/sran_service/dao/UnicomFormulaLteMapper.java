@@ -73,4 +73,6 @@ public interface UnicomFormulaLteMapper {
     Integer deleteAllFormulas();
 
     List<JSONObject> getFormuUnitlaList();
+
+    String getquotaName(@Param("expression") String expression);
 }

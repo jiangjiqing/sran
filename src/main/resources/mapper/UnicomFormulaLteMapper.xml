@@ -231,4 +231,8 @@
   <delete id="deleteAllFormulas">
     DELETE FROM unicom_formula_lte
   </delete>
+
+  <select id="getquotaName" parameterType="java.lang.String">
+SELECT quota_name FROM unicom_formula_lte WHERE expression = #{expression}
+  </select>
 </mapper>

@@ -189,4 +189,8 @@
   <select id="deleteColumn" parameterType="java.lang.String">
     alter table unicom_quota_history_cell_wcdma drop column `${quotaName}`;
   </select>
+
+  <update id="setColumn" parameterType="java.lang.String">
+    alter table  unicom_quota_history_cell_wcdma change  column `${oldquotaName}` `${quotaName}` varchar(5)
+  </update>
 </mapper>

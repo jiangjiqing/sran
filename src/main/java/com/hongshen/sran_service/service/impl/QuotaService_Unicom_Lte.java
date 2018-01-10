@@ -285,4 +285,25 @@ public class QuotaService_Unicom_Lte implements QuotaService {
         return quotaThresholdCellMapper.addThreshold(threshold);
     }
 
+    @Override
+    public void setGroupQuotaColumn(String oldquotaName,String quotaName) {
+
+        quotaHistoryGroupMapper.setColumn(oldquotaName,quotaName);
+    }
+
+    @Override
+    public void setNodeQuotaColumn(String oldquotaName,String quotaName) {
+        quotaHistoryNodeMapper.setColumn(oldquotaName,quotaName);
+    }
+
+    @Override
+    public void setCellQuotaColumn(String oldquotaName,String quotaName) {
+        quotaHistoryCellMapper.setColumn(oldquotaName,quotaName);
+    }
+
+    @Override
+    public String getquotaName(String expression) {
+        return formulaMapper.getquotaName(expression);
+    }
+
 }

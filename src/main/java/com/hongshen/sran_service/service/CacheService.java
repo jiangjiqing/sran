@@ -40,7 +40,7 @@ public interface CacheService {
     List<String> getFormulaNameListProcessed(Boolean isVisible);
 
     JSONObject getFormulaByName(String quotaName);
-
+    List<String> getFormulaExp();
     JSONObject getFormulaProcessedByName(String quotaName);
 
     void  resetThresholdGroupList();
@@ -66,4 +66,6 @@ public interface CacheService {
     Date getUpdateTimeForQuotaData(String level);
 
     String getUpdateTimeForQuotaData();
+
+    List<JSONObject> getFormulaExpKey();
 }

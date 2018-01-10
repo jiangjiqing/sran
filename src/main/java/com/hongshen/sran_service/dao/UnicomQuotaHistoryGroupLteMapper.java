@@ -47,4 +47,6 @@ public interface UnicomQuotaHistoryGroupLteMapper {
     void addColumn(@Param("formula") String formula);
 
     void deleteColumn(@Param("quotaName") String quotaName);
+
+    void setColumn(@Param("oldquotaName")String oldquotaName,@Param("quotaName") String quotaName);
 }

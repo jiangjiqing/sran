@@ -239,6 +239,7 @@ public class QuotaFormulaController {
         Integer listNum = 0;
         Integer realAddNum = 0;
         List<String> addFormulaNameList =  new ArrayList();
+        List<String> addFormulaExpList =  new ArrayList();
         JSONObject result = new JSONObject();
         NetObjBase obj = objFactory.getNetObj(supplier, generation);
         if (obj == null) {
@@ -249,11 +250,14 @@ public class QuotaFormulaController {
 
             } else {
 
-                List<String> oldFormulaList = obj.getCacheService().getFormulaNameListProcessed(false);
-
+                List<String> oldFormulanNameList = obj.getCacheService().getFormulaNameList(false);
+                List<String> formulaExp = obj.getCacheService().getFormulaExp();
+                List<JSONObject> oldFormulaList = obj.getCacheService().getFormulaList(false);
+                //List<JSONObject> exp = obj.getCacheService().getFormulaExpKey();
                 obj.getQuotaService().deleteAllFormulas();
 
                 listNum = formulas.size();
+
 
                 for (int i = 0; i < listNum; i++) {
 
@@ -263,21 +267,37 @@ public class QuotaFormulaController {
                     try {
                         if ( quotaName != null && !quotaName.trim().equals("") &&
                                 expression != null && !expression.trim().equals("")) {
+
                             JSONObject formula = formulas.getJSONObject(i);
+
                             formula.put("quotaName",quotaName);
+
                             formula.put("expression",expression);
+
                             addFormulaNameList.add(quotaName);
+
+                            addFormulaExpList.add(expression);
+
                             Integer num = obj.getQuotaService().addFormula(formula);
+
                             realAddNum += num;
 
                             if (num > 0) {
                                 try{
                                     try{
-                                        if(!oldFormulaList.contains(quotaName)) {
+                                        if(!oldFormulanNameList.contains(quotaName)&&!formulaExp.contains(expression)) {
 
                                             obj.getQuotaService().addGroupQuotaColumn(quotaName);
                                             obj.getQuotaService().addNodeQuotaColumn(quotaName);
                                             obj.getQuotaService().addCellQuotaColumn(quotaName);
+                                        }else if(!oldFormulanNameList.contains(quotaName)&&formulaExp.contains(expression)){
+                                            for(JSONObject fo:oldFormulaList){
+                                                if(fo.getString("expression").equals(expression)) {
+                                                    obj.getQuotaService().setGroupQuotaColumn(fo.getString("quotaName"), quotaName);
+                                                    obj.getQuotaService().setNodeQuotaColumn(fo.getString("quotaName"), quotaName);
+                                                    obj.getQuotaService().setCellQuotaColumn(fo.getString("quotaName"), quotaName);
+                                                }
+                                            }
                                         }
                                     }catch (Exception e){
                                         e.getStackTrace();
@@ -306,7 +326,7 @@ public class QuotaFormulaController {
                     }
                 }
 
-                for(String f : oldFormulaList){
+                for(String f : oldFormulanNameList){
 
                     if(!addFormulaNameList.contains(f)){
                         // delete quota_history column
@@ -370,7 +390,7 @@ public class QuotaFormulaController {
                 List<String> oldCounterNameList = obj.getCacheService().getCounterNameListProcessed(false);
 
                 // get counter column's attribute
-                JSONObject attribute = obj.getQuotaService().getCounterColumnAttribute(oldCounterNameList.get(0));
+                JSONObject attribute = obj.getQuotaService().getCounterColumnAttribute(oldCounterNameList.get(0).replaceAll(" ",""));
 
                 // clear old data
                 obj.getQuotaService().deleteCounters();
@@ -379,34 +399,38 @@ public class QuotaFormulaController {
 
                 for(int j = 0; j < listNum; j++){
                     if(generation.equals("wcdma")) {
-                        addNameList.add(counters.getJSONObject(j).getString("name"));
+                        addNameList.add(counters.getJSONObject(j).getString("name").replaceAll(" ",""));
 
                     }else if(generation.equals("lte")){
-                        addNameList.add(counters.getJSONObject(j).getString("type")+
-                                "_"+ counters.getJSONObject(j).getString("name"));
+                        addNameList.add(counters.getJSONObject(j).getString("type").replaceAll(" ","")+
+                                "_"+ counters.getJSONObject(j).getString("name").replaceAll(" ",""));
                     }
                 }
 
                 // import data
                 for (int i = 0; i < listNum; i++) {
 
-                    String name = counters.getJSONObject(i).getString("name");
-                    String type = counters.getJSONObject(i).getString("type");
+                    String name = counters.getJSONObject(i).getString("name").replaceAll(" ","");
+                    String type = counters.getJSONObject(i).getString("type").replaceAll(" ","");
 
                     try {
                         if(name !=null && !name.trim().equals("") &&
                                 type !=null && !type.trim().equals("")){
 
-                            Integer num = obj.getQuotaService().addCounter(counters.getJSONObject(i));
+
+                            JSONObject counter = counters.getJSONObject(i);
+                            counter.put("name",name);
+                            counter.put("type",type);
+                            Integer num = obj.getQuotaService().addCounter(counter);
 
                             if (num > 0) {
                                 realAddNum += num;
                                 if(generation.equals("wcdma")) {
-                                    counterName = counters.getJSONObject(i).getString("name");
+                                    counterName = counters.getJSONObject(i).getString("name").replaceAll(" ","");
 
                                 }else if(generation.equals("lte")){
-                                    counterName = counters.getJSONObject(i).getString("type")+
-                                            "_"+ counters.getJSONObject(i).getString("name");
+                                    counterName = counters.getJSONObject(i).getString("type").replaceAll(" ","")+
+                                            "_"+ counters.getJSONObject(i).getString("name").replaceAll(" ","");
                                 }
                                 try{
                                     String nullable = "";

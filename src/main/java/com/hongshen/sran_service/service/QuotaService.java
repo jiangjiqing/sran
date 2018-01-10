@@ -92,4 +92,12 @@ public interface QuotaService {
     int addNodeThreshold(JSONObject threshold);
 
     int addCellThreshold(JSONObject threshold);
+
+    void setGroupQuotaColumn(String oldquotaName,String quotaName);
+
+    void setNodeQuotaColumn(String oldquotaName,String quotaName);
+
+    void setCellQuotaColumn(String oldquotaName,String quotaName);
+
+    String getquotaName(String expression);
 }

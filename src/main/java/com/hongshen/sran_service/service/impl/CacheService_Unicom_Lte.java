@@ -367,6 +367,15 @@ public class CacheService_Unicom_Lte implements CacheService {
     }
 
     @Override
+    public List<String> getFormulaExp() {
+        List ExpList = new ArrayList();
+        for(int i=0;i<formulaList.size();i++){
+            ExpList.add(formulaList.get(i).getString("expression"));
+        }
+        return ExpList;
+    }
+
+    @Override
     public JSONObject getFormulaProcessedByName(String quotaName) {
         if (formulaListProcessed == null || formulaListProcessed.isEmpty()){
             resetFormulaList();
@@ -475,6 +484,18 @@ public class CacheService_Unicom_Lte implements CacheService {
             }
         }
         return time;
+    }
+
+    @Override
+    public List<JSONObject> getFormulaExpKey() {
+        List list = new ArrayList();
+        for(int i=0;i<formulaList.size();i++){
+            JSONObject JSON = new JSONObject();
+            JSON.put(formulaList.get(i).getString("expression"),formulaList.get(i).getString("quotaName"));
+            list.add(JSON);
+        }
+
+        return list;
     }
 
     public Date getUpdateTimeForQuotaData(String level) {

@@ -72,4 +72,6 @@ public interface UnicomFormulaWcdmaMapper {
     Integer deleteAllFormulas();
 
     List<JSONObject> getFormuUnitlaList();
+
+    String getquotaName(@Param("expression") String expression);
 }
