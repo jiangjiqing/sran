@@ -223,7 +223,7 @@
   </select>
 
   <insert id="addQuotaHistoryGroupList" parameterType="java.util.List">
-    INSERT INTO unicom_quota_history_group_lte
+    REPLACE INTO unicom_quota_history_group_lte
     <foreach close=")" collection="cloumns" index="index" item="cloumn" open="(" separator=",">
       ${cloumn}
     </foreach>

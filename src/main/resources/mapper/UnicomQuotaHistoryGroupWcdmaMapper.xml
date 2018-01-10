@@ -169,7 +169,7 @@
 
   <insert id="addQuotaHistoryGroupList" parameterType="java.util.List">
 
-    INSERT INTO unicom_quota_history_group_wcdma
+    REPLACE INTO unicom_quota_history_group_wcdma
     <foreach close=")" collection="cloumns" index="index" item="cloumn" open="(" separator=",">
       ${cloumn}
     </foreach>

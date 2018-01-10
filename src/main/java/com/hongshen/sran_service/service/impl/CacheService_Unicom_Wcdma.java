@@ -68,6 +68,8 @@ public class CacheService_Unicom_Wcdma implements CacheService {
 
     private  static  List<JSONObject> thresholdCellList = new ArrayList<>();
 
+    public static List<String> counterWcdmaTimeList = new ArrayList<>();
+
     @Override
     public void resetCounterList(){
 

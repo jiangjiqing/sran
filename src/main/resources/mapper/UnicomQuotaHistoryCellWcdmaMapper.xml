@@ -152,7 +152,7 @@
     <!--</select>-->
 
     <insert id="addQuotaHistoryCellList" parameterType="java.util.List">
-        INSERT INTO unicom_quota_history_cell_wcdma
+        REPLACE INTO unicom_quota_history_cell_wcdma
         <foreach close=")" collection="cloumns" index="index" item="cloumn" open="(" separator=",">
             ${cloumn}
         </foreach>

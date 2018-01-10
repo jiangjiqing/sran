@@ -34,9 +34,11 @@ public class CalculationThread extends Thread {
 
             synchronized (this) {
 
-                List<String> counterWcdmaTimeList = ScannerHelper.counterWcdmaTimeList;
+                caCheServiceWcdma = applicationContext.getBean(CacheService_Unicom_Wcdma.class);
+                caCheServiceLte = applicationContext.getBean(CacheService_Unicom_Lte.class);
 
-                List<String> counterLteTimeList = ScannerHelper.counterLteTimeList;
+                List<String> counterWcdmaTimeList = caCheServiceWcdma.counterWcdmaTimeList;
+                List<String> counterLteTimeList = caCheServiceLte.counterLteTimeList;
 
                 if(counterWcdmaTimeList.size() == 0 && counterLteTimeList.size() == 0) {
 
@@ -52,9 +54,7 @@ public class CalculationThread extends Thread {
                 if (counterWcdmaTimeList.size() != 0) {
 
                     String counterWcdmatime = counterWcdmaTimeList.get(0);
-                    ScannerHelper.counterWcdmaTimeList.remove(0);
-
-                    caCheServiceWcdma = applicationContext.getBean(CacheService_Unicom_Wcdma.class);
+                    caCheServiceWcdma.counterWcdmaTimeList.remove(0);
                     caCheServiceWcdma.setUpdateTimeForQuotaData(counterWcdmatime);
 
                     scannerServiceWcdma = applicationContext.getBean(ScannerService_Unicom_Wcdma.class);
@@ -66,29 +66,11 @@ public class CalculationThread extends Thread {
                         scannerServiceWcdma.groupCalculation(params, counterWcdmatime);
                     }
 
-                    JSONObject param = new JSONObject();
-
-                    param.put("supplier", "unicom");
-                    param.put("generation", "wcdma");
-                    param.put("message", "The counterHistoryWcdma cell/node/group complete of the "
-                            + counterWcdmatime + "calculation");
-                    param.put("time", counterWcdmatime);
-
-                    String path = Constants.SCANNER_SEND_WCDMA;
-
-                    try {
-
-                        ScannerHelper.httpclientCounterCalculation(path, param);
-                    } catch (IOException e) {
-
-                        e.printStackTrace();
-                    }
+                    //send(Constants.WCDMA, counterWcdmatime);
                 } else if (counterLteTimeList.size() != 0) {
 
                     String counterLtetime = counterLteTimeList.get(0);
-                    ScannerHelper.counterLteTimeList.remove(0);
-
-                    caCheServiceLte = applicationContext.getBean(CacheService_Unicom_Lte.class);
+                    caCheServiceLte.counterLteTimeList.remove(0);
                     caCheServiceLte.setUpdateTimeForQuotaData(counterLtetime);
 
                     scannerServiceLte = applicationContext.getBean(ScannerService_Unicom_Lte.class);
@@ -100,25 +82,29 @@ public class CalculationThread extends Thread {
                         scannerServiceLte.groupCalculation(params, counterLtetime);
                     }
 
-                    JSONObject param = new JSONObject();
-
-                    param.put("supplier", "unicom");
-                    param.put("generation", "wcdma");
-                    param.put("message", "The counterHistoryLte cell/node/group complete of the "
-                            + counterLtetime + "calculation");
-                    param.put("time", counterLtetime);
-
-                    String path = Constants.SCANNER_SEND_LTE;
-
-                    try {
-
-                        ScannerHelper.httpclientCounterCalculation(path, param);
-                    } catch (IOException e) {
-
-                        e.printStackTrace();
-                    }
+                    //send(Constants.LTE, counterLtetime);
                 }
             }
+        }
+    }
+
+    public void send (String type, String time) {
+
+        JSONObject param = new JSONObject();
+
+        param.put("supplier", "unicom");
+        param.put("generation", type);
+        param.put("message", 1);
+        param.put("time", time);
+
+        String path = Constants.SCANNER_SEND_LTE;
+
+        try {
+
+            ScannerHelper.httpclientCounterCalculation(path, param);
+        } catch (IOException e) {
+
+            e.printStackTrace();
         }
     }
 }

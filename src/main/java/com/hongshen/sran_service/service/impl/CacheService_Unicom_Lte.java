@@ -68,6 +68,8 @@ public class CacheService_Unicom_Lte implements CacheService {
 
     private  static  List<JSONObject> thresholdCellList = new ArrayList<>();
 
+    public static List<String> counterLteTimeList = new ArrayList<>();
+
     @Override
     public void resetCounterList(){
 

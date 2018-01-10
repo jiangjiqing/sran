@@ -12,10 +12,6 @@ import java.util.regex.Pattern;
 
 public class ScannerHelper {
 
-    public static List<String> counterWcdmaTimeList = new ArrayList<>();
-
-    public static List<String> counterLteTimeList = new ArrayList<>();
-
     public static void httpclient(String paramPath) throws IOException {
 
         String url = paramPath;
