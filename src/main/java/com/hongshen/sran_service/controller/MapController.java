@@ -63,7 +63,9 @@ public class MapController extends BaseController{
                                     dataOne.put("id","");
                                     dataOne.put("range","");
                                 }else {
-                                    dataOne.put("id",groupId.getString("group_id"));
+                                    if (groupId.getString("group_id")==null) {
+                                        dataOne.put("id", "");
+                                    }
                                     dataOne.put("range",groupId.getString("scope"));
                                 }
 
