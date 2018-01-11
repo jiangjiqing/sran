@@ -205,7 +205,7 @@
       license_user licenseUser,
       mme,
       ip,
-      enb_id enbId,
+      enb_id id,
       isVip
     FROM unicom_node_lte
     WHERE node_name = #{nodeName}

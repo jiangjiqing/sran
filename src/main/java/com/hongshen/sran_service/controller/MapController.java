@@ -65,6 +65,8 @@ public class MapController extends BaseController{
                                 }else {
                                     if (groupId.getString("group_id")==null) {
                                         dataOne.put("id", "");
+                                    }else {
+                                        dataOne.put("id", groupId.getString("group_id"));
                                     }
                                     dataOne.put("range",groupId.getString("scope"));
                                 }
@@ -305,7 +307,7 @@ public class MapController extends BaseController{
                                 try {
                                     // infos //TODO delete infos
                                     JSONObject nodeInfo = obj.getElementInfoService().getNodeInfo(nodeName);
-
+                                    dataOne.put("id",nodeInfo.getString("id"));
                                     if (nodeInfo == null || nodeInfo.isEmpty()|| nodeInfo.size()==0) {
                                         JSONObject temp = new JSONObject();
                                         dataOne.put("infos", temp);

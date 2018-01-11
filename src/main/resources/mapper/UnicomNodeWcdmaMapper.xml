@@ -188,7 +188,7 @@
       node_name nodeName,
       group_name groupName,
       station_name stationName,
-      rbsid,
+      rbsid id,
       ip,
       lac,
       latitude,
