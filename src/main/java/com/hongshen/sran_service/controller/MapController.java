@@ -58,6 +58,14 @@ public class MapController extends BaseController{
                                 // longitude \ latitude and scope
                                 List<JSONObject> nodeList = obj.getElementInfoService().getNodeLocationsByGroup(groupName);
                                 List<Double[]> list = new ArrayList<>();
+                                JSONObject groupId = obj.getElementInfoService().getGroupIdByName(groupName);
+                                if (groupId == null){
+                                    dataOne.put("id","");
+                                    dataOne.put("range","");
+                                }else {
+                                    dataOne.put("id",groupId.getString("group_id"));
+                                    dataOne.put("range",groupId.getString("scope"));
+                                }
 
                                 dataOne.put("nodeCount",nodeList.size());
                                 for (JSONObject node : nodeList) {

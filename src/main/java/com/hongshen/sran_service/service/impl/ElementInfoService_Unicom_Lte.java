@@ -2,6 +2,7 @@ package com.hongshen.sran_service.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hongshen.sran_service.dao.*;
+import com.hongshen.sran_service.entity.UnicomGroupLte;
 import com.hongshen.sran_service.service.ElementInfoService;
 import com.hongshen.sran_service.service.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class ElementInfoService_Unicom_Lte implements ElementInfoService {
     private UnicomFavoriteLteMapper favoriteMapper;
 
     @Autowired
-    private UnicomGroupWcdmaMapper groupMapper; //3G
+    private UnicomGroupLteMapper groupMapper; //3G
 
 	@Autowired
     private UnicomNodeLteMapper nodeMapper;
