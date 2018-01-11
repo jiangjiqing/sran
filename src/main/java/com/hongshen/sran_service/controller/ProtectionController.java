@@ -79,8 +79,13 @@ public class ProtectionController extends BaseController{
                         // group
                         jsonObject.put("nodeCount",nodeCount.size());
                         JSONObject groupId = objLte.getElementInfoService().getGroupIdByName(ProtectLte.get(i).getString("name"));
-                        jsonObject.put("id",groupId.getString("group_id"));
-                        jsonObject.put("range",groupId.getString("scope"));
+                        if (groupId == null){
+                            jsonObject.put("id","");
+                            jsonObject.put("range","");
+                        }else {
+                            jsonObject.put("id",groupId.getString("group_id"));
+                            jsonObject.put("range",groupId.getString("scope"));
+                        }
                         jsonObject.put("stationName","");
                         List<Double[]> list = new ArrayList<>();
 
@@ -153,8 +158,13 @@ public class ProtectionController extends BaseController{
                         //group
                         jsonObject.put("nodeCount",nodeCount.size());
                         JSONObject groupId = objWcdma.getElementInfoService().getGroupIdByName(ProtectWcdma.get(i).getString("name"));
-                        jsonObject.put("id",groupId.getString("group_id"));
-                        jsonObject.put("range",groupId.getString("scope"));
+                        if (groupId == null){
+                            jsonObject.put("id","");
+                            jsonObject.put("range","");
+                        }else {
+                            jsonObject.put("id", groupId.getString("group_id"));
+                            jsonObject.put("range", groupId.getString("scope"));
+                        }
                         jsonObject.put("stationName","");
                         List<Double[]> list = new ArrayList<>();
 
