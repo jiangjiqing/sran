@@ -59,6 +59,7 @@ public class MapController extends BaseController{
                                 List<JSONObject> nodeList = obj.getElementInfoService().getNodeLocationsByGroup(groupName);
                                 List<Double[]> list = new ArrayList<>();
 
+                                dataOne.put("nodeCount",nodeList.size());
                                 for (JSONObject node : nodeList) {
 
                                     Double latitude = node.getDouble("latitude");

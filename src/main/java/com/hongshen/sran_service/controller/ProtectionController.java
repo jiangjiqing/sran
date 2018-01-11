@@ -40,7 +40,7 @@ public class ProtectionController extends BaseController{
         }else {
             List<JSONObject> ProtectLte = objLte.getElementInfoService().getProtectInfo();
             List<JSONObject> ProtectWcdma = objWcdma.getElementInfoService().getProtectInfo();
-
+            String[] nullSh = new String[0];
                 for (int i = 0;i < ProtectLte.size();i++){
                     JSONObject jsonObject = new JSONObject();
                     jsonObject.put("name",ProtectLte.get(i).getString("name"));
@@ -55,7 +55,7 @@ public class ProtectionController extends BaseController{
                             jsonObject.put("stationName",nodeList.get(j).getString("station_name"));
                             jsonObject.put("longitude",nodeList.get(j).getString("longitude"));
                             jsonObject.put("latitude",nodeList.get(j).getString("latitude"));
-                            jsonObject.put("scope","[]");
+                            jsonObject.put("scope",nullSh);
                             jsonObject.put("range","");
                         }
                         List<JSONObject> alarmList = objLte.getAlarmService().getNodeAlarmByName(ProtectLte.get(i).getString("name"));
@@ -133,7 +133,7 @@ public class ProtectionController extends BaseController{
                             jsonObject.put("stationName",nodeList.get(j).getString("station_name"));
                             jsonObject.put("longitude",nodeList.get(j).getString("longitude"));
                             jsonObject.put("latitude",nodeList.get(j).getString("latitude"));
-                            jsonObject.put("scope","[]");
+                            jsonObject.put("scope",nullSh);
                             jsonObject.put("range","");
                         }
                         List<JSONObject> alarmList = objWcdma.getAlarmService().getNodeAlarmByName(ProtectWcdma.get(i).getString("name"));
